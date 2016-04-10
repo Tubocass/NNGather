@@ -27,6 +27,11 @@ public class MainMomController : MoMController
 		base.CreateFarmer();
 		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount );
 	}
+	public override void CreateFighter()
+	{
+		base.CreateFighter();
+		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount );
+	}
 	public override void AddFoodLocation(Vector3 loc)
 	{
 		base.AddFoodLocation(loc);

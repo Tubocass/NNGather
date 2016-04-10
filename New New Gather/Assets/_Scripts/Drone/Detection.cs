@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Detection : MonoBehaviour 
 {
-	FarmerController controller;
+	DroneController controller;
 	// Use this for initialization
 	void Start () 
 	{
-		controller = transform.parent.GetComponent<FarmerController>();
+		controller = transform.parent.GetComponent<DroneController>();
 	}
 	
 	void OnTriggerEnter(Collider other)

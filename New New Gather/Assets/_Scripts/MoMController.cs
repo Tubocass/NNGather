@@ -15,10 +15,20 @@ public class MoMController : MonoBehaviour
 			else return transform.position;
 			}
 	}
+	public Vector3 FightAnchor
+	{
+		get{
+			if(activeFightFlag)
+				return fightFlagTran.position;
+			else return transform.position;
+			}
+	}
 	public Vector3 Location{get{return transform.position;}}
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmer, soldier, farmFlag, fightFlag;
+	[SerializeField] Color TeamColor;
+	MeshRenderer currentMesh;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 	NavMeshAgent agent;
 
@@ -34,6 +44,8 @@ public class MoMController : MonoBehaviour
 
 	protected virtual void Start()
 	{	
+		currentMesh = GetComponentInChildren<MeshRenderer>();
+		currentMesh.material.color = TeamColor;
 		farmFlag = Instantiate(farmFlag) as GameObject; //GameObject.Find("FarmFlag");
 		fightFlag = Instantiate(fightFlag) as GameObject;//GameObject.Find("FightFlag");
 		farmFlagTran = farmFlag.GetComponent<Transform>();
@@ -83,7 +95,16 @@ public class MoMController : MonoBehaviour
 		{
 			FoodAmount -= 1;
 			GameObject spawn = Instantiate(farmer,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
-			spawn.GetComponent<FarmerController>().setMoM(this);
+			spawn.GetComponent<FarmerController>().setMoM(this, TeamColor);
+		}
+	}
+	public virtual void CreateFighter()
+	{
+		if(FoodAmount>0)
+		{
+			FoodAmount -= 1;
+			GameObject spawn = Instantiate(soldier,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
+			spawn.GetComponent<FighterController>().setMoM(this, TeamColor);
 		}
 	}
 	public virtual void AddFoodLocation(Vector3 loc)

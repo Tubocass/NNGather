@@ -27,7 +27,7 @@ public class InputControls : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.E))
 		{
-			//mainMoMControl.CreateFighter();
+			mainMoMControl.CreateFighter();
 		}
 		if(Input.GetKeyDown(KeyCode.Z))
 		{
