@@ -19,7 +19,7 @@ public class FoodObject : MonoBehaviour
 	{
 		transform.position = Vector3.zero;
 		Detach();
-		UnityEventManager.TriggerEventInt("TargetUnavailable",Id);
+		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 		gameObject.SetActive(false);
 	}
 	public void Attach(Transform newParent, Vector3 point)
@@ -28,7 +28,7 @@ public class FoodObject : MonoBehaviour
 		transform.localPosition = point;
 		//GetComponent<Rigidbody>().isKinematic = true;
 		bAttached = true;
-		UnityEventManager.TriggerEventInt("TargetUnavailable",Id);
+		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 	}
 	public void Detach()
 	{

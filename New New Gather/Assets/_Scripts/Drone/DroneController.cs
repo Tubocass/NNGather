@@ -1,23 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DroneController : MonoBehaviour 
+public class DroneController : Unit_Base 
 {
-	public int TeamID;
+	//public int TeamID;
+	//public Vector3 Location{get{return transform.position;}}
 	[SerializeField] protected float orbit = 25;
 	[SerializeField] protected Vector3 nose; //set in editor
-	protected NavMove navMove;
+	//protected NavMove navMove;
 	protected bool bInDanger;
 	protected MoMController myMoM;
 
 	protected virtual void OnEnable()
 	{
-		navMove = GetComponent<NavMove>();
-		UnityEventManager.StartListeningInt("TargetUnavailable", TargetLost);
+		base.OnEnable();
+		UnityEventManager.StartListening("TargetUnavailable", TargetLost);
 	}
 	protected virtual void OnDisable()
 	{
-		UnityEventManager.StopListeningInt("TargetUnavailable", TargetLost);
+		UnityEventManager.StopListening("TargetUnavailable", TargetLost);
 		StopCoroutine(Idle());
 	}
 
@@ -36,7 +37,7 @@ public class DroneController : MonoBehaviour
 
 	protected void ReturnToHome()
 	{
-		navMove.MoveTo(myMoM.Location);
+		MoveTo(myMoM.Location);
 	}
 
 	protected virtual void TargetLost(int id)
@@ -53,7 +54,7 @@ public class DroneController : MonoBehaviour
 	{
 		while(true)
 		{
-			if(!navMove.BMoving)
+			if(!bMoving)
 			{
 				ArrivedAtTargetLocation();
 			}
@@ -65,17 +66,17 @@ public class DroneController : MonoBehaviour
 		MoveRandomly();
 	}
 
-	public void OnTriggerEnter(Collider other)
+	public virtual void OnTriggerEnter(Collider other)
 	{
 
 	}
 
-	public void OnTriggerStay(Collider other)
+	public virtual void OnTriggerStay(Collider other)
 	{
 		
 	}
 
-	public void OnCollisionEnter(Collision bang)
+	public virtual void OnCollisionEnter(Collision bang)
 	{
 		
 	}

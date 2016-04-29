@@ -8,12 +8,10 @@ public class MainMomController : MoMController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount);
-	}
-	protected override void SetID()
-	{
 		TeamID = 0;
+		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount);
 	}
+
 //	protected override void PlaceFarmFlag(Vector3 location)
 //	{
 //		activeFarmFlag = true;
@@ -25,17 +23,17 @@ public class MainMomController : MoMController
 	public override void CreateFarmer()
 	{
 		base.CreateFarmer();
-		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount );
+		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount );
 	}
 	public override void CreateFighter()
 	{
 		base.CreateFighter();
-		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount );
+		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount );
 	}
 	public override void AddFoodLocation(Vector3 loc)
 	{
 		base.AddFoodLocation(loc);
-		UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount);
+		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount);
 	}
 	void Update()
 	{

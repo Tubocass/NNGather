@@ -1,50 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NavMove : MonoBehaviour 
+public class Unit_Base : MonoBehaviour 
 {
-	public bool BMoving{get{return bMoving;}}
-	[SerializeField] Vector3 rVector;
-	[SerializeField] float MaxHoverDistance = 100, MinHoverDistance = 2;
+	public int TeamID;
+	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value);}}
+	public Vector3 Location{get{return transform.position;}}
+	protected Transform tran;
+	[SerializeField] protected float MaxHoverDistance = 100, MinHoverDistance = 2;
+	[SerializeField] protected Vector3 currentVector;
+	[SerializeField] protected bool bMoving;
 	[SerializeField] int tries;
-	[SerializeField] bool bMoving;
-	Transform tran;
-	NavMeshAgent agent;
+	protected NavMeshAgent agent;
 
-
-	void OnEnable () 
+	protected virtual void OnEnable () 
 	{
 		tran = transform;
-		rVector = tran.position;
+		currentVector = tran.position;
 		agent = GetComponent<NavMeshAgent>();
-//		bWandering = true;
-//		StartCoroutine("Wander");
-	}
-
-//	IEnumerator Wander()
-//	{
-//		while(bWandering)
-//		{
-//			if(agent.remainingDistance<1)
-//			{
-//				rVector = RandomVector(controller.Anchor.position, orbit);
-//				agent.SetDestination(rVector);
-//			}
-//			yield return new WaitForSeconds(1);
-//		}
-//	}
-	IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				bMoving = false;
-				Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
-			}
-			yield return new WaitForSeconds(0.5f);
-		}
 	}
 
 	public Vector3 RandomVector(Vector3 origin, float range)
@@ -68,10 +41,24 @@ public class NavMove : MonoBehaviour
 	{
 		//agent.ResetPath();
 		bMoving = true;
-		rVector = location;
+		currentVector = location;
 		agent.SetDestination(location);
 		StopCoroutine("MovingTo");
 		StartCoroutine("MovingTo");
 
+	}
+
+	IEnumerator MovingTo()
+	{
+		while(bMoving)
+		{
+			if(agent.remainingDistance<1)
+			{
+				bMoving = false;
+				Debug.Log("I arrived");
+				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+			}
+			yield return new WaitForSeconds(0.5f);
+		}
 	}
 }

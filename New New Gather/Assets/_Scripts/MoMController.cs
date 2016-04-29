@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class MoMController : MonoBehaviour 
+public class MoMController : Unit_Base 
 {
 	public static int MoMCount;
-	public int FoodAmount, TeamID;
+	public int FoodAmount;
 	public Vector3 FoodAnchor
 	{
 		get{
@@ -23,19 +23,19 @@ public class MoMController : MonoBehaviour
 			else return transform.position;
 			}
 	}
-	public Vector3 Location{get{return transform.position;}}
+	//public Vector3 Location{get{return transform.position;}}
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmer, soldier, farmFlag, fightFlag;
 	[SerializeField] Color TeamColor;
 	MeshRenderer currentMesh;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
-	NavMeshAgent agent;
+	//NavMeshAgent agent;
 
 	protected virtual void OnEnable()
 	{
-		agent = GetComponent<NavMeshAgent>();
-		SetID();
+		base.OnEnable();
+		TeamID = MoMCount+1;
 	}
 	protected virtual void OnDisable()
 	{
@@ -52,17 +52,13 @@ public class MoMController : MonoBehaviour
 		fightFlagTran = fightFlag.GetComponent<Transform>();
 		StartCoroutine(UpdateLocation());
 	}
-	protected virtual void SetID()
-	{
-		TeamID = MoMCount+1;
-	}
 
 	protected virtual void PlaceFarmFlag(Vector3 location)
 	{
 		farmFlag.SetActive(true);
 		farmFlagTran.position = location;
 		farmFlag.GetComponent<ParticleSystem>().Play();
-		UnityEventManager.TriggerEventInt("PlaceFarmFlag", TeamID);
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", TeamID);
 		activeFarmFlag = true;
 	}
 	protected virtual void RecallFarmFlag()
@@ -70,7 +66,7 @@ public class MoMController : MonoBehaviour
 		farmFlagTran.position = transform.position;
 		farmFlag.GetComponent<ParticleSystem>().Stop();
 		farmFlag.SetActive(false);
-		UnityEventManager.TriggerEventInt("PlaceFarmFlag", TeamID);
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", TeamID);
 		activeFarmFlag = false;
 	}
 	protected virtual void PlaceFightFlag(Vector3 location)
@@ -78,7 +74,7 @@ public class MoMController : MonoBehaviour
 		fightFlag.SetActive(true);
 		fightFlagTran.position = location;
 		fightFlag.GetComponent<ParticleSystem>().Play();
-		UnityEventManager.TriggerEventInt("PlaceFightFlag", TeamID);
+		UnityEventManager.TriggerEvent("PlaceFightFlag", TeamID);
 		activeFightFlag = true;
 	}
 	protected virtual void RecallFightFlag()
@@ -86,7 +82,7 @@ public class MoMController : MonoBehaviour
 		fightFlagTran.position = transform.position;
 		fightFlag.GetComponent<ParticleSystem>().Stop();
 		fightFlag.SetActive(false);
-		UnityEventManager.TriggerEventInt("PlaceFightFlag", TeamID);
+		UnityEventManager.TriggerEvent("PlaceFightFlag", TeamID);
 		activeFightFlag = false;
 	}
 	public virtual void CreateFarmer()
@@ -136,7 +132,7 @@ public class MoMController : MonoBehaviour
 		int size = 1;
 		foreach(Vector3 v in foodQ)
 		{
-			if(v != null)
+			if(v != Vector3.zero)
 			{
 				size++;
 				xx += v.x;

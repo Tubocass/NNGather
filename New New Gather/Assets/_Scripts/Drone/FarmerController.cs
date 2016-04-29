@@ -25,12 +25,12 @@ public class FarmerController : DroneController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		UnityEventManager.StartListeningInt("PlaceFarmFlag", UpdateFlagLocation);
+		UnityEventManager.StartListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		UnityEventManager.StopListeningInt("PlaceFarmFlag", UpdateFlagLocation);
+		UnityEventManager.StopListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 
 //	public void setMoM(MoMController mom, Color tc)
@@ -45,7 +45,7 @@ public class FarmerController : DroneController
 	{
 		if(TeamID == team && CanTargetFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
 		{
-			navMove.MoveTo(myMoM.FoodAnchor);
+			MoveTo(myMoM.FoodAnchor);
 		}
 	}
 
@@ -102,8 +102,8 @@ public class FarmerController : DroneController
 
 	protected override void MoveRandomly()
 	{
-		Vector3 rVector = navMove.RandomVector(myMoM.FoodAnchor, orbit);
-		navMove.MoveTo(rVector);
+		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
+		MoveTo(rVector);
 	}
 
 //	IEnumerator Idle()
@@ -126,7 +126,7 @@ public class FarmerController : DroneController
 		}
 		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location,transform.position)>1)
 		{
-			navMove.MoveTo(targetedFood.Location);
+			MoveTo(targetedFood.Location);
 		}
 		if(CanTargetFood())
 		{
@@ -139,20 +139,7 @@ public class FarmerController : DroneController
 
 	}
 
-	public void OnTriggerEnter(Collider other)
-	{
-		if(other.tag == "Food")
-		{
-			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-			if(ot!=null && ot.CanBeTargetted && CanTargetFood())
-			{
-				targetedFood = ot;
-				navMove.MoveTo(targetedFood.Location);
-			}
-		}
-	}
-
-	public void OnTriggerStay(Collider other)
+	public override void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "Food" && CanTargetFood())
 		{
@@ -160,12 +147,25 @@ public class FarmerController : DroneController
 			if(ot!=null && ot.CanBeTargetted)
 			{
 				targetedFood = ot;
-				navMove.MoveTo(targetedFood.Location);
+				MoveTo(targetedFood.Location);
 			}
 		}
 	}
 
-	public void OnCollisionEnter(Collision bang)
+	public override void OnTriggerStay(Collider other)
+	{
+		if(other.tag == "Food" && CanTargetFood())
+		{
+			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
+			if(ot!=null && ot.CanBeTargetted)
+			{
+				targetedFood = ot;
+				MoveTo(targetedFood.Location);
+			}
+		}
+	}
+
+	public override void OnCollisionEnter(Collision bang)
 	{
 		if(bang.collider.tag == "Food")
 		{

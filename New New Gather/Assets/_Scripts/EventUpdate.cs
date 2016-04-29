@@ -8,12 +8,12 @@ public class EventUpdate : MonoBehaviour
 
 	void OnEnable()
 	{
-		UnityEventManager.StartListeningInt("UpdateFood", SetFood);
+		UnityEventManager.StartListening("UpdateFood", SetFood);
 		scoreText.text =  "Food: " + 0;
 	}
 	void OnDisable()
 	{
-		UnityEventManager.StopListeningInt("UpdateFood", SetFood);
+		UnityEventManager.StopListening("UpdateFood", SetFood);
 	}
 	void SetFood(int amount)
 	{
