@@ -34,20 +34,21 @@ public class FighterController : DroneController
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
+		Unit_Base[] enemiesCopy = enemies.ToArray();
 		if(enemies.Count>0)
 		{
-			nearestEnemyDist = Vector3.Distance(Location,enemies[0].Location);
-			foreach(Unit_Base unit in enemies)
+			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			foreach(Unit_Base unit in enemiesCopy)
 			{
 				if(unit.isActive)
 				{
-					newDist = Vector3.Distance(Location,unit.Location);
+					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
 					if(newDist <= nearestEnemyDist)
 					{
 						nearestEnemyDist = newDist;
 						enemy = unit;
 					}
-				}else enemies.Remove(unit);
+				}//else enemies.RemoveAll(e=> !e.isActive);
 			}
 		}
 		return enemy;
@@ -55,18 +56,37 @@ public class FighterController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		targetEnemy = TargetNearest();
+
 		if(targetEnemy != null)
 		{
+			if(Vector3.Distance(Location,targetEnemy.Location)<1.5f)
+			{
+				Attack(targetEnemy);
+			}else{
 		 	MoveTo(targetEnemy.Location);
-		}else MoveRandomly();
+		 	}
+		}else {
+			targetEnemy = TargetNearest();
+			if(targetEnemy!=null)
+			{
+				MoveTo(targetEnemy.Location);
+			}else MoveRandomly();
+		}
+		
 
 	}
+
 	protected override void MoveRandomly()
 	{
 		Vector3 rVector = RandomVector(myMoM.FightAnchor, orbit);
 		MoveTo(rVector);
 	}
+
+	void Attack(Unit_Base target)
+	{
+		target.Health = -5f;
+	}
+
 	bool CanTargetEnemy()
 	{
 		return true;
@@ -101,5 +121,13 @@ public class FighterController : DroneController
 	}
 	public override void OnCollisionEnter(Collision bang)
 	{
+		if(bang.collider.tag == "Drone")
+		{
+			DroneController ot = bang.gameObject.GetComponent<DroneController>();
+			if(ot!=null && ot.TeamID!=TeamID)
+			{
+				Attack(ot);
+			}
+		}
 	}
 }

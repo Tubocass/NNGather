@@ -91,6 +91,11 @@ public class FarmerController : DroneController
 		return false;
 	}
 
+//	protected override void Death ()
+//	{
+//		base.Death();
+//	}
+
 	protected override void TargetLost(int id)
 	{
 		if(IsTargetingFood() && id == targetedFood.Id)

@@ -24,6 +24,7 @@ public class DroneController : Unit_Base
 
 	public void setMoM(MoMController mom, Color tc)
 	{
+		isActive = true;
 		myMoM = mom;
 		TeamID = myMoM.TeamID;
 		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;

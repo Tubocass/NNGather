@@ -7,12 +7,12 @@ public class InputControls : MonoBehaviour
 	GameObject farmFlag, fightFlag, mainMoM;
 	Transform  farmFlagTran, fightFlagTran, mainMoMTran;
 	[SerializeField] LayerMask mask;
-	MoMController mainMoMControl;
+	MainMomController mainMoMControl;
 	void Start () 
 	{
 		mainMoM = GameObject.Find("MainMoM");
 		mainMoMTran = mainMoM.transform;
-		mainMoMControl = mainMoM.GetComponent<MoMController>();
+		mainMoMControl = mainMoM.GetComponent<MainMomController>();
 		farmFlag = GameObject.Find("FarmFlag");
 		fightFlag = GameObject.Find("FightFlag");
 		farmFlagTran = farmFlag.GetComponent<Transform>();
@@ -31,15 +31,11 @@ public class InputControls : MonoBehaviour
 		}
 		if(Input.GetKeyDown(KeyCode.Z))
 		{
-			farmFlagTran.position = mainMoMTran.position;
-			farmFlag.SetActive(false);
-			UnityEventManager.TriggerEvent("PlaceFarmFlag");
+			mainMoMControl.RecallFarmFlag();
 		}
 		if(Input.GetKeyDown(KeyCode.C))
 		{
-			fightFlagTran.position = mainMoMTran.position;
-			fightFlag.SetActive(false);
-			UnityEventManager.TriggerEvent("PlaceFightFlag");
+			mainMoMControl.RecallFightFlag();
 		}
 		if (Input.GetMouseButtonDown (0)) 
 		{
@@ -48,11 +44,7 @@ public class InputControls : MonoBehaviour
 
 			if (Physics.Raycast (ray, out hit, 100f, mask)) 
 			{
-				farmFlag.SetActive(true);
-				farmFlagTran.position = hit.point;
-				farmFlag.GetComponent<ParticleSystem>().Play();
-				UnityEventManager.TriggerEvent("PlaceFarmFlag");
-
+				mainMoMControl.PlaceFarmFlag(hit.point);
 			}
 		}
 		if (Input.GetMouseButtonDown (1)) 
@@ -62,11 +54,7 @@ public class InputControls : MonoBehaviour
 
 			if (Physics.Raycast (ray, out hit, 100f, mask)) 
 			{
-
-//				fightFlag.SetActive(true);
-//				fightFlagTran.position = hit.point;
-//				fightFlag.GetComponent<ParticleSystem>().Play();
-//				UnityEventManager.TriggerEvent("PlaceFightFlag");
+				mainMoMControl.PlaceFightFlag(hit.point);
 			}
 		}
 	}

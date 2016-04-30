@@ -26,6 +26,8 @@ public class MoMController : Unit_Base
 	//public Vector3 Location{get{return transform.position;}}
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
+	protected static List<FarmerController> Farmers;
+	protected static List<FighterController> Fighters;
 	[SerializeField] protected GameObject farmer, soldier, farmFlag, fightFlag;
 	[SerializeField] Color TeamColor;
 	MeshRenderer currentMesh;
@@ -35,6 +37,8 @@ public class MoMController : Unit_Base
 	protected virtual void OnEnable()
 	{
 		base.OnEnable();
+		Farmers = new List<FarmerController>();
+		Fighters = new List<FighterController>();
 		TeamID = MoMCount+1;
 	}
 	protected virtual void OnDisable()
@@ -53,7 +57,7 @@ public class MoMController : Unit_Base
 		StartCoroutine(UpdateLocation());
 	}
 
-	protected virtual void PlaceFarmFlag(Vector3 location)
+	public virtual void PlaceFarmFlag(Vector3 location)
 	{
 		farmFlag.SetActive(true);
 		farmFlagTran.position = location;
@@ -61,7 +65,7 @@ public class MoMController : Unit_Base
 		UnityEventManager.TriggerEvent("PlaceFarmFlag", TeamID);
 		activeFarmFlag = true;
 	}
-	protected virtual void RecallFarmFlag()
+	public virtual void RecallFarmFlag()
 	{
 		farmFlagTran.position = transform.position;
 		farmFlag.GetComponent<ParticleSystem>().Stop();
@@ -69,7 +73,7 @@ public class MoMController : Unit_Base
 		UnityEventManager.TriggerEvent("PlaceFarmFlag", TeamID);
 		activeFarmFlag = false;
 	}
-	protected virtual void PlaceFightFlag(Vector3 location)
+	public virtual void PlaceFightFlag(Vector3 location)
 	{
 		fightFlag.SetActive(true);
 		fightFlagTran.position = location;
@@ -77,7 +81,7 @@ public class MoMController : Unit_Base
 		UnityEventManager.TriggerEvent("PlaceFightFlag", TeamID);
 		activeFightFlag = true;
 	}
-	protected virtual void RecallFightFlag()
+	public virtual void RecallFightFlag()
 	{
 		fightFlagTran.position = transform.position;
 		fightFlag.GetComponent<ParticleSystem>().Stop();
@@ -90,10 +94,31 @@ public class MoMController : Unit_Base
 		if(FoodAmount>0)
 		{
 			FoodAmount -= 1;
-			GameObject spawn = Instantiate(farmer,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
-			spawn.GetComponent<FarmerController>().setMoM(this, TeamColor);
+			if(Farmers.Count>0)
+			{
+				FarmerController recycle = Farmers.Find(f=> !f.isActive);
+				if(recycle!=null)
+				{
+					recycle.setMoM(this, TeamColor);
+				}else{
+					GameObject spawn = Instantiate(farmer,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
+					FarmerController fc = spawn.GetComponent<FarmerController>();
+					fc.setMoM(this, TeamColor);
+					Farmers.Add(fc);
+				}
+			}else {
+				GameObject spawn = Instantiate(farmer,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
+				FarmerController fc = spawn.GetComponent<FarmerController>();
+				fc.setMoM(this, TeamColor);
+				Farmers.Add(fc);
+			}
 		}
 	}
+	public void LoseFarmer(FarmerController unit)
+	{
+		
+	}
+
 	public virtual void CreateFighter()
 	{
 		if(FoodAmount>0)
@@ -103,6 +128,7 @@ public class MoMController : Unit_Base
 			spawn.GetComponent<FighterController>().setMoM(this, TeamColor);
 		}
 	}
+
 	public virtual void AddFoodLocation(Vector3 loc)
 	{
 		if(foodQ.Count>9)
@@ -124,6 +150,7 @@ public class MoMController : Unit_Base
 			yield return new WaitForSeconds(3);
 		}
 	}
+
 	void MoveToCenter()
 	{
 		Debug.Log("Updating");

@@ -6,11 +6,28 @@ public class Unit_Base : MonoBehaviour
 	public int TeamID;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value);}}
 	public Vector3 Location{get{return transform.position;}}
-	protected Transform tran;
+	public float Health{
+		get
+		{
+			return health;
+		}
+		set
+		{
+			health+=value; 
+			if(health<=0)
+			{
+				Death();
+			}
+		}
+	}
+
 	[SerializeField] protected float MaxHoverDistance = 100, MinHoverDistance = 2;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
+	[SerializeField] protected float health;
 	[SerializeField] int tries;
+	protected Transform tran;
+
 	protected NavMeshAgent agent;
 
 	protected virtual void OnEnable () 
@@ -18,6 +35,11 @@ public class Unit_Base : MonoBehaviour
 		tran = transform;
 		currentVector = tran.position;
 		agent = GetComponent<NavMeshAgent>();
+	}
+
+	protected virtual void Death()
+	{
+		isActive = false;
 	}
 
 	public Vector3 RandomVector(Vector3 origin, float range)
