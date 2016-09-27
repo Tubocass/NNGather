@@ -3,20 +3,32 @@ using System.Collections;
 
 public class InputControls : MonoBehaviour 
 {
-	public GameObject farmer, soldier;
-	GameObject farmFlag, fightFlag, mainMoM;
-	Transform  farmFlagTran, fightFlagTran, mainMoMTran;
+	//public GameObject farmer, soldier;
+	//GameObject farmFlag, fightFlag, mainMoM;
+	//Transform  mainMoMTran; //farmFlagTran, fightFlagTran,;
 	[SerializeField] LayerMask mask;
 	MainMomController mainMoMControl;
+	void OnEnable()
+	{
+		UnityEventManager.StartListening("MainMomChange",MoMChanged);
+	}
+	void OnDisable()
+	{
+		UnityEventManager.StopListening("MainMomChange",MoMChanged);
+	}
 	void Start () 
 	{
-		mainMoM = GameObject.Find("MainMoM");
-		mainMoMTran = mainMoM.transform;
-		mainMoMControl = mainMoM.GetComponent<MainMomController>();
-		farmFlag = GameObject.Find("FarmFlag");
-		fightFlag = GameObject.Find("FightFlag");
-		farmFlagTran = farmFlag.GetComponent<Transform>();
-		fightFlagTran = fightFlag.GetComponent<Transform>();
+		//mainMoM = GameObject.Find("MainMoM");
+		//mainMoMTran = mainMoM.transform;
+		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
+//		farmFlag = GameObject.Find("FarmFlag");
+//		fightFlag = GameObject.Find("FightFlag");
+//		farmFlagTran = farmFlag.GetComponent<Transform>();
+//		fightFlagTran = fightFlag.GetComponent<Transform>();
+	}
+	void MoMChanged()
+	{
+		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
 
 	void Update () 
@@ -28,6 +40,10 @@ public class InputControls : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.E))
 		{
 			mainMoMControl.CreateFighter();
+		}
+		if(Input.GetKeyDown(KeyCode.R))
+		{
+			mainMoMControl.CreateDaughter();
 		}
 		if(Input.GetKeyDown(KeyCode.Z))
 		{

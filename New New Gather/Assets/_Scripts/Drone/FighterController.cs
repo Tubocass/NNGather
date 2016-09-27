@@ -34,7 +34,6 @@ public class FighterController : DroneController
 			targetEnemy = null;
 			ArrivedAtTargetLocation();
 		}
-		
 	}
 
 	protected override void Death()

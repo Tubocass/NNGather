@@ -10,7 +10,6 @@ public class DroneController : Unit_Base
 	[SerializeField] protected Vector3 nose; //set in editor
 	//protected NavMove navMove;
 	protected bool bInDanger;
-	protected MoMController myMoM;
 	protected float sqrDist = 20f*20f;
 
 	protected override void OnEnable()
@@ -26,11 +25,8 @@ public class DroneController : Unit_Base
 
 	public void setMoM(MoMController mom, Color tc)
 	{
-		isActive = true;
-		myMoM = mom;
-		teamID = myMoM.teamID;
+		base.setMoM(mom);
 		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
-		tran.position = mom.Location + new Vector3(1,0,1);
 		StartCoroutine(Idle());
 	}
 
@@ -38,8 +34,6 @@ public class DroneController : Unit_Base
 	{
 
 	}
-
-
 
 	protected virtual void TargetLost(int id)
 	{

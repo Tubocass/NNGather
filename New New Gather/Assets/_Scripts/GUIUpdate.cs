@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class EventUpdate : MonoBehaviour 
+public class GUIUpdate : MonoBehaviour 
 {
 	[SerializeField] Text scoreText;
 

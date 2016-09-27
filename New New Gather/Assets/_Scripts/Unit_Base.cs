@@ -27,22 +27,33 @@ public class Unit_Base : MonoBehaviour
 	[SerializeField] protected bool bMoving;
 	[SerializeField] protected float health, startHealth;
 	[SerializeField] int tries;
+	protected MoMController myMoM;
 	protected Transform tran;
-
 	protected NavMeshAgent agent;
+	float maxDistanceSqrd, minDistanceSqrd;
+
 
 	public virtual void OnCreated()
 	{
 		TotalCreated+=1;
 		unitID = TotalCreated;
-
 	}
 	protected virtual void OnEnable () 
 	{
+		maxDistanceSqrd = MaxHoverDistance*MaxHoverDistance;
+		minDistanceSqrd = MinHoverDistance*MinHoverDistance;
 		tran = transform;
 		agent = GetComponent<NavMeshAgent>();
 		currentVector = tran.position;
 		health = startHealth;
+	}
+
+	public virtual void setMoM(MoMController mom)
+	{
+		isActive = true;
+		myMoM = mom;
+		teamID = myMoM.teamID;
+		tran.position = mom.Location + new Vector3(1,0,1);
 	}
 
 	protected virtual void Death()
@@ -58,14 +69,14 @@ public class Unit_Base : MonoBehaviour
 		Vector3 rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
 		NavMeshPath path = new NavMeshPath();
 		agent.CalculatePath(rando,path);
-		float dist = Vector3.Distance(rando,tran.position);
+		float dist = (rando-tran.position).sqrMagnitude;
 		tries = 10;
-		while(tries>0 && (dist>MaxHoverDistance || dist<MinHoverDistance) || (path.status == NavMeshPathStatus.PathPartial))
+		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd) || (path.status == NavMeshPathStatus.PathPartial))
 		{
 			tries--;
 			rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
 			agent.CalculatePath(rando,path);
-			dist = Vector3.Distance(rando,tran.position);
+			dist = (rando-tran.position).sqrMagnitude;
 		}
 		return rando;
 	}
