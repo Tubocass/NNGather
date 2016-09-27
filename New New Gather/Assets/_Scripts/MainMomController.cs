@@ -8,7 +8,7 @@ public class MainMomController : MoMController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		TeamID = 0;
+		teamID = 0;
 		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount);
 	}
 

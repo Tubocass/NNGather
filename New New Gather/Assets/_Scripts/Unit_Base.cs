@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Unit_Base : MonoBehaviour 
 {
-	public int TeamID;
+	public static int TotalCreated;
+	public int teamID, unitID;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value);}}
-	public Vector3 Location{get{return transform.position;}}
+	public Vector3 Location{get{return tran.position;}}
 	public float Health{
 		get
 		{
@@ -24,22 +25,32 @@ public class Unit_Base : MonoBehaviour
 	[SerializeField] protected float MaxHoverDistance = 100, MinHoverDistance = 2;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
-	[SerializeField] protected float health;
+	[SerializeField] protected float health, startHealth;
 	[SerializeField] int tries;
 	protected Transform tran;
 
 	protected NavMeshAgent agent;
 
+	public virtual void OnCreated()
+	{
+		TotalCreated+=1;
+		unitID = TotalCreated;
+
+	}
 	protected virtual void OnEnable () 
 	{
 		tran = transform;
-		currentVector = tran.position;
 		agent = GetComponent<NavMeshAgent>();
+		currentVector = tran.position;
+		health = startHealth;
 	}
 
 	protected virtual void Death()
 	{
+		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
+		StopCoroutine(MovingTo());
 		isActive = false;
+		bMoving = false;
 	}
 
 	public Vector3 RandomVector(Vector3 origin, float range)
@@ -67,10 +78,9 @@ public class Unit_Base : MonoBehaviour
 		agent.SetDestination(location);
 		StopCoroutine("MovingTo");
 		StartCoroutine("MovingTo");
-
 	}
 
-	IEnumerator MovingTo()
+	protected virtual IEnumerator MovingTo()
 	{
 		while(bMoving)
 		{

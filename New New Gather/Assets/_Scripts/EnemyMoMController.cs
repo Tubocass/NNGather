@@ -26,6 +26,8 @@ public class EnemyMoMController : MoMController
 		{
 			yield return new WaitForSeconds(1);
 			CreateFarmer();
+			if(fighters<farmers/2 && FoodAmount>2)
+			CreateFighter();
 			yield return new WaitForSeconds(4);
 		}
 	}

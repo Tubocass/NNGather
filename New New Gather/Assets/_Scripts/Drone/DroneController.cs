@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DroneController : Unit_Base 
 {
@@ -10,8 +11,9 @@ public class DroneController : Unit_Base
 	//protected NavMove navMove;
 	protected bool bInDanger;
 	protected MoMController myMoM;
+	protected float sqrDist = 20f*20f;
 
-	protected virtual void OnEnable()
+	protected override void OnEnable()
 	{
 		base.OnEnable();
 		UnityEventManager.StartListening("TargetUnavailable", TargetLost);
@@ -26,8 +28,9 @@ public class DroneController : Unit_Base
 	{
 		isActive = true;
 		myMoM = mom;
-		TeamID = myMoM.TeamID;
+		teamID = myMoM.teamID;
 		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
+		tran.position = mom.Location + new Vector3(1,0,1);
 		StartCoroutine(Idle());
 	}
 
@@ -36,10 +39,7 @@ public class DroneController : Unit_Base
 
 	}
 
-	protected void ReturnToHome()
-	{
-		MoveTo(myMoM.Location);
-	}
+
 
 	protected virtual void TargetLost(int id)
 	{
@@ -72,10 +72,10 @@ public class DroneController : Unit_Base
 
 	}
 
-	public virtual void OnTriggerStay(Collider other)
-	{
-		
-	}
+//	public virtual void OnTriggerStay(Collider other)
+//	{
+//		
+//	}
 
 	public virtual void OnCollisionEnter(Collision bang)
 	{

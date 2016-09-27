@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FarmerController : DroneController 
 {
@@ -21,10 +22,14 @@ public class FarmerController : DroneController
 	*/
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
+	static List<FoodObject> Foods;
+	List<FoodObject> foods;
+	bool bReturning;
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		Foods = new List<FoodObject>();
 		UnityEventManager.StartListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
@@ -43,12 +48,22 @@ public class FarmerController : DroneController
 
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(TeamID == team && CanTargetFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
+		if(teamID == team && CanTargetFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
 		{
 			MoveTo(myMoM.FoodAnchor);
 		}
 	}
 
+	protected override void Death()
+	{
+		base.Death();
+		myMoM.farmers-=1;
+		if(IsCarryingFood())
+		{
+			carriedFood.Detach();
+			carriedFood = null;
+		}
+	}
 //	void ReturnToHome()
 //	{
 //		navMove.MoveTo(myMoM.Location);
@@ -91,6 +106,22 @@ public class FarmerController : DroneController
 		return false;
 	}
 
+	protected override IEnumerator MovingTo()
+	{
+		while(bMoving)
+		{
+			if(agent.remainingDistance<1)
+			{
+				bMoving = false;
+				//Debug.Log("I arrived");
+				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+			}else
+			{
+				yield return new WaitForSeconds(0.5f);
+				if(bReturning) MoveTo(myMoM.Location);
+			}
+		}
+	}
 //	protected override void Death ()
 //	{
 //		base.Death();
@@ -105,10 +136,39 @@ public class FarmerController : DroneController
 		}
 	}
 
+	FoodObject TargetNearest()
+	{
+		float nearestFoodDist, newDist;
+		FoodObject food = null;
+
+		foods = Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
+
+		if(foods.Count>0)
+		{
+			nearestFoodDist = (foods[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			foreach(FoodObject f in foods)
+			{
+				newDist = (f.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+				if(newDist <= nearestFoodDist)
+				{
+					nearestFoodDist = newDist;
+					food = f;
+				}
+			}
+		}
+		return food;
+	}
+
 	protected override void MoveRandomly()
 	{
 		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
 		MoveTo(rVector);
+	}
+
+	protected void ReturnToHome()
+	{
+		bReturning = true;
+		MoveTo(myMoM.Location);
 	}
 
 //	IEnumerator Idle()
@@ -125,17 +185,22 @@ public class FarmerController : DroneController
 
 	protected override void ArrivedAtTargetLocation()
 	{
-		if(IsCarryingFood() && Vector3.Distance(myMoM.Location,transform.position)>1)
+		if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
 		{
 			ReturnToHome();
 		}
-		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location,transform.position)>1)
+		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
 		{
 			MoveTo(targetedFood.Location);
 		}
 		if(CanTargetFood())
 		{
-			MoveRandomly();
+			targetedFood = TargetNearest();
+			if(targetedFood!=null)
+			{
+				MoveTo(targetedFood.Location);
+			}
+			else MoveRandomly();
 		}
 //		if(isFoodInSight())
 //		{
@@ -146,29 +211,32 @@ public class FarmerController : DroneController
 
 	public override void OnTriggerEnter(Collider other)
 	{
-		if(other.tag == "Food" && CanTargetFood())
+		if(other.tag == "Food")
 		{
 			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-			if(ot!=null && ot.CanBeTargetted)
+			if(ot!=null && !Foods.Contains(ot))
 			{
-				targetedFood = ot;
-				MoveTo(targetedFood.Location);
+				Foods.Add(ot);
 			}
 		}
 	}
 
-	public override void OnTriggerStay(Collider other)
-	{
-		if(other.tag == "Food" && CanTargetFood())
-		{
-			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-			if(ot!=null && ot.CanBeTargetted)
-			{
-				targetedFood = ot;
-				MoveTo(targetedFood.Location);
-			}
-		}
-	}
+//	public override void OnTriggerStay(Collider other)
+//	{
+//		
+////		if(other.tag == "Food")
+////		{
+////			if(targetedFood==null)
+////			{
+////				FoodObject ot = other.gameObject.GetComponent<FoodObject>();
+////				if(ot!=null && ot.CanBeTargetted)
+////				{
+////					targetedFood = ot;
+////					MoveTo(targetedFood.Location);
+////				}
+////			}
+////		}
+//	}
 
 	public override void OnCollisionEnter(Collision bang)
 	{
@@ -192,11 +260,16 @@ public class FarmerController : DroneController
 				}
 			}
 		}
-		if(bang.collider.tag == "MoM" && IsCarryingFood())
+		if(IsCarryingFood() && bang.collider.tag == "MoM")
 		{
-			bang.gameObject.GetComponent<MoMController>().AddFoodLocation(foodLoc);
-			carriedFood.Destroy();
-			carriedFood = null;
+			MoMController bangMoM = bang.gameObject.GetComponent<MoMController>();
+			if(bangMoM.unitID == myMoM.unitID)
+			{
+				bangMoM.AddFoodLocation(foodLoc);
+				carriedFood.Destroy();
+				carriedFood = null;
+				bReturning = false;
+			}
 
 		}
 	}

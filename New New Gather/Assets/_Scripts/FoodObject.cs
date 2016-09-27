@@ -5,14 +5,14 @@ public class FoodObject : MonoBehaviour
 {
 	public static int TotalCreated;
 	public int Id{get{return id;}}
-	public bool CanBeTargetted{get{return !bAttached;}}
+	public bool CanBeTargetted{get{return gameObject.activeSelf && !bAttached;}}
 	public Vector3 Location{get{return transform.position;}}
-	[SerializeField]private int id;
+	[SerializeField]private int id, idOffset = 1000;
 	[SerializeField]private bool bAttached;
 
 	void OnEnable()
 	{
-		id = TotalCreated;
+		id = TotalCreated+idOffset;
 		TotalCreated++;
 	}
 	public void Destroy()
