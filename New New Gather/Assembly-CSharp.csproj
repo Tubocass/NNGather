@@ -51,12 +51,10 @@
      <Compile Include="Assets\ProCore\ProBuilder\API Examples\Misc\HueCube.cs" />
      <Compile Include="Assets\_Scripts\CameraFollow.cs" />
      <Compile Include="Assets\_Scripts\ColorPicker.cs" />
-     <Compile Include="Assets\_Scripts\Drone\BWander.cs" />
      <Compile Include="Assets\_Scripts\Drone\Detection.cs" />
      <Compile Include="Assets\_Scripts\Drone\DroneController.cs" />
      <Compile Include="Assets\_Scripts\Drone\FarmerController.cs" />
      <Compile Include="Assets\_Scripts\Drone\FighterController.cs" />
-     <Compile Include="Assets\_Scripts\Drone\IBehaviour.cs" />
      <Compile Include="Assets\_Scripts\Drone\NavMove.cs" />
      <Compile Include="Assets\_Scripts\FoodObject.cs" />
      <Compile Include="Assets\_Scripts\FoodSpawner.cs" />

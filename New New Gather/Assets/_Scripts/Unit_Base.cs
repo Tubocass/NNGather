@@ -59,7 +59,7 @@ public class Unit_Base : MonoBehaviour
 	protected virtual void Death()
 	{
 		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
-		StopCoroutine(MovingTo());
+		StopAllCoroutines();
 		isActive = false;
 		bMoving = false;
 	}

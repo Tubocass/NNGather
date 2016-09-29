@@ -10,20 +10,12 @@ public class MainMomController : MoMController
 		base.OnEnable();
 		teamID = 0;
 		UnityEventManager.TriggerEvent("UpdateFood", FoodAmount);
-		farmFlagFab = Instantiate(farmFlagFab) as GameObject; //GameObject.Find("FarmFlag");
-		fightFlagFab = Instantiate(fightFlagFab) as GameObject;//GameObject.Find("FightFlag");
+		farmFlagFab = Instantiate(farmFlagFab) as GameObject; 
+		fightFlagFab = Instantiate(fightFlagFab) as GameObject;
 		farmFlagTran = farmFlagFab.GetComponent<Transform>();
 		fightFlagTran = fightFlagFab.GetComponent<Transform>();
 	}
 
-//	protected override void PlaceFarmFlag(Vector3 location)
-//	{
-//		activeFarmFlag = true;
-//	}
-//	protected override void RecallFarmFlag(Vector3 location)
-//	{
-//		activeFarmFlag = false;
-//	}
 	public override void CreateFarmer()
 	{
 		base.CreateFarmer();
@@ -71,58 +63,4 @@ public class MainMomController : MoMController
 		UnityEventManager.TriggerEvent("PlaceFightFlag", teamID);
 		activeFightFlag = false;
 	}
-//	void Update()
-//	{
-//		if(Input.GetKeyDown(KeyCode.Q))
-//		{
-//			this.CreateFarmer();
-//		}
-//		if(Input.GetKeyDown(KeyCode.E))
-//		{
-//			//mainMoMControl.CreateFighter();
-//		}
-//		if(Input.GetKeyDown(KeyCode.Z))
-//		{
-//			RecallFarmFlag();
-////			farmFlagTran.position = transform.position;
-////			farmFlag.SetActive(false);
-////			UnityEventManager.TriggerEvent("PlaceFarmFlag");
-//		}
-//		if(Input.GetKeyDown(KeyCode.C))
-//		{
-//			RecallFightFlag();
-////			fightFlagTran.position = transform.position;
-////			fightFlag.SetActive(false);
-////			UnityEventManager.TriggerEvent("PlaceFightFlag");
-//		}
-//		if (Input.GetMouseButtonDown (0)) 
-//		{
-//			RaycastHit hit;
-//			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//
-//			if (Physics.Raycast (ray, out hit, 100f, mask)) 
-//			{
-//				PlaceFarmFlag(hit.point);
-////				farmFlag.SetActive(true);
-////				farmFlagTran.position = hit.point;
-////				farmFlag.GetComponent<ParticleSystem>().Play();
-////				UnityEventManager.TriggerEvent("PlaceFarmFlag");
-//
-//			}
-//		}
-//		if (Input.GetMouseButtonDown (1)) 
-//		{
-//			RaycastHit hit;
-//			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//
-//			if (Physics.Raycast (ray, out hit, 100f, mask)) 
-//			{
-//				PlaceFightFlag(hit.point);
-////				fightFlag.SetActive(true);
-////				fightFlagTran.position = hit.point;
-////				fightFlag.GetComponent<ParticleSystem>().Play();
-////				UnityEventManager.TriggerEvent("PlaceFightFlag");
-//			}
-//		}
-//	}
 }

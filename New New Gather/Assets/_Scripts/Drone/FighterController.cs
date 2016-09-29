@@ -8,9 +8,11 @@ public class FighterController : DroneController
 	static List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
 	bool canAttack=true;
-	//float enemyDist;
+	ParticleSystem spark;
+
 	protected override void OnEnable()
 	{
+		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
 		base.OnEnable();
 		UnityEventManager.StartListening("PlaceFightFlag", UpdateFlagLocation);
@@ -42,47 +44,6 @@ public class FighterController : DroneController
 		myMoM.fighters-=1;
 	}
 
-	Unit_Base TargetNearest()
-	{
-		float nearestEnemyDist, newDist;
-		Unit_Base enemy = null;
-
-		enemiesCopy = enemies.FindAll(e=> e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
-
-		if(enemiesCopy.Count>0)
-		{
-			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-			foreach(Unit_Base unit in enemiesCopy)
-			{
-				if(unit.isActive)
-				{
-					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
-					if(newDist <= nearestEnemyDist)
-					{
-						nearestEnemyDist = newDist;
-						enemy = unit;
-					}
-				}else enemies.Remove(unit);
-			}
-		}
-		return enemy;
-	}
-	protected override IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				bMoving = false;
-				//Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
-			}else
-			{
-				yield return new WaitForSeconds(0.5f);
-				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
-			}
-		}
-	}
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
@@ -110,17 +71,63 @@ public class FighterController : DroneController
 		MoveTo(rVector);
 	}
 
+	protected override IEnumerator MovingTo()
+	{
+		while(bMoving)
+		{
+			if(agent.remainingDistance<1)
+			{
+				bMoving = false;
+				//Debug.Log("I arrived");
+				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+			}else
+			{
+				yield return new WaitForSeconds(0.5f);
+				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
+			}
+		}
+	}
+
+	Unit_Base TargetNearest()
+	{
+		float nearestEnemyDist, newDist;
+		Unit_Base enemy = null;
+
+		enemiesCopy = enemies.FindAll(e=> e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+
+		if(enemiesCopy.Count>0)
+		{
+			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			foreach(Unit_Base unit in enemiesCopy)
+			{
+				if(unit.isActive)
+				{
+					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+					if(newDist <= nearestEnemyDist)
+					{
+						nearestEnemyDist = newDist;
+						enemy = unit;
+					}
+				}else enemies.Remove(unit);
+			}
+		}
+		return enemy;
+	}
+
 	void Attack(Unit_Base target)
 	{
+		spark.Play();
 		target.Health = -5f;
 		canAttack = false;
 		StartCoroutine(AttackCooldown());
 	}
+
 	IEnumerator AttackCooldown()
 	{
 		yield return new WaitForSeconds(1f);
 		canAttack = true;
 	}
+
 	bool IsTargetingEnemy()
 	{
 		if(targetEnemy!=null && targetEnemy.isActive)
@@ -134,6 +141,7 @@ public class FighterController : DroneController
 		return true;
 		else return false;
 	}
+
 	public override void OnTriggerEnter(Collider other)
 	{
 //		if(CanTargetEnemy() && other.tag == "Drone")

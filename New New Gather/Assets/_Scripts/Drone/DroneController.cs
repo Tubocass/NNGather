@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 public class DroneController : Unit_Base 
 {
-	//public int TeamID;
-	//public Vector3 Location{get{return transform.position;}}
 	[SerializeField] protected float orbit = 25;
 	[SerializeField] protected Vector3 nose; //set in editor
-	//protected NavMove navMove;
 	protected bool bInDanger;
 	protected float sqrDist = 20f*20f;
 

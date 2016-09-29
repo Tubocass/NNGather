@@ -38,14 +38,6 @@ public class FarmerController : DroneController
 		UnityEventManager.StopListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 
-//	public void setMoM(MoMController mom, Color tc)
-//	{
-//		myMoM = mom;
-//		TeamID = myMoM.TeamID;
-//		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
-//		StartCoroutine(Idle());
-//	}
-
 	protected override void UpdateFlagLocation(int team)
 	{
 		if(teamID == team && CanTargetFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
@@ -64,10 +56,59 @@ public class FarmerController : DroneController
 			carriedFood = null;
 		}
 	}
-//	void ReturnToHome()
-//	{
-//		navMove.MoveTo(myMoM.Location);
-//	}
+
+	protected override void MoveRandomly()
+	{
+		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
+		MoveTo(rVector);
+	}
+
+	protected override IEnumerator MovingTo()
+	{
+		while(bMoving)
+		{
+			if(agent.remainingDistance<1)
+			{
+				bMoving = false;
+				//Debug.Log("I arrived");
+				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+			}else
+			{
+				yield return new WaitForSeconds(0.5f);
+				if(bReturning) MoveTo(myMoM.Location);
+			}
+		}
+	}
+
+	protected override void TargetLost(int id)
+	{
+		if(IsTargetingFood() && id == targetedFood.Id)
+		{
+			targetedFood = null;
+			MoveRandomly();
+		}
+	}
+
+	protected override void ArrivedAtTargetLocation()
+	{
+		if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
+		{
+			ReturnToHome();
+		}
+		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
+		{
+			MoveTo(targetedFood.Location);
+		}
+		if(CanTargetFood())
+		{
+			targetedFood = TargetNearest();
+			if(targetedFood!=null)
+			{
+				MoveTo(targetedFood.Location);
+			}
+			else MoveRandomly();
+		}
+	}
 
 	bool IsCarryingFood()
 	{	
@@ -106,36 +147,6 @@ public class FarmerController : DroneController
 		return false;
 	}
 
-	protected override IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				bMoving = false;
-				//Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
-			}else
-			{
-				yield return new WaitForSeconds(0.5f);
-				if(bReturning) MoveTo(myMoM.Location);
-			}
-		}
-	}
-//	protected override void Death ()
-//	{
-//		base.Death();
-//	}
-
-	protected override void TargetLost(int id)
-	{
-		if(IsTargetingFood() && id == targetedFood.Id)
-		{
-			targetedFood = null;
-			MoveRandomly();
-		}
-	}
-
 	FoodObject TargetNearest()
 	{
 		float nearestFoodDist, newDist;
@@ -159,54 +170,10 @@ public class FarmerController : DroneController
 		return food;
 	}
 
-	protected override void MoveRandomly()
-	{
-		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
-		MoveTo(rVector);
-	}
-
 	protected void ReturnToHome()
 	{
 		bReturning = true;
 		MoveTo(myMoM.Location);
-	}
-
-//	IEnumerator Idle()
-//	{
-//		while(true)
-//		{
-//			if(!navMove.BMoving)
-//			{
-//				ArrivedAtTargetLocation();
-//			}
-//			yield return new WaitForSeconds(1);
-//		}
-//	}
-
-	protected override void ArrivedAtTargetLocation()
-	{
-		if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
-		{
-			ReturnToHome();
-		}
-		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
-		{
-			MoveTo(targetedFood.Location);
-		}
-		if(CanTargetFood())
-		{
-			targetedFood = TargetNearest();
-			if(targetedFood!=null)
-			{
-				MoveTo(targetedFood.Location);
-			}
-			else MoveRandomly();
-		}
-//		if(isFoodInSight())
-//		{
-//			//move to food
-//		}
-
 	}
 
 	public override void OnTriggerEnter(Collider other)
@@ -256,10 +223,10 @@ public class FarmerController : DroneController
 					ot.Attach(transform,nose);
 					foodLoc = ot.Location;
 					ReturnToHome();
-					//UnityEventManager.TriggerEventInt("TargetUnavailable",ot.Id);
 				}
 			}
 		}
+
 		if(IsCarryingFood() && bang.collider.tag == "MoM")
 		{
 			MoMController bangMoM = bang.gameObject.GetComponent<MoMController>();

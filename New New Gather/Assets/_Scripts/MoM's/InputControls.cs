@@ -18,19 +18,13 @@ public class InputControls : MonoBehaviour
 	}
 	void Start () 
 	{
-		//mainMoM = GameObject.Find("MainMoM");
-		//mainMoMTran = mainMoM.transform;
+		
 		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
-//		farmFlag = GameObject.Find("FarmFlag");
-//		fightFlag = GameObject.Find("FightFlag");
-//		farmFlagTran = farmFlag.GetComponent<Transform>();
-//		fightFlagTran = fightFlag.GetComponent<Transform>();
 	}
 	void MoMChanged()
 	{
 		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
-
 	void Update () 
 	{
 		if(Input.GetKeyDown(KeyCode.Q))
