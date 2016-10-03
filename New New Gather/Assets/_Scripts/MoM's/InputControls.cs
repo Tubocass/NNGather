@@ -7,7 +7,12 @@ public class InputControls : MonoBehaviour
 	//GameObject farmFlag, fightFlag, mainMoM;
 	//Transform  mainMoMTran; //farmFlagTran, fightFlagTran,;
 	[SerializeField] LayerMask mask;
+	[SerializeField] float speed = 10;
 	MainMomController mainMoMControl;
+	Vector3 movement;
+	CameraFollow cam;
+
+
 	void OnEnable()
 	{
 		UnityEventManager.StartListening("MainMomChange",MoMChanged);
@@ -18,7 +23,7 @@ public class InputControls : MonoBehaviour
 	}
 	void Start () 
 	{
-		
+		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
 	void MoMChanged()
@@ -27,6 +32,18 @@ public class InputControls : MonoBehaviour
 	}
 	void Update () 
 	{
+		float lastInputX = Input.GetAxis ("Horizontal");
+		float lastInputY = Input.GetAxis ("Vertical");
+		if(lastInputX > 0f || lastInputY > 0f || lastInputX < 0f || lastInputY < 0f)
+		{
+			movement = new Vector3 	(speed * lastInputX,0 ,  speed * lastInputY);
+			cam.MoveTo(movement);
+		}
+
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			cam.SetFollow();
+		}
 		if(Input.GetKeyDown(KeyCode.Q))
 		{
 			mainMoMControl.CreateFarmer();
