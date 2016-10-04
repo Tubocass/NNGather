@@ -25,5 +25,6 @@ public class DaughterController : MoMController
 	{
 		base.setMoM(mom);
 		TeamColor = tc;
+		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
 }

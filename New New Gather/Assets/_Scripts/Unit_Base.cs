@@ -15,6 +15,10 @@ public class Unit_Base : MonoBehaviour
 		set
 		{
 			health+=value; 
+			if(this.GetType()==typeof(MainMomController))
+			{
+				UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
+			}
 			if(health<=0)
 			{
 				Death();
@@ -22,7 +26,7 @@ public class Unit_Base : MonoBehaviour
 		}
 	}
 
-	[SerializeField] protected float MaxHoverDistance = 100, MinHoverDistance = 2;
+	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
 	[SerializeField] protected float health, startHealth;
@@ -32,12 +36,6 @@ public class Unit_Base : MonoBehaviour
 	protected NavMeshAgent agent;
 	float maxDistanceSqrd, minDistanceSqrd;
 
-
-	public virtual void OnCreated()
-	{
-		TotalCreated+=1;
-		unitID = TotalCreated;
-	}
 	protected virtual void OnEnable () 
 	{
 		maxDistanceSqrd = MaxHoverDistance*MaxHoverDistance;
@@ -46,6 +44,8 @@ public class Unit_Base : MonoBehaviour
 		agent = GetComponent<NavMeshAgent>();
 		currentVector = tran.position;
 		health = startHealth;
+		TotalCreated+=1;
+		unitID = TotalCreated;
 	}
 
 	public virtual void setMoM(MoMController mom)

@@ -24,9 +24,10 @@ public class FighterController : DroneController
 	}
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(teamID == team && CanTargetEnemy() && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+		if(teamID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
 		{
-			MoveTo(myMoM.FoodAnchor);
+			targetEnemy = null;
+			MoveTo(myMoM.FightAnchor);
 		}
 	}
 	protected override void TargetLost(int id)
@@ -119,6 +120,7 @@ public class FighterController : DroneController
 		spark.Play();
 		target.Health = -5f;
 		canAttack = false;
+		if(this.isActive)
 		StartCoroutine(AttackCooldown());
 	}
 

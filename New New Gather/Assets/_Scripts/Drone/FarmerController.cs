@@ -40,8 +40,9 @@ public class FarmerController : DroneController
 
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(teamID == team && CanTargetFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
+		if(teamID == team && !IsCarryingFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
 		{
+			targetedFood = null;
 			MoveTo(myMoM.FoodAnchor);
 		}
 	}
@@ -85,7 +86,7 @@ public class FarmerController : DroneController
 		if(IsTargetingFood() && id == targetedFood.Id)
 		{
 			targetedFood = null;
-			MoveRandomly();
+			ArrivedAtTargetLocation();
 		}
 	}
 

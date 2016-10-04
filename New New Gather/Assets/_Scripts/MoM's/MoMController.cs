@@ -6,7 +6,20 @@ using System.Collections.Generic;
 public class MoMController : Unit_Base 
 {
 	public static int MoMCount;
-	public int FoodAmount;
+	public int FoodAmount{
+		get
+		{
+			return foodAmount;
+		}
+		set
+		{
+			foodAmount+=value; 
+			if(this.GetType()==typeof(MainMomController))
+			{
+				UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+			}
+		}
+	}
 	public Vector3 FoodAnchor
 	{
 		get{
@@ -23,15 +36,15 @@ public class MoMController : Unit_Base
 			else return Location;
 			}
 	}
-
-	protected static List<FarmerController> Farmers = new List<FarmerController>();
-	protected static List<FighterController> Fighters = new List<FighterController>();
-	protected static List<DaughterController> Daughters = new List<DaughterController>();
+	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
+	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
+	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
-	[SerializeField] public int farmers, fighters, daughters;
+	[SerializeField] public int farmers, fighters, daughters;//counters
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, farmFlagFab, fightFlagFab;
 	[SerializeField] protected Color TeamColor;
+	[SerializeField] protected int foodAmount;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
 	protected override void OnEnable()
@@ -39,30 +52,37 @@ public class MoMController : Unit_Base
 		base.OnEnable();
 		Farmers = new List<FarmerController>();
 		Fighters = new List<FighterController>();
+		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+		MoMCount+=1;
 		teamID = MoMCount+1;
 	}
-	protected virtual void OnDisable()
-	{
-		StopCoroutine(UpdateLocation());
-	}
+//	protected virtual void OnDisable()
+//	{
+//		StopCoroutine(UpdateLocation());
+//	}
 
 	protected virtual void Start()
 	{	
-		OnCreated();
 		StartCoroutine(UpdateLocation());
-	}
-	public override void OnCreated()
-	{
-		base.OnCreated();
-		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-		MoMCount+=1;
+		StartCoroutine(Hunger());
 	}
 
+	protected virtual IEnumerator Hunger()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(5);
+			if(FoodAmount>1)
+			{
+				FoodAmount = -1;
+			}else Health = -1;
+		}
+	}
 	public virtual void CreateFarmer()
 	{
 		if(FoodAmount>0)
 		{
-			FoodAmount -= 1;
+			FoodAmount = -1;
 			farmers++;
 			if(Farmers.Count>0)
 			{
@@ -83,7 +103,7 @@ public class MoMController : Unit_Base
 	{
 		if(FoodAmount>0)
 		{
-			FoodAmount -= 1;
+			FoodAmount = -1;
 			fighters++;
 			if(Fighters.Count>0)
 			{
@@ -104,7 +124,7 @@ public class MoMController : Unit_Base
 	{
 		if(FoodAmount>0)
 		{
-			FoodAmount -= 5;
+			FoodAmount = -5;
 			daughters++;
 			if(Farmers.Count>0)
 			{
@@ -125,7 +145,6 @@ public class MoMController : Unit_Base
 	{
 		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,1),Quaternion.identity) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
-		fc.OnCreated();
 		fc.setMoM(this, TeamColor);
 		Farmers.Add(fc);
 	}
@@ -133,7 +152,6 @@ public class MoMController : Unit_Base
 	{
 		GameObject spawn = Instantiate(fighterFab,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
-		fc.OnCreated();
 		fc.setMoM(this, TeamColor);
 		Fighters.Add(fc);
 	}
@@ -142,7 +160,6 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(daughterFab, Location + new Vector3(1,1,1),Quaternion.identity) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		dc.setMoM(this, TeamColor);
-		dc.OnCreated();
 		Daughters.Add(dc);
 	}
 
@@ -155,7 +172,7 @@ public class MoMController : Unit_Base
 			Debug.Log("newness");
 		}else {foodQ.Enqueue(loc);Debug.Log("newness");}
 
-		FoodAmount++;
+		FoodAmount = 1;
 	}
 
 	IEnumerator UpdateLocation()
