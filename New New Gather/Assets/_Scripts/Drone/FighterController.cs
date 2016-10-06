@@ -94,7 +94,7 @@ public class FighterController : DroneController
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
 
-		enemiesCopy = enemies.FindAll(e=> e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+		enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 
 		if(enemiesCopy.Count>0)
 		{

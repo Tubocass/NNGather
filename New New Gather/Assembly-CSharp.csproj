@@ -59,6 +59,7 @@
      <Compile Include="Assets\_Scripts\FoodObject.cs" />
      <Compile Include="Assets\_Scripts\FoodSpawner.cs" />
      <Compile Include="Assets\_Scripts\GUIUpdate.cs" />
+     <Compile Include="Assets\_Scripts\GenerateLevel.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\DaughterController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\EnemyMoMController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\InputControls.cs" />

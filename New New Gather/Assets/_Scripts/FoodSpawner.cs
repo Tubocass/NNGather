@@ -7,6 +7,7 @@ public class FoodSpawner : MonoBehaviour
 	[SerializeField] GameObject foodObj;
 	[SerializeField] FoodObject[] foodPile;
 	[SerializeField] Vector3[] spawnPoints;
+	public Vector3 Location{get{return transform.position;}}
 
 	void Start () 
 	{
