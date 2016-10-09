@@ -27,4 +27,9 @@ public class DaughterController : MoMController
 		TeamColor = tc;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
+	protected override void Death()
+	{
+		base.Death();
+		myMoM.daughters-=1;
+	}
 }
