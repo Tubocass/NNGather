@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class FighterController : DroneController 
 {
 	Unit_Base targetEnemy;
-	static List<Unit_Base> enemies;
+	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
 	bool canAttack=true;
 	ParticleSystem spark;
@@ -24,7 +24,7 @@ public class FighterController : DroneController
 	}
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(teamID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+		if(myMoM.unitID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
 		{
 			targetEnemy = null;
 			MoveTo(myMoM.FightAnchor);

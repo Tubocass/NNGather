@@ -22,14 +22,13 @@ public class FarmerController : DroneController
 	*/
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
-	static List<FoodObject> Foods;
+
 	List<FoodObject> foods;
 	bool bReturning;
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		Foods = new List<FoodObject>();
 		UnityEventManager.StartListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
@@ -40,7 +39,7 @@ public class FarmerController : DroneController
 
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(teamID == team && !IsCarryingFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
+		if(myMoM.unitID == team && !IsCarryingFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
 		{
 			targetedFood = null;
 			MoveTo(myMoM.FoodAnchor);
@@ -153,7 +152,7 @@ public class FarmerController : DroneController
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
 
-		foods = Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
+		foods = myMoM.Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
 
 		if(foods.Count>0)
 		{
@@ -182,9 +181,9 @@ public class FarmerController : DroneController
 		if(other.tag == "Food")
 		{
 			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-			if(ot!=null && !Foods.Contains(ot))
+			if(ot!=null && !myMoM.Foods.Contains(ot))
 			{
-				Foods.Add(ot);
+				myMoM.Foods.Add(ot);
 			}
 		}
 	}

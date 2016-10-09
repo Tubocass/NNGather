@@ -8,7 +8,7 @@ public class GenerateLevel : MonoBehaviour
 	public Vector3 groundSize;
 	public int plants = 5, pits = 3, clusterDist = 5;
 	GameObject[] Pits;
-	List<FoodSpawner> PlantList = new List<FoodSpawner>();
+	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
 	GameObject spawn;
 	Vector3 spawnPoint;
 
@@ -58,6 +58,8 @@ public class GenerateLevel : MonoBehaviour
 		GameObject[] flowers = new GameObject[plants]; 
 		do{
 			spawnPoint = new Vector3(Random.Range(-clusterDist,clusterDist)+position.x, 0.5f, Random.Range(-clusterDist,clusterDist)+position.z);
+			Mathf.Clamp(spawnPoint.x, -groundSize.x+8, groundSize.x-8);
+			Mathf.Clamp(spawnPoint.z, -groundSize.z+8, groundSize.z-8);
 			Vector3 nearestLoc;
 
 			if(pl<1)
@@ -74,6 +76,8 @@ public class GenerateLevel : MonoBehaviour
 				}else{
 
 					spawnPoint = new Vector3(Random.Range(-clusterDist,clusterDist), 0.5f, Random.Range(-clusterDist,clusterDist));
+					Mathf.Clamp(spawnPoint.x, -groundSize.x+8, groundSize.x-8);
+					Mathf.Clamp(spawnPoint.z, -groundSize.z+8, groundSize.z-8);
 					nearestLoc = NearestTarget(flowers, spawnPoint);
 					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDist)
 					{

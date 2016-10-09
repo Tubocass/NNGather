@@ -68,7 +68,7 @@ public class MainMomController : MoMController
 		farmFlagFab.SetActive(true);
 		farmFlagTran.position = location;
 		farmFlagFab.GetComponent<ParticleSystem>().Play();
-		UnityEventManager.TriggerEvent("PlaceFarmFlag", teamID);
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
 		activeFarmFlag = true;
 	}
 	public virtual void RecallFarmFlag()
@@ -76,7 +76,7 @@ public class MainMomController : MoMController
 		farmFlagTran.position = transform.position;
 		farmFlagFab.GetComponent<ParticleSystem>().Stop();
 		farmFlagFab.SetActive(false);
-		UnityEventManager.TriggerEvent("PlaceFarmFlag", teamID);
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
 		activeFarmFlag = false;
 	}
 	public virtual void PlaceFightFlag(Vector3 location)
@@ -84,7 +84,7 @@ public class MainMomController : MoMController
 		fightFlagFab.SetActive(true);
 		fightFlagTran.position = location;
 		fightFlagFab.GetComponent<ParticleSystem>().Play();
-		UnityEventManager.TriggerEvent("PlaceFightFlag", teamID);
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = true;
 	}
 	public virtual void RecallFightFlag()
@@ -92,7 +92,7 @@ public class MainMomController : MoMController
 		fightFlagTran.position = transform.position;
 		fightFlagFab.GetComponent<ParticleSystem>().Stop();
 		fightFlagFab.SetActive(false);
-		UnityEventManager.TriggerEvent("PlaceFightFlag", teamID);
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = false;
 	}
 }

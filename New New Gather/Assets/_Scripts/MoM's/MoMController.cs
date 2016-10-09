@@ -36,6 +36,7 @@ public class MoMController : Unit_Base
 			else return Location;
 			}
 	}
+	public List<FoodObject> Foods;
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
@@ -50,6 +51,7 @@ public class MoMController : Unit_Base
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		Foods = new List<FoodObject>();
 		Farmers = new List<FarmerController>();
 		Fighters = new List<FighterController>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
