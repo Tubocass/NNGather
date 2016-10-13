@@ -9,11 +9,13 @@ public class FighterController : DroneController
 	List<Unit_Base> enemiesCopy;
 	bool canAttack=true;
 	ParticleSystem spark;
+	LayerMask mask;
 
 	protected override void OnEnable()
 	{
 		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
+		mask = 1<<LayerMask.NameToLayer("Units");
 		base.OnEnable();
 		UnityEventManager.StartListening("PlaceFightFlag", UpdateFlagLocation);
 	}
@@ -34,9 +36,17 @@ public class FighterController : DroneController
 	{
 		if(targetEnemy!=null && id == targetEnemy.unitID)
 		{
+			enemies.Remove(targetEnemy);
 			targetEnemy = null;
 			ArrivedAtTargetLocation();
 		}
+		// (enemies[enemies.FindIndex(e=> e.unitID == id)]);
+	}
+
+	public override void setMoM(MoMController mom, Color tc)
+	{
+		base.setMoM(mom, tc);
+		StartCoroutine(LookForEnemies());
 	}
 
 	protected override void Death()
@@ -93,7 +103,7 @@ public class FighterController : DroneController
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
-
+		enemies.RemoveAll(e=> !e.isActive);
 		enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 
 		if(enemiesCopy.Count>0)
@@ -143,19 +153,41 @@ public class FighterController : DroneController
 		return true;
 		else return false;
 	}
+	IEnumerator LookForEnemies()
+	{
+		while(true)
+		{
+			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+			if(hits.Length>0)
+			{
+				foreach(RaycastHit f in hits)
+				{
+					if(f.collider.tag == "Drone")
+					{
+						Unit_Base ot = f.collider.GetComponent<Unit_Base>();
+						if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+						{
+							enemies.Add(ot);
+						}
+					}
+				}
+			}
+			yield return new WaitForSeconds(2f);
+		}
+	}
 
 	public override void OnTriggerEnter(Collider other)
 	{
 //		if(CanTargetEnemy() && other.tag == "Drone")
 //		{
-			Unit_Base ot = other.gameObject.GetComponent<Unit_Base>();
-			if(ot!=null && ot.teamID!=teamID)
-			{
-				if(!enemies.Contains(ot))
-				{
-					enemies.Add(ot);
-				}
-			}
+//			Unit_Base ot = other.gameObject.GetComponent<Unit_Base>();
+//			if(ot!=null && ot.teamID!=teamID)
+//			{
+//				if(!enemies.Contains(ot))
+//				{
+//					enemies.Add(ot);
+//				}
+//			}
 //		}
 	}
 //	public override void OnTriggerStay(Collider other)

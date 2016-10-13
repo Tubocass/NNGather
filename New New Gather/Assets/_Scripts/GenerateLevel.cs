@@ -6,17 +6,21 @@ public class GenerateLevel : MonoBehaviour
 {
 	public GameObject Ground, Plant, Sarlac_Pit;
 	public Vector3 groundSize;
-	public int plants = 5, pits = 3, clusterDist = 5;
+	public int plants = 5, pits = 3, plantClusterDist = 5, spClusterDist = 20;
 	GameObject[] Pits;
 	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
 	GameObject spawn;
 	Vector3 spawnPoint;
+	float plantClustSqrd, spClusterSqrd;
+	float xx, zz;
 
 	void Start () 
 	{
-		clusterDist *= clusterDist; 
+		//plantClustSqrd = plantClusterDist*plantClusterDist; //causing problems with lvl generation
+		spClusterSqrd = spClusterDist*spClusterDist;
 		groundSize = Ground.GetComponent<MeshRenderer>().bounds.extents;
-		float xx = groundSize.x - groundSize.x/8, zz = groundSize.z- groundSize.z/8;
+		xx = groundSize.x - groundSize.x/8;
+		zz = groundSize.z- groundSize.z/8;
 		Pits = new GameObject[pits];
 		int sp = 0;
 		do{
@@ -31,7 +35,7 @@ public class GenerateLevel : MonoBehaviour
 			}else
 			{
 				Vector3 nearestLoc = NearestTarget(Pits, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
-				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDist)
+				if((nearestLoc-spawnPoint).sqrMagnitude>spClusterSqrd)
 				{
 					Pits[sp] = SpawnSarlacPit(spawnPoint);
 					sp++;
@@ -39,7 +43,7 @@ public class GenerateLevel : MonoBehaviour
 
 					spawnPoint = new Vector3(Random.Range(-xx,xx), 0.5f, Random.Range(-zz,zz));
 					nearestLoc = NearestTarget(Pits, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDist)
+					if((nearestLoc-spawnPoint).sqrMagnitude>spClusterSqrd)
 					{
 						Pits[sp] = SpawnSarlacPit(spawnPoint);
 						sp++;
@@ -55,11 +59,12 @@ public class GenerateLevel : MonoBehaviour
 		GameObject newPit =	Instantiate(Sarlac_Pit, position, Quaternion.identity)as GameObject;
 
 		int pl = 0;
+		//float minX = -groundSize.x, maxX = groundSize.x, minZ = groundSize.z, maxZ = groundSize.z;;
 		GameObject[] flowers = new GameObject[plants]; 
 		do{
-			spawnPoint = new Vector3(Random.Range(-clusterDist,clusterDist)+position.x, 0.5f, Random.Range(-clusterDist,clusterDist)+position.z);
-			Mathf.Clamp(spawnPoint.x, -groundSize.x+8, groundSize.x-8);
-			Mathf.Clamp(spawnPoint.z, -groundSize.z+8, groundSize.z-8);
+			spawnPoint = new Vector3(Random.Range(-plantClusterDist,plantClusterDist)+position.x, 0.5f, Random.Range(-plantClusterDist,plantClusterDist)+position.z);
+			Mathf.Clamp(spawnPoint.x, -xx, xx);
+			Mathf.Clamp(spawnPoint.z, -zz, zz);
 			Vector3 nearestLoc;
 
 			if(pl<1)
@@ -69,17 +74,17 @@ public class GenerateLevel : MonoBehaviour
 			}else
 			{
 				nearestLoc = NearestTarget(flowers, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
-				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDist)
+				if((nearestLoc-spawnPoint).sqrMagnitude>plantClusterDist)
 				{
 					flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
 					pl++;
 				}else{
 
-					spawnPoint = new Vector3(Random.Range(-clusterDist,clusterDist), 0.5f, Random.Range(-clusterDist,clusterDist));
-					Mathf.Clamp(spawnPoint.x, -groundSize.x+8, groundSize.x-8);
-					Mathf.Clamp(spawnPoint.z, -groundSize.z+8, groundSize.z-8);
+					spawnPoint = new Vector3(Random.Range(-plantClusterDist,plantClusterDist)+position.x, 0.5f, Random.Range(-plantClusterDist,plantClusterDist)+position.z);
+					Mathf.Clamp(spawnPoint.x, -xx, xx);
+					Mathf.Clamp(spawnPoint.z, -zz, zz);
 					nearestLoc = NearestTarget(flowers, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDist)
+					if((nearestLoc-spawnPoint).sqrMagnitude>plantClusterDist)
 					{
 						flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
 						pl++;

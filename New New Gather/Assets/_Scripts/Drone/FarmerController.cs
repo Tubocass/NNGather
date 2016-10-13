@@ -22,6 +22,7 @@ public class FarmerController : DroneController
 	*/
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
+	LayerMask mask;
 
 	List<FoodObject> foods;
 	bool bReturning;
@@ -29,6 +30,7 @@ public class FarmerController : DroneController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		mask = 1<<LayerMask.NameToLayer("Food");
 		UnityEventManager.StartListening("PlaceFarmFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
@@ -44,6 +46,11 @@ public class FarmerController : DroneController
 			targetedFood = null;
 			MoveTo(myMoM.FoodAnchor);
 		}
+	}
+	public override void setMoM(MoMController mom, Color tc)
+	{
+		base.setMoM(mom, tc);
+		StartCoroutine(LookForFood());
 	}
 
 	protected override void Death()
@@ -152,6 +159,21 @@ public class FarmerController : DroneController
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
 
+//		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+//		if(hits.Length>0)
+//		{
+//			nearestFoodDist = hits[0].distance; //Vector3.Distance(Location,enemies[0].Location);
+//			foreach(RaycastHit f in hits)
+//			{
+//				newDist = f.distance;//Vector3.Distance(Location,unit.Location);
+//				if(newDist <= nearestFoodDist)
+//				{
+//					nearestFoodDist = newDist;
+//					food = f.collider.GetComponent<FoodObject>();
+//				}
+//			}
+//		}
+
 		foods = myMoM.Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
 
 		if(foods.Count>0)
@@ -169,23 +191,44 @@ public class FarmerController : DroneController
 		}
 		return food;
 	}
-
+	IEnumerator LookForFood()
+	{
+		while(true)
+		{
+			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+			if(hits.Length>0)
+			{
+				foreach(RaycastHit f in hits)
+				{
+					if(f.collider.tag == "Food")
+					{
+						FoodObject ot = f.collider.GetComponent<FoodObject>();
+						if(ot!=null && !myMoM.Foods.Contains(ot))
+						{
+							myMoM.Foods.Add(ot);
+						}
+					}
+				}
+			}
+			yield return new WaitForSeconds(2f);
+		}
+	}
 	protected void ReturnToHome()
 	{
 		bReturning = true;
 		MoveTo(myMoM.Location);
 	}
 
-	public override void OnTriggerEnter(Collider other)
+	public override void OnTriggerEnter(Collider other)//replaced by LookForFood coroutine
 	{
-		if(other.tag == "Food")
-		{
-			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-			if(ot!=null && !myMoM.Foods.Contains(ot))
-			{
-				myMoM.Foods.Add(ot);
-			}
-		}
+//		if(other.tag == "Food")
+//		{
+//			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
+//			if(ot!=null && !myMoM.Foods.Contains(ot))
+//			{
+//				myMoM.Foods.Add(ot);
+//			}
+//		}
 	}
 
 //	public override void OnTriggerStay(Collider other)

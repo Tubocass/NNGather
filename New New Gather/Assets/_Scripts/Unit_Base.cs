@@ -98,8 +98,7 @@ public class Unit_Base : MonoBehaviour
 			if(agent.remainingDistance<1)
 			{
 				bMoving = false;
-				Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+				//Debug.Log("I arrived");
 			}
 			yield return new WaitForSeconds(0.5f);
 		}

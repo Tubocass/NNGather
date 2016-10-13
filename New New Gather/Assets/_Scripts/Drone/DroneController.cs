@@ -20,7 +20,7 @@ public class DroneController : Unit_Base
 		StopCoroutine(Idle());
 	}
 
-	public void setMoM(MoMController mom, Color tc)
+	public virtual void setMoM(MoMController mom, Color tc)
 	{
 		base.setMoM(mom);
 		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
