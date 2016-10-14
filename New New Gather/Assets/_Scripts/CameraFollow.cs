@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
 {
 	public Transform target;            // The position that that camera will be following.
 	public float smoothing = 5f;        // The speed with which the camera will be following.
-	public bool bFollowing = true;
+	public bool bFollowing = false;
 	Vector3 targetCamPos;
 	Transform tran;
 	
@@ -15,6 +15,12 @@ public class CameraFollow : MonoBehaviour
 	{
 		tran = GetComponent<Transform>();
 		// Calculate the initial offset.
+		//offset = transform.position - target.position;
+	}
+	public void SetTarget(Transform newTarget)
+	{
+		target = newTarget;
+		tran.position = new Vector3(newTarget.position.x, tran.position.y, newTarget.position.z);
 		offset = transform.position - target.position;
 	}
 	public void MoveTo(Vector3 position)

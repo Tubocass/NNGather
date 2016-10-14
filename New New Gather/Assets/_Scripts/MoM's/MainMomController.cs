@@ -35,6 +35,7 @@ public class MainMomController : MoMController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		UnityEventManager.TriggerEvent("MainMomChange",this.gameObject);
 		teamID = 0;
 		farmFlagFab = Instantiate(farmFlagFab) as GameObject; 
 		fightFlagFab = Instantiate(fightFlagFab) as GameObject;

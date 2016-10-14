@@ -44,7 +44,7 @@ public class MoMController : Unit_Base
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] public int farmers, fighters, daughters;//counters
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, farmFlagFab, fightFlagFab;
-	[SerializeField] protected Color TeamColor;
+	[SerializeField] public Color TeamColor;
 	[SerializeField] protected int foodAmount;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 

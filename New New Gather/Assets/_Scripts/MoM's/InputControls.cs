@@ -24,11 +24,12 @@ public class InputControls : MonoBehaviour
 	void Start () 
 	{
 		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
+		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
-	void MoMChanged()
+	void MoMChanged(GameObject Main)
 	{
-		mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
+		mainMoMControl = Main.GetComponent<MainMomController>();
+		cam.SetTarget(mainMoMControl.transform);
 	}
 	void Update () 
 	{
