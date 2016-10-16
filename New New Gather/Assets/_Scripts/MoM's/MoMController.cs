@@ -42,7 +42,7 @@ public class MoMController : Unit_Base
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
-	[SerializeField] public int farmers, fighters, daughters;//counters
+	[SerializeField] public int farmers, fighters, daughters, farmerCost=1, fighterCost=2, daughterCost=8;//counters
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, farmFlagFab, fightFlagFab;
 	[SerializeField] public Color TeamColor;
 	[SerializeField] protected int foodAmount;
@@ -52,8 +52,8 @@ public class MoMController : Unit_Base
 	{
 		base.OnEnable();
 		Foods = new List<FoodObject>();
-		Farmers = new List<FarmerController>();
-		Fighters = new List<FighterController>();
+		//Farmers = new List<FarmerController>();
+		//Fighters = new List<FighterController>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 		MoMCount+=1;
 		teamID = MoMCount+1;
@@ -74,7 +74,7 @@ public class MoMController : Unit_Base
 		while (true)
 		{
 			yield return new WaitForSeconds(5);
-			if(FoodAmount>1)
+			if(FoodAmount>=1)
 			{
 				FoodAmount = -1;
 			}else Health = -1;
@@ -82,9 +82,9 @@ public class MoMController : Unit_Base
 	}
 	public virtual void CreateFarmer()
 	{
-		if(FoodAmount>0)
+		if(FoodAmount>=farmerCost)
 		{
-			FoodAmount = -1;
+			FoodAmount = -farmerCost;
 			farmers++;
 			if(Farmers.Count>0)
 			{
@@ -103,9 +103,9 @@ public class MoMController : Unit_Base
 
 	public virtual void CreateFighter()
 	{
-		if(FoodAmount>0)
+		if(FoodAmount>=fighterCost)
 		{
-			FoodAmount = -1;
+			FoodAmount = -fighterCost;
 			fighters++;
 			if(Fighters.Count>0)
 			{
@@ -124,9 +124,9 @@ public class MoMController : Unit_Base
 
 	public virtual void CreateDaughter()
 	{
-		if(FoodAmount>0)
+		if(FoodAmount>=daughterCost)
 		{
-			FoodAmount = -5;
+			FoodAmount = -daughterCost;
 			daughters++;
 			if(Farmers.Count>0)
 			{

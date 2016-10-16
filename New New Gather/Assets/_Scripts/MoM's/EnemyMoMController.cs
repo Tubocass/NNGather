@@ -27,10 +27,10 @@ public class EnemyMoMController : MoMController
 			yield return new WaitForSeconds(1);
 			CreateFarmer();
 			yield return new WaitForSeconds(1);
-			if(fighters<farmers/2 && FoodAmount>2)
+			if(fighters<farmers/2)
 			CreateFighter();
 			yield return new WaitForSeconds(1);
-			if(fighters + farmers>5 && daughters<=5 && FoodAmount>10)
+			if(fighters + farmers>5 && daughters<=5)
 			CreateDaughter();
 			yield return new WaitForSeconds(4);
 		}

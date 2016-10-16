@@ -60,8 +60,8 @@ public class Unit_Base : MonoBehaviour
 	{
 		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
 		StopAllCoroutines();
-		isActive = false;
 		bMoving = false;
+		isActive = false;
 	}
 
 	public Vector3 RandomVector(Vector3 origin, float range)

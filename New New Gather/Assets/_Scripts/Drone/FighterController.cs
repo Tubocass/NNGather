@@ -16,6 +16,7 @@ public class FighterController : DroneController
 		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
 		mask = 1<<LayerMask.NameToLayer("Units");
+		canAttack=true;
 		base.OnEnable();
 		UnityEventManager.StartListening("PlaceFightFlag", UpdateFlagLocation);
 	}
@@ -129,6 +130,7 @@ public class FighterController : DroneController
 	{
 		spark.Play();
 		target.Health = -5f;
+		Health = -5;
 		canAttack = false;
 		if(this.isActive)
 		StartCoroutine(AttackCooldown());
