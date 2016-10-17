@@ -6,7 +6,7 @@ public class Unit_Base : MonoBehaviour
 	public static int TotalCreated;
 	public int teamID, unitID;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value);}}
-	public Vector3 Location{get{return tran.position;}}
+	public Vector3 Location{get{return transform.position;}}
 	public float Health{
 		get
 		{
@@ -31,7 +31,7 @@ public class Unit_Base : MonoBehaviour
 	[SerializeField] protected bool bMoving;
 	[SerializeField] protected float health, startHealth;
 	[SerializeField] int tries;
-	protected MoMController myMoM;
+	public MoMController myMoM;
 	protected Transform tran;
 	protected NavMeshAgent agent;
 	float maxDistanceSqrd, minDistanceSqrd;

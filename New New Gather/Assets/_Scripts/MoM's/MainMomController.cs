@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MainMomController : MoMController 
 {
@@ -48,7 +49,35 @@ public class MainMomController : MoMController
 		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 	}
-
+	protected override void Death ()
+	{
+		base.Death ();
+		newQueen();
+	}
+//	protected new void newQueen()
+//	{
+//		if(Daughters.Count>0)
+//		{
+//			List<DaughterController> princesses = Daughters.FindAll(f=> f.teamID==teamID && f.isActive);
+//			if(princesses.Count>0)
+//			{
+//				GameObject spawn;
+//				for(int p = 0; p<princesses.Count; p++)
+//				{
+//					if(p==0)
+//					{
+//						spawn = Instantiate(mMoMFab,princesses[p].Location, Quaternion.identity) as GameObject;
+//					}else  spawn = Instantiate(eMoMFAb,princesses[p].Location, Quaternion.identity) as GameObject;;
+//
+//					MoMController mom = spawn.GetComponent<MoMController>();
+//					List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==princesses[p]);
+//					List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==princesses[p]);
+//					mom.SetupQueen(teamID,TeamColor, farmTransfers, fightTransfers);
+//					princesses[p].isActive = false;
+//				}
+//			}
+//		}
+//	}
 //	public override void CreateFarmer()
 //	{
 //		base.CreateFarmer();

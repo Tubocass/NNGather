@@ -5,10 +5,16 @@ public class EnemyMoMController : MoMController
 {
 
 	// Use this for initialization
-	protected override void Start () 
+	protected override void OnEnable () 
 	{
 		base.Start();
+		base.OnEnable();
 		StartCoroutine(SpawnTimer());
+	}
+	protected override void Death ()
+	{
+		base.Death ();
+		newQueen();
 	}
 //	public override void CreateFarmer()
 //	{

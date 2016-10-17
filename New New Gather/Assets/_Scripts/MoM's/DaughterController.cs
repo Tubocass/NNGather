@@ -3,9 +3,10 @@ using System.Collections;
 
 public class DaughterController : MoMController 
 {
-	protected override void Start () 
+	protected override void OnEnable () 
 	{
 		base.Start();
+		base.OnEnable();
 		StartCoroutine(SpawnTimer());
 	}
 
@@ -27,6 +28,11 @@ public class DaughterController : MoMController
 		TeamColor = tc;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
+	public void Kill()
+	{
+		Death();
+	}
+
 	protected override void Death()
 	{
 		base.Death();

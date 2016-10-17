@@ -37,23 +37,22 @@ public class MoMController : Unit_Base
 			}
 	}
 	public List<FoodObject> Foods;
+	public Color TeamColor;
+	public int farmers, fighters, daughters;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
-	[SerializeField] public int farmers, fighters, daughters, farmerCost=1, fighterCost=2, daughterCost=8;//counters
-	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, farmFlagFab, fightFlagFab;
-	[SerializeField] public Color TeamColor;
+	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int foodAmount;
+	[SerializeField] int farmerCost=1, fighterCost=2, daughterCost=8;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
 		Foods = new List<FoodObject>();
-		//Farmers = new List<FarmerController>();
-		//Fighters = new List<FighterController>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 		MoMCount+=1;
 		teamID = MoMCount+1;
@@ -80,6 +79,7 @@ public class MoMController : Unit_Base
 			}else Health = -1;
 		}
 	}
+
 	public virtual void CreateFarmer()
 	{
 		if(FoodAmount>=farmerCost)
@@ -128,7 +128,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -daughterCost;
 			daughters++;
-			if(Farmers.Count>0)
+			if(Daughters.Count>0)
 			{
 				DaughterController recycle = Daughters.Find(f=> !f.isActive);
 				if(recycle!=null)
@@ -163,6 +163,69 @@ public class MoMController : Unit_Base
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		dc.setMoM(this, TeamColor);
 		Daughters.Add(dc);
+	}
+
+	public void SetupQueen(MoMController oldMoM)//Gets called by new MoM
+	{
+		//Health = startHealth;
+		teamID = oldMoM.teamID;
+		TeamColor = oldMoM.TeamColor;
+		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+		farmers = oldMoM.farmers;
+		fighters = oldMoM.fighters;
+		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==oldMoM);
+		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==oldMoM);
+		foreach(FarmerController f in farmTransfers)
+		{
+			f.setMoM(this);
+		}
+		foreach(FighterController f in fightTransfers)
+		{
+			f.setMoM(this);
+		}
+	}
+	protected virtual void newQueen()
+	{
+		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
+		List<DaughterController> princesses = new List<DaughterController>();
+		if(Daughters.Count>0)
+		{
+			princesses = Daughters.FindAll(f=> f.teamID==teamID && f.isActive && f.myMoM==this);
+		}
+
+		if(princesses.Count>0)
+		{
+			//give first princess all drones
+			foreach(FarmerController f in farmTransfers)
+			{
+				f.setMoM(princesses[0]);
+				princesses[0].farmers++;
+			}
+			foreach(FighterController f in fightTransfers)
+			{
+				f.setMoM(princesses[0]);
+				princesses[0].fighters++;
+			}
+
+			for(int p = 0; p<princesses.Count; p++)
+			{
+				GameObject spawn = Instantiate(eMoMFAb,princesses[p].Location, Quaternion.identity) as GameObject;
+				MoMController mom = spawn.GetComponent<MoMController>();
+				mom.isActive = true;
+				mom.SetupQueen(princesses[p]);
+				princesses[p].Kill();
+			}
+		}else{
+			foreach(FarmerController f in farmTransfers)
+			{
+				f.Health = -20;
+			}
+			foreach(FighterController f in fightTransfers)
+			{
+				f.Health = -20;
+			}
+		}
 	}
 
 	public virtual void AddFoodLocation(Vector3 loc)
