@@ -196,6 +196,7 @@ public class MoMController : Unit_Base
 
 		if(princesses.Count>0)
 		{
+			GameObject spawn;
 			//give first princess all drones
 			foreach(FarmerController f in farmTransfers)
 			{
@@ -210,7 +211,12 @@ public class MoMController : Unit_Base
 
 			for(int p = 0; p<princesses.Count; p++)
 			{
-				GameObject spawn = Instantiate(eMoMFAb,princesses[p].Location, Quaternion.identity) as GameObject;
+				if(this.GetType()== typeof(MainMomController) && p==0)
+				{
+					spawn = Instantiate(mMoMFab, princesses[p].Location, Quaternion.identity) as GameObject;
+				}else{
+					spawn = Instantiate(eMoMFAb, princesses[p].Location, Quaternion.identity) as GameObject;
+				}
 				MoMController mom = spawn.GetComponent<MoMController>();
 				mom.isActive = true;
 				mom.SetupQueen(princesses[p]);
