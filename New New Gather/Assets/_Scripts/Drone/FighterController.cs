@@ -130,7 +130,7 @@ public class FighterController : DroneController
 	{
 		spark.Play();
 		target.Health = -5f;
-		Health = -5;
+		Health = -2;
 		canAttack = false;
 		if(this.isActive)
 		StartCoroutine(AttackCooldown());

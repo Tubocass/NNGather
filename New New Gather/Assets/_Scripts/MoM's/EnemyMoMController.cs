@@ -11,11 +11,11 @@ public class EnemyMoMController : MoMController
 		base.OnEnable();
 		StartCoroutine(SpawnTimer());
 	}
-	protected override void Death ()
-	{
-		base.Death ();
-		newQueen();
-	}
+//	protected override void Death ()
+//	{
+//		base.Death ();
+//		newQueen();
+//	}
 //	public override void CreateFarmer()
 //	{
 //		if(FoodAmount>0)

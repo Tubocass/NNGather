@@ -46,7 +46,8 @@ public class MoMController : Unit_Base
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int foodAmount;
-	[SerializeField] int farmerCost=1, fighterCost=2, daughterCost=8;
+	[SerializeField] int farmerCost=1, fighterCost=2, daughterCost=8, startFood = 5;
+	[SerializeField] int qCount=0;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
 	protected override void OnEnable()
@@ -55,6 +56,7 @@ public class MoMController : Unit_Base
 		Foods = new List<FoodObject>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 		MoMCount+=1;
+		foodAmount = startFood;
 		teamID = MoMCount+1;
 	}
 //	protected virtual void OnDisable()
@@ -67,12 +69,16 @@ public class MoMController : Unit_Base
 		StartCoroutine(UpdateLocation());
 		StartCoroutine(Hunger());
 	}
-
+	protected override void Death ()
+	{
+		base.Death ();
+		newQueen();
+	}
 	protected virtual IEnumerator Hunger()
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(5);
+			yield return new WaitForSeconds(10);
 			if(FoodAmount>=1)
 			{
 				FoodAmount = -1;
@@ -164,6 +170,35 @@ public class MoMController : Unit_Base
 		dc.setMoM(this, TeamColor);
 		Daughters.Add(dc);
 	}
+	public virtual void CedeDrones(MoMController newMoM)
+	{
+		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
+		foreach(FarmerController f in farmTransfers)
+			{
+				f.setMoM(newMoM);
+				newMoM.farmers++;
+			}
+			foreach(FighterController f in fightTransfers)
+			{
+				f.setMoM(newMoM);
+				newMoM.fighters++;
+			}
+	}
+	protected void KillDrones()
+	{
+		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
+		foreach(FarmerController f in farmTransfers)
+			{
+				f.Health = -20;
+			}
+			foreach(FighterController f in fightTransfers)
+			{
+				f.Health = -20;
+			}
+	}
+
 
 	public void SetupQueen(MoMController oldMoM)//Gets called by new MoM
 	{
@@ -171,43 +206,21 @@ public class MoMController : Unit_Base
 		teamID = oldMoM.teamID;
 		TeamColor = oldMoM.TeamColor;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-		farmers = oldMoM.farmers;
-		fighters = oldMoM.fighters;
-		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==oldMoM);
-		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==oldMoM);
-		foreach(FarmerController f in farmTransfers)
-		{
-			f.setMoM(this);
-		}
-		foreach(FighterController f in fightTransfers)
-		{
-			f.setMoM(this);
-		}
+		oldMoM.CedeDrones(this);
 	}
 	protected virtual void newQueen()
 	{
-		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
-		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
 		List<DaughterController> princesses = new List<DaughterController>();
 		if(Daughters.Count>0)
 		{
-			princesses = Daughters.FindAll(f=> f.teamID==teamID && f.isActive && f.myMoM==this);
+			princesses = Daughters.FindAll(f=> f.isActive && f.myMoM==this);
 		}
 
 		if(princesses.Count>0)
 		{
 			GameObject spawn;
 			//give first princess all drones
-			foreach(FarmerController f in farmTransfers)
-			{
-				f.setMoM(princesses[0]);
-				princesses[0].farmers++;
-			}
-			foreach(FighterController f in fightTransfers)
-			{
-				f.setMoM(princesses[0]);
-				princesses[0].fighters++;
-			}
+			CedeDrones(princesses[0]);
 
 			for(int p = 0; p<princesses.Count; p++)
 			{
@@ -223,14 +236,7 @@ public class MoMController : Unit_Base
 				princesses[p].Kill();
 			}
 		}else{
-			foreach(FarmerController f in farmTransfers)
-			{
-				f.Health = -20;
-			}
-			foreach(FighterController f in fightTransfers)
-			{
-				f.Health = -20;
-			}
+			KillDrones();
 		}
 	}
 
@@ -241,8 +247,10 @@ public class MoMController : Unit_Base
 			foodQ.Dequeue();
 			foodQ.Enqueue(loc);
 			Debug.Log("newness");
-		}else {foodQ.Enqueue(loc);Debug.Log("newness");}
-
+		}else {
+			qCount+=1;
+			foodQ.Enqueue(loc);//Debug.Log("newness");
+		}
 		FoodAmount = 1;
 	}
 
@@ -252,21 +260,23 @@ public class MoMController : Unit_Base
 		{
 			if(foodQ.Count>0)
 			MoveToCenter();
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(5);
 		}
 	}
 
 	void MoveToCenter()
 	{
-		Debug.Log("Updating");
+		//Debug.Log("Updating");
 		Vector3 newLoc;
 		float xx = 0, zz = 0;
 		int size = 1;
-		foreach(Vector3 v in foodQ)
+		for(int i = foodQ.Count; i>0;i--)
 		{
+			Vector3 v= foodQ.Dequeue();
 			if(v != Vector3.zero)
 			{
 				size++;
+				qCount-=1;
 				xx += v.x;
 				zz += v.z;
 			}

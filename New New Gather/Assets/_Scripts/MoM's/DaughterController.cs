@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DaughterController : MoMController 
 {
@@ -28,7 +29,7 @@ public class DaughterController : MoMController
 		TeamColor = tc;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
-	public void Kill()
+	public void Kill()//mostly used for upgrading into a MoM
 	{
 		Death();
 	}
@@ -37,5 +38,16 @@ public class DaughterController : MoMController
 	{
 		base.Death();
 		myMoM.daughters-=1;
+	}
+
+	protected override void newQueen()
+	{
+		if(myMoM.isActive)
+		{
+			CedeDrones(myMoM);
+
+		}else{
+			KillDrones();
+		}
 	}
 }

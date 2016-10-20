@@ -49,11 +49,11 @@ public class MainMomController : MoMController
 		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 	}
-	protected override void Death ()
-	{
-		base.Death ();
-		newQueen();
-	}
+//	protected override void Death ()
+//	{
+//		base.Death ();
+//		newQueen();
+//	}
 //	protected new void newQueen()
 //	{
 //		if(Daughters.Count>0)
