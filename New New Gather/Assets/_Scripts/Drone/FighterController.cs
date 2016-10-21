@@ -60,7 +60,7 @@ public class FighterController : DroneController
 	{
 		//base.ArrivedAtTargetLocation();
 
-		if(targetEnemy != null && targetEnemy.isActive)
+		if(IsTargetingEnemy())
 		{
 			if(canAttack && Vector3.Distance(Location,targetEnemy.Location)<1f)
 			{
@@ -149,12 +149,12 @@ public class FighterController : DroneController
 		else return false;
 	}
 
-	bool CanTargetEnemy()
-	{
-		if(!IsTargetingEnemy())
-		return true;
-		else return false;
-	}
+//	bool CanTargetEnemy()
+//	{
+//		if(!IsTargetingEnemy())
+//		return true;
+//		else return false;
+//	}
 	IEnumerator LookForEnemies()
 	{
 		while(true)
