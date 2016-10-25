@@ -53,7 +53,7 @@ public class Unit_Base : MonoBehaviour
 		isActive = true;
 		myMoM = mom;
 		teamID = myMoM.teamID;
-		tran.position = mom.Location + new Vector3(1,0,1);
+		//tran.position = mom.Location + new Vector3(1,0,1);
 	}
 
 	protected virtual void Death()

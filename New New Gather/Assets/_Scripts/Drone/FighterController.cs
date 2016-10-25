@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class FighterController : DroneController 
 {
+	[SerializeField] float attackStrength, selfAttack;
 	Unit_Base targetEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
@@ -47,7 +48,7 @@ public class FighterController : DroneController
 	public override void setMoM(MoMController mom, Color tc)
 	{
 		base.setMoM(mom, tc);
-		StartCoroutine(LookForEnemies());
+		//StartCoroutine(LookForEnemies());
 	}
 
 	protected override void Death()
@@ -100,13 +101,68 @@ public class FighterController : DroneController
 		}
 	}
 
+	IEnumerator LookForEnemies()
+	{
+		while(true)
+		{
+			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+			if(hits.Length>0)
+			{
+				foreach(RaycastHit f in hits)
+				{
+					if(f.collider.tag == "Drone"||f.collider.tag == "Sarlac"||f.collider.tag == "MoM")
+					{
+						Unit_Base ot = f.collider.GetComponent<Unit_Base>();
+						if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+						{
+							enemies.Add(ot);
+						}
+					}
+				}
+			}
+			yield return new WaitForSeconds(2f);
+		}
+	}
 	Unit_Base TargetNearest()
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
 		enemies.RemoveAll(e=> !e.isActive);
-		enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 
+		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		if(hits.Length>0)
+		{
+			foreach(RaycastHit f in hits)
+			{
+				if(f.collider.tag == "Sarlac")
+				{
+					enemy = f.collider.GetComponent<SarlacController>();
+					if(enemy!=null )
+					{
+						return enemy;
+					}
+				}
+				if(f.collider.tag == "MoM")
+				{
+					Unit_Base ot = f.collider.GetComponent<MoMController>();
+					if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+					{
+						enemies.Add(ot);
+					}
+				}
+				if(f.collider.tag == "Drone")
+				{
+					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
+					if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+					{
+						enemies.Add(ot);
+					}
+				}
+			}
+		}
+
+		enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 		if(enemiesCopy.Count>0)
 		{
 			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
@@ -129,8 +185,8 @@ public class FighterController : DroneController
 	void Attack(Unit_Base target)
 	{
 		spark.Play();
-		target.Health = -5f;
-		Health = -2;
+		target.Health = -attackStrength;
+		Health = -selfAttack;
 		canAttack = false;
 		if(this.isActive)
 		StartCoroutine(AttackCooldown());
@@ -155,28 +211,6 @@ public class FighterController : DroneController
 //		return true;
 //		else return false;
 //	}
-	IEnumerator LookForEnemies()
-	{
-		while(true)
-		{
-			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-			if(hits.Length>0)
-			{
-				foreach(RaycastHit f in hits)
-				{
-					if(f.collider.tag == "Drone")
-					{
-						Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-						if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
-						{
-							enemies.Add(ot);
-						}
-					}
-				}
-			}
-			yield return new WaitForSeconds(2f);
-		}
-	}
 
 	public override void OnTriggerEnter(Collider other)
 	{
@@ -206,9 +240,9 @@ public class FighterController : DroneController
 //	}
 	public override void OnCollisionEnter(Collision bang)
 	{
-		if(bang.collider.tag == "Drone")
+		if(bang.collider.tag == "Drone"||bang.collider.tag == "Sarlac"||bang.collider.tag == "MoM")
 		{
-			DroneController ot = bang.gameObject.GetComponent<DroneController>();
+			Unit_Base ot = bang.gameObject.GetComponent<Unit_Base>();
 			if(ot!=null && ot.teamID!=teamID && canAttack)
 			{
 				Attack(ot);

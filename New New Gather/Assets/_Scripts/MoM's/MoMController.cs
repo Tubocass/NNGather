@@ -56,6 +56,7 @@ public class MoMController : Unit_Base
 		Foods = new List<FoodObject>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 		MoMCount+=1;
+		daughters = 0;//I don't know why this has to be reset
 		foodAmount = startFood;
 		teamID = MoMCount+1;
 	}
@@ -98,6 +99,7 @@ public class MoMController : Unit_Base
 				if(recycle!=null)
 				{
 					recycle.setMoM(this, TeamColor);
+					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFarmer();
 				}
@@ -119,6 +121,7 @@ public class MoMController : Unit_Base
 				if(recycle!=null)
 				{
 					recycle.setMoM(this, TeamColor);
+					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFighter();
 				}
@@ -140,6 +143,7 @@ public class MoMController : Unit_Base
 				if(recycle!=null)
 				{
 					recycle.setMoM(this, TeamColor);
+					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateDaughter();
 				}

@@ -8,6 +8,8 @@ public class DaughterController : MoMController
 	{
 		base.Start();
 		base.OnEnable();
+		farmers = 0;
+		fighters = 0;
 		StartCoroutine(SpawnTimer());
 	}
 
