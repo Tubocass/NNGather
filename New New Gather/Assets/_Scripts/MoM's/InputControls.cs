@@ -41,48 +41,51 @@ public class InputControls : MonoBehaviour
 			cam.MoveTo(movement);
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(mainMoMControl.isActive)
 		{
-			cam.SetFollow();
-		}
-		if(Input.GetKeyDown(KeyCode.Q))
-		{
-			mainMoMControl.CreateFarmer();
-		}
-		if(Input.GetKeyDown(KeyCode.E))
-		{
-			mainMoMControl.CreateFighter();
-		}
-		if(Input.GetKeyDown(KeyCode.R))
-		{
-			mainMoMControl.CreateDaughter();
-		}
-		if(Input.GetKeyDown(KeyCode.Z))
-		{
-			mainMoMControl.RecallFarmFlag();
-		}
-		if(Input.GetKeyDown(KeyCode.C))
-		{
-			mainMoMControl.RecallFightFlag();
-		}
-		if (Input.GetMouseButtonDown (0)) 
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-
-			if (Physics.Raycast (ray, out hit, 100f, mask)) 
+			if(Input.GetKeyDown(KeyCode.Space))
 			{
-				mainMoMControl.PlaceFarmFlag(hit.point);
+				cam.SetFollow();
 			}
-		}
-		if (Input.GetMouseButtonDown (1)) 
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-
-			if (Physics.Raycast (ray, out hit, 100f, mask)) 
+			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				mainMoMControl.PlaceFightFlag(hit.point);
+				mainMoMControl.CreateFarmer();
+			}
+			if(Input.GetKeyDown(KeyCode.E))
+			{
+				mainMoMControl.CreateFighter();
+			}
+			if(Input.GetKeyDown(KeyCode.R))
+			{
+				mainMoMControl.CreateDaughter();
+			}
+			if(Input.GetKeyDown(KeyCode.Z))
+			{
+				mainMoMControl.RecallFarmFlag();
+			}
+			if(Input.GetKeyDown(KeyCode.C))
+			{
+				mainMoMControl.RecallFightFlag();
+			}
+			if (Input.GetMouseButtonDown (0)) 
+			{
+				RaycastHit hit;
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+
+				if (Physics.Raycast (ray, out hit, 100f, mask)) 
+				{
+					mainMoMControl.PlaceFarmFlag(hit.point);
+				}
+			}
+			if (Input.GetMouseButtonDown (1)) 
+			{
+				RaycastHit hit;
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+
+				if (Physics.Raycast (ray, out hit, 100f, mask)) 
+				{
+					mainMoMControl.PlaceFightFlag(hit.point);
+				}
 			}
 		}
 	}

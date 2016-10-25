@@ -75,6 +75,10 @@ public class MoMController : Unit_Base
 		base.Death ();
 		newQueen();
 	}
+	public override void TakeDamage(float damage)
+	{
+		Health = -damage/2;
+	}
 	protected virtual IEnumerator Hunger()
 	{
 		while (true)

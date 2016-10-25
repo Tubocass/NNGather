@@ -59,12 +59,14 @@
      <Compile Include="Assets\_Scripts\FoodObject.cs" />
      <Compile Include="Assets\_Scripts\FoodSpawner.cs" />
      <Compile Include="Assets\_Scripts\GUIUpdate.cs" />
+     <Compile Include="Assets\_Scripts\GameController.cs" />
      <Compile Include="Assets\_Scripts\GenerateLevel.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\DaughterController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\EnemyMoMController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\InputControls.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\MainMomController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\MoMController.cs" />
+     <Compile Include="Assets\_Scripts\PitController.cs" />
      <Compile Include="Assets\_Scripts\SarlacController.cs" />
      <Compile Include="Assets\_Scripts\Unit_Base.cs" />
      <Compile Include="Assets\_Scripts\UnityEventManager.cs" />

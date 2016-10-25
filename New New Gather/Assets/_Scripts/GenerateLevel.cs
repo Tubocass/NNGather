@@ -98,6 +98,7 @@ public class GenerateLevel : MonoBehaviour
 	GameObject SpawnSarlacPit(Vector3 position)
 	{
 		GameObject newPit =	Instantiate(Sarlac_Pit, position, Quaternion.identity)as GameObject;
+		PitController.Pits.Add(newPit.GetComponent<PitController>());
 
 		int pl = 0;
 		//float minX = -groundSize.x, maxX = groundSize.x, minZ = groundSize.z, maxZ = groundSize.z;;

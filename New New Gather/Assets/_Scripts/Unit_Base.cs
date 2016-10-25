@@ -63,6 +63,10 @@ public class Unit_Base : MonoBehaviour
 		bMoving = false;
 		isActive = false;
 	}
+	public virtual void TakeDamage(float damage)
+	{
+		Health = -damage;
+	}
 
 	public Vector3 RandomVector(Vector3 origin, float range)
 	{
@@ -102,5 +106,20 @@ public class Unit_Base : MonoBehaviour
 			}
 			yield return new WaitForSeconds(0.5f);
 		}
+	}
+
+	public virtual void OnTriggerEnter(Collider other)
+	{
+
+	}
+
+//	public virtual void OnTriggerStay(Collider other)
+//	{
+//		
+//	}
+
+	public virtual void OnCollisionEnter(Collision bang)
+	{
+		
 	}
 }

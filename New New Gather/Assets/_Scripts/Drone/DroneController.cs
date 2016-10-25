@@ -58,18 +58,4 @@ public class DroneController : Unit_Base
 		MoveRandomly();
 	}
 
-	public virtual void OnTriggerEnter(Collider other)
-	{
-
-	}
-
-//	public virtual void OnTriggerStay(Collider other)
-//	{
-//		
-//	}
-
-	public virtual void OnCollisionEnter(Collision bang)
-	{
-		
-	}
 }
