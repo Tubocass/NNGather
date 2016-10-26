@@ -31,10 +31,13 @@ public class PitController : MonoBehaviour
 	public static IEnumerator Release()
 	{
 		yield return new WaitForSeconds(timer);
-		PitController spawnPoint = Pits.Find(p=> p.Location.x>GameController.Sun_A.position.x && p.Location.x<GameController.Sun_B.position.x);
-		SarlacInstance.anchor = spawnPoint.Location;
-		SarlacInstance.transform.position = spawnPoint.Location;
-		SarlacInstance.isActive = true;
+		PitController spawnPoint = Pits[Random.Range(0,Pits.Count-1)];//Find(p=> p.Location.x>GenerateLevel.Sun_A.position.x && p.Location.x<GenerateLevel.Sun_B.position.x);
+		if(spawnPoint!=null&& !GenerateLevel.IsDayLight())
+		{
+			SarlacInstance.anchor = spawnPoint.Location;
+			SarlacInstance.transform.position = spawnPoint.Location;
+			SarlacInstance.isActive = true;
+		}else yield return Release();
 
 	}
 

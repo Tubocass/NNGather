@@ -20,6 +20,8 @@ public class SarlacController : DroneController
 	{
 		base.OnEnable();
 		eaten = 0;
+		bMoving = false;
+		bReturning = false;
 		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
 		mask = 1<<LayerMask.NameToLayer("Units");
@@ -77,12 +79,13 @@ public class SarlacController : DroneController
 	protected void ReturnToHome()
 	{
 		bReturning = true;
-		MoveTo(anchor);
+		Vector3 nearest = NearestTarget(PitController.Pits,Location);
+		MoveTo(nearest);
 	}
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		if(eaten<maxEaten)
+		if(eaten<maxEaten&&!GenerateLevel.IsDayLight())
 		{
 			if(IsTargetingEnemy())
 			{
@@ -103,7 +106,7 @@ public class SarlacController : DroneController
 	}
 	bool IsTargetingEnemy()
 	{
-		if(targetEnemy!=null && targetEnemy.isActive && eaten<maxEaten)
+		if(!GenerateLevel.IsDayLight() && targetEnemy!=null && targetEnemy.isActive && eaten<maxEaten)
 		return true;
 		else return false;
 	}
@@ -149,28 +152,31 @@ public class SarlacController : DroneController
 		}
 		return enemy;
 	}
-//	IEnumerator LookForEnemies()
-//	{
-//		while(true)
-//		{
-//			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-//			if(hits.Length>0)
-//			{
-//				foreach(RaycastHit f in hits)
-//				{
-//					if(f.collider.tag == "Drone")
-//					{
-//						Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-//						if(ot!=null && !enemies.Contains(ot))
-//						{
-//							enemies.Add(ot);
-//						}
-//					}
-//				}
-//			}
-//			yield return new WaitForSeconds(2f);
-//		}
-//	}
+	Vector3 NearestTarget(List<PitController> Objects, Vector3 targetLoc)
+	{
+		float nearestDist, newDist;
+		PitController obj = null;
+
+		//foods = Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
+
+		if(Objects.Count>0)
+		{
+			nearestDist = (Objects[0].transform.position-targetLoc).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			foreach(PitController o in Objects)
+			{
+				if(o!=null)
+				{
+					newDist = (o.transform.position-targetLoc).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+					if(newDist <= nearestDist)
+					{
+						nearestDist = newDist;
+						obj = o;
+					}
+				}
+			}
+		}
+		return obj.transform.position;
+	}
 
 	void Attack(Unit_Base target)
 	{
@@ -200,12 +206,12 @@ public class SarlacController : DroneController
 		}
 		if(bang.collider.tag == "Pit")
 		{
-			if(eaten>=maxEaten)
+			if(eaten>=maxEaten||GenerateLevel.IsDayLight())
 			{
 				PitController pc = bang.gameObject.GetComponent<PitController>();
-				pc.StartTimer();
-				this.isActive = false;
 				this.bReturning = false;
+				pc.StartTimer();
+				this.Death();
 			}
 		}
 	}

@@ -8,6 +8,9 @@ public class GenerateLevel : MonoBehaviour
 	public Vector3 groundSize;
 	public int plants = 5, pits = 3, plantClusterDist = 5, spClusterDist = 20, moms = 2, momsDistance = 20;
 	public Color[] Colors;
+	[SerializeField] float SunSpeed = 2f;
+	[SerializeField] bool bDaylight;
+	static Transform DayLight, NightLight;
 	GameObject[] Pits;
 	GameObject[] MoMs;
 	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
@@ -24,6 +27,8 @@ public class GenerateLevel : MonoBehaviour
 		groundSize = Ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z- groundSize.z/8;
+		DayLight = GameObject.Find("Day Light").transform;
+		NightLight = GameObject.Find("Night Light").transform;
 		Pits = new GameObject[pits];
 		MoMs = new GameObject[moms];
 		int sp = 0, mm = 0;
@@ -87,6 +92,23 @@ public class GenerateLevel : MonoBehaviour
 		}while(mm<moms);
 
 	}
+	void Update()
+	{
+		DayLight.Rotate(DayLight.right,SunSpeed*Time.deltaTime,Space.World);
+		NightLight.Rotate(NightLight.right,SunSpeed*Time.deltaTime,Space.World);
+		bDaylight = IsDayLight();
+
+	}
+	public static bool IsDayLight()
+	{
+		return DayLight.eulerAngles.x>0&&DayLight.eulerAngles.x<180;
+	}
+
+//	void OnGUI()
+//	{
+//		Vector3 screenPoint = Camera.main.WorldToScreenPoint(groundSize);
+//		Graphics.DrawTexture(new Rect(0,0, groundSize.x*2, groundSize.z*2), DayTexture);
+//	}
 
 	GameObject SpawnMoM(Vector3 position, int count)
 	{
@@ -137,28 +159,6 @@ public class GenerateLevel : MonoBehaviour
 		return newPit;
 	}
 
-//	FoodSpawner TargetNearest(List<FoodSpawner> ListOT, Vector3 targetLoc)
-//	{
-//		float nearestFoodDist, newDist;
-//		FoodSpawner food = null;
-//
-//		//foods = Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
-//
-//		if(ListOT.Count>0)
-//		{
-//			nearestFoodDist = (ListOT[0].Location-targetLoc).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-//			foreach(FoodSpawner f in ListOT)
-//			{
-//				newDist = (f.Location-targetLoc).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
-//				if(newDist <= nearestFoodDist)
-//				{
-//					nearestFoodDist = newDist;
-//					food = f;
-//				}
-//			}
-//		}
-//		return food;
-//	}
 	Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
 	{
 		float nearestDist, newDist;
