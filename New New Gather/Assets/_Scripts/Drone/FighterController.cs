@@ -8,9 +8,9 @@ public class FighterController : DroneController
 	Unit_Base targetEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
-	bool canAttack=true;
 	ParticleSystem spark;
 	LayerMask mask;
+	bool canAttack=true, bReturning;
 
 	protected override void OnEnable()
 	{

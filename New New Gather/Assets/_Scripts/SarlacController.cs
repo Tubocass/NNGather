@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class SarlacController : DroneController 
 {
+	[SerializeField] float attackStrength;
 	public Vector3 anchor;
 	[SerializeField] int maxEaten;
 	//[SerializeField] protected float orbit = 25;
@@ -11,9 +12,9 @@ public class SarlacController : DroneController
 	Unit_Base targetEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
-	bool canAttack=true, bReturning;
 	ParticleSystem spark;
 	LayerMask mask;
+	bool canAttack=true, bReturning;
 	int eaten;
 
 	protected override void OnEnable()
@@ -66,7 +67,7 @@ public class SarlacController : DroneController
 			}else
 			{
 				yield return new WaitForSeconds(0.5f);
-				if(bReturning) MoveTo(anchor);
+				if(bReturning) ReturnToHome();
 				else if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
 			}
 		}
@@ -75,6 +76,12 @@ public class SarlacController : DroneController
 	{
 		Vector3 rVector = RandomVector(anchor, orbit);
 		MoveTo(rVector);
+	}
+	protected override void DaySwitch(bool b)
+	{
+		base.DaySwitch(b);
+		if(bDay)
+		ReturnToHome();
 	}
 	protected void ReturnToHome()
 	{
@@ -85,7 +92,7 @@ public class SarlacController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		if(eaten<maxEaten&&!GenerateLevel.IsDayLight())
+		if(eaten<maxEaten &&! bReturning)
 		{
 			if(IsTargetingEnemy())
 			{
@@ -106,7 +113,7 @@ public class SarlacController : DroneController
 	}
 	bool IsTargetingEnemy()
 	{
-		if(!GenerateLevel.IsDayLight() && targetEnemy!=null && targetEnemy.isActive && eaten<maxEaten)
+		if(!bDay && targetEnemy!=null && targetEnemy.isActive && eaten<maxEaten)
 		return true;
 		else return false;
 	}
@@ -181,7 +188,7 @@ public class SarlacController : DroneController
 	void Attack(Unit_Base target)
 	{
 		spark.Play();
-		target.Health = -5f;
+		target.Health = -attackStrength;
 		eaten++;
 		//Health = -2;
 		canAttack = false;
@@ -191,7 +198,7 @@ public class SarlacController : DroneController
 
 	IEnumerator AttackCooldown()
 	{
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.5f);
 		canAttack = true;
 	}
 	public override void OnCollisionEnter(Collision bang)
@@ -206,7 +213,7 @@ public class SarlacController : DroneController
 		}
 		if(bang.collider.tag == "Pit")
 		{
-			if(eaten>=maxEaten||GenerateLevel.IsDayLight())
+			if(eaten>=maxEaten||bDay)
 			{
 				PitController pc = bang.gameObject.GetComponent<PitController>();
 				this.bReturning = false;

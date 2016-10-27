@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 public class GenerateLevel : MonoBehaviour 
 {
-	public GameObject Ground, Plant, Sarlac_Pit, EnemyMoMFab, MainMoMFab;
+	public GameObject Ground, Plant, Sarlac_Pit, EnemyMoMFab, MainMoMFab, GlowFab;
 	public Vector3 groundSize;
 	public int plants = 5, pits = 3, plantClusterDist = 5, spClusterDist = 20, moms = 2, momsDistance = 20;
 	public Color[] Colors;
-	[SerializeField] float SunSpeed = 2f;
-	[SerializeField] bool bDaylight;
 	static Transform DayLight, NightLight;
+	[SerializeField] float SunSpeed = 2f;
 	GameObject[] Pits;
 	GameObject[] MoMs;
 	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
@@ -18,6 +17,7 @@ public class GenerateLevel : MonoBehaviour
 	Vector3 spawnPoint;
 	float plantClustSqrd, spClusterSqrd, mmDistanceSqrd;
 	float xx, zz;
+	bool bDay;
 
 	void Start () 
 	{
@@ -96,12 +96,21 @@ public class GenerateLevel : MonoBehaviour
 	{
 		DayLight.Rotate(DayLight.right,SunSpeed*Time.deltaTime,Space.World);
 		NightLight.Rotate(NightLight.right,SunSpeed*Time.deltaTime,Space.World);
-		bDaylight = IsDayLight();
+		if(!IsDayLight()&&bDay)
+		{
+			bDay = false;
+			UnityEventManager.TriggerEvent("DayTime",false);
+			DayLight.gameObject.SetActive(false);
+		}else if(IsDayLight()&&!bDay){
+			bDay = true;
+			UnityEventManager.TriggerEvent("DayTime",true);
+			DayLight.gameObject.SetActive(true);
+		}
 
 	}
 	public static bool IsDayLight()
 	{
-		return DayLight.eulerAngles.x>0&&DayLight.eulerAngles.x<180;
+		return DayLight.eulerAngles.x>0-10&&DayLight.eulerAngles.x<180+10;
 	}
 
 //	void OnGUI()
@@ -121,7 +130,8 @@ public class GenerateLevel : MonoBehaviour
 	{
 		GameObject newPit =	Instantiate(Sarlac_Pit, position, Quaternion.identity)as GameObject;
 		PitController.Pits.Add(newPit.GetComponent<PitController>());
-
+		int g = Random.Range(0,3);
+		plants = Random.Range(3,7);
 		int pl = 0;
 		//float minX = -groundSize.x, maxX = groundSize.x, minZ = groundSize.z, maxZ = groundSize.z;;
 		GameObject[] flowers = new GameObject[plants]; 
@@ -135,6 +145,11 @@ public class GenerateLevel : MonoBehaviour
 			{
 				flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
 				pl++;
+				if(g>0)
+				{
+					GameObject glow = Instantiate(GlowFab, new Vector3(Random.Range(-plantClustSqrd,plantClustSqrd)+position.x, 0.5f, Random.Range(-plantClustSqrd,plantClustSqrd)+position.z), Quaternion.identity)as GameObject;
+					g--;
+				}
 			}else
 			{
 				nearestLoc = NearestTarget(flowers, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
@@ -142,6 +157,11 @@ public class GenerateLevel : MonoBehaviour
 				{
 					flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
 					pl++;
+					if(g>0)
+					{
+						GameObject glow =Instantiate(GlowFab, new Vector3(Random.Range(-plantClustSqrd,plantClustSqrd)+position.x, 0.5f, Random.Range(-plantClustSqrd,plantClustSqrd)+position.z), Quaternion.identity)as GameObject;
+						g--;
+					}
 				}else{
 
 					spawnPoint = new Vector3(Random.Range(-plantClustSqrd,plantClustSqrd)+position.x, 0.5f, Random.Range(-plantClustSqrd,plantClustSqrd)+position.z);
@@ -152,6 +172,11 @@ public class GenerateLevel : MonoBehaviour
 					{
 						flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
 						pl++;
+						if(g>0)
+						{
+							GameObject glow =Instantiate(GlowFab, new Vector3(Random.Range(-plantClustSqrd,plantClustSqrd)+position.x, 0.5f, Random.Range(-plantClustSqrd,plantClustSqrd)+position.z), Quaternion.identity)as GameObject;
+							g--;
+						}
 					}
 				}
 			}

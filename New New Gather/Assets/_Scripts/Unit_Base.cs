@@ -5,7 +5,7 @@ public class Unit_Base : MonoBehaviour
 {
 	public static int TotalCreated;
 	public int teamID, unitID;
-	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value);}}
+	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}
 	public float Health{
 		get
@@ -25,15 +25,15 @@ public class Unit_Base : MonoBehaviour
 			}
 		}
 	}
-
+	public MoMController myMoM;
 	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
 	[SerializeField] protected float health, startHealth;
 	[SerializeField] int tries;
-	public MoMController myMoM;
 	protected Transform tran;
 	protected NavMeshAgent agent;
+	protected bool bDay;
 	float maxDistanceSqrd, minDistanceSqrd;
 
 	protected virtual void OnEnable () 
@@ -46,8 +46,18 @@ public class Unit_Base : MonoBehaviour
 		health = startHealth;
 		TotalCreated+=1;
 		unitID = TotalCreated;
-	}
+		bDay = GenerateLevel.IsDayLight();
+		UnityEventManager.StartListening("DayTime", DaySwitch);
 
+	}
+	void OnDisable()
+	{
+		UnityEventManager.StopListening("DayTime", DaySwitch);
+	}
+	protected virtual void DaySwitch(bool b)
+	{
+		bDay = b;
+	}
 	public virtual void setMoM(MoMController mom)
 	{
 		isActive = true;
@@ -59,6 +69,7 @@ public class Unit_Base : MonoBehaviour
 	protected virtual void Death()
 	{
 		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
+		UnityEventManager.StopListening("DayTime", DaySwitch);
 		StopAllCoroutines();
 		bMoving = false;
 		isActive = false;

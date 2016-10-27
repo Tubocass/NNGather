@@ -4,14 +4,13 @@ using System.Collections.Generic;
 
 public class PitController : MonoBehaviour 
 {
-
-	[SerializeField] GameObject SarlacFab;
-	[SerializeField] float Timer = 30;
-	static float timer;
 	public static List<PitController> Pits = new List<PitController>();
 	public Vector3 Location{get{return transform.position;}}
+	static float timer;
 	static SarlacController SarlacInstance;
-	// Use this for initialization
+	[SerializeField] GameObject SarlacFab;
+	[SerializeField] float Timer = 30;
+
 	void Start () 
 	{
 		timer = Timer;
