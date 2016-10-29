@@ -77,7 +77,20 @@ public class MoMController : Unit_Base
 	}
 	public override void TakeDamage(float damage)
 	{
+		StartCoroutine(EmergencyFighters());
 		Health = -damage/2;
+	}
+	protected virtual IEnumerator EmergencyFighters()
+	{
+		int ef = (FoodAmount - 2)/fighterCost;
+		if(farmers>0 && ef>0)
+		{
+			for(;ef>0;ef-- )
+			{
+				CreateFighter();
+				yield return new WaitForSeconds(0.2f);
+			}
+		}
 	}
 	protected virtual IEnumerator Hunger()
 	{
@@ -276,12 +289,12 @@ public class MoMController : Unit_Base
 	{
 		//Debug.Log("Updating");
 		Vector3 newLoc;
-		float xx = 0, zz = 0;
+		float xx = Location.x, zz = Location.z;
 		int size = 1;
 		for(int i = foodQ.Count; i>0;i--)
 		{
 			Vector3 v= foodQ.Dequeue();
-			if(v != Vector3.zero)
+			if(!v.Equals( Vector3.zero))
 			{
 				size++;
 				qCount-=1;
@@ -294,6 +307,7 @@ public class MoMController : Unit_Base
 		{
 			Debug.Log("I'm gonna move");
 			agent.SetDestination(newLoc);
+			currentVector = newLoc;
 		}
 	}
 }

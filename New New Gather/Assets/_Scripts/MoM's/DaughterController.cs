@@ -18,6 +18,7 @@ public class DaughterController : MoMController
 		while(true)
 		{
 			yield return new WaitForSeconds(1);
+			if(farmers<100)
 			CreateFarmer();
 			if(fighters<farmers/2 && FoodAmount>2)
 			CreateFighter();

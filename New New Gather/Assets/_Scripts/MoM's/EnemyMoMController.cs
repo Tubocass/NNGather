@@ -31,6 +31,7 @@ public class EnemyMoMController : MoMController
 		while(true)
 		{
 			yield return new WaitForSeconds(1);
+			if(farmers<100)
 			CreateFarmer();
 			yield return new WaitForSeconds(1);
 			if(fighters<farmers/2)
