@@ -43,6 +43,7 @@ public class SarlacController : DroneController
 	public override void TakeDamage(float damage)
 	{
 		eaten++;
+		targetEnemy = TargetNearest();
 	}
 //	protected override IEnumerator Idle()
 //	{

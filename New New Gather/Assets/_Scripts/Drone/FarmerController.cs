@@ -195,7 +195,7 @@ public class FarmerController : DroneController
 	{
 		while(true)
 		{
-			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+			RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
 			if(hits.Length>0)
 			{
 				foreach(RaycastHit f in hits)
@@ -230,23 +230,6 @@ public class FarmerController : DroneController
 //			}
 //		}
 	}
-
-//	public override void OnTriggerStay(Collider other)
-//	{
-//		
-////		if(other.tag == "Food")
-////		{
-////			if(targetedFood==null)
-////			{
-////				FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-////				if(ot!=null && ot.CanBeTargetted)
-////				{
-////					targetedFood = ot;
-////					MoveTo(targetedFood.Location);
-////				}
-////			}
-////		}
-//	}
 
 	public override void OnCollisionEnter(Collision bang)
 	{

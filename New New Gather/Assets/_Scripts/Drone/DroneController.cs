@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public class DroneController : Unit_Base 
 {
-	[SerializeField] protected float orbit = 25;
+	[SerializeField] protected float orbit = 25, sightRange;
 	[SerializeField] protected Vector3 nose; //set in editor
 	protected bool bInDanger;
-	protected float sqrDist = 20f*20f;
+	protected float sqrDist;
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		sqrDist = orbit*orbit;
 		UnityEventManager.StartListening("TargetUnavailable", TargetLost);
 	}
 	protected virtual void OnDisable()

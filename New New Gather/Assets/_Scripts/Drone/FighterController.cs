@@ -130,7 +130,7 @@ public class FighterController : DroneController
 		enemies.RemoveAll(e=> !e.isActive);
 		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 
-		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
 		if(hits.Length>0)
 		{
 			foreach(RaycastHit f in hits)

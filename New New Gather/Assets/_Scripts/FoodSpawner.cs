@@ -3,11 +3,35 @@ using System.Collections;
 
 public class FoodSpawner : MonoBehaviour 
 {
+	public Vector3 Location{get{return transform.position;}}
 	[SerializeField] int amount;
 	[SerializeField] GameObject foodObj;
 	[SerializeField] FoodObject[] foodPile;
 	[SerializeField] Vector3[] spawnPoints;
-	public Vector3 Location{get{return transform.position;}}
+	bool bSpawnTime;
+	string myTag;
+
+	void OnEnable()
+	{
+		myTag = gameObject.tag;
+		UnityEventManager.StartListening("DayTime", DaySwitch);
+
+	}
+	void OnDisable()
+	{
+		UnityEventManager.StopListening("DayTime", DaySwitch);
+	}
+	void DaySwitch(bool b)
+	{
+		if(myTag.Equals("DayPlant"))
+		bSpawnTime = b;
+		else bSpawnTime = !b;
+
+		if(bSpawnTime)
+		{
+			StartCoroutine(SpawnFood());
+		}
+	}
 
 	void Start () 
 	{
@@ -27,7 +51,7 @@ public class FoodSpawner : MonoBehaviour
 	
 	IEnumerator SpawnFood()
 	{
-		while(true)
+		while(bSpawnTime)
 		{
 			for(int i = 0; i<foodPile.Length; i++)
 			{
@@ -38,7 +62,7 @@ public class FoodSpawner : MonoBehaviour
 					yield return new WaitForSeconds(3f);
 				}
 			}
-			yield return new WaitForSeconds(5f);
+			yield return new WaitForSeconds(3f);
 		}
 	}
 }

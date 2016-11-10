@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class GenerateLevel : MonoBehaviour 
 {
-	public GameObject Ground, Plant, Sarlac_Pit, EnemyMoMFab, MainMoMFab, GlowFab;
+	public GameObject Ground, NightPlant, DayPlant, Sarlac_Pit, EnemyMoMFab, MainMoMFab, GlowFab;
 	public Vector3 groundSize;
-	public int plants = 5, pits = 3, plantClusterDist = 5, spClusterDist = 20, moms = 2, momsDistance = 20;
+	public int plants = 5, dayPatches = 5, pits = 3, plantClusterDist = 5, dayPlantPitDistance = 15, spClusterDist = 20, moms = 2, momsDistance = 20;
 	public Color[] Colors;
 	static Transform DayLight, NightLight;
 	[SerializeField] float SunSpeed = 2f;
@@ -15,7 +15,7 @@ public class GenerateLevel : MonoBehaviour
 	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
 	GameObject spawn;
 	Vector3 spawnPoint;
-	float plantClustSqrd, spClusterSqrd, mmDistanceSqrd;
+	float plantClustSqrd, spClusterSqrd, mmDistanceSqrd, dpDistanceSqrd;
 	float xx, zz;
 	bool bDay;
 
@@ -24,6 +24,7 @@ public class GenerateLevel : MonoBehaviour
 		plantClustSqrd = plantClusterDist*plantClusterDist; //causing problems with lvl generation
 		spClusterSqrd = spClusterDist*spClusterDist;
 		mmDistanceSqrd = momsDistance * momsDistance;
+		dpDistanceSqrd = dayPlantPitDistance * dayPlantPitDistance;
 		groundSize = Ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z- groundSize.z/8;
@@ -31,7 +32,8 @@ public class GenerateLevel : MonoBehaviour
 		NightLight = GameObject.Find("Night Light").transform;
 		Pits = new GameObject[pits];
 		MoMs = new GameObject[moms];
-		int sp = 0, mm = 0;
+		int sp = 0, mm = 0, dp = 0;
+		//Sarlac Pits
 		do{
 			spawnPoint = new Vector3(Random.Range(-xx,xx), 0.5f, Random.Range(-zz,zz));
 
@@ -60,7 +62,27 @@ public class GenerateLevel : MonoBehaviour
 				}
 			}
 		}while(sp<pits);
+		//Day Plants
+		do{
+			spawnPoint = new Vector3(Random.Range(-xx,xx), 0.5f, Random.Range(-zz,zz));
+			Vector3 nearestLoc = NearestTarget(Pits, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
+			if((nearestLoc-spawnPoint).sqrMagnitude>dpDistanceSqrd)
+			{
+				SpawnDayPlants(spawnPoint);
+				dp++;
+			}else{
 
+				spawnPoint = new Vector3(Random.Range(-xx,xx), 0.5f, Random.Range(-zz,zz));
+				nearestLoc = NearestTarget(Pits, spawnPoint);
+				if((nearestLoc-spawnPoint).sqrMagnitude>dpDistanceSqrd)
+				{
+					SpawnDayPlants(spawnPoint);
+					dp++;
+				}
+			}
+			
+		}while(dp<dayPatches);
+		//MoMs
 		do{
 			spawnPoint = new Vector3(Random.Range(-xx,xx), 0.5f, Random.Range(-zz,zz));
 
@@ -130,8 +152,8 @@ public class GenerateLevel : MonoBehaviour
 	{
 		GameObject newPit =	Instantiate(Sarlac_Pit, position, Quaternion.identity)as GameObject;
 		PitController.Pits.Add(newPit.GetComponent<PitController>());
-		int g = Random.Range(0,3);
-		plants = Random.Range(3,7);
+		int g = Random.Range(0,3);// number of glow rocks
+		plants = Random.Range(3,7);// number of plants
 		int pl = 0;
 		//float minX = -groundSize.x, maxX = groundSize.x, minZ = groundSize.z, maxZ = groundSize.z;;
 		GameObject[] flowers = new GameObject[plants]; 
@@ -143,7 +165,7 @@ public class GenerateLevel : MonoBehaviour
 
 			if(pl<1)
 			{
-				flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
+				flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
 				pl++;
 				if(g>0)
 				{
@@ -155,7 +177,7 @@ public class GenerateLevel : MonoBehaviour
 				nearestLoc = NearestTarget(flowers, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
 				if((nearestLoc-spawnPoint).sqrMagnitude>plantClusterDist)
 				{
-					flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
+					flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
 					pl++;
 					if(g>0)
 					{
@@ -170,7 +192,7 @@ public class GenerateLevel : MonoBehaviour
 					nearestLoc = NearestTarget(flowers, spawnPoint);
 					if((nearestLoc-spawnPoint).sqrMagnitude>plantClusterDist)
 					{
-						flowers[pl] = Instantiate(Plant, spawnPoint, Quaternion.identity)as GameObject;
+						flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
 						pl++;
 						if(g>0)
 						{
@@ -182,6 +204,13 @@ public class GenerateLevel : MonoBehaviour
 			}
 		}while(pl<plants);
 		return newPit;
+	}
+	GameObject SpawnDayPlants(Vector3 position)
+	{
+		GameObject dayPlant = Instantiate(DayPlant, position, Quaternion.identity)as GameObject;
+
+		return dayPlant;
+		
 	}
 
 	Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
