@@ -75,11 +75,29 @@ public class MoMController : Unit_Base
 		base.Death ();
 		newQueen();
 	}
+
 	public override void TakeDamage(float damage)
 	{
 		StartCoroutine(EmergencyFighters());
 		Health = -damage/2;
 	}
+
+	public int GetTeamSize()
+	{
+		int myUnits = 0, grandUnits = 0;
+		myUnits = farmers+fighters+daughters;
+		List<DaughterController> myDaughters = new List<DaughterController>();
+		if(daughters>0)
+		{
+			myDaughters = Daughters.FindAll(d=> d.isActive && d.teamID==teamID);
+			foreach(DaughterController d in myDaughters)
+			{
+				grandUnits += d.farmers + d.fighters;
+			}
+		}
+		return myUnits + grandUnits;
+	}
+
 	protected virtual IEnumerator EmergencyFighters()
 	{
 		int ef = (FoodAmount - 2)/fighterCost;

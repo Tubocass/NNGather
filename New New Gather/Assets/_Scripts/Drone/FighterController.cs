@@ -45,11 +45,11 @@ public class FighterController : DroneController
 		// (enemies[enemies.FindIndex(e=> e.unitID == id)]);
 	}
 
-	public override void setMoM(MoMController mom, Color tc)
-	{
-		base.setMoM(mom, tc);
-		//StartCoroutine(LookForEnemies());
-	}
+//	public override void setMoM(MoMController mom, Color tc)
+//	{
+//		base.setMoM(mom, tc);
+//		//StartCoroutine(LookForEnemies());
+//	}
 
 	protected override void Death()
 	{
@@ -127,7 +127,8 @@ public class FighterController : DroneController
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
-		enemies.RemoveAll(e=> !e.isActive);
+		//enemies.RemoveAll(e=> !e.isActive);
+		enemies.Clear();
 		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
 
 		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
@@ -154,7 +155,7 @@ public class FighterController : DroneController
 				if(f.collider.tag == "Drone")
 				{
 					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-					if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+					if(ot!=null && !ot.teamID.Equals(teamID) && !enemies.Contains(ot))
 					{
 						enemies.Add(ot);
 					}
@@ -212,8 +213,8 @@ public class FighterController : DroneController
 //		else return false;
 //	}
 
-	public override void OnTriggerEnter(Collider other)
-	{
+	//public override void OnTriggerEnter(Collider other)
+	//{
 //		if(CanTargetEnemy() && other.tag == "Drone")
 //		{
 //			Unit_Base ot = other.gameObject.GetComponent<Unit_Base>();
@@ -225,7 +226,7 @@ public class FighterController : DroneController
 //				}
 //			}
 //		}
-	}
+	//}
 //	public override void OnTriggerStay(Collider other)
 //	{
 ////		if(other.tag == "Fighter")

@@ -29,10 +29,12 @@ public class CameraFollow : MonoBehaviour
 		Vector3 targetDir  = tran.position + position*Time.deltaTime; 
 		tran.position = Vector3.MoveTowards(tran.position,targetDir,0.25f);
 	}
+
 	public void SetFollow()
 	{
 		bFollowing = true;
 	}
+
 	
 	void FixedUpdate ()
 	{

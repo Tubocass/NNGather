@@ -47,11 +47,11 @@ public class FarmerController : DroneController
 			MoveTo(myMoM.FoodAnchor);
 		}
 	}
-	public override void setMoM(MoMController mom, Color tc)
-	{
-		base.setMoM(mom, tc);
-		StartCoroutine(LookForFood());
-	}
+//	public override void setMoM(MoMController mom, Color tc)
+//	{
+//		base.setMoM(mom, tc);
+//		//StartCoroutine(LookForFood());
+//	}
 
 	protected override void Death()
 	{
@@ -159,20 +159,21 @@ public class FarmerController : DroneController
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
 
-//		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-//		if(hits.Length>0)
-//		{
-//			nearestFoodDist = hits[0].distance; //Vector3.Distance(Location,enemies[0].Location);
-//			foreach(RaycastHit f in hits)
-//			{
-//				newDist = f.distance;//Vector3.Distance(Location,unit.Location);
-//				if(newDist <= nearestFoodDist)
-//				{
-//					nearestFoodDist = newDist;
-//					food = f.collider.GetComponent<FoodObject>();
-//				}
-//			}
-//		}
+		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		if(hits.Length>0)
+		{
+			foreach(RaycastHit f in hits)
+			{
+				if(f.collider.tag == "Food")
+				{
+					FoodObject ot = f.collider.GetComponent<FoodObject>();
+					if(ot!=null && !myMoM.Foods.Contains(ot))
+					{
+						myMoM.Foods.Add(ot);
+					}
+				}
+			}
+		}
 
 		foods = myMoM.Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
 
@@ -191,28 +192,28 @@ public class FarmerController : DroneController
 		}
 		return food;
 	}
-	IEnumerator LookForFood()
-	{
-		while(true)
-		{
-			RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-			if(hits.Length>0)
-			{
-				foreach(RaycastHit f in hits)
-				{
-					if(f.collider.tag == "Food")
-					{
-						FoodObject ot = f.collider.GetComponent<FoodObject>();
-						if(ot!=null && !myMoM.Foods.Contains(ot))
-						{
-							myMoM.Foods.Add(ot);
-						}
-					}
-				}
-			}
-			yield return new WaitForSeconds(2f);
-		}
-	}
+//	IEnumerator LookForFood()
+//	{
+//		while(true)
+//		{
+//			RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+//			if(hits.Length>0)
+//			{
+//				foreach(RaycastHit f in hits)
+//				{
+//					if(f.collider.tag == "Food")
+//					{
+//						FoodObject ot = f.collider.GetComponent<FoodObject>();
+//						if(ot!=null && !myMoM.Foods.Contains(ot))
+//						{
+//							myMoM.Foods.Add(ot);
+//						}
+//					}
+//				}
+//			}
+//			yield return new WaitForSeconds(2f);
+//		}
+//	}
 	protected void ReturnToHome()
 	{
 		bReturning = true;

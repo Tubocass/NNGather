@@ -27,7 +27,7 @@ public class FoodSpawner : MonoBehaviour
 		bSpawnTime = b;
 		else bSpawnTime = !b;
 
-		if(bSpawnTime)
+		//if(bSpawnTime)
 		{
 			StartCoroutine(SpawnFood());
 		}
@@ -45,8 +45,9 @@ public class FoodSpawner : MonoBehaviour
 		{
 			GameObject newFood = Instantiate(foodObj, spawnPoints[i], Quaternion.identity) as GameObject;
 			foodPile[i] = newFood.GetComponent<FoodObject>();
+			foodPile[i].gameObject.SetActive(false);
 		}
-		StartCoroutine(SpawnFood());
+		DaySwitch(true);
 	}
 	
 	IEnumerator SpawnFood()
@@ -63,6 +64,18 @@ public class FoodSpawner : MonoBehaviour
 				}
 			}
 			yield return new WaitForSeconds(3f);
+		} 
+		if(!bSpawnTime)
+		{
+			for(int i = 0; i<foodPile.Length; i++)
+			{
+				if(!foodPile[i].gameObject.activeSelf)
+				{
+					foodPile[i].transform.position = spawnPoints[i];
+					foodPile[i].gameObject.SetActive(true);
+					yield return new WaitForSeconds(9f);
+				}
+			}
 		}
 	}
 }

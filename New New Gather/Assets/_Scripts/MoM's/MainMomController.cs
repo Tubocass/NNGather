@@ -32,6 +32,7 @@ public class MainMomController : MoMController
 //	}
 
 	[SerializeField] LayerMask mask;
+	MainMomController MainMoM;
 
 	protected override void OnEnable()
 	{
