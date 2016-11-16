@@ -32,13 +32,14 @@ public class MainMomController : MoMController
 //	}
 
 	[SerializeField] LayerMask mask;
-	MainMomController MainMoM;
+	public static MainMomController MainMoM;
 
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		MainMoM = this;
 		UnityEventManager.TriggerEvent("MainMomChange",this.gameObject);
-		teamID = 0;
+		//teamID = 0;
 		farmFlagFab = Instantiate(farmFlagFab) as GameObject; 
 		fightFlagFab = Instantiate(fightFlagFab) as GameObject;
 		farmFlagTran = farmFlagFab.GetComponent<Transform>();

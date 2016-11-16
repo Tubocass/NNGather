@@ -42,6 +42,7 @@ public class MoMController : Unit_Base
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
+	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
@@ -58,7 +59,10 @@ public class MoMController : Unit_Base
 		MoMCount+=1;
 		daughters = 0;//I don't know why this has to be reset
 		foodAmount = startFood;
-		teamID = MoMCount+1;
+		teamID = MoMCount-1;
+
+		if(!MoMs.Contains(this))
+		MoMs.Add(this);
 	}
 //	protected virtual void OnDisable()
 //	{
@@ -82,20 +86,20 @@ public class MoMController : Unit_Base
 		Health = -damage/2;
 	}
 
-	public int GetTeamSize()
+	public static int GetTeamSize(int teamNum)
 	{
-		int myUnits = 0, grandUnits = 0;
-		myUnits = farmers+fighters+daughters;
-		List<DaughterController> myDaughters = new List<DaughterController>();
-		if(daughters>0)
+		int myUnits = 0;
+		List<MoMController> moms = new List<MoMController>();
+		moms = MoMs.FindAll(d=> d.isActive && d.teamID==teamNum);
+
+		if(moms.Count>0)
 		{
-			myDaughters = Daughters.FindAll(d=> d.isActive && d.teamID==teamID);
-			foreach(DaughterController d in myDaughters)
+			foreach(MoMController d in moms)
 			{
-				grandUnits += d.farmers + d.fighters;
+				myUnits += d.farmers + d.fighters + 1;
 			}
 		}
-		return myUnits + grandUnits;
+		return myUnits;
 	}
 
 	protected virtual IEnumerator EmergencyFighters()

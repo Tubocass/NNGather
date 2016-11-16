@@ -45,10 +45,16 @@ public class GUIUpdate : MonoBehaviour
 	{
 		while(true)
 		{
-			float totalPop, t1, t2, t3;
+			float totalPop;
+			float t1 = MoMController.GetTeamSize(0);
+			float t2 = MoMController.GetTeamSize(1);
+			float t3 = MoMController.GetTeamSize(2);
+			totalPop = t1+t2+t3;
+
 			if(mainMoMControl!= null)
 			{
-				statText.text = "Units: "+ mainMoMControl.GetTeamSize();
+				statText.text = " Farmers: "+ MainMomController.MainMoM.farmers+ " Fighters: "+ MainMomController.MainMoM.fighters
+					+ "\n Team 1: "+ t1 +" - "+ Mathf.Floor(t1/totalPop*100) + "%" +  "\n Team 2: "+ t2 +" - "+ Mathf.Floor(t2/totalPop*100) +"%" +"\n Team 3: "+ t3 +" - "+ Mathf.Floor(t3/totalPop*100) +"%";
 			}
 			yield return new WaitForSeconds(1f);
 		}
