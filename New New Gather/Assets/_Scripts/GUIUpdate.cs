@@ -5,14 +5,13 @@ using System.Collections.Generic;
 
 public class GUIUpdate : MonoBehaviour 
 {
-	[SerializeField] Text scoreText, healthText, statText;
+	[SerializeField] Text scoreText, healthText, statText1, statText2;
 	MainMomController mainMoMControl;
 
 
 	void OnEnable()
 	{
 		UnityEventManager.StartListening("UpdateFood", SetFood);
-		UnityEventManager.StartListening("MainMomChange", MoMChanged);
 		UnityEventManager.StartListening("UpdateHealth", SetHealth);
 		StartCoroutine(UpdateInfo());
 //		healthText.text =  "Health: " + 0;
@@ -22,13 +21,8 @@ public class GUIUpdate : MonoBehaviour
 	{
 		UnityEventManager.StopListening("UpdateFood", SetFood);
 		UnityEventManager.StopListening("UpdateHealth", SetHealth);
-		UnityEventManager.StopListening("MainMomChange", MoMChanged);
 	}
-	void MoMChanged(GameObject Main)
-	{
-		mainMoMControl = Main.GetComponent<MainMomController>();
 
-	}
 	void SetFood(int amount)
 	{
 		scoreText.text = "Food: "+ amount;
@@ -51,10 +45,10 @@ public class GUIUpdate : MonoBehaviour
 			float t3 = MoMController.GetTeamSize(2);
 			totalPop = t1+t2+t3;
 
-			if(mainMoMControl!= null)
+			if(MainMomController.MainMoM!= null)
 			{
-				statText.text = " Farmers: "+ MainMomController.MainMoM.farmers+ " Fighters: "+ MainMomController.MainMoM.fighters
-					+ "\n Team 1: "+ t1 +" - "+ Mathf.Floor(t1/totalPop*100) + "%" +  "\n Team 2: "+ t2 +" - "+ Mathf.Floor(t2/totalPop*100) +"%" +"\n Team 3: "+ t3 +" - "+ Mathf.Floor(t3/totalPop*100) +"%";
+				statText1.text = "Farmers: "+ MainMomController.MainMoM.farmers+ "\nFighters: "+ MainMomController.MainMoM.fighters;
+				statText2.text =  "Team 1: "+ t1 +" - "+ Mathf.Floor(t1/totalPop*100) + "%" +  "\nTeam 2: "+ t2 +" - "+ Mathf.Floor(t2/totalPop*100) +"%" +"\nTeam 3: "+ t3 +" - "+ Mathf.Floor(t3/totalPop*100) +"%";
 			}
 			yield return new WaitForSeconds(1f);
 		}

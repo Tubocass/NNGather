@@ -38,7 +38,7 @@ public class MainMomController : MoMController
 	{
 		base.OnEnable();
 		MainMoM = this;
-		UnityEventManager.TriggerEvent("MainMomChange",this.gameObject);
+		UnityEventManager.TriggerEvent("MainMomChange");
 		//teamID = 0;
 		farmFlagFab = Instantiate(farmFlagFab) as GameObject; 
 		fightFlagFab = Instantiate(fightFlagFab) as GameObject;

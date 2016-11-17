@@ -15,7 +15,8 @@ public class FoodSpawner : MonoBehaviour
 	{
 		myTag = gameObject.tag;
 		UnityEventManager.StartListening("DayTime", DaySwitch);
-
+		DaySwitch(GenerateLevel.IsDayLight());
+		StartCoroutine(SpawnFood());
 	}
 	void OnDisable()
 	{
@@ -26,11 +27,6 @@ public class FoodSpawner : MonoBehaviour
 		if(myTag.Equals("DayPlant"))
 		bSpawnTime = b;
 		else bSpawnTime = !b;
-
-		//if(bSpawnTime)
-		{
-			StartCoroutine(SpawnFood());
-		}
 	}
 
 	void Start () 
@@ -47,12 +43,11 @@ public class FoodSpawner : MonoBehaviour
 			foodPile[i] = newFood.GetComponent<FoodObject>();
 			foodPile[i].gameObject.SetActive(false);
 		}
-		DaySwitch(true);
 	}
 	
 	IEnumerator SpawnFood()
 	{
-		while(bSpawnTime)
+		while(true)
 		{
 			for(int i = 0; i<foodPile.Length; i++)
 			{
@@ -60,22 +55,14 @@ public class FoodSpawner : MonoBehaviour
 				{
 					foodPile[i].transform.position = spawnPoints[i];
 					foodPile[i].gameObject.SetActive(true);
-					yield return new WaitForSeconds(3f);
+					if(!bSpawnTime)
+					{
+						yield return new WaitForSeconds(3f);
+					}else yield return new WaitForSeconds(12f);
+							
 				}
 			}
 			yield return new WaitForSeconds(3f);
 		} 
-		if(!bSpawnTime)
-		{
-			for(int i = 0; i<foodPile.Length; i++)
-			{
-				if(!foodPile[i].gameObject.activeSelf)
-				{
-					foodPile[i].transform.position = spawnPoints[i];
-					foodPile[i].gameObject.SetActive(true);
-					yield return new WaitForSeconds(9f);
-				}
-			}
-		}
 	}
 }

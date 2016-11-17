@@ -8,29 +8,15 @@ public class InputControls : MonoBehaviour
 	//Transform  mainMoMTran; //farmFlagTran, fightFlagTran,;
 	[SerializeField] LayerMask mask;
 	[SerializeField] float speed = 10, maxFOV = 25, minFOV= 20, scrollSpeed = 3f;
-	MainMomController mainMoMControl;
 	Vector3 movement;
 	CameraFollow cam;
 
-
-	void OnEnable()
-	{
-		UnityEventManager.StartListening("MainMomChange",MoMChanged);
-	}
-	void OnDisable()
-	{
-		UnityEventManager.StopListening("MainMomChange",MoMChanged);
-	}
 	void Start () 
 	{
 		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
-	void MoMChanged(GameObject Main)
-	{
-		mainMoMControl = Main.GetComponent<MainMomController>();
-		cam.SetTarget(mainMoMControl.transform);
-	}
+
 	void Update () 
 	{
 		float lastInputX = Input.GetAxis ("Horizontal");
@@ -48,7 +34,7 @@ public class InputControls : MonoBehaviour
 			Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minFOV, maxFOV);
 		}
 
-		if(mainMoMControl.isActive)
+		if(MainMomController.MainMoM.isActive)
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
@@ -56,23 +42,23 @@ public class InputControls : MonoBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				mainMoMControl.CreateFarmer();
+				MainMomController.MainMoM.CreateFarmer();
 			}
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				mainMoMControl.CreateFighter();
+				MainMomController.MainMoM.CreateFighter();
 			}
 			if(Input.GetKeyDown(KeyCode.R))
 			{
-				mainMoMControl.CreateDaughter();
+				MainMomController.MainMoM.CreateDaughter();
 			}
 			if(Input.GetKeyDown(KeyCode.Z))
 			{
-				mainMoMControl.RecallFarmFlag();
+				MainMomController.MainMoM.RecallFarmFlag();
 			}
 			if(Input.GetKeyDown(KeyCode.C))
 			{
-				mainMoMControl.RecallFightFlag();
+				MainMomController.MainMoM.RecallFightFlag();
 			}
 			if (Input.GetMouseButtonDown (0)) 
 			{
@@ -81,7 +67,7 @@ public class InputControls : MonoBehaviour
 
 				if (Physics.Raycast (ray, out hit, 100f, mask)) 
 				{
-					mainMoMControl.PlaceFarmFlag(hit.point);
+					MainMomController.MainMoM.PlaceFarmFlag(hit.point);
 				}
 			}
 			if (Input.GetMouseButtonDown (1)) 
@@ -91,7 +77,7 @@ public class InputControls : MonoBehaviour
 
 				if (Physics.Raycast (ray, out hit, 100f, mask)) 
 				{
-					mainMoMControl.PlaceFightFlag(hit.point);
+					MainMomController.MainMoM.PlaceFightFlag(hit.point);
 				}
 			}
 		}
