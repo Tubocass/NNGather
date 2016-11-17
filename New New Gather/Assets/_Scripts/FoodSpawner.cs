@@ -55,11 +55,10 @@ public class FoodSpawner : MonoBehaviour
 				{
 					foodPile[i].transform.position = spawnPoints[i];
 					foodPile[i].gameObject.SetActive(true);
-					if(!bSpawnTime)
+					if(bSpawnTime)
 					{
 						yield return new WaitForSeconds(3f);
 					}else yield return new WaitForSeconds(12f);
-							
 				}
 			}
 			yield return new WaitForSeconds(3f);

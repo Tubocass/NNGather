@@ -38,7 +38,7 @@ public class MoMController : Unit_Base
 	}
 	public List<FoodObject> Foods;
 	public Color TeamColor;
-	public int farmers, fighters, daughters;//counters
+	public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
@@ -57,7 +57,9 @@ public class MoMController : Unit_Base
 		Foods = new List<FoodObject>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 		MoMCount+=1;
-		daughters = 0;//I don't know why this has to be reset
+		daughters = 0;//I really
+		farmers = 0;//don't understand
+		fighters = 0;//why these have to be hard reset
 		foodAmount = startFood;
 		teamID = MoMCount-1;
 
@@ -213,44 +215,45 @@ public class MoMController : Unit_Base
 		dc.setMoM(this, TeamColor);
 		Daughters.Add(dc);
 	}
+
 	public virtual void CedeDrones(MoMController newMoM)
 	{
 		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
 		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
 		foreach(FarmerController f in farmTransfers)
-			{
-				f.setMoM(newMoM);
-				newMoM.farmers++;
-			}
-			foreach(FighterController f in fightTransfers)
-			{
-				f.setMoM(newMoM);
-				newMoM.fighters++;
-			}
+		{
+			f.setMoM(newMoM);
+			newMoM.farmers++;
+		}
+		foreach(FighterController f in fightTransfers)
+		{
+			f.setMoM(newMoM);
+			newMoM.fighters++;
+		}
 	}
 	protected void KillDrones()
 	{
 		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
 		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
 		foreach(FarmerController f in farmTransfers)
-			{
-				f.Health = -20;
-			}
-			foreach(FighterController f in fightTransfers)
-			{
-				f.Health = -20;
-			}
+		{
+			f.Health = -20;
+		}
+		foreach(FighterController f in fightTransfers)
+		{
+			f.Health = -20;
+		}
 	}
 
+//	public void SetupQueen(MoMController oldMoM)//Gets called by new MoM
+//	{
+//		//Health = startHealth;
+//		teamID = oldMoM.teamID;
+//		TeamColor = oldMoM.TeamColor;
+//		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+//		oldMoM.CedeDrones(this);
+//	}
 
-	public void SetupQueen(MoMController oldMoM)//Gets called by new MoM
-	{
-		//Health = startHealth;
-		teamID = oldMoM.teamID;
-		TeamColor = oldMoM.TeamColor;
-		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-		oldMoM.CedeDrones(this);
-	}
 	protected virtual void newQueen()
 	{
 		List<DaughterController> princesses = new List<DaughterController>();
@@ -262,20 +265,26 @@ public class MoMController : Unit_Base
 		if(princesses.Count>0)
 		{
 			GameObject spawn;
+			MoMController mom;
 			//give first princess all drones
 			CedeDrones(princesses[0]);
 
 			for(int p = 0; p<princesses.Count; p++)
 			{
-				if(this.GetType()== typeof(MainMomController) && p==0)
+				if(this.GetType() == typeof(MainMomController) && p==0)
 				{
 					spawn = Instantiate(mMoMFab, princesses[p].Location, Quaternion.identity) as GameObject;
 				}else{
 					spawn = Instantiate(eMoMFAb, princesses[p].Location, Quaternion.identity) as GameObject;
 				}
-				MoMController mom = spawn.GetComponent<MoMController>();
+
+				mom = spawn.GetComponent<MoMController>();
 				mom.isActive = true;
-				mom.SetupQueen(princesses[p]);
+				mom.teamID = teamID;
+				mom.TeamColor = TeamColor;
+				mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+				princesses[p].CedeDrones(mom);
+				//mom.SetupQueen(princesses[p]);
 				princesses[p].Kill();
 			}
 		}else{

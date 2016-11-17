@@ -25,16 +25,13 @@ public class GUIUpdate : MonoBehaviour
 
 	void SetFood(int amount)
 	{
-		scoreText.text = "Food: "+ amount;
+		scoreText.text = "Food\n   "+ amount;
 	}
 	void SetHealth(int amount)
 	{
-		healthText.text = "Health: "+ amount;
+		healthText.text = "Health\n   "+ amount;
 	}
-	void SetStatus(int amount)
-	{
-		healthText.text = "Health: "+ amount;
-	}
+
 	IEnumerator UpdateInfo()
 	{
 		while(true)

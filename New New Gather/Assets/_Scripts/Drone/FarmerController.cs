@@ -149,11 +149,6 @@ public class FarmerController : DroneController
 		else return false;
 	}
 
-	bool IsFoodInSight()
-	{
-		return false;
-	}
-
 	FoodObject TargetNearest()
 	{
 		float nearestFoodDist, newDist;
@@ -192,44 +187,11 @@ public class FarmerController : DroneController
 		}
 		return food;
 	}
-//	IEnumerator LookForFood()
-//	{
-//		while(true)
-//		{
-//			RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-//			if(hits.Length>0)
-//			{
-//				foreach(RaycastHit f in hits)
-//				{
-//					if(f.collider.tag == "Food")
-//					{
-//						FoodObject ot = f.collider.GetComponent<FoodObject>();
-//						if(ot!=null && !myMoM.Foods.Contains(ot))
-//						{
-//							myMoM.Foods.Add(ot);
-//						}
-//					}
-//				}
-//			}
-//			yield return new WaitForSeconds(2f);
-//		}
-//	}
+
 	protected void ReturnToHome()
 	{
 		bReturning = true;
 		MoveTo(myMoM.Location);
-	}
-
-	public override void OnTriggerEnter(Collider other)//replaced by LookForFood coroutine
-	{
-//		if(other.tag == "Food")
-//		{
-//			FoodObject ot = other.gameObject.GetComponent<FoodObject>();
-//			if(ot!=null && !myMoM.Foods.Contains(ot))
-//			{
-//				myMoM.Foods.Add(ot);
-//			}
-//		}
 	}
 
 	public override void OnCollisionEnter(Collision bang)
@@ -264,7 +226,6 @@ public class FarmerController : DroneController
 				carriedFood = null;
 				bReturning = false;
 			}
-
 		}
 	}
 }

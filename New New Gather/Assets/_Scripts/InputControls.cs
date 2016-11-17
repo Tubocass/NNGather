@@ -16,7 +16,14 @@ public class InputControls : MonoBehaviour
 		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
 		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
-
+	public void CreatFarmer()
+	{
+		MainMomController.MainMoM.CreateFarmer();
+	}
+	public void CreatFighter()
+	{
+		MainMomController.MainMoM.CreateFighter();
+	}
 	void Update () 
 	{
 		float lastInputX = Input.GetAxis ("Horizontal");
