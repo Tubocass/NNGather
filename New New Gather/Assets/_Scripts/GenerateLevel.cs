@@ -13,10 +13,8 @@ public class GenerateLevel : MonoBehaviour
 	[SerializeField] float SunSpeed = 2f;
 	GameObject[] Pits;
 	GameObject[] MoMs;
-	//List<FoodSpawner> PlantList = new List<FoodSpawner>();
 	GameObject spawn;
 	Vector3 spawnPoint;
-	float plantClustSqrd, spClusterSqrd, mmDistanceSqrd, dpDistanceSqrd;
 	float xx, zz;
 	int MoMCount;
 	bool bDay;
@@ -24,10 +22,6 @@ public class GenerateLevel : MonoBehaviour
 
 	void Start () 
 	{
-//		plantClustSqrd = plantClusterDist*plantClusterDist; //causing problems with lvl generation
-//		spClusterSqrd = spClusterDist*spClusterDist;
-//		mmDistanceSqrd = momsDistance * momsDistance;
-//		dpDistanceSqrd = dayPlantPitDistance * dayPlantPitDistance;
 		groundSize = Ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z- groundSize.z/8;
@@ -35,87 +29,16 @@ public class GenerateLevel : MonoBehaviour
 		NightLight = GameObject.Find("Night Light").transform;
 		Pits = new GameObject[pits];
 		MoMs = new GameObject[moms];
-		//int sp = 0, mm = 0, dp = 0;
 
 		//Sarlac Pits
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
-		/*do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
 
-			if(sp==0)
-			{
-				Pits[sp] = SpawnSarlacPit(spawnPoint);
-				//fd = spawn.GetComponent<FoodSpawner>();
-				//PlantList.Add(fd);
-				sp++;
-			}else
-			{
-				Vector3 nearestLoc = NearestTarget(Pits, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
-				if((nearestLoc-spawnPoint).sqrMagnitude>spClusterSqrd)
-				{
-					Pits[sp] = SpawnSarlacPit(spawnPoint);
-					sp++;
-				}else{
-
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
-					nearestLoc = NearestTarget(Pits, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>spClusterSqrd)
-					{
-						Pits[sp] = SpawnSarlacPit(spawnPoint);
-						sp++;
-					}
-				}
-			}
-		}while(sp<pits);*/
 		//Day Plants
 		SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants);
-		/*do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
-			Vector3 nearestLoc = NearestTarget(Pits, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
-			if((nearestLoc-spawnPoint).sqrMagnitude>dpDistanceSqrd)
-			{
-				SpawnDayPlants(spawnPoint);
-				dp++;
-			}else{
 
-				spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
-				nearestLoc = NearestTarget(Pits, spawnPoint);
-				if((nearestLoc-spawnPoint).sqrMagnitude>dpDistanceSqrd)
-				{
-					SpawnDayPlants(spawnPoint);
-					dp++;
-				}
-			}
-			
-		}while(dp<dayPatches);*/
 		//MoMs
 		SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
-		/*do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
 
-			if(mm==0)
-			{
-				MoMs[mm] = Instantiate(MainMoMFab, spawnPoint, Quaternion.identity)as GameObject;
-				mm++;
-			}else
-			{
-				Vector3 nearestLoc = NearestTarget(MoMs, spawnPoint);
-				if((nearestLoc-spawnPoint).sqrMagnitude>mmDistanceSqrd)
-				{
-					MoMs[mm] = SpawnMoM(spawnPoint);
-					mm++;
-				}else{
-
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-xx,xx), 0.5f, UnityEngine.Random.Range(-zz,zz));
-					nearestLoc = NearestTarget(MoMs, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>mmDistanceSqrd)
-					{
-						MoMs[mm] = SpawnMoM(spawnPoint);
-						mm++;
-					}
-				}
-			}
-		}while(mm<moms);*/
 
 	}
 	void Update()
@@ -160,66 +83,16 @@ public class GenerateLevel : MonoBehaviour
 		PitController.Pits.Add(newPit.GetComponent<PitController>());
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
 		plants = UnityEngine.Random.Range(3,7);// number of plants
-		//int pl = 0;
-		//GameObject[] flowers = new GameObject[plants]; 
 		SpawnObjects(NightPlantFab, plants, plantRadius, plantClusterDist, position);
 		if(g>0)
 		SpawnObjects(GlowFab, g, 15, plantClusterDist, position);
-		/*do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-plantRadius,plantRadius)+position.x, 0.5f, UnityEngine.Random.Range(-plantRadius,plantRadius)+position.z);
-			Mathf.Clamp(spawnPoint.x, -xx, xx);
-			Mathf.Clamp(spawnPoint.z, -zz, zz);
-			Vector3 nearestLoc;
-
-			if(pl<1)
-			{
-				flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
-				pl++;
-				if(g>0)
-				{
-					GameObject glow = Instantiate(GlowFab, new Vector3(UnityEngine.Random.Range(-plantRadius,plantRadius)+position.x, 0.5f, UnityEngine.Random.Range(-plantRadius,plantRadius)+position.z), Quaternion.identity)as GameObject;
-					g--;
-				}
-			}else
-			{
-				nearestLoc = NearestTarget(flowers, spawnPoint);//Find(l=> (l.Location-spawnPoint).sqrMagnitude<clusterDist)
-				if((nearestLoc-spawnPoint).sqrMagnitude>plantClustSqrd)
-				{
-					flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
-					pl++;
-					if(g>0)
-					{
-						GameObject glow =Instantiate(GlowFab, new Vector3(UnityEngine.Random.Range(-plantRadius,plantRadius)+position.x, 0.5f, UnityEngine.Random.Range(-plantRadius,plantRadius)+position.z), Quaternion.identity)as GameObject;
-						g--;
-					}
-				}else{
-
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-plantRadius,plantRadius)+position.x, 0.5f, UnityEngine.Random.Range(-plantRadius,plantRadius)+position.z);
-					Mathf.Clamp(spawnPoint.x, -xx, xx);
-					Mathf.Clamp(spawnPoint.z, -zz, zz);
-					nearestLoc = NearestTarget(flowers, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>plantClustSqrd)
-					{
-						flowers[pl] = Instantiate(NightPlant, spawnPoint, Quaternion.identity)as GameObject;
-						pl++;
-						if(g>0)
-						{
-							GameObject glow =Instantiate(GlowFab, new Vector3(UnityEngine.Random.Range(-plantRadius,plantRadius)+position.x, 0.5f, UnityEngine.Random.Range(-plantRadius,plantRadius)+position.z), Quaternion.identity)as GameObject;
-							g--;
-						}
-					}
-				}
-			}
-		}while(pl<plants);*/
 		return newPit;
 	}
 
 	GameObject SpawnDayPlants(Vector3 position)
 	{
 		GameObject dayPlant = Instantiate(DayPlantFab, position, Quaternion.identity)as GameObject;
-
 		return dayPlant;
-		
 	}
 
 	void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
@@ -230,37 +103,6 @@ public class GenerateLevel : MonoBehaviour
 				GameObject obj = Instantiate(fab, pos, Quaternion.identity)as GameObject;
 			return obj; 
 			});
-		/*do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
-			Mathf.Clamp(spawnPoint.x, -xx, xx);
-			Mathf.Clamp(spawnPoint.z, -zz, zz);
-			Vector3 nearestLoc;
-
-			if(created<1)
-			{
-				objs[created] = Instantiate(fab, spawnPoint, Quaternion.identity) as GameObject;
-				created++;
-			}else
-			{
-				nearestLoc = NearestTarget(objs, spawnPoint);
-				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
-				{
-					objs[created] = Instantiate(fab, spawnPoint, Quaternion.identity) as GameObject;
-					created++;
-				}else{
-
-					spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
-					Mathf.Clamp(spawnPoint.x, -xx, xx);
-					Mathf.Clamp(spawnPoint.z, -zz, zz);
-					nearestLoc = NearestTarget(objs, spawnPoint);
-					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
-					{
-						objs[created] = Instantiate(fab, spawnPoint, Quaternion.identity) as GameObject;
-						created++;
-					}
-				}
-			}
-		}while(created<amount);*/
 	}
 
 	void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
