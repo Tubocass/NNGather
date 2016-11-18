@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MoMController : Unit_Base 
 {
-	public static int MoMCount;
+	//public static int MoMCount;
 	public int FoodAmount{
 		get
 		{
@@ -56,12 +56,11 @@ public class MoMController : Unit_Base
 		base.OnEnable();
 		Foods = new List<FoodObject>();
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-		MoMCount+=1;
 		daughters = 0;//I really
 		farmers = 0;//don't understand
 		fighters = 0;//why these have to be hard reset
 		foodAmount = startFood;
-		teamID = MoMCount-1;
+
 
 		if(!MoMs.Contains(this))
 		MoMs.Add(this);

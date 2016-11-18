@@ -41,7 +41,7 @@ public class InputControls : MonoBehaviour
 			Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minFOV, maxFOV);
 		}
 
-		if(MainMomController.MainMoM.isActive)
+		if(MainMomController.MainMoM!=null && MainMomController.MainMoM.isActive)
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
