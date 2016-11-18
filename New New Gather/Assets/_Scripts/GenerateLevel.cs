@@ -213,6 +213,7 @@ public class GenerateLevel : MonoBehaviour
 		}while(pl<plants);*/
 		return newPit;
 	}
+
 	GameObject SpawnDayPlants(Vector3 position)
 	{
 		GameObject dayPlant = Instantiate(DayPlantFab, position, Quaternion.identity)as GameObject;
@@ -220,12 +221,16 @@ public class GenerateLevel : MonoBehaviour
 		return dayPlant;
 		
 	}
+
 	void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
 	{
-		float clusterDistSqrd = clusterDist*clusterDist;
-		int created = 0;
 		GameObject[] objs = new GameObject[amount]; 
-		do{
+		SpawnObjects(amount, radius, clusterDist, position, objs, (Vector3 pos)=>
+		{
+				GameObject obj = Instantiate(fab, pos, Quaternion.identity)as GameObject;
+			return obj; 
+			});
+		/*do{
 			spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
 			Mathf.Clamp(spawnPoint.x, -xx, xx);
 			Mathf.Clamp(spawnPoint.z, -zz, zz);
@@ -255,7 +260,7 @@ public class GenerateLevel : MonoBehaviour
 					}
 				}
 			}
-		}while(created<amount);
+		}while(created<amount);*/
 	}
 
 	void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
