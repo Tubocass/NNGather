@@ -31,7 +31,7 @@ public class PitController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(timer);
 		PitController spawnPoint = Pits[Random.Range(0,Pits.Count-1)];//Find(p=> p.Location.x>GenerateLevel.Sun_A.position.x && p.Location.x<GenerateLevel.Sun_B.position.x);
-		if(spawnPoint!=null&& !GenerateLevel.IsDayLight())
+		if(spawnPoint!=null&& !GameController.IsDayLight())
 		{
 			SarlacInstance.anchor = spawnPoint.Location;
 			SarlacInstance.transform.position = spawnPoint.Location;

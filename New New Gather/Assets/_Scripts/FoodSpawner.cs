@@ -15,7 +15,7 @@ public class FoodSpawner : MonoBehaviour
 	{
 		myTag = gameObject.tag;
 		UnityEventManager.StartListening("DayTime", DaySwitch);
-		DaySwitch(GenerateLevel.IsDayLight());
+		DaySwitch(GameController.IsDayLight());
 		StartCoroutine(SpawnFood());
 	}
 	void OnDisable()

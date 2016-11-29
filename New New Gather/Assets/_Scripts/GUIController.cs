@@ -3,11 +3,11 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GUIUpdate : MonoBehaviour 
+public class GUIController : MonoBehaviour 
 {
-	[SerializeField] Text scoreText, healthText, statText1, statText2;
+	[SerializeField] RectTransform PauseScreen, ScoreScreen;
+	[SerializeField] Text foodText, healthText, statText1, statText2;
 	MainMomController mainMoMControl;
-
 
 	void OnEnable()
 	{
@@ -22,10 +22,15 @@ public class GUIUpdate : MonoBehaviour
 		UnityEventManager.StopListening("UpdateFood", SetFood);
 		UnityEventManager.StopListening("UpdateHealth", SetHealth);
 	}
+	public void EnablePause(bool show)
+	{
+		
+		PauseScreen.gameObject.SetActive(show);
+	}
 
 	void SetFood(int amount)
 	{
-		scoreText.text = "Food\n   "+ amount;
+		foodText.text = "Food\n   "+ amount;
 	}
 	void SetHealth(int amount)
 	{

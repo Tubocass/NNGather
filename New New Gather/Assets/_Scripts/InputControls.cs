@@ -10,10 +10,12 @@ public class InputControls : MonoBehaviour
 	[SerializeField] float speed = 10, maxFOV = 25, minFOV= 20, scrollSpeed = 3f;
 	Vector3 movement;
 	CameraFollow cam;
+	GUIController GUI;
 
 	void Start () 
 	{
 		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+		GUI = GetComponent<GUIController>();
 		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
 	public void CreatFarmer()
@@ -40,7 +42,10 @@ public class InputControls : MonoBehaviour
 			Camera.main.orthographicSize -= lastInputScroll* scrollSpeed;
 			Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minFOV, maxFOV);
 		}
-
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			GUI.EnablePause(true);
+		}
 		if(MainMomController.MainMoM!=null && MainMomController.MainMoM.isActive)
 		{
 			if(Input.GetKeyDown(KeyCode.Space))

@@ -46,7 +46,7 @@ public class Unit_Base : MonoBehaviour
 		health = startHealth;
 		TotalCreated+=1;
 		unitID = TotalCreated;
-		bDay = GenerateLevel.IsDayLight();
+		bDay = GameController.IsDayLight();
 		UnityEventManager.StartListening("DayTime", DaySwitch);
 
 	}

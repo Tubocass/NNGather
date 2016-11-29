@@ -5,28 +5,35 @@ using System;
 
 public class GenerateLevel : MonoBehaviour 
 {
-	public GameObject Ground, NightPlantFab, DayPlantFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, GlowFab;
-	public Vector3 groundSize;
-	public int plants = 5, dayScars = 5, pits = 3, plantClusterDist = 5, plantRadius = 15, dayPlantPitDistance = 15, spClusterDist = 20, moms = 2, momsDistance = 20;
-	public Color[] Colors;
-	static Transform DayLight, NightLight;
-	[SerializeField] float SunSpeed = 2f;
+	public int pits = 3, spClusterDist = 20, nightPlants = 5, nightPlantRadius = 15, nightPlantClusterDist = 5;
+	[Space(10)]
+
+	public int dayScars = 5, dayPlantPitDistance = 30;
+	[Space(10)]
+
+	public int moms = 2, momsDistance = 20;
+	[Space(10)]
+
+	[SerializeField] Color[] Colors;
+	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, GlowFab;//prefabs
+	[Space(5)]
+
 	GameObject[] Pits;
 	GameObject[] MoMs;
 	GameObject spawn;
 	Vector3 spawnPoint;
+	Vector3 groundSize;
 	float xx, zz;
 	int MoMCount;
 	bool bDay;
 	private delegate GameObject SpawnFunction(Vector3 v);
 
-	void Start () 
+	public void Generate() 
 	{
-		groundSize = Ground.GetComponent<MeshRenderer>().bounds.extents;
+		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
+		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z- groundSize.z/8;
-		DayLight = GameObject.Find("Day Light").transform;
-		NightLight = GameObject.Find("Night Light").transform;
 		Pits = new GameObject[pits];
 		MoMs = new GameObject[moms];
 
@@ -34,32 +41,10 @@ public class GenerateLevel : MonoBehaviour
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
 
 		//Day Plants
-		SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants);
+		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants);
 
 		//MoMs
 		SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
-
-
-	}
-	void Update()
-	{
-		DayLight.Rotate(DayLight.right,SunSpeed*Time.deltaTime,Space.World);
-		NightLight.Rotate(NightLight.right,SunSpeed*Time.deltaTime,Space.World);
-		if(!IsDayLight()&&bDay)
-		{
-			bDay = false;
-			UnityEventManager.TriggerEvent("DayTime",false);
-			DayLight.gameObject.SetActive(false);
-		}else if(IsDayLight()&&!bDay){
-			bDay = true;
-			UnityEventManager.TriggerEvent("DayTime",true);
-			DayLight.gameObject.SetActive(true);
-		}
-
-	}
-	public static bool IsDayLight()
-	{
-		return DayLight.eulerAngles.x>0-10&&DayLight.eulerAngles.x<180+10;
 	}
 
 	GameObject SpawnMoM(Vector3 position)
@@ -82,17 +67,23 @@ public class GenerateLevel : MonoBehaviour
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
 		PitController.Pits.Add(newPit.GetComponent<PitController>());
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
-		plants = UnityEngine.Random.Range(3,7);// number of plants
-		SpawnObjects(NightPlantFab, plants, plantRadius, plantClusterDist, position);
+		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
+		SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
 		if(g>0)
-		SpawnObjects(GlowFab, g, 15, plantClusterDist, position);
+		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position);
 		return newPit;
 	}
 
 	GameObject SpawnDayPlants(Vector3 position)
 	{
-		GameObject dayPlant = Instantiate(DayPlantFab, position, Quaternion.identity)as GameObject;
-		return dayPlant;
+		//float angle = Vector3.Angle(position, new Vector3());
+		Quaternion rand =  Quaternion.AngleAxis(UnityEngine.Random.Range(0,360), Vector3.up);//UnityEngine.Random.Range(0,360)
+		GameObject scar = Instantiate(ScarFab, position, rand)as GameObject;
+	
+		//plants = UnityEngine.Random.Range(3,7);// number of plants
+		SpawnObjects(DayPlantFab, 2, nightPlantRadius, nightPlantClusterDist, position);
+
+		return scar;
 	}
 
 	void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
@@ -100,9 +91,9 @@ public class GenerateLevel : MonoBehaviour
 		GameObject[] objs = new GameObject[amount]; 
 		SpawnObjects(amount, radius, clusterDist, position, objs, (Vector3 pos)=>
 		{
-				GameObject obj = Instantiate(fab, pos, Quaternion.identity)as GameObject;
+			GameObject obj = Instantiate(fab, pos, Quaternion.identity)as GameObject;
 			return obj; 
-			});
+		});
 	}
 
 	void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
@@ -116,12 +107,8 @@ public class GenerateLevel : MonoBehaviour
 			Mathf.Clamp(spawnPoint.z, -zz, zz);
 			Vector3 nearestLoc;
 
-			if(created<1)
+			if(objs[0] == null)
 			{
-//				RaycastHit[] hits = Physics.SphereCastAll(position,.5f,Vector3.down,1,mask, QueryTriggerInteraction.Ignore);
-//				if(hits.Length>0)
-//				{
-//				}
 				objs[created] = create(spawnPoint);
 				created++;
 			}else
