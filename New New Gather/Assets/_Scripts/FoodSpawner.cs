@@ -14,13 +14,13 @@ public class FoodSpawner : MonoBehaviour
 	void OnEnable()
 	{
 		myTag = gameObject.tag;
-		UnityEventManager.StartListening("DayTime", DaySwitch);
+		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 		DaySwitch(GameController.IsDayLight());
 		StartCoroutine(SpawnFood());
 	}
 	void OnDisable()
 	{
-		UnityEventManager.StopListening("DayTime", DaySwitch);
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
 	void DaySwitch(bool b)
 	{

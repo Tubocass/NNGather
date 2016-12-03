@@ -19,12 +19,12 @@ public class FighterController : DroneController
 		mask = 1<<LayerMask.NameToLayer("Units");
 		canAttack=true;
 		base.OnEnable();
-		UnityEventManager.StartListening("PlaceFightFlag", UpdateFlagLocation);
+		UnityEventManager.StartListeningInt("PlaceFightFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		UnityEventManager.StopListening("PlaceFightFlag", UpdateFlagLocation);
+		UnityEventManager.StopListeningInt("PlaceFightFlag", UpdateFlagLocation);
 	}
 	protected override void UpdateFlagLocation(int team)
 	{

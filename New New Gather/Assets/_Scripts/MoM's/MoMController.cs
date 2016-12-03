@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class MoMController : Unit_Base 
 {
-	//public static int MoMCount;
 	public int FoodAmount{
 		get
 		{
@@ -46,8 +45,7 @@ public class MoMController : Unit_Base
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
-	[SerializeField] protected int foodAmount;
-	[SerializeField] int farmerCost=1, fighterCost=2, daughterCost=8, startFood = 5;
+	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, foodAmount, hungerTime = 10;
 	[SerializeField] int qCount=0;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
@@ -70,6 +68,22 @@ public class MoMController : Unit_Base
 //		StopCoroutine(UpdateLocation());
 //	}
 
+//	public static int GetTeamSize(int teamNum) //function is valid, but I felt like using a static int would be cheaper
+//	{
+//		int myUnits = 0;
+//		List<MoMController> moms = new List<MoMController>();
+//		moms = MoMs.FindAll(d=> d.isActive && d.teamID==teamNum);
+//
+//		if(moms.Count>0)
+//		{
+//			foreach(MoMController d in moms)
+//			{
+//				myUnits += d.farmers + d.fighters + 1;
+//			}
+//		}
+//		return myUnits;
+//	}
+
 	protected virtual void Start()
 	{	
 		StartCoroutine(UpdateLocation());
@@ -79,28 +93,16 @@ public class MoMController : Unit_Base
 	{
 		base.Death ();
 		newQueen();
+		if(Unit_Base.TeamSize[teamID]==0)
+		{
+			UnityEventManager.TriggerEvent("MoMDeath", teamID);
+		}
 	}
 
 	public override void TakeDamage(float damage)
 	{
 		StartCoroutine(EmergencyFighters());
 		Health = -damage/2;
-	}
-
-	public static int GetTeamSize(int teamNum)
-	{
-		int myUnits = 0;
-		List<MoMController> moms = new List<MoMController>();
-		moms = MoMs.FindAll(d=> d.isActive && d.teamID==teamNum);
-
-		if(moms.Count>0)
-		{
-			foreach(MoMController d in moms)
-			{
-				myUnits += d.farmers + d.fighters + 1;
-			}
-		}
-		return myUnits;
 	}
 
 	protected virtual IEnumerator EmergencyFighters()
@@ -119,7 +121,7 @@ public class MoMController : Unit_Base
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(10);
+			yield return new WaitForSeconds(hungerTime);
 			if(FoodAmount>=1)
 			{
 				FoodAmount = -1;
@@ -133,6 +135,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -farmerCost;
 			farmers++;
+			Unit_Base.TeamSize[teamID] += 1;
 			if(Farmers.Count>0)
 			{
 				FarmerController recycle = Farmers.Find(f=> !f.isActive);
@@ -155,6 +158,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -fighterCost;
 			fighters++;
+			Unit_Base.TeamSize[teamID] += 1;
 			if(Fighters.Count>0)
 			{
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
@@ -177,6 +181,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -daughterCost;
 			daughters++;
+			Unit_Base.TeamSize[teamID] += 1;
 			if(Daughters.Count>0)
 			{
 				DaughterController recycle = Daughters.Find(f=> !f.isActive);
@@ -311,7 +316,7 @@ public class MoMController : Unit_Base
 		{
 			if(foodQ.Count>0)
 			MoveToCenter();
-			yield return new WaitForSeconds(5);
+			yield return new WaitForSeconds(10);
 		}
 	}
 

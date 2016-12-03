@@ -13,11 +13,11 @@ public class LightController : MonoBehaviour
 	}
 	void OnEnable()
 	{
-		UnityEventManager.StartListening("DayTime", DaySwitch);
+		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 	}
 	void OnDisable()
 	{
-		UnityEventManager.StopListening("DayTime", DaySwitch);
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
 	void DaySwitch(bool b)
 	{

@@ -60,6 +60,27 @@ public class MainMomController : MoMController
 		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 	}
+	public override void CreateFarmer()
+	{
+		if(farmers<farmerCap)
+		{
+			base.CreateFarmer();
+		}
+	}
+	public override void CreateFighter()
+	{
+		if(fighters<fighterCap)
+		{
+			base.CreateFighter();
+		}
+	}
+	public override void CreateDaughter()
+	{
+		if(daughters<daughterCap)
+		{
+			base.CreateDaughter();
+		}
+	}
 //	protected override void Death ()
 //	{
 //		base.Death ();

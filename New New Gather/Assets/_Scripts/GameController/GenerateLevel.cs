@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class GenerateLevel : MonoBehaviour 
 {
@@ -11,7 +10,7 @@ public class GenerateLevel : MonoBehaviour
 	public int dayScars = 5, dayPlantPitDistance = 30;
 	[Space(10)]
 
-	public int moms = 2, momsDistance = 20;
+	public int moms = 3, momsDistance = 20;
 	[Space(10)]
 
 	[SerializeField] Color[] Colors;
@@ -57,6 +56,7 @@ public class GenerateLevel : MonoBehaviour
 			newMoM = Instantiate(EnemyMoMFab, position, Quaternion.identity)as GameObject;
 		}
 		newMoM.GetComponent<MoMController>().teamID = MoMCount;
+		Unit_Base.TeamSize[MoMCount] += 1;
 		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
 		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
 		MoMCount+=1;

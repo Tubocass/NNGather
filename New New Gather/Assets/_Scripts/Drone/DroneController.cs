@@ -13,11 +13,11 @@ public class DroneController : Unit_Base
 	{
 		base.OnEnable();
 		sqrDist = orbit*orbit;
-		UnityEventManager.StartListening("TargetUnavailable", TargetLost);
+		UnityEventManager.StartListeningInt("TargetUnavailable", TargetLost);
 	}
 	protected virtual void OnDisable()
 	{
-		UnityEventManager.StopListening("TargetUnavailable", TargetLost);
+		UnityEventManager.StopListeningInt("TargetUnavailable", TargetLost);
 		StopCoroutine(Idle());
 	}
 

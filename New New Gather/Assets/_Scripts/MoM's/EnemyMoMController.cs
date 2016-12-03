@@ -31,13 +31,13 @@ public class EnemyMoMController : MoMController
 		while(true)
 		{
 			yield return new WaitForSeconds(1);
-			if(farmers<100)
+			if(farmers<farmerCap)
 			CreateFarmer();
 			yield return new WaitForSeconds(1);
 			if(fighters<farmers/2)
 			CreateFighter();
 			yield return new WaitForSeconds(1);
-			if(fighters + farmers>5 && daughters<=5)
+			if(fighters + farmers>5 && daughters<=daughterCap)
 			CreateDaughter();
 			yield return new WaitForSeconds(4);
 		}

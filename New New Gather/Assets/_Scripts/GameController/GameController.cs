@@ -8,13 +8,30 @@ public class GameController : MonoBehaviour
 	static Transform DayLight, NightLight;
 	GenerateLevel levelGen;
 	bool bDay;
-	
+
+	void OnEnable()
+	{
+		UnityEventManager.StartListeningInt("MoMDeath",IsGameOver);
+	}
+	void OnDisable()
+	{
+		UnityEventManager.StopListeningInt("MoMDeath",IsGameOver);
+	}
+
 	void Start()
 	{
 		levelGen = GetComponent<GenerateLevel>();
 		DayLight = GameObject.Find("Day Light").transform;
 		NightLight = GameObject.Find("Night Light").transform;
 		levelGen.Generate();
+	}
+
+	void IsGameOver(int team)
+	{
+		if(team==0)
+		{
+			SceneManager.LoadScene("Score");
+		}
 	}
 
 	void Update()

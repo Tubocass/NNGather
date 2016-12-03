@@ -31,12 +31,12 @@ public class FarmerController : DroneController
 	{
 		base.OnEnable();
 		mask = 1<<LayerMask.NameToLayer("Food");
-		UnityEventManager.StartListening("PlaceFarmFlag", UpdateFlagLocation);
+		UnityEventManager.StartListeningInt("PlaceFarmFlag", UpdateFlagLocation);
 	}
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		UnityEventManager.StopListening("PlaceFarmFlag", UpdateFlagLocation);
+		UnityEventManager.StopListeningInt("PlaceFarmFlag", UpdateFlagLocation);
 	}
 
 	protected override void UpdateFlagLocation(int team)

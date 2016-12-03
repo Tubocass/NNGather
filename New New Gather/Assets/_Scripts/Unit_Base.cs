@@ -4,6 +4,7 @@ using System.Collections;
 public class Unit_Base : MonoBehaviour 
 {
 	public static int TotalCreated;
+	public static int[] TeamSize = new int[10];
 	public int teamID, unitID;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}
@@ -32,7 +33,7 @@ public class Unit_Base : MonoBehaviour
 	[SerializeField] protected float health, startHealth;
 	[SerializeField] int tries;
 	protected Transform tran;
-	protected NavMeshAgent agent;
+	protected UnityEngine.AI.NavMeshAgent agent;
 	protected bool bDay;
 	float maxDistanceSqrd, minDistanceSqrd;
 
@@ -41,18 +42,18 @@ public class Unit_Base : MonoBehaviour
 		maxDistanceSqrd = MaxHoverDistance*MaxHoverDistance;
 		minDistanceSqrd = MinHoverDistance*MinHoverDistance;
 		tran = transform;
-		agent = GetComponent<NavMeshAgent>();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		currentVector = tran.position;
 		health = startHealth;
 		TotalCreated+=1;
 		unitID = TotalCreated;
 		bDay = GameController.IsDayLight();
-		UnityEventManager.StartListening("DayTime", DaySwitch);
+		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 
 	}
 	void OnDisable()
 	{
-		UnityEventManager.StopListening("DayTime", DaySwitch);
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
 	protected virtual void DaySwitch(bool b)
 	{
@@ -69,10 +70,11 @@ public class Unit_Base : MonoBehaviour
 	protected virtual void Death()
 	{
 		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
-		UnityEventManager.StopListening("DayTime", DaySwitch);
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 		StopAllCoroutines();
 		bMoving = false;
 		isActive = false;
+		TeamSize[teamID]-=1;
 	}
 	public virtual void TakeDamage(float damage)
 	{
@@ -82,11 +84,11 @@ public class Unit_Base : MonoBehaviour
 	public Vector3 RandomVector(Vector3 origin, float range)
 	{
 		Vector3 rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
-		NavMeshPath path = new NavMeshPath();
+		UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
 		agent.CalculatePath(rando,path);
 		float dist = (rando-tran.position).sqrMagnitude;
 		tries = 10;
-		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd) || (path.status == NavMeshPathStatus.PathPartial))
+		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd) || (path.status == UnityEngine.AI.NavMeshPathStatus.PathPartial))
 		{
 			tries--;
 			rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
