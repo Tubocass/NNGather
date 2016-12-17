@@ -63,6 +63,10 @@ public class FarmerController : DroneController
 			carriedFood = null;
 		}
 	}
+	public void GoLimp()
+	{
+		
+	}
 
 	protected override void MoveRandomly()
 	{

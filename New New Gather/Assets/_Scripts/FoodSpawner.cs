@@ -4,10 +4,11 @@ using System.Collections;
 public class FoodSpawner : MonoBehaviour 
 {
 	public Vector3 Location{get{return transform.position;}}
-	[SerializeField] int amount;
+	[SerializeField] int amount = 4;
+	[SerializeField] float radius = 3, clusterDist = 1;
 	[SerializeField] GameObject foodObj;
-	[SerializeField] FoodObject[] foodPile;
-	[SerializeField] Vector3[] spawnPoints;
+ 	GameObject[] foodPile;
+	Vector3[] spawnPoints;
 	bool bSpawnTime;
 	string myTag;
 
@@ -16,7 +17,6 @@ public class FoodSpawner : MonoBehaviour
 		myTag = gameObject.tag;
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 		DaySwitch(GameController.IsDayLight());
-		StartCoroutine(SpawnFood());
 	}
 	void OnDisable()
 	{
@@ -31,18 +31,27 @@ public class FoodSpawner : MonoBehaviour
 
 	void Start () 
 	{
-		foodPile = new FoodObject[amount];
+		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
-		for(int i = 0; i<amount; i++)
+		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);//Spawn 
+		for(int i = 0; i<amount; i++)//and then store the spawnpoint
 		{
-			spawnPoints[i] = transform.position + new Vector3(Random.Range(-3,3), 0, Random.Range(-3,3));
+			spawnPoints[i] = foodPile[i].transform.position;
+			foodPile[i].SetActive(false);
 		}
-		for(int i = 0; i<amount; i++)
-		{
-			GameObject newFood = Instantiate(foodObj, spawnPoints[i], Quaternion.identity) as GameObject;
-			foodPile[i] = newFood.GetComponent<FoodObject>();
-			foodPile[i].gameObject.SetActive(false);
-		}
+		StartCoroutine(SpawnFood());
+//		for(int i = 0; i<amount; i++)
+//		{
+//			GameObject newFood = Instantiate(foodObj, spawnPoints[i], Quaternion.identity) as GameObject;
+//			foodPile[i] = newFood.GetComponent<FoodObject>();
+//			foodPile[i].gameObject.SetActive(false);
+//		}
+	}
+	GameObject InitialSpawn(Vector3 position)
+	{
+		GameObject food = Instantiate(foodObj, position, Quaternion.identity) as GameObject;
+		//food.SetActive(false);
+		return food;
 	}
 	
 	IEnumerator SpawnFood()

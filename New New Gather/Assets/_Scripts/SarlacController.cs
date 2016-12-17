@@ -9,7 +9,7 @@ public class SarlacController : DroneController
 	[SerializeField] int maxEaten;
 	//[SerializeField] protected float orbit = 25;
 	//float sqrDist = 20f*20f;
-	Unit_Base targetEnemy;
+	Unit_Base targetEnemy, carriedEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
 	ParticleSystem spark;
@@ -118,6 +118,37 @@ public class SarlacController : DroneController
 		return true;
 		else return false;
 	}
+	bool IsCarryingFood()
+	{	
+		Unit_Base fo = GetComponentInChildren<Unit_Base>();
+		if(fo !=null)
+		{
+			if(carriedEnemy==null)
+			{
+				carriedEnemy = fo;
+			}
+			if(fo.unitID != carriedEnemy.unitID)
+			{
+				carriedEnemy.Health -= 20;
+				carriedEnemy = fo;
+			}
+			return true;
+		}else return false;
+	}
+
+	bool IsTargetingFood()
+	{
+		if(targetEnemy!=null && targetEnemy.gameObject.activeSelf)
+		return true;
+		else return false;
+	}
+
+	bool CanTargetFood()
+	{
+		if(!IsTargetingFood() && !IsCarryingFood() && canAttack)
+		return true;
+		else return false;
+	}
 	Unit_Base TargetNearest()
 	{
 		float nearestEnemyDist, newDist;
@@ -207,18 +238,26 @@ public class SarlacController : DroneController
 		if(bang.collider.tag == "Drone")
 		{
 			DroneController ot = bang.gameObject.GetComponent<DroneController>();
-			if(ot!=null && canAttack)
+			if(ot!=null && ot.CanBeTargetted)
 			{
-				Attack(ot);
+				if(IsTargetingFood() || CanTargetFood())
+				{
+					targetEnemy = null;
+					//carriedEnemy = ot;
+					ot.Attach(this.tran,tran.TransformPoint(nose));
+					ReturnToHome();
+				}
 			}
 		}
 		if(bang.collider.tag == "Pit")
 		{
-			if(eaten>=maxEaten||bDay)
+			if(eaten>=maxEaten||bDay||bReturning)
 			{
 				PitController pc = bang.gameObject.GetComponent<PitController>();
 				this.bReturning = false;
 				pc.StartTimer();
+				if(IsCarryingFood())
+				carriedEnemy.isActive = false;
 				this.Death();
 			}
 		}

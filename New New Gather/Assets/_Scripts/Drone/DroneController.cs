@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DroneController : Unit_Base 
+public class DroneController : Unit_Base, IAttachable 
 {
+	public bool CanBeTargetted{get{return gameObject.activeSelf && !bAttached;}}
+	[SerializeField] GameObject clone;
 	[SerializeField] protected float orbit = 25, sightRange;
 	[SerializeField] protected Vector3 nose; //set in editor
 	protected bool bInDanger;
 	protected float sqrDist;
+	bool bAttached;
 
 	protected override void OnEnable()
 	{
@@ -42,12 +45,29 @@ public class DroneController : Unit_Base
 	{
 
 	}
-
+	public void Attach(Transform newParent, Vector3 point)
+	{
+//		bAttached = true;
+//		agent.Stop();
+//		bMoving = false;
+//		transform.SetParent(newParent);
+//		transform.localPosition = point;
+//		GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.None;
+//		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
+		var g = Instantiate(clone, point, Quaternion.identity)as GameObject;
+		g.transform.SetParent(newParent);
+		Death();
+	}
+	public void Detach()
+	{
+		transform.SetParent(null);
+		bAttached = false;
+	}
 	protected IEnumerator Idle()
 	{
 		while(true)
 		{
-			if(!bMoving)
+			if(!bMoving&& !bAttached)
 			{
 				ArrivedAtTargetLocation();
 			}

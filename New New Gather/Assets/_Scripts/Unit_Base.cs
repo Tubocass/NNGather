@@ -74,6 +74,7 @@ public class Unit_Base : MonoBehaviour
 		StopAllCoroutines();
 		bMoving = false;
 		isActive = false;
+		if(teamID>=0)
 		TeamSize[teamID]-=1;
 	}
 	public virtual void TakeDamage(float damage)

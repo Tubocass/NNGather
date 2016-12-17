@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GenerateLevel : MonoBehaviour 
 {
+	public static float xx, zz;
 	public int pits = 3, spClusterDist = 20, nightPlants = 5, nightPlantRadius = 15, nightPlantClusterDist = 5;
 	[Space(10)]
 
@@ -22,14 +23,14 @@ public class GenerateLevel : MonoBehaviour
 	GameObject spawn;
 	Vector3 spawnPoint;
 	Vector3 groundSize;
-	float xx, zz;
 	int MoMCount;
 	bool bDay;
-	private delegate GameObject SpawnFunction(Vector3 v);
+	public delegate GameObject SpawnFunction(Vector3 v);
 
 	public void Generate() 
 	{
 		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
+		ground.SetActive(true);
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z- groundSize.z/8;
@@ -86,7 +87,7 @@ public class GenerateLevel : MonoBehaviour
 		return scar;
 	}
 
-	void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
+	public static void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
 	{
 		GameObject[] objs = new GameObject[amount]; 
 		SpawnObjects(amount, radius, clusterDist, position, objs, (Vector3 pos)=>
@@ -96,15 +97,15 @@ public class GenerateLevel : MonoBehaviour
 		});
 	}
 
-	void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
+	public static void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
 	{
 		//GameObject[] objs = new GameObject[amount]; 
 		float clusterDistSqrd = clusterDist*clusterDist;
 		int created = 0;
 		do{
-			spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
-			Mathf.Clamp(spawnPoint.x, -xx, xx);
-			Mathf.Clamp(spawnPoint.z, -zz, zz);
+			Vector3 spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
+			Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
+			Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
 			Vector3 nearestLoc;
 
 			if(objs[0] == null)
@@ -121,8 +122,8 @@ public class GenerateLevel : MonoBehaviour
 				}else{
 
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
-					Mathf.Clamp(spawnPoint.x, -xx, xx);
-					Mathf.Clamp(spawnPoint.z, -zz, zz);
+					Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
+					Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
 					nearestLoc = NearestTarget(objs, spawnPoint);
 					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
 					{
@@ -135,7 +136,7 @@ public class GenerateLevel : MonoBehaviour
 	}
 
 
-	Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
+	static Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
 	{
 		float nearestDist, newDist;
 		GameObject obj = null;

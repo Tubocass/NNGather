@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FoodObject : MonoBehaviour 
+public class FoodObject : MonoBehaviour, IAttachable 
 {
 	public static int TotalCreated;
 	public int Id{get{return id;}}
@@ -26,14 +26,12 @@ public class FoodObject : MonoBehaviour
 	{
 		transform.SetParent(newParent);
 		transform.localPosition = point;
-		//GetComponent<Rigidbody>().isKinematic = true;
 		bAttached = true;
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 	}
 	public void Detach()
 	{
 		transform.SetParent(null);
-		//GetComponent<Rigidbody>().isKinematic = false;
 		bAttached = false;
 	}
 

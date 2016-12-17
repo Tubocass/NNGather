@@ -315,6 +315,10 @@ public class MoMController : Unit_Base
 		while(true)
 		{
 			if(foodQ.Count>0)
+			if(myMoM!= null && myMoM.isActive)
+			{
+				AddFoodLocation(myMoM.transform.position);
+			}
 			MoveToCenter();
 			yield return new WaitForSeconds(10);
 		}

@@ -31,6 +31,16 @@ public class GameController : MonoBehaviour
 		if(team==0)
 		{
 			SceneManager.LoadScene("Score");
+		}else{
+			float t1 = Unit_Base.TeamSize[0];
+			float t2 = Unit_Base.TeamSize[1];
+			float t3 = Unit_Base.TeamSize[2];
+			float totalPop = t1+t2+t3;
+			float t1Percent = Mathf.Floor(t1/totalPop*100);
+			if(t1Percent>99.9f)
+			{
+				SceneManager.LoadScene("Score");
+			}
 		}
 	}
 

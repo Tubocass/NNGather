@@ -63,6 +63,7 @@
      <Compile Include="Assets\_Scripts\GameController\GenerateLevel.cs" />
      <Compile Include="Assets\_Scripts\GameController\InputControls.cs" />
      <Compile Include="Assets\_Scripts\GameController\UnityEventManager.cs" />
+     <Compile Include="Assets\_Scripts\IAttachable.cs" />
      <Compile Include="Assets\_Scripts\LightController.cs" />
      <Compile Include="Assets\_Scripts\MenuScreenController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\DaughterController.cs" />
