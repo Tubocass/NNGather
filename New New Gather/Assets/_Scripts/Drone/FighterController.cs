@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FighterController : DroneController 
 {
-	[SerializeField] float attackStrength, selfAttack;
+	[SerializeField] float attackStrength, selfAttack, refractoryPeriod;
 	Unit_Base targetEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
@@ -195,7 +195,7 @@ public class FighterController : DroneController
 
 	IEnumerator AttackCooldown()
 	{
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(refractoryPeriod);
 		canAttack = true;
 	}
 
@@ -244,7 +244,7 @@ public class FighterController : DroneController
 		if(bang.collider.tag == "Drone"||bang.collider.tag == "Sarlac"||bang.collider.tag == "MoM")
 		{
 			Unit_Base ot = bang.gameObject.GetComponent<Unit_Base>();
-			if(ot!=null && ot.teamID!=teamID && canAttack)
+			if(ot!=null && !ot.teamID.Equals(teamID) && canAttack)
 			{
 				Attack(ot);
 			}

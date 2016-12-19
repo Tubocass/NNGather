@@ -9,12 +9,14 @@ public class SarlacController : DroneController
 	[SerializeField] int maxEaten;
 	//[SerializeField] protected float orbit = 25;
 	//float sqrDist = 20f*20f;
-	Unit_Base targetEnemy, carriedEnemy;
+	Unit_Base targetEnemy;
+	GameObject[] enemiesCarried;
+	[SerializeField]int numCarried, maxCarry;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
 	ParticleSystem spark;
 	LayerMask mask;
-	bool canAttack=true, bReturning;
+	bool canAttack=false, bReturning;
 	int eaten;
 
 	protected override void OnEnable()
@@ -25,9 +27,11 @@ public class SarlacController : DroneController
 		bReturning = false;
 		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
+		enemiesCarried = new GameObject[maxCarry];
 		mask = 1<<LayerMask.NameToLayer("Units");
-		canAttack=true;
+		canAttack=false;
 		StartCoroutine(Idle());
+		StartCoroutine(AttackCooldown());
 		//StartCoroutine(LookForEnemies());
 	}
 	protected override void TargetLost(int id)
@@ -87,13 +91,13 @@ public class SarlacController : DroneController
 	protected void ReturnToHome()
 	{
 		bReturning = true;
-		Vector3 nearest = NearestTarget(PitController.Pits,Location);
+		Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
 		MoveTo(nearest);
 	}
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		if(eaten<maxEaten &&! bReturning)
+		if(eaten<maxEaten && !IsCarryingFood())
 		{
 			if(IsTargetingEnemy())
 			{
@@ -120,20 +124,19 @@ public class SarlacController : DroneController
 	}
 	bool IsCarryingFood()
 	{	
-		Unit_Base fo = GetComponentInChildren<Unit_Base>();
-		if(fo !=null)
+		numCarried = 0;
+		foreach(Transform fo in GetComponentsInChildren<Transform>())
 		{
-			if(carriedEnemy==null)
+			if(fo !=null&& fo.tag!="Sarlac")
 			{
-				carriedEnemy = fo;
+				if(numCarried<maxCarry)
+				{
+					enemiesCarried[numCarried] = fo.gameObject;
+					numCarried++;
+				}else Destroy(fo.gameObject);
 			}
-			if(fo.unitID != carriedEnemy.unitID)
-			{
-				carriedEnemy.Health -= 20;
-				carriedEnemy = fo;
-			}
-			return true;
-		}else return false;
+		}
+		return numCarried>0?true:false;
 	}
 
 	bool IsTargetingFood()
@@ -148,6 +151,14 @@ public class SarlacController : DroneController
 		if(!IsTargetingFood() && !IsCarryingFood() && canAttack)
 		return true;
 		else return false;
+	}
+	bool CanAttack()
+	{
+		Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
+		if(Vector3.Distance(nearest,Location)>2 && canAttack)
+		{
+			return true;
+		}else return false;
 	}
 	Unit_Base TargetNearest()
 	{
@@ -191,37 +202,12 @@ public class SarlacController : DroneController
 		}
 		return enemy;
 	}
-	Vector3 NearestTarget(List<PitController> Objects, Vector3 targetLoc)
-	{
-		float nearestDist, newDist;
-		PitController obj = null;
-
-		//foods = Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
-
-		if(Objects.Count>0)
-		{
-			nearestDist = (Objects[0].transform.position-targetLoc).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-			foreach(PitController o in Objects)
-			{
-				if(o!=null)
-				{
-					newDist = (o.transform.position-targetLoc).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
-					if(newDist <= nearestDist)
-					{
-						nearestDist = newDist;
-						obj = o;
-					}
-				}
-			}
-		}
-		return obj.transform.position;
-	}
 
 	void Attack(Unit_Base target)
 	{
 		spark.Play();
 		target.Health = -attackStrength;
-		eaten++;
+		//eaten++;
 		//Health = -2;
 		canAttack = false;
 		if(this.isActive)
@@ -244,20 +230,34 @@ public class SarlacController : DroneController
 				{
 					targetEnemy = null;
 					//carriedEnemy = ot;
+					if(numCarried<maxCarry)
 					ot.Attach(this.tran,tran.TransformPoint(nose));
+					else Attack(ot);
+					eaten++;
 					ReturnToHome();
 				}
 			}
 		}
+
 		if(bang.collider.tag == "Pit")
 		{
-			if(eaten>=maxEaten||bDay||bReturning)
+			if(IsCarryingFood())
 			{
-				PitController pc = bang.gameObject.GetComponent<PitController>();
+				for(int i = 0; i<numCarried;i++)
+				{
+					if(enemiesCarried[i] != null)
+					{
+						Destroy(enemiesCarried[i]);
+					}
+				}
+				numCarried = 0;
 				this.bReturning = false;
-				pc.StartTimer();
-				if(IsCarryingFood())
-				carriedEnemy.isActive = false;
+			}
+			if(eaten>=maxEaten||bDay)
+			{
+				//PitController pc = bang.gameObject.GetComponent<PitController>();
+				this.bReturning = false;
+				GameController.StartTimer();
 				this.Death();
 			}
 		}

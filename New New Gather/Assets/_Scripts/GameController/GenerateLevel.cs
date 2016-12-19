@@ -18,7 +18,7 @@ public class GenerateLevel : MonoBehaviour
 	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, GlowFab;//prefabs
 	[Space(5)]
 
-	GameObject[] Pits;
+	public static GameObject[] Pits;
 	GameObject[] MoMs;
 	GameObject spawn;
 	Vector3 spawnPoint;
@@ -41,7 +41,7 @@ public class GenerateLevel : MonoBehaviour
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
 
 		//Day Plants
-		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants);
+		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants); //need to make them separate from Sarlac pits
 
 		//MoMs
 		SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
@@ -66,7 +66,6 @@ public class GenerateLevel : MonoBehaviour
 	GameObject SpawnSarlacPit(Vector3 position)
 	{
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
-		PitController.Pits.Add(newPit.GetComponent<PitController>());
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
 		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
 		SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
@@ -119,8 +118,9 @@ public class GenerateLevel : MonoBehaviour
 				{
 					objs[created] = create(spawnPoint);
 					created++;
-				}else{
-
+				}else
+				{
+					do{
 					spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0.5f, UnityEngine.Random.Range(-radius,radius)+position.z);
 					Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
 					Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
@@ -130,13 +130,14 @@ public class GenerateLevel : MonoBehaviour
 						objs[created] = create(spawnPoint);
 						created++;
 					}
+					}while((nearestLoc-spawnPoint).sqrMagnitude<clusterDistSqrd);
 				}
 			}
 		}while(created<amount);
 	}
 
 
-	static Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
+	public static Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
 	{
 		float nearestDist, newDist;
 		GameObject obj = null;

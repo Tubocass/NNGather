@@ -40,7 +40,7 @@ public class CameraFollow : MonoBehaviour
 	{
 		bFollowing = false;
 		Vector3 targetDir  = tran.position + position*Time.deltaTime; 
-		tran.position = Vector3.MoveTowards(tran.position,targetDir,0.25f);
+		tran.position = Vector3.MoveTowards(tran.position,targetDir,1f);
 	}
 
 	public void SetFollow()

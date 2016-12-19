@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FarmerController : DroneController 
+public class FarmerController : DroneController, IAttachable 
 {
 	/*public IBehaviour BState 
 	{
@@ -23,7 +23,6 @@ public class FarmerController : DroneController
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
 	LayerMask mask;
-
 	List<FoodObject> foods;
 	bool bReturning;
 
@@ -62,10 +61,6 @@ public class FarmerController : DroneController
 			carriedFood.Detach();
 			carriedFood = null;
 		}
-	}
-	public void GoLimp()
-	{
-		
 	}
 
 	protected override void MoveRandomly()
