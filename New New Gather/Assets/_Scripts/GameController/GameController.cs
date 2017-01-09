@@ -58,19 +58,23 @@ public class GameController : MonoBehaviour
 			StartCoroutine(Release());
 		}
 	}
-
+	public static float TeamSizePercent(int t)
+	{
+		float totalPop =0;
+		int teams =  instance.levelGen.moms;
+		for(int i = 0; i< teams;i++)
+		{
+			totalPop +=Unit_Base.TeamSize[i];
+		}
+		return Unit_Base.TeamSize[t]/totalPop*100;
+	}
 	void IsGameOver(int team)
 	{
 		if(team==0)
 		{
 			SceneManager.LoadScene("Score");
 		}else{
-			float t1 = Unit_Base.TeamSize[0];
-			float t2 = Unit_Base.TeamSize[1];
-			float t3 = Unit_Base.TeamSize[2];
-			float totalPop = t1+t2+t3;
-			float t1Percent = Mathf.Floor(t1/totalPop*100);
-			if(t1Percent>99.9f)
+			if(TeamSizePercent(0)>99.9f)
 			{
 				SceneManager.LoadScene("Score");
 			}
@@ -116,7 +120,7 @@ public class GameController : MonoBehaviour
 
 	public void StartNewGame()
 	{
-		//SceneManager.LoadScene("Main");
+		SceneManager.LoadScene("Main");
 		//levelGen.Generate();
 	}
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class GUIController : MonoBehaviour 
 {
-	[SerializeField] RectTransform PauseScreen, ScoreScreen, NotificationPanel;
+	[SerializeField] RectTransform PauseScreen, ScoreScreen, NotificationPanel, StatPanel;
 	[SerializeField] Text foodText, healthText, statText1, statText2, notificationText;
 	MainMomController mainMoMControl;
 
@@ -53,20 +53,20 @@ public class GUIController : MonoBehaviour
 	{
 		while(true)
 		{
-			float t1 = Unit_Base.TeamSize[0];
-			float t2 = Unit_Base.TeamSize[1];
-			float t3 = Unit_Base.TeamSize[2];
-			float totalPop = t1+t2+t3;
-			float t1Percent = Mathf.Floor(t1/totalPop*100);
-			float t2Percent = Mathf.Floor(t2/totalPop*100);
-			float t3Percent = Mathf.Floor(t3/totalPop*100);
+			int teams =  GetComponent<GenerateLevel>().moms;
+			StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams));
 
 			if(MainMomController.MainMoM!= null)
 			{
 				statText1.text = "Farmers: "+ MainMomController.MainMoM.farmers+ "\nFighters: "+ MainMomController.MainMoM.fighters+ "\nDaughters: "+ MainMomController.MainMoM.daughters;
-				statText2.text =  "Team 1: "+ t1 +" - "+ t1Percent + "%" +  "\nTeam 2: "+ t2 +" - "+t2Percent +"%" +"\nTeam 3: "+ t3 +" - "+ t3Percent +"%";
+				statText2.text = "";
+				for(int i = 0; i< GetComponent<GenerateLevel>().moms;i++)
+				{
+					statText2.text += string.Format("\nTeam {0}: {1} - {2:F1}%", i+1, Unit_Base.TeamSize[i], GameController.TeamSizePercent(i));
+				}
+				//statText2.text =  "Team 1: "+ t1 +" - "+ t1Percent + "%" +  "\nTeam 2: "+ t2 +" - "+t2Percent +"%" +"\nTeam 3: "+ t3 +" - "+ t3Percent +"%";
 			}
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(.5f);
 		}
 
 	}

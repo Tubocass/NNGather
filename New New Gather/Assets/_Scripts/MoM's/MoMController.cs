@@ -63,10 +63,6 @@ public class MoMController : Unit_Base
 		if(!MoMs.Contains(this))
 		MoMs.Add(this);
 	}
-//	protected virtual void OnDisable()
-//	{
-//		StopCoroutine(UpdateLocation());
-//	}
 
 //	public static int GetTeamSize(int teamNum) //function is valid, but I felt like using a static int would be cheaper
 //	{
@@ -249,15 +245,6 @@ public class MoMController : Unit_Base
 		}
 	}
 
-//	public void SetupQueen(MoMController oldMoM)//Gets called by new MoM
-//	{
-//		//Health = startHealth;
-//		teamID = oldMoM.teamID;
-//		TeamColor = oldMoM.TeamColor;
-//		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-//		oldMoM.CedeDrones(this);
-//	}
-
 	protected virtual void newQueen()
 	{
 		List<DaughterController> princesses = new List<DaughterController>();
@@ -288,7 +275,6 @@ public class MoMController : Unit_Base
 				mom.TeamColor = TeamColor;
 				mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 				princesses[p].CedeDrones(mom);
-				//mom.SetupQueen(princesses[p]);
 				princesses[p].Kill();
 			}
 		}else{

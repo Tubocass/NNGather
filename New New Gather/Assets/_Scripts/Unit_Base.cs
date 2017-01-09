@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class Unit_Base : MonoBehaviour 
+public class Unit_Base : NetworkBehaviour 
 {
 	public static int TotalCreated;
 	public static int[] TeamSize = new int[10];
@@ -15,6 +16,10 @@ public class Unit_Base : MonoBehaviour
 		}
 		set
 		{
+			if(health<=0)
+			{
+				return;
+			}
 			health+=value; 
 			if(this.GetType()==typeof(MainMomController))
 			{
@@ -59,6 +64,7 @@ public class Unit_Base : MonoBehaviour
 	{
 		bDay = b;
 	}
+
 	public virtual void setMoM(MoMController mom)
 	{
 		isActive = true;

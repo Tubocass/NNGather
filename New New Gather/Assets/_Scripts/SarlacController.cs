@@ -234,6 +234,8 @@ public class SarlacController : DroneController
 					ot.Attach(this.tran,tran.TransformPoint(nose));
 					else Attack(ot);
 					eaten++;
+					numCarried++;
+					if(numCarried>3)
 					ReturnToHome();
 				}
 			}

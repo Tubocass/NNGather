@@ -33,7 +33,7 @@ public class GenerateLevel : MonoBehaviour
 		ground.SetActive(true);
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
-		zz = groundSize.z- groundSize.z/8;
+		zz = groundSize.z - groundSize.z/8;
 		Pits = new GameObject[pits];
 		MoMs = new GameObject[moms];
 
