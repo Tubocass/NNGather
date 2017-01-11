@@ -89,6 +89,9 @@ public class InputControls : MonoBehaviour
 
 				if (Physics.Raycast (ray, out hit, 100f, mask)) 
 				{
+					if(Input.GetKeyDown(KeyCode.LeftShift))
+					MainMomController.MainMoM.PlaceTeamFightFlag(hit.point);
+					else
 					MainMomController.MainMoM.PlaceFightFlag(hit.point);
 				}
 			}

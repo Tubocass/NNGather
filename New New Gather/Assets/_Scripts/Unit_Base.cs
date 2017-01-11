@@ -80,7 +80,7 @@ public class Unit_Base : NetworkBehaviour
 		StopAllCoroutines();
 		bMoving = false;
 		isActive = false;
-		if(teamID>=0)
+		if(teamID>=0&&TeamSize[teamID]>0)
 		TeamSize[teamID]-=1;
 	}
 	public virtual void TakeDamage(float damage)

@@ -29,6 +29,8 @@ public class GenerateLevel : MonoBehaviour
 
 	public void Generate() 
 	{
+		Unit_Base.TeamSize = new int[10];
+		Unit_Base.TotalCreated = 0;
 		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
 		ground.SetActive(true);
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
@@ -68,7 +70,19 @@ public class GenerateLevel : MonoBehaviour
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
 		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
-		SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
+		GameObject[] plantObjs = new GameObject[nightPlants];
+		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position, plantObjs, (Vector3 pos)=>
+		{
+			GameObject obj = Instantiate(NightPlantFab, pos, Quaternion.identity)as GameObject;
+			return obj; 
+		});
+		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
+		for(int i = 0; i<nightPlants; i++)//and then store the spawnpoint
+		{
+			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0,plantObjs[i].transform.position);
+			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, position-new Vector3(Random.Range(-4,4), position.y, Random.Range(-4,4)));
+			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
+		}
 		if(g>0)
 		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position);
 		return newPit;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FighterController : DroneController 
 {
-	[SerializeField] float attackStrength, selfAttack, refractoryPeriod;
+	[SerializeField] float attackStrength , selfAttack, refractoryPeriod;
 	Unit_Base targetEnemy;
 	List<Unit_Base> enemies;
 	List<Unit_Base> enemiesCopy;
@@ -20,15 +20,24 @@ public class FighterController : DroneController
 		canAttack=true;
 		base.OnEnable();
 		UnityEventManager.StartListeningInt("PlaceFightFlag", UpdateFlagLocation);
+		UnityEventManager.StartListeningInt("PlaceTeamFightFlag", UpdateTeamFlagLocation);
 	}
 	protected override void OnDisable()
 	{
 		base.OnDisable();
 		UnityEventManager.StopListeningInt("PlaceFightFlag", UpdateFlagLocation);
 	}
-	protected override void UpdateFlagLocation(int team)
+	protected override void UpdateFlagLocation(int mom)
 	{
-		if(myMoM.unitID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+		if(myMoM.unitID == mom  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+		{
+			targetEnemy = null;
+			MoveTo(myMoM.FightAnchor);
+		}
+	}
+	protected void UpdateTeamFlagLocation(int team)
+	{
+		if(myMoM.teamID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
 		{
 			targetEnemy = null;
 			MoveTo(myMoM.FightAnchor);

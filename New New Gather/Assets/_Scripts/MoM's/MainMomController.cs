@@ -60,6 +60,12 @@ public class MainMomController : MoMController
 		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 	}
+	protected override void Death ()
+	{
+		base.Death();
+		farmFlagFab.SetActive(false);
+		fightFlagFab.SetActive(false);
+	}
 	public override void CreateFarmer()
 	{
 		if(farmers<farmerCap)
@@ -148,6 +154,12 @@ public class MainMomController : MoMController
 		fightFlagFab.GetComponent<ParticleSystem>().Play();
 		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = true;
+	}
+	public virtual void PlaceTeamFightFlag(Vector3 location)
+	{
+		PlaceFightFlag(location);
+		UnityEventManager.TriggerEvent("PlaceTeamFightFlag", teamID);
+	
 	}
 	public virtual void RecallFightFlag()
 	{

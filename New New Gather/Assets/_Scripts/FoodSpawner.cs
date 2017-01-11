@@ -38,6 +38,8 @@ public class FoodSpawner : MonoBehaviour
 		{
 			spawnPoints[i] = foodPile[i].transform.position;
 			foodPile[i].SetActive(false);
+			foodPile[i].GetComponent<LineRenderer>().SetPosition(0,foodPile[i].transform.position);
+			foodPile[i].GetComponent<LineRenderer>().SetPosition(1,transform.position);
 		}
 		StartCoroutine(SpawnFood());
 //		for(int i = 0; i<amount; i++)

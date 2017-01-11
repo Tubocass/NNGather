@@ -25,7 +25,11 @@ public class GUIController : MonoBehaviour
 	}
 	public void EnablePause(bool show)
 	{
-		PauseScreen.gameObject.SetActive(show);
+		PauseScreen.gameObject.SetActive(!PauseScreen.gameObject.activeSelf);
+	}
+	public void Escape()
+	{
+		Application.Quit();
 	}
 	void Notify(int team)
 	{
@@ -54,7 +58,7 @@ public class GUIController : MonoBehaviour
 		while(true)
 		{
 			int teams =  GetComponent<GenerateLevel>().moms;
-			StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams));
+			StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams)+15);
 
 			if(MainMomController.MainMoM!= null)
 			{
