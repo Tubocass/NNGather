@@ -77,10 +77,13 @@ public class GenerateLevel : MonoBehaviour
 			return obj; 
 		});
 		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
-		for(int i = 0; i<nightPlants; i++)//and then store the spawnpoint
+		for(int i = 0; i<nightPlants; i++)
 		{
-			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0,plantObjs[i].transform.position);
-			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, position-new Vector3(Random.Range(-4,4), position.y, Random.Range(-4,4)));
+			Vector3 plantPos = plantObjs[i].transform.position;
+			Vector3 dir = plantPos - position;
+			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
+			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0, plantPos);
+			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, (plantPos- dir));
 			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
 		}
 		if(g>0)
