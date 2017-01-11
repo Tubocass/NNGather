@@ -42,12 +42,14 @@ public class MoMController : Unit_Base
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
-	protected Transform farmFlagTran, fightFlagTran;
-	protected bool activeFarmFlag, activeFightFlag;
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, foodAmount, hungerTime = 10;
+	protected Transform farmFlagTran, fightFlagTran;
+	protected bool activeFarmFlag, activeFightFlag;
+	protected GameObject fightFlag, farmFlag;
 	[SerializeField] int qCount=0;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
+
 
 	protected override void OnEnable()
 	{
@@ -58,8 +60,10 @@ public class MoMController : Unit_Base
 		farmers = 0;//don't understand
 		fighters = 0;//why these have to be hard reset
 		foodAmount = startFood;
-
-
+		farmFlag = Instantiate(farmFlagFab) as GameObject; 
+		fightFlag = Instantiate(fightFlagFab) as GameObject;
+		farmFlagTran = farmFlag.GetComponent<Transform>();
+		fightFlagTran = fightFlag.GetComponent<Transform>();
 		if(!MoMs.Contains(this))
 		MoMs.Add(this);
 	}
@@ -183,7 +187,7 @@ public class MoMController : Unit_Base
 				DaughterController recycle = Daughters.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
-					recycle.setMoM(this, TeamColor);
+					recycle.setMoM(this, TeamColor, fightFlagTran);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateDaughter();
@@ -212,7 +216,7 @@ public class MoMController : Unit_Base
 	{
 		GameObject spawn = Instantiate(daughterFab, Location + new Vector3(1,1,1),Quaternion.identity) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
-		dc.setMoM(this, TeamColor);
+		dc.setMoM(this, TeamColor, fightFlagTran);
 		Daughters.Add(dc);
 	}
 
@@ -280,6 +284,40 @@ public class MoMController : Unit_Base
 		}else{
 			KillDrones();
 		}
+	}
+
+	public virtual void PlaceFarmFlag(Vector3 location)
+	{
+		farmFlag.SetActive(true);
+		farmFlagTran.position = location;
+		//farmFlagFab.GetComponent<ParticleSystem>().Play();
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
+		activeFarmFlag = true;
+	}
+	public virtual void RecallFarmFlag()
+	{
+		farmFlagTran.position = transform.position;
+		//farmFlag.GetComponent<ParticleSystem>().Stop();
+		farmFlag.SetActive(false);
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
+		activeFarmFlag = false;
+	}
+	public virtual void PlaceFightFlag(Vector3 location)
+	{
+		fightFlag.SetActive(true);
+		fightFlagTran.position = location;
+		//fightFlag.GetComponent<ParticleSystem>().Play();
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
+		activeFightFlag = true;
+	}
+
+	public virtual void RecallFightFlag()
+	{
+		fightFlagTran.position = transform.position;
+		//fightFlag.GetComponent<ParticleSystem>().Stop();
+		fightFlag.SetActive(false);
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
+		activeFightFlag = false;
 	}
 
 	public virtual void AddFoodLocation(Vector3 loc)

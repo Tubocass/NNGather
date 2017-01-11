@@ -26,10 +26,12 @@ public class DaughterController : MoMController
 		}
 	}
 
-	public void setMoM(MoMController mom, Color tc)
+	public void setMoM(MoMController mom, Color tc, Transform fightFlag)
 	{
 		base.setMoM(mom);
+		fightFlagTran = fightFlag;
 		TeamColor = tc;
+
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
 	public void Kill()//mostly used for upgrading into a MoM
