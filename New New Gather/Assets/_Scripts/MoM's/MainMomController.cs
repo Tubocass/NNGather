@@ -111,9 +111,11 @@ public class MainMomController : MoMController
 		base.PlaceFightFlag(location);
 		fightFlag.GetComponent<ParticleSystem>().Play();
 		List<DaughterController> princesses = new List<DaughterController>();
+		List<MoMController> otherMoMs = new List<MoMController>();
+		otherMoMs = MoMs.FindAll(f=> f.isActive && f.teamID == teamID && f.unitID != unitID);
 		if(daughters>0)
 		{
-			princesses = Daughters.FindAll(f=> f.isActive && f.teamID.Equals(teamID));
+			princesses = Daughters.FindAll(f=> f.isActive && f.teamID == teamID);
 		}
 		if(princesses.Count>0)
 		{
@@ -121,8 +123,15 @@ public class MainMomController : MoMController
 			{
 				princesses[p].PlaceFightFlag(location);
 			}
-			bTeamFlag = true;
 		}
+		if(otherMoMs.Count>0)
+		{
+			for(int p = 0; p<otherMoMs.Count; p++)
+			{
+				otherMoMs[p].PlaceFightFlag(location);
+			}
+		}
+		bTeamFlag = true;
 	}
 	public void RecallTeamFightFlag()
 	{
