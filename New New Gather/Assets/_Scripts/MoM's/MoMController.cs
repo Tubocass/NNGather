@@ -92,6 +92,8 @@ public class MoMController : Unit_Base
 	protected override void Death ()
 	{
 		base.Death ();
+		farmFlag.SetActive(false);
+		fightFlag.SetActive(false);
 		newQueen();
 		if(Unit_Base.TeamSize[teamID]==0)
 		{
@@ -179,21 +181,25 @@ public class MoMController : Unit_Base
 	{
 		if(FoodAmount>=daughterCost)
 		{
-			FoodAmount = -daughterCost;
-			daughters++;
-			Unit_Base.TeamSize[teamID] += 1;
-			if(Daughters.Count>0)
+			Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
+			if(Vector3.Distance(nearest,Location)<=20)
 			{
-				DaughterController recycle = Daughters.Find(f=> !f.isActive);
-				if(recycle!=null)
+				FoodAmount = -daughterCost;
+				daughters++;
+				Unit_Base.TeamSize[teamID] += 1;
+				if(Daughters.Count>0)
 				{
-					recycle.setMoM(this, TeamColor, fightFlagTran);
-					recycle.transform.position = Location+new Vector3(1,0,1);
-				}else{
-					InstantiateDaughter();
+					DaughterController recycle = Daughters.Find(f=> !f.isActive);
+					if(recycle!=null)
+					{
+						recycle.setMoM(this, TeamColor);
+						recycle.transform.position = nearest;//Location+new Vector3(1,0,1);
+					}else{
+						InstantiateDaughter(nearest);
+					}
+				}else {
+					InstantiateDaughter(nearest);
 				}
-			}else {
-				InstantiateDaughter();
 			}
 		}
 	}
@@ -212,11 +218,11 @@ public class MoMController : Unit_Base
 		fc.setMoM(this, TeamColor);
 		Fighters.Add(fc);
 	}
-	void InstantiateDaughter()
+	void InstantiateDaughter(Vector3 location)
 	{
-		GameObject spawn = Instantiate(daughterFab, Location + new Vector3(1,1,1),Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(daughterFab, location,Quaternion.identity) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
-		dc.setMoM(this, TeamColor, fightFlagTran);
+		dc.setMoM(this, TeamColor);
 		Daughters.Add(dc);
 	}
 

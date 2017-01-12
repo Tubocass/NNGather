@@ -20,7 +20,6 @@ public class FighterController : DroneController
 		canAttack=true;
 		base.OnEnable();
 		UnityEventManager.StartListeningInt("PlaceFightFlag", UpdateFlagLocation);
-		UnityEventManager.StartListeningInt("PlaceTeamFightFlag", UpdateTeamFlagLocation);
 	}
 	protected override void OnDisable()
 	{
@@ -30,14 +29,6 @@ public class FighterController : DroneController
 	protected override void UpdateFlagLocation(int mom)
 	{
 		if(myMoM.unitID == mom  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
-		{
-			targetEnemy = null;
-			MoveTo(myMoM.FightAnchor);
-		}
-	}
-	protected void UpdateTeamFlagLocation(int team)
-	{
-		if(myMoM.teamID == team  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
 		{
 			targetEnemy = null;
 			MoveTo(myMoM.FightAnchor);

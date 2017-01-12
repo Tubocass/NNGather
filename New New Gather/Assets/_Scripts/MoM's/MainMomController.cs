@@ -60,8 +60,6 @@ public class MainMomController : MoMController
 	protected override void Death ()
 	{
 		base.Death();
-		farmFlagFab.SetActive(false);
-		fightFlagFab.SetActive(false);
 	}
 	public override void CreateFarmer()
 	{
@@ -115,7 +113,7 @@ public class MainMomController : MoMController
 		List<DaughterController> princesses = new List<DaughterController>();
 		if(daughters>0)
 		{
-			princesses = Daughters.FindAll(f=> f.isActive && f.myMoM==this);
+			princesses = Daughters.FindAll(f=> f.isActive && f.teamID.Equals(teamID));
 		}
 		if(princesses.Count>0)
 		{

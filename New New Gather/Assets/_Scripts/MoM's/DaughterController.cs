@@ -4,15 +4,31 @@ using System.Collections.Generic;
 
 public class DaughterController : MoMController 
 {
+	[SerializeField] protected float orbit = 15;
+	bool bInBloom = true;
+	Vector3 birthHole;
 	protected override void OnEnable () 
 	{
 		base.Start();
 		base.OnEnable();
 		farmers = 0;
 		fighters = 0;
-		StartCoroutine(SpawnTimer());
+		bInBloom = true;
+	}
+	protected override void Start()
+	{
+		StopAllCoroutines();
+		StartCoroutine(Bloom());
 	}
 
+	IEnumerator Bloom()
+	{
+		yield return new WaitForSeconds(30f);
+		bInBloom = false;
+		StartCoroutine(SpawnTimer());
+		StartCoroutine(Hunger());
+		StartCoroutine(Idle());
+	}
 	IEnumerator SpawnTimer()
 	{
 		while(true)
@@ -26,13 +42,17 @@ public class DaughterController : MoMController
 		}
 	}
 
-	public void setMoM(MoMController mom, Color tc, Transform fightFlag)
+	public void setMoM(MoMController mom, Color tc)
 	{
 		base.setMoM(mom);
-		fightFlagTran = fightFlag;
 		TeamColor = tc;
-
+		birthHole = tran.position;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+	}
+	protected override void MoveRandomly()
+	{
+		Vector3 rVector = RandomVector(birthHole, orbit);
+		MoveTo(rVector);
 	}
 	public void Kill()//mostly used for upgrading into a MoM
 	{

@@ -128,18 +128,30 @@ public class Unit_Base : NetworkBehaviour
 		}
 	}
 
-	public virtual void OnTriggerEnter(Collider other)
+	protected virtual void MoveRandomly()
 	{
 
 	}
 
-//	public virtual void OnTriggerStay(Collider other)
-//	{
-//		
-//	}
-
+	protected virtual IEnumerator Idle()
+	{
+		while(true)
+		{
+			if(!bMoving)
+			{
+				ArrivedAtTargetLocation();
+			}
+			yield return new WaitForSeconds(1);
+		}
+	}
+	protected virtual void ArrivedAtTargetLocation()
+	{
+		MoveRandomly();
+	}
 	public virtual void OnCollisionEnter(Collision bang)
 	{
-		
+	}
+	public virtual void OnTriggerEnter(Collider other)
+	{
 	}
 }

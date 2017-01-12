@@ -64,12 +64,8 @@ public class DroneController : Unit_Base
 		
 	}
 
-	protected virtual void MoveRandomly()
-	{
 
-	}
-
-	protected IEnumerator Idle()
+	protected override IEnumerator Idle()
 	{
 		while(true)
 		{
@@ -79,10 +75,6 @@ public class DroneController : Unit_Base
 			}
 			yield return new WaitForSeconds(1);
 		}
-	}
-	protected virtual void ArrivedAtTargetLocation()
-	{
-		MoveRandomly();
 	}
 
 }
