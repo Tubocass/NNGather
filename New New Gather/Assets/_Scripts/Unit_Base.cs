@@ -21,7 +21,7 @@ public class Unit_Base : NetworkBehaviour
 				return;
 			}
 			health+=value; 
-			if(this.GetType()==typeof(MainMomController))
+			if(this.GetType()==typeof(PlayerMomController))
 			{
 				UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 			}

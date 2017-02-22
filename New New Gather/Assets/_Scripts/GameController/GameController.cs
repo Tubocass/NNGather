@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 	[SerializeField] GameObject SarlacFab;
 	[SerializeField] float SunSpeed = 2f;
 	[SerializeField] float Timer = 30;
+	[SerializeField] bool bStartGame;
 	GenerateLevel levelGen;
 	bool bDay;
 
@@ -48,7 +49,8 @@ public class GameController : MonoBehaviour
 		levelGen = GetComponent<GenerateLevel>();
 		DayLight = GameObject.Find("Day Light").transform;
 		NightLight = GameObject.Find("Night Light").transform;
-		levelGen.Generate();
+		if(bStartGame)
+		//levelGen.Generate();
 		timer = Timer;
 		if(SarlacInstance == null)
 		{
@@ -120,7 +122,7 @@ public class GameController : MonoBehaviour
 
 	public void StartNewGame()
 	{
-		SceneManager.LoadScene("Main");
-		//levelGen.Generate();
+		//SceneManager.LoadScene("Main");
+		levelGen.Generate();
 	}
 }

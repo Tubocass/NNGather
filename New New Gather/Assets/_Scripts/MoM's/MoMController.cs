@@ -13,7 +13,7 @@ public class MoMController : Unit_Base
 		set
 		{
 			foodAmount+=value; 
-			if(this.GetType()==typeof(MainMomController))
+			if(this.GetType()==typeof(PlayerMomController))
 			{
 				UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 			}
@@ -272,7 +272,7 @@ public class MoMController : Unit_Base
 
 			for(int p = 0; p<princesses.Count; p++)
 			{
-				if(this.GetType() == typeof(MainMomController) && p==0)
+				if(this.GetType() == typeof(PlayerMomController) && p==0)
 				{
 					spawn = Instantiate(mMoMFab, princesses[p].Location, Quaternion.identity) as GameObject;
 				}else{

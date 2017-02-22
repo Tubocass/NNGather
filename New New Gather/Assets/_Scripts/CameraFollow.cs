@@ -27,8 +27,8 @@ public class CameraFollow : MonoBehaviour
 	}
 	void MoMChanged()
 	{
-		if(MainMomController.MainMoM!=null)
-		SetTarget(MainMomController.MainMoM.transform);
+		if(PlayerMomController.MainMoM!=null)
+		SetTarget(PlayerMomController.MainMoM.transform);
 	}
 	public void SetTarget(Transform newTarget)
 	{

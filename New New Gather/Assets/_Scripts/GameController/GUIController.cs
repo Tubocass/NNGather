@@ -7,7 +7,7 @@ public class GUIController : MonoBehaviour
 {
 	[SerializeField] RectTransform PauseScreen, ScoreScreen, NotificationPanel, StatPanel;
 	[SerializeField] Text foodText, healthText, statText1, statText2, notificationText;
-	MainMomController mainMoMControl;
+	PlayerMomController mainMoMControl;
 
 	void OnEnable()
 	{
@@ -23,7 +23,14 @@ public class GUIController : MonoBehaviour
 		UnityEventManager.StopListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StopListeningInt("UpdateHealth", SetHealth);
 	}
-	public void EnablePause(bool show)
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			EnablePause();
+		}
+	}
+	public void EnablePause()
 	{
 		PauseScreen.gameObject.SetActive(!PauseScreen.gameObject.activeSelf);
 	}
@@ -60,9 +67,9 @@ public class GUIController : MonoBehaviour
 			int teams =  GetComponent<GenerateLevel>().moms;
 			StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams)+15);
 
-			if(MainMomController.MainMoM!= null)
+			if(PlayerMomController.MainMoM!= null)
 			{
-				statText1.text = "Farmers: "+ MainMomController.MainMoM.farmers+ "\nFighters: "+ MainMomController.MainMoM.fighters+ "\nDaughters: "+ MainMomController.MainMoM.daughters;
+				statText1.text = "Farmers: "+ PlayerMomController.MainMoM.farmers+ "\nFighters: "+ PlayerMomController.MainMoM.fighters+ "\nDaughters: "+ PlayerMomController.MainMoM.daughters;
 				statText2.text = "";
 				for(int i = 0; i< GetComponent<GenerateLevel>().moms;i++)
 				{

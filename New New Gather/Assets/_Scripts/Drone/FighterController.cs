@@ -136,7 +136,7 @@ public class FighterController : DroneController
 		{
 			foreach(RaycastHit f in hits)
 			{
-				if(f.collider.tag == "Sarlac")
+				if(f.collider.CompareTag("Sarlac"))
 				{
 					enemy = f.collider.GetComponent<SarlacController>();
 					if(enemy!=null )
@@ -144,7 +144,7 @@ public class FighterController : DroneController
 						return enemy;
 					}
 				}
-				if(f.collider.tag == "MoM")
+				if(f.collider.CompareTag("MoM"))
 				{
 					Unit_Base ot = f.collider.GetComponent<MoMController>();
 					if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
@@ -152,7 +152,7 @@ public class FighterController : DroneController
 						enemies.Add(ot);
 					}
 				}
-				if(f.collider.tag == "Drone")
+				if(f.collider.CompareTag( "Drone"))
 				{
 					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
 					if(ot!=null && !ot.teamID.Equals(teamID) && !enemies.Contains(ot))
@@ -241,7 +241,7 @@ public class FighterController : DroneController
 //	}
 	public override void OnCollisionEnter(Collision bang)
 	{
-		if(bang.collider.tag == "Drone"||bang.collider.tag == "Sarlac"||bang.collider.tag == "MoM")
+		if(bang.collider.CompareTag("Drone")||bang.collider.CompareTag("Sarlac")||bang.collider.CompareTag("MoM"))
 		{
 			Unit_Base ot = bang.gameObject.GetComponent<Unit_Base>();
 			if(ot!=null && !ot.teamID.Equals(teamID) && canAttack)

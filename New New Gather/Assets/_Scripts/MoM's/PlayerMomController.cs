@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MainMomController : MoMController 
+public class PlayerMomController : MoMController 
 {
 //	public new float Health{
 //		get
@@ -30,19 +30,17 @@ public class MainMomController : MoMController
 //			UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 //		}
 //	}
-
-	[SerializeField] LayerMask mask;
 	bool bTeamFlag = false;
-	public static MainMomController MainMoM{
+	public static PlayerMomController MainMoM{
 		get{
 			if(main==null)
 			{
-				main = FindObjectOfType<MainMomController>();
+				main = FindObjectOfType<PlayerMomController>();
 			}
 			return main;
 		}
 	}
-	static MainMomController main;
+	static PlayerMomController main;
 
 	protected override void OnEnable()
 	{
@@ -56,6 +54,10 @@ public class MainMomController : MoMController
 		base.Start();
 		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+	}
+	public override void OnStartLocalPlayer()
+	{
+		Debug.Log("local idiot");
 	}
 	protected override void Death ()
 	{

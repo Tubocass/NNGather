@@ -158,7 +158,7 @@ public class FarmerController : DroneController, IAttachable
 		{
 			foreach(RaycastHit f in hits)
 			{
-				if(f.collider.tag == "Food")
+				if(f.collider.CompareTag("Food"))
 				{
 					FoodObject ot = f.collider.GetComponent<FoodObject>();
 					if(ot!=null && !myMoM.Foods.Contains(ot))
@@ -195,7 +195,7 @@ public class FarmerController : DroneController, IAttachable
 
 	public override void OnCollisionEnter(Collision bang)
 	{
-		if(bang.collider.tag == "Food")
+		if(bang.collider.CompareTag("Food"))
 		{
 			FoodObject ot = bang.gameObject.GetComponent<FoodObject>();
 			if(ot!=null && ot.CanBeTargetted)

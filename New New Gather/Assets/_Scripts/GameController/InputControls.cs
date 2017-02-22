@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class InputControls : MonoBehaviour 
+public class InputControls :  NetworkBehaviour
 {
 	//public GameObject farmer, soldier;
 	//GameObject farmFlag, fightFlag, mainMoM;
@@ -15,19 +16,23 @@ public class InputControls : MonoBehaviour
 	void Start () 
 	{
 		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-		GUI = GetComponent<GUIController>();
+		GUI = GameController.instance.GetComponent<GUIController>();
 		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
 	public void CreatFarmer()
 	{
-		MainMomController.MainMoM.CreateFarmer();
+		PlayerMomController.MainMoM.CreateFarmer();
 	}
 	public void CreatFighter()
 	{
-		MainMomController.MainMoM.CreateFighter();
+		PlayerMomController.MainMoM.CreateFighter();
 	}
 	void Update () 
 	{
+//		if(!isLocalPlayer)
+//		{
+//			return;
+//		}
 		float lastInputX = Input.GetAxis ("Horizontal");
 		float lastInputY = Input.GetAxis ("Vertical");
 		float lastInputScroll = Input.GetAxis("Mouse ScrollWheel");
@@ -42,11 +47,8 @@ public class InputControls : MonoBehaviour
 			Camera.main.orthographicSize -= lastInputScroll* scrollSpeed;
 			Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minFOV, maxFOV);
 		}
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			GUI.EnablePause(true);
-		}
-		if(MainMomController.MainMoM!=null && MainMomController.MainMoM.isActive)
+
+		if(PlayerMomController.MainMoM!=null && PlayerMomController.MainMoM.isActive)
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
@@ -54,23 +56,23 @@ public class InputControls : MonoBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				MainMomController.MainMoM.CreateFarmer();
+				PlayerMomController.MainMoM.CreateFarmer();
 			}
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				MainMomController.MainMoM.CreateFighter();
+				PlayerMomController.MainMoM.CreateFighter();
 			}
 			if(Input.GetKeyDown(KeyCode.R))
 			{
-				MainMomController.MainMoM.CreateDaughter();
+				PlayerMomController.MainMoM.CreateDaughter();
 			}
 			if(Input.GetKeyDown(KeyCode.Z))
 			{
-				MainMomController.MainMoM.RecallFarmFlag();
+				PlayerMomController.MainMoM.RecallFarmFlag();
 			}
 			if(Input.GetKeyDown(KeyCode.C))
 			{
-				MainMomController.MainMoM.RecallFightFlag();
+				PlayerMomController.MainMoM.RecallFightFlag();
 			}
 			if (Input.GetMouseButtonDown (0)) 
 			{
@@ -79,7 +81,7 @@ public class InputControls : MonoBehaviour
 
 				if (Physics.Raycast (ray, out hit, 100f, mask)) 
 				{
-					MainMomController.MainMoM.PlaceFarmFlag(hit.point);
+					PlayerMomController.MainMoM.PlaceFarmFlag(hit.point);
 				}
 			}
 			if (Input.GetMouseButtonDown (1)) 
@@ -92,9 +94,9 @@ public class InputControls : MonoBehaviour
 					if(Input.GetKey(KeyCode.LeftShift))
 					{
 						Debug.Log("Super");
-						MainMomController.MainMoM.PlaceTeamFightFlag(hit.point);
+						PlayerMomController.MainMoM.PlaceTeamFightFlag(hit.point);
 					}
-					else MainMomController.MainMoM.PlaceFightFlag(hit.point);
+					else PlayerMomController.MainMoM.PlaceFightFlag(hit.point);
 				}
 			}
 		}
