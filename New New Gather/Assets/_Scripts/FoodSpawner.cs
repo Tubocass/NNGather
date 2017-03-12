@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class FoodSpawner : MonoBehaviour 
+public class FoodSpawner : NetworkBehaviour 
 {
 	public Vector3 Location{get{return transform.position;}}
 	[SerializeField] int amount = 4;
@@ -22,6 +23,7 @@ public class FoodSpawner : MonoBehaviour
 	{
 		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
+
 	void DaySwitch(bool b)
 	{
 		if(myTag.Equals("DayPlant"))
@@ -29,8 +31,12 @@ public class FoodSpawner : MonoBehaviour
 		else bSpawnTime = !b;
 	}
 
+
 	void Start () 
 	{
+		if(!isServer)
+		return;
+
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
 		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);//Spawn 
@@ -55,7 +61,8 @@ public class FoodSpawner : MonoBehaviour
 		//food.SetActive(false);
 		return food;
 	}
-	
+
+
 	IEnumerator SpawnFood()
 	{
 		while(true)
@@ -64,8 +71,9 @@ public class FoodSpawner : MonoBehaviour
 			{
 				if(!foodPile[i].gameObject.activeSelf)
 				{
-					foodPile[i].transform.position = spawnPoints[i];
-					foodPile[i].gameObject.SetActive(true);
+					foodPile[i].GetComponent<FoodObject>().RpcReset(spawnPoints[i]);
+//					foodPile[i].transform.position = spawnPoints[i];
+//					foodPile[i].gameObject.SetActive(true);
 					if(bSpawnTime)
 					{
 						yield return new WaitForSeconds(3f);

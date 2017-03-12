@@ -31,7 +31,7 @@ public class DaughterController : MoMController
 	}
 	IEnumerator SpawnTimer()
 	{
-		while(true)
+		while(true&& isServer)
 		{
 			yield return new WaitForSeconds(1);
 			if(farmers<farmerCap)
@@ -42,9 +42,9 @@ public class DaughterController : MoMController
 		}
 	}
 
-	public void setMoM(MoMController mom, Color tc)
+	public void RpcSetMoM(GameObject mom, Color tc)
 	{
-		base.setMoM(mom);
+		base.SetMoM(mom);
 		TeamColor = tc;
 		birthHole = tran.position;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;

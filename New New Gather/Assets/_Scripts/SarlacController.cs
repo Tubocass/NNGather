@@ -34,6 +34,10 @@ public class SarlacController : DroneController
 		StartCoroutine(AttackCooldown());
 		//StartCoroutine(LookForEnemies());
 	}
+	protected override void OnDisable()
+	{
+		StopAllCoroutines();
+	}
 	protected override void TargetLost(int id)
 	{
 		if(targetEnemy!=null && id == targetEnemy.unitID)
@@ -66,21 +70,34 @@ public class SarlacController : DroneController
 		{
 			if(agent.remainingDistance<1)
 			{
-				bMoving = false;
+				if(currntPoint<points-1)
+				{
+					currntPoint +=1;
+					currentVector = Path[currntPoint];
+					agent.SetDestination(currentVector);
+				}else bMoving = false;
 				//Debug.Log("I arrived");
 				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
 			}else
 			{
-				yield return new WaitForSeconds(0.5f);
-				if(bReturning) ReturnToHome();
-				else if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
+				//if(bReturning) ReturnToHome();
+				//else 
+				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
 			}
+			yield return new WaitForSeconds(0.5f);
 		}
 	}
 	protected override void MoveRandomly()
 	{
-		Vector3 rVector = RandomVector(anchor, orbit);
-		MoveTo(rVector);
+//		Vector3 rVector = RandomVector(anchor, orbit);
+//		MoveTo(rVector);
+
+		UnityEngine.AI.NavMeshPath rVector = RandomPath(anchor, orbit);
+		if(rVector.status!=UnityEngine.AI.NavMeshPathStatus.PathPartial)
+		{
+			agent.SetPath(rVector);
+			agent.Resume();
+		}
 	}
 	protected override void DaySwitch(bool b)
 	{
@@ -97,7 +114,10 @@ public class SarlacController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		if(eaten<maxEaten && !IsCarryingFood())
+		if(!isServer)
+		return;
+
+		if(isActive&& eaten<maxEaten && !IsCarryingFood())
 		{
 			if(IsTargetingEnemy())
 			{

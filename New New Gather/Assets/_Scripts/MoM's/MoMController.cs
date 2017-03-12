@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -36,14 +37,15 @@ public class MoMController : Unit_Base
 			}
 	}
 	public List<FoodObject> Foods;
-	public Color TeamColor;
-	public int farmers = 0, fighters = 0, daughters = 0;//counters
+	[SyncVar(hook = "ColorChange")]public Color TeamColor;
+	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
-	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, foodAmount, hungerTime = 10;
+	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, hungerTime = 10;
+	[SyncVar][SerializeField] protected int foodAmount;
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	protected GameObject fightFlag, farmFlag;
@@ -86,8 +88,11 @@ public class MoMController : Unit_Base
 
 	protected virtual void Start()
 	{	
-		StartCoroutine(UpdateLocation());
-		StartCoroutine(Hunger());
+		if(isServer)
+		{
+			StartCoroutine(UpdateLocation());
+			StartCoroutine(Hunger());
+		}
 	}
 	protected override void Death ()
 	{
@@ -100,7 +105,10 @@ public class MoMController : Unit_Base
 			UnityEventManager.TriggerEvent("MoMDeath", teamID);
 		}
 	}
-
+	public void ColorChange(Color newColor)
+	{
+		GetComponentInChildren<Renderer>().material.color = TeamColor;
+	}
 	public override void TakeDamage(float damage)
 	{
 		StartCoroutine(EmergencyFighters());
@@ -131,6 +139,7 @@ public class MoMController : Unit_Base
 		}
 	}
 
+	[Server]
 	public virtual void CreateFarmer()
 	{
 		if(FoodAmount>=farmerCost)
@@ -138,22 +147,24 @@ public class MoMController : Unit_Base
 			FoodAmount = -farmerCost;
 			farmers++;
 			Unit_Base.TeamSize[teamID] += 1;
-			if(Farmers.Count>0)
+			if(Farmers.Count>0)//Are there any farmer bots already?
 			{
-				FarmerController recycle = Farmers.Find(f=> !f.isActive);
+				FarmerController recycle = Farmers.Find(f=> !f.isActive);//are there inactive bots?
 				if(recycle!=null)
 				{
-					recycle.setMoM(this, TeamColor);
+					//reycycle.RpsSetMom
+					recycle.RpcSetMoM(this.gameObject, TeamColor);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
-					InstantiateFarmer();
+					InstantiateFarmer();//No inactives we can recycle
 				}
 			}else {
-				InstantiateFarmer();
+				InstantiateFarmer();//No Bots available yet
 			}
 		}
 	}
 
+	[Server]
 	public virtual void CreateFighter()
 	{
 		if(FoodAmount>=fighterCost)
@@ -166,7 +177,7 @@ public class MoMController : Unit_Base
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
-					recycle.setMoM(this, TeamColor);
+					recycle.RpcSetMoM(this.gameObject, TeamColor);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFighter();
@@ -181,9 +192,9 @@ public class MoMController : Unit_Base
 	{
 		if(FoodAmount>=daughterCost)
 		{
-			Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
-			if(Vector3.Distance(nearest,Location)<=20)
-			{
+//			Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
+//			if(Vector3.Distance(nearest,Location)<=20)
+//			{
 				FoodAmount = -daughterCost;
 				daughters++;
 				Unit_Base.TeamSize[teamID] += 1;
@@ -192,37 +203,42 @@ public class MoMController : Unit_Base
 					DaughterController recycle = Daughters.Find(f=> !f.isActive);
 					if(recycle!=null)
 					{
-						recycle.setMoM(this, TeamColor);
-						recycle.transform.position = nearest;//Location+new Vector3(1,0,1);
+						recycle.RpcSetMoM(this.gameObject, TeamColor);
+						recycle.transform.position = Location+new Vector3(1,0,1);
 					}else{
-						InstantiateDaughter(nearest);
+						InstantiateDaughter();
 					}
 				}else {
-					InstantiateDaughter(nearest);
+					InstantiateDaughter();
 				}
-			}
+			//}
 		}
 	}
-
-	void InstantiateFarmer()
+	[Server]
+	protected void InstantiateFarmer()
 	{
-		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,1),Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
-		fc.setMoM(this, TeamColor);
+		NetworkServer.Spawn(spawn);
+		fc.RpcSetMoM(this.gameObject, TeamColor);
 		Farmers.Add(fc);
 	}
-	void InstantiateFighter()
+	[Server]
+	protected void InstantiateFighter()
 	{
 		GameObject spawn = Instantiate(fighterFab,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
-		fc.setMoM(this, TeamColor);
+		NetworkServer.Spawn(spawn);
+		fc.RpcSetMoM(this.gameObject, TeamColor);
 		Fighters.Add(fc);
 	}
-	void InstantiateDaughter(Vector3 location)
+	[Server]
+	protected void InstantiateDaughter()
 	{
-		GameObject spawn = Instantiate(daughterFab, location,Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(daughterFab, transform.position + new Vector3(-1,0,1),Quaternion.identity) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
-		dc.setMoM(this, TeamColor);
+		NetworkServer.Spawn(spawn);
+		dc.RpcSetMoM(this.gameObject, TeamColor);
 		Daughters.Add(dc);
 	}
 
@@ -232,12 +248,12 @@ public class MoMController : Unit_Base
 		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
 		foreach(FarmerController f in farmTransfers)
 		{
-			f.setMoM(newMoM);
+			f.SetMoM(newMoM.gameObject);
 			newMoM.farmers++;
 		}
 		foreach(FighterController f in fightTransfers)
 		{
-			f.setMoM(newMoM);
+			f.SetMoM(newMoM.gameObject);
 			newMoM.fighters++;
 		}
 	}
@@ -353,7 +369,7 @@ public class MoMController : Unit_Base
 			yield return new WaitForSeconds(10);
 		}
 	}
-
+	[Server]
 	void MoveToCenter()
 	{
 		//Debug.Log("Updating");
@@ -375,8 +391,7 @@ public class MoMController : Unit_Base
 		if(Vector3.Distance( transform.position, newLoc)>1)
 		{
 			Debug.Log("I'm gonna move");
-			agent.SetDestination(newLoc);
-			currentVector = newLoc;
+			MoveTo(newLoc);
 		}
 	}
 }

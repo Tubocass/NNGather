@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,10 +23,10 @@ public class DroneController : Unit_Base
 		UnityEventManager.StopListeningInt("TargetUnavailable", TargetLost);
 		StopCoroutine(Idle());
 	}
-
-	public virtual void setMoM(MoMController mom, Color tc)
+	[ClientRpc]
+	public virtual void RpcSetMoM(GameObject mom, Color tc)
 	{
-		base.setMoM(mom);
+		base.SetMoM(mom);
 		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
 		StartCoroutine(Idle());
 	}

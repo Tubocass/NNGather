@@ -19,20 +19,20 @@ public class InputControls :  NetworkBehaviour
 		GUI = GameController.instance.GetComponent<GUIController>();
 		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
 	}
-	public void CreatFarmer()
-	{
-		PlayerMomController.MainMoM.CreateFarmer();
-	}
-	public void CreatFighter()
-	{
-		PlayerMomController.MainMoM.CreateFighter();
-	}
+//	public void CreatFarmer()//UI hooks
+//	{
+//		PlayerMomController.MainMoM.CreateFarmer();
+//	}
+//	public void CreatFighter()
+//	{
+//		PlayerMomController.MainMoM.CreateFighter();
+//	}
 	void Update () 
 	{
-//		if(!isLocalPlayer)
-//		{
-//			return;
-//		}
+		if(!isLocalPlayer)
+		{
+			return;
+		}
 		float lastInputX = Input.GetAxis ("Horizontal");
 		float lastInputY = Input.GetAxis ("Vertical");
 		float lastInputScroll = Input.GetAxis("Mouse ScrollWheel");
@@ -56,11 +56,12 @@ public class InputControls :  NetworkBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				PlayerMomController.MainMoM.CreateFarmer();
+				//PlayerMomController.MainMoM.CreateFarmer();
+				PlayerMomController.MainMoM.CmdCreateFarmer();
 			}
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				PlayerMomController.MainMoM.CreateFighter();
+				PlayerMomController.MainMoM.CmdCreateFighter();
 			}
 			if(Input.GetKeyDown(KeyCode.R))
 			{

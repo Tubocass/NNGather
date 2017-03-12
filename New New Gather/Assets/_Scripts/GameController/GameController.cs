@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameController : MonoBehaviour 
+public class GameController :  NetworkBehaviour
 {
 	//public static List<GameObject> Pits = new List<GameObject>();
 	static Transform DayLight, NightLight;
@@ -46,6 +47,9 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
+		if(!isServer)
+		return;
+
 		levelGen = GetComponent<GenerateLevel>();
 		DayLight = GameObject.Find("Day Light").transform;
 		NightLight = GameObject.Find("Night Light").transform;
@@ -57,6 +61,7 @@ public class GameController : MonoBehaviour
 			GameObject spawn = Instantiate(SarlacFab, Vector3.zero,Quaternion.identity) as GameObject;
 			SarlacInstance = spawn.GetComponent<SarlacController>();
 			SarlacInstance.isActive = false;
+			NetworkServer.Spawn(spawn);
 			StartCoroutine(Release());
 		}
 	}
@@ -85,6 +90,9 @@ public class GameController : MonoBehaviour
 
 	void Update()
 	{
+		if(!isServer)
+		return;
+
 		DayLight.Rotate(DayLight.right,SunSpeed*Time.deltaTime,Space.World);
 		NightLight.Rotate(NightLight.right,SunSpeed*Time.deltaTime,Space.World);
 		if(!IsDayLight()&&bDay)
@@ -100,7 +108,9 @@ public class GameController : MonoBehaviour
 	}
 	public static bool IsDayLight()
 	{
+		if(DayLight!=null)
 		return DayLight.eulerAngles.x>0-10&&DayLight.eulerAngles.x<180+10;
+		else return false;
 	}
 
 	public static void StartTimer()

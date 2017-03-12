@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Networking;
 using System.Collections;
 
@@ -6,7 +7,7 @@ public class Unit_Base : NetworkBehaviour
 {
 	public static int TotalCreated;
 	public static int[] TeamSize = new int[10];
-	public int teamID, unitID;
+	[SyncVar]public int teamID, unitID;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}
 	public float Health{
@@ -35,7 +36,9 @@ public class Unit_Base : NetworkBehaviour
 	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
-	[SerializeField] protected float health, startHealth;
+	[SyncVar][SerializeField] protected float health, startHealth;
+	[SerializeField] protected Vector3[] Path;
+	[SerializeField] protected int points, currntPoint;
 	[SerializeField] int tries;
 	protected Transform tran;
 	protected UnityEngine.AI.NavMeshAgent agent;
@@ -56,7 +59,7 @@ public class Unit_Base : NetworkBehaviour
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 
 	}
-	void OnDisable()
+	protected virtual void OnDisable()
 	{
 		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
@@ -64,11 +67,11 @@ public class Unit_Base : NetworkBehaviour
 	{
 		bDay = b;
 	}
-
-	public virtual void setMoM(MoMController mom)
+	//[ClientRpc]
+	public virtual void SetMoM(GameObject mom)
 	{
 		isActive = true;
-		myMoM = mom;
+		myMoM = mom.GetComponent<MoMController>();
 		teamID = myMoM.teamID;
 		//tran.position = mom.Location + new Vector3(1,0,1);
 	}
@@ -104,15 +107,56 @@ public class Unit_Base : NetworkBehaviour
 		}
 		return rando;
 	}
-
+	public UnityEngine.AI.NavMeshPath RandomPath(Vector3 origin, float range)
+	{
+		Vector3 rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
+		UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+		agent.CalculatePath(rando,path);
+		float dist = (rando-tran.position).sqrMagnitude;
+		tries = 10;
+		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd) || (path.status == UnityEngine.AI.NavMeshPathStatus.PathPartial))
+		{
+			tries--;
+			rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
+			agent.CalculatePath(rando,path);
+			dist = (rando-tran.position).sqrMagnitude;
+		}
+		return path;
+	}
+	[Server]
 	public void MoveTo(Vector3 location)
 	{
-		//agent.ResetPath();
-		bMoving = true;
-		currentVector = location;
-		agent.SetDestination(location);
+		NavMeshPath path = new NavMeshPath();
+		agent.CalculatePath(location, path);
+		RpcMoveTo(path.corners);
+	}
+//
+//	protected virtual IEnumerator MovingTo()
+//	{
+//		while(bMoving)
+//		{
+//			if(agent.remainingDistance<1)
+//			{
+//				bMoving = false;
+//				//Debug.Log("I arrived");
+//			}
+//			yield return new WaitForSeconds(0.5f);
+//		}
+//	}
+	[ClientRpc]
+	public void RpcMoveTo(Vector3[] PathArray)
+	{
 		StopCoroutine("MovingTo");
-		StartCoroutine("MovingTo");
+		if(PathArray.Length>0)
+		{
+			bMoving = true;
+			currntPoint = 0;
+			points = PathArray.Length;
+			Path = PathArray;
+			currentVector = Path[currntPoint];
+			agent.SetDestination(currentVector);
+			StartCoroutine("MovingTo");
+		}
 	}
 
 	protected virtual IEnumerator MovingTo()
@@ -121,16 +165,22 @@ public class Unit_Base : NetworkBehaviour
 		{
 			if(agent.remainingDistance<1)
 			{
-				bMoving = false;
+				if(currntPoint<points-1)
+				{
+					currntPoint +=1;
+					currentVector = Path[currntPoint];
+					agent.SetDestination(currentVector);
+				}else bMoving = false;
 				//Debug.Log("I arrived");
 			}
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
-
-	protected virtual void MoveRandomly()
+	[Server]
+	protected virtual void MoveRandomly()//Vector3[] PathArray
 	{
-
+		NavMeshPath rVector = RandomPath(Vector3.zero, 25);
+		RpcMoveTo(rVector.corners);
 	}
 
 	protected virtual IEnumerator Idle()
@@ -146,6 +196,7 @@ public class Unit_Base : NetworkBehaviour
 	}
 	protected virtual void ArrivedAtTargetLocation()
 	{
+		if(isServer)
 		MoveRandomly();
 	}
 	public virtual void OnCollisionEnter(Collision bang)

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class FoodObject : MonoBehaviour, IAttachable 
+public class FoodObject : NetworkBehaviour//, IAttachable 
 {
 	public static int TotalCreated;
 	public int Id{get{return id;}}
@@ -22,12 +23,26 @@ public class FoodObject : MonoBehaviour, IAttachable
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 		gameObject.SetActive(false);
 	}
-	public void Attach(Transform newParent, Vector3 point)
+//	public void Attach(Transform newParent, Vector3 point)
+//	{
+//		transform.SetParent(newParent);
+//		transform.localPosition = point;
+//		bAttached = true;
+//		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
+//	}
+	[ClientRpc]
+	public void RpcAttach(GameObject newParent, Vector3 point)
 	{
-		transform.SetParent(newParent);
+		transform.SetParent(newParent.transform);
 		transform.localPosition = point;
 		bAttached = true;
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
+	}
+	[ClientRpc]
+	public void RpcReset(Vector3 position)
+	{
+		transform.position = position;
+		gameObject.SetActive(true);
 	}
 	public void Detach()
 	{

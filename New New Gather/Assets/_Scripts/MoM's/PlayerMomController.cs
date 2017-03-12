@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -44,38 +45,124 @@ public class PlayerMomController : MoMController
 
 	protected override void OnEnable()
 	{
-		base.OnEnable();
-		main = this;
-		UnityEventManager.TriggerEvent("MainMomChange");
-		//teamID = 0;
+		//if(isLocalPlayer)
+		{
+			base.OnEnable();
+			//main = this;
+			UnityEventManager.TriggerEvent("MainMomChange");
+			//teamID = 0;
+		}
 	}
 	protected override void Start()
 	{
-		base.Start();
-		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
-		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+		//if(isLocalPlayer)
+		{
+			base.Start();
+			UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
+			UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+		}
 	}
 	public override void OnStartLocalPlayer()
 	{
 		Debug.Log("local idiot");
+		main = this;
 	}
 	protected override void Death ()
 	{
 		base.Death();
 	}
-	public override void CreateFarmer()
+//	public override void CreateFarmer()
+//	{
+//		if(farmers<farmerCap)
+//		{
+//			base.CreateFarmer();
+//		}
+//	}
+
+	[Command]
+	public void CmdCreateFarmer()
 	{
 		if(farmers<farmerCap)
 		{
-			base.CreateFarmer();
+			if(FoodAmount>=farmerCost)
+			{
+				FoodAmount = -farmerCost;
+				farmers++;
+				Unit_Base.TeamSize[teamID] += 1;
+				if(Farmers.Count>0)
+				{
+					FarmerController recycle = Farmers.Find(f=> !f.isActive);
+					if(recycle!=null)
+					{
+						//reycycle.RpsSetMom
+						recycle.RpcSetMoM(this.gameObject, TeamColor);
+						recycle.transform.position = Location+new Vector3(1,0,1);
+					}else{
+						InstantiateFarmer();
+						//CmdInstantiateFarmer();
+					}
+				}else {
+					InstantiateFarmer();
+					//CmdInstantiateFarmer();
+				}
+			}
 		}
 	}
-	public override void CreateFighter()
+	[Command]
+	public void CmdInstantiateFarmer()
+	{
+		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
+		FarmerController fc = spawn.GetComponent<FarmerController>();
+		NetworkServer.Spawn(spawn);
+		fc.RpcSetMoM(this.gameObject, TeamColor);
+		Farmers.Add(fc);
+
+	}
+//	public override void CreateFighter()
+//	{
+//		if(fighters<fighterCap)
+//		{
+//			base.CreateFighter();
+//		}
+//	}
+	[Command]
+	public void CmdCreateFighter()
 	{
 		if(fighters<fighterCap)
 		{
-			base.CreateFighter();
+			if(FoodAmount>=fighterCost)
+			{
+				FoodAmount = -fighterCost;
+				fighters++;
+				Unit_Base.TeamSize[teamID] += 1;
+				if(Fighters.Count>0)
+				{
+					FighterController recycle = Fighters.Find(f=> !f.isActive);
+					if(recycle!=null)
+					{
+						//reycycle.RpsSetMom
+						recycle.RpcSetMoM(this.gameObject, TeamColor);
+						recycle.transform.position = Location+new Vector3(1,0,1);
+					}else{
+						InstantiateFarmer();
+						//CmdInstantiateFighter();
+					}
+				}else {
+					InstantiateFarmer();
+					//CmdInstantiateFighter();
+				}
+			}
 		}
+	}
+	[Command]
+	public void CmdInstantiateFighter()
+	{
+		GameObject spawn = Instantiate(fighterFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
+		FighterController fc = spawn.GetComponent<FighterController>();
+		NetworkServer.Spawn(spawn);
+		fc.RpcSetMoM(this.gameObject, TeamColor);
+		Fighters.Add(fc);
+
 	}
 	public override void CreateDaughter()
 	{

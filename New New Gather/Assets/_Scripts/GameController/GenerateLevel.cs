@@ -12,31 +12,32 @@ public class GenerateLevel : NetworkBehaviour
 	public int dayScars = 5, dayPlantPitDistance = 30;
 	[Space(10)]
 
-	public int moms = 3, momsDistance = 20;
+	public int moms = 3, bots = 2, momsDistance = 20;
 	[Space(10)]
 
 	[SerializeField] Color[] Colors;
-	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, GlowFab;//prefabs
+	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
 	[Space(5)]
 
 	public static GameObject[] Pits;
 	GameObject[] MoMs;
 	Vector3 groundSize;
-	int MoMCount;
+	int MoMCount, botCount;
 	public delegate GameObject SpawnFunction(Vector3 v);
+
 
 	public void Generate() 
 	{
 		Unit_Base.TeamSize = new int[10];
 		Unit_Base.TotalCreated = 0;
 		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
-		NetworkServer.Spawn(ground);
 		ground.SetActive(true);
+		NetworkServer.Spawn(ground);
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z - groundSize.z/8;
 		Pits = new GameObject[pits];
-		MoMs = new GameObject[moms];
+		MoMs = new GameObject[moms+bots];
 
 		//Sarlac Pits
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
@@ -44,27 +45,54 @@ public class GenerateLevel : NetworkBehaviour
 		//Day Plants
 		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants); //need to make them separate from Sarlac pits
 
+		//Bots
+		SpawnObjects(bots, xx, momsDistance, Vector3.zero, MoMs, SpawnBots);
+
 		//MoMs
-		SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
+		//SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
+	}
+
+	public void OnStartLocalPlayer()
+	{
 	}
 
 	GameObject SpawnMoM(Vector3 position)
 	{
 		GameObject newMoM;
 		Vector3 height = new Vector3(0,0.5f,0);
-		if(MoMCount==0)
-		{
-			newMoM = Instantiate(MainMoMFab, position+height, Quaternion.identity)as GameObject;
-			//NetworkServer.SpawnWithClientAuthority(newMoM, PlayerMomController.MainMoM.gameObject);
-		}else {
-			newMoM = Instantiate(EnemyMoMFab, position+height, Quaternion.identity)as GameObject;
-		}
-		newMoM.GetComponent<MoMController>().teamID = MoMCount;
+		newMoM = Instantiate(MainMoMFab, position+height, Quaternion.identity)as GameObject;
+		SetMoMObj(newMoM.GetComponent<MoMController>());
+		//NetworkServer.SpawnWithClientAuthority(newMoM);
+		//NetworkServer.SpawnWithClientAuthority(newMoM, PlayerMomController.MainMoM.gameObject);
+
+//		newMoM.GetComponent<MoMController>().teamID = MoMCount;
+//		Unit_Base.TeamSize[MoMCount] += 1;
+//		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
+//		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
+//		MoMCount+=1;
+		return newMoM;
+	}
+	GameObject SpawnBots(Vector3 position)
+	{
+		GameObject newMoM;
+		Vector3 height = new Vector3(0,0.5f,0);
+		newMoM = Instantiate(EnemyMoMFab, position+height, Quaternion.identity)as GameObject;
+		SetMoMObj(newMoM.GetComponent<MoMController>());
+		//NetworkServer.Spawn(newMoM);
+//		newMoM.GetComponent<MoMController>().teamID = MoMCount;
+//		Unit_Base.TeamSize[MoMCount] += 1;
+//		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
+//		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
+//		MoMCount+=1;
+		return newMoM;
+	}
+	void SetMoMObj(MoMController newMoM)
+	{
+		newMoM.teamID = MoMCount;
 		Unit_Base.TeamSize[MoMCount] += 1;
-		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
+		newMoM.TeamColor = Colors[MoMCount];
 		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
 		MoMCount+=1;
-		return newMoM;
 	}
 	GameObject SpawnSarlacPit(Vector3 position)
 	{
@@ -114,6 +142,7 @@ public class GenerateLevel : NetworkBehaviour
 		});
 	}
 
+	[Server]
 	public static void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
 	{
 		//GameObject[] objs = new GameObject[amount]; 
@@ -132,6 +161,7 @@ public class GenerateLevel : NetworkBehaviour
 			if(objs[0] == null)
 			{
 				objs[created] = create(spawnPoint);
+				NetworkServer.Spawn(objs[created]);
 				created++;
 			}else
 			{
@@ -139,6 +169,7 @@ public class GenerateLevel : NetworkBehaviour
 				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
 				{
 					objs[created] = create(spawnPoint);
+					NetworkServer.Spawn(objs[created]);
 					created++;
 				}else
 				{
@@ -150,6 +181,7 @@ public class GenerateLevel : NetworkBehaviour
 						if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
 						{
 							objs[created] = create(spawnPoint);
+							NetworkServer.Spawn(objs[created]);
 							created++;
 						}
 					}while((nearestLoc-spawnPoint).sqrMagnitude<clusterDistSqrd);

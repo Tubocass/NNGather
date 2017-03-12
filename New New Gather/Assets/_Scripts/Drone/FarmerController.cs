@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -40,10 +42,13 @@ public class FarmerController : DroneController, IAttachable
 
 	protected override void UpdateFlagLocation(int team)
 	{
-		if(myMoM.unitID == team && !IsCarryingFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
+		if(isServer)
 		{
-			targetedFood = null;
-			MoveTo(myMoM.FoodAnchor);
+			if(myMoM.unitID == team && !IsCarryingFood() && Vector3.Distance(transform.position, myMoM.FoodAnchor)>orbit)
+			{
+				targetedFood = null;
+				MoveTo(myMoM.FoodAnchor);
+			}
 		}
 	}
 //	public override void setMoM(MoMController mom, Color tc)
@@ -63,11 +68,21 @@ public class FarmerController : DroneController, IAttachable
 		}
 	}
 
-	protected override void MoveRandomly()
-	{
-		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
-		MoveTo(rVector);
-	}
+//	protected override void MoveRandomly()
+//	{
+//		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
+//		MoveTo(rVector);
+//	}
+
+//	protected override void MoveRandomly()
+//	{
+//		NavMeshPath rVector = RandomPath(myMoM.FoodAnchor, orbit);
+//		if(rVector.status!=NavMeshPathStatus.PathPartial)
+//		{
+//			agent.SetPath(rVector);
+//			agent.Resume();
+//		}
+//	}
 
 	protected override IEnumerator MovingTo()
 	{
@@ -75,14 +90,24 @@ public class FarmerController : DroneController, IAttachable
 		{
 			if(agent.remainingDistance<1)
 			{
-				bMoving = false;
-				//Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
-			}else
-			{
-				yield return new WaitForSeconds(0.5f);
-				if(bReturning) MoveTo(myMoM.Location);
+				if(currntPoint<points-1)
+				{
+					currntPoint +=1;
+					currentVector = Path[currntPoint];
+					agent.SetDestination(currentVector);
+				}else bMoving = false;
 			}
+			//if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>1) ReturnToHome();
+			yield return new WaitForSeconds(0.5f);
+		}
+	}
+
+	protected void ReturnToHome()
+	{
+		if(isServer)
+		{
+			bReturning = true;
+			MoveTo(myMoM.Location);
 		}
 	}
 
@@ -97,22 +122,25 @@ public class FarmerController : DroneController, IAttachable
 
 	protected override void ArrivedAtTargetLocation()
 	{
-		if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
+		if(isServer && myMoM!=null)
 		{
-			ReturnToHome();
-		}
-		if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
-		{
-			MoveTo(targetedFood.Location);
-		}
-		if(CanTargetFood())
-		{
-			targetedFood = TargetNearest();
-			if(targetedFood!=null)
+			if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
+			{
+				ReturnToHome();
+			}
+			if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
 			{
 				MoveTo(targetedFood.Location);
 			}
-			else MoveRandomly();
+			if(CanTargetFood())
+			{
+				targetedFood = TargetNearest();
+				if(targetedFood!=null)
+				{
+					MoveTo(targetedFood.Location);
+				}
+				else MoveRandomly();
+			}
 		}
 	}
 
@@ -187,14 +215,11 @@ public class FarmerController : DroneController, IAttachable
 		return food;
 	}
 
-	protected void ReturnToHome()
-	{
-		bReturning = true;
-		MoveTo(myMoM.Location);
-	}
-
 	public override void OnCollisionEnter(Collision bang)
 	{
+		if(!isServer)
+		return;
+
 		if(bang.collider.CompareTag("Food"))
 		{
 			FoodObject ot = bang.gameObject.GetComponent<FoodObject>();
@@ -208,7 +233,7 @@ public class FarmerController : DroneController, IAttachable
 					}
 					targetedFood = null;
 					carriedFood = ot;
-					ot.Attach(transform,nose);
+					ot.RpcAttach(this.gameObject,nose);
 					foodLoc = ot.Location;
 					ReturnToHome();
 				}

@@ -11,6 +11,8 @@ public class GUIController : MonoBehaviour
 
 	void OnEnable()
 	{
+		int teams =  GetComponent<GenerateLevel>().moms;
+		StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams)+15);
 		UnityEventManager.StartListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StartListeningInt("UpdateHealth", SetHealth);
 		UnityEventManager.StartListeningInt("MoMDeath", Notify);
@@ -64,9 +66,6 @@ public class GUIController : MonoBehaviour
 	{
 		while(true)
 		{
-			int teams =  GetComponent<GenerateLevel>().moms;
-			StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams)+15);
-
 			if(PlayerMomController.MainMoM!= null)
 			{
 				statText1.text = "Farmers: "+ PlayerMomController.MainMoM.farmers+ "\nFighters: "+ PlayerMomController.MainMoM.fighters+ "\nDaughters: "+ PlayerMomController.MainMoM.daughters;

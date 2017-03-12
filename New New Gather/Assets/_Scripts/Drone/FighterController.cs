@@ -60,29 +60,31 @@ public class FighterController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-
-		if(IsTargetingEnemy())
+		if(myMoM!=null)
 		{
-			if(canAttack && Vector3.Distance(Location,targetEnemy.Location)<1f)
+			if(IsTargetingEnemy())
 			{
-				Attack(targetEnemy);
-			}else{
-		 	MoveTo(targetEnemy.Location);
-		 	}
-		}else {
-			targetEnemy = TargetNearest();
-			if(targetEnemy!=null)
-			{
-				MoveTo(targetEnemy.Location);
-			}else MoveRandomly();
+				if(canAttack && Vector3.Distance(Location,targetEnemy.Location)<1f)
+				{
+					Attack(targetEnemy);
+				}else{
+			 	MoveTo(targetEnemy.Location);
+			 	}
+			}else {
+				targetEnemy = TargetNearest();
+				if(targetEnemy!=null)
+				{
+					MoveTo(targetEnemy.Location);
+				}else MoveRandomly();
+			}
 		}
 	}
 
-	protected override void MoveRandomly()
-	{
-		Vector3 rVector = RandomVector(myMoM.FightAnchor, orbit);
-		MoveTo(rVector);
-	}
+//	protected override void MoveRandomly()
+//	{
+//		Vector3 rVector = RandomVector(myMoM.FightAnchor, orbit);
+//		MoveTo(rVector);
+//	}
 
 	protected override IEnumerator MovingTo()
 	{

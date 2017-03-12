@@ -72,6 +72,8 @@
      <Compile Include="Assets\_Scripts\MoM&apos;s\PlayerMomController.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\DumbFuckingScript.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\Interact.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\MouseLook.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\walker.cs" />
      <Compile Include="Assets\_Scripts\PanelController.cs" />
      <Compile Include="Assets\_Scripts\PitController.cs" />
