@@ -37,7 +37,7 @@ public class MoMController : Unit_Base
 			}
 	}
 	public List<FoodObject> Foods;
-	[SyncVar(hook = "ColorChange")]public Color TeamColor;
+	//[SyncVar(hook = "ColorChange")]public Color TeamColor;
 	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
@@ -57,7 +57,8 @@ public class MoMController : Unit_Base
 	{
 		base.OnEnable();
 		Foods = new List<FoodObject>();
-		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
+		TeamColorMat.color = TeamColor;
 		daughters = 0;//I really
 		farmers = 0;//don't understand
 		fighters = 0;//why these have to be hard reset
@@ -105,10 +106,7 @@ public class MoMController : Unit_Base
 			UnityEventManager.TriggerEvent("MoMDeath", teamID);
 		}
 	}
-	public void ColorChange(Color newColor)
-	{
-		GetComponentInChildren<Renderer>().material.color = TeamColor;
-	}
+
 	public override void TakeDamage(float damage)
 	{
 		StartCoroutine(EmergencyFighters());

@@ -16,7 +16,8 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 		id = TotalCreated+idOffset;
 		TotalCreated++;
 	}
-	public void Destroy()
+	[ClientRpc]
+	public void RpcDestroy()
 	{
 		transform.position = Vector3.zero;
 		Detach();
@@ -44,6 +45,7 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 		transform.position = position;
 		gameObject.SetActive(true);
 	}
+
 	public void Detach()
 	{
 		transform.SetParent(null);

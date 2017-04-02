@@ -51,11 +51,6 @@ public class FarmerController : DroneController, IAttachable
 			}
 		}
 	}
-//	public override void setMoM(MoMController mom, Color tc)
-//	{
-//		base.setMoM(mom, tc);
-//		//StartCoroutine(LookForFood());
-//	}
 
 	protected override void Death()
 	{
@@ -67,22 +62,6 @@ public class FarmerController : DroneController, IAttachable
 			carriedFood = null;
 		}
 	}
-
-//	protected override void MoveRandomly()
-//	{
-//		Vector3 rVector = RandomVector(myMoM.FoodAnchor, orbit);
-//		MoveTo(rVector);
-//	}
-
-//	protected override void MoveRandomly()
-//	{
-//		NavMeshPath rVector = RandomPath(myMoM.FoodAnchor, orbit);
-//		if(rVector.status!=NavMeshPathStatus.PathPartial)
-//		{
-//			agent.SetPath(rVector);
-//			agent.Resume();
-//		}
-//	}
 
 	protected override IEnumerator MovingTo()
 	{
@@ -96,12 +75,20 @@ public class FarmerController : DroneController, IAttachable
 					currentVector = Path[currntPoint];
 					agent.SetDestination(currentVector);
 				}else bMoving = false;
+			}else{
+				if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>2) 
+				ReturnToHome();
 			}
-			//if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>1) ReturnToHome();
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
 
+	[Server]
+	protected override void MoveRandomly()//Vector3[] PathArray
+	{
+		NavMeshPath rVector = RandomPath(myMoM.FoodAnchor, 25);
+		RpcMoveTo(rVector.corners);
+	}
 	protected void ReturnToHome()
 	{
 		if(isServer)
@@ -155,7 +142,7 @@ public class FarmerController : DroneController, IAttachable
 			}
 			if(fo.Id != carriedFood.Id)
 			{
-				carriedFood.Destroy();
+				carriedFood.RpcDestroy();
 				carriedFood = fo;
 			}
 			return true;
@@ -246,7 +233,7 @@ public class FarmerController : DroneController, IAttachable
 			if(bangMoM.unitID == myMoM.unitID)
 			{
 				bangMoM.AddFoodLocation(foodLoc);
-				carriedFood.Destroy();
+				carriedFood.RpcDestroy();
 				carriedFood = null;
 				bReturning = false;
 			}

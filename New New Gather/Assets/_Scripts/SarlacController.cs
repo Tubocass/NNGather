@@ -22,6 +22,7 @@ public class SarlacController : DroneController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
 		eaten = 0;
 		bMoving = false;
 		bReturning = false;

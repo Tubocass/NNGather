@@ -8,6 +8,7 @@ public class Unit_Base : NetworkBehaviour
 	public static int TotalCreated;
 	public static int[] TeamSize = new int[10];
 	[SyncVar]public int teamID, unitID;
+	[SyncVar(hook = "OnChangeColor")] public Color TeamColor;
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}
 	public float Health{
@@ -17,32 +18,38 @@ public class Unit_Base : NetworkBehaviour
 		}
 		set
 		{
-			if(health<=0)
+			if(isServer)
 			{
-				return;
-			}
-			health+=value; 
-			if(this.GetType()==typeof(PlayerMomController))
-			{
-				UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
-			}
-			if(health<=0)
-			{
-				Death();
+				if(health<=0)//already dead, leave me be
+				{
+					return;
+				}
+				health+=value; 
+				if(this.GetType()==typeof(PlayerMomController))
+				{
+					RpcSetHealthUI();
+					//UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
+				}
+				if(health<=0)
+				{
+					Death();
+				}
 			}
 		}
 	}
 	public MoMController myMoM;
+	[SyncVar][SerializeField] protected float health, startHealth;
 	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] protected bool bMoving;
-	[SyncVar][SerializeField] protected float health, startHealth;
 	[SerializeField] protected Vector3[] Path;
 	[SerializeField] protected int points, currntPoint;
 	[SerializeField] int tries;
+	[SyncVar]bool hasChanged;
 	protected Transform tran;
 	protected UnityEngine.AI.NavMeshAgent agent;
 	protected bool bDay;
+	protected Material TeamColorMat;
 	float maxDistanceSqrd, minDistanceSqrd;
 
 	protected virtual void OnEnable () 
@@ -56,6 +63,7 @@ public class Unit_Base : NetworkBehaviour
 		TotalCreated+=1;
 		unitID = TotalCreated;
 		bDay = GameController.IsDayLight();
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 
 	}
@@ -75,6 +83,22 @@ public class Unit_Base : NetworkBehaviour
 		teamID = myMoM.teamID;
 		//tran.position = mom.Location + new Vector3(1,0,1);
 	}
+	protected void OnChangeColor(Color newColor)
+	{
+		TeamColor = newColor;
+		TeamColorMat.color = newColor;
+		hasChanged = true;
+	}
+	public override void OnStartClient()
+	{
+		if(hasChanged)
+		TeamColorMat.color = TeamColor;
+	}
+	[ClientRpc]
+	public void RpcSetHealthUI()
+	{
+		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
+	}
 
 	protected virtual void Death()
 	{
@@ -83,6 +107,7 @@ public class Unit_Base : NetworkBehaviour
 		StopAllCoroutines();
 		bMoving = false;
 		isActive = false;
+		hasChanged = false;
 		if(teamID>=0&&TeamSize[teamID]>0)
 		TeamSize[teamID]-=1;
 	}
@@ -183,22 +208,22 @@ public class Unit_Base : NetworkBehaviour
 		RpcMoveTo(rVector.corners);
 	}
 
-	protected virtual IEnumerator Idle()
-	{
-		while(true)
-		{
-			if(!bMoving)
-			{
-				ArrivedAtTargetLocation();
-			}
-			yield return new WaitForSeconds(1);
-		}
-	}
-	protected virtual void ArrivedAtTargetLocation()
-	{
-		if(isServer)
-		MoveRandomly();
-	}
+//	protected virtual IEnumerator Idle()
+//	{
+//		while(true)
+//		{
+//			if(!bMoving)
+//			{
+//				ArrivedAtTargetLocation();
+//			}
+//			yield return new WaitForSeconds(1);
+//		}
+//	}
+//	protected virtual void ArrivedAtTargetLocation()
+//	{
+//		if(isServer)
+//		MoveRandomly();
+//	}
 	public virtual void OnCollisionEnter(Collision bang)
 	{
 	}

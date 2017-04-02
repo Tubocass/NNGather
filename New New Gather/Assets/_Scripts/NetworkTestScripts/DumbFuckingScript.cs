@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 public class DumbFuckingScript : NetworkBehaviour 
 {
 	[SyncVar(hook = "OnChangeColor")] public Color myColor;
-	bool hasChanged;
+	[SyncVar]bool hasChanged;
 
 	public override void OnStartClient()
 	{

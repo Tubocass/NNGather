@@ -71,6 +71,7 @@ public class PlayerMomController : MoMController
 	{
 		base.Death();
 	}
+
 //	public override void CreateFarmer()
 //	{
 //		if(farmers<farmerCap)
@@ -144,11 +145,11 @@ public class PlayerMomController : MoMController
 						recycle.RpcSetMoM(this.gameObject, TeamColor);
 						recycle.transform.position = Location+new Vector3(1,0,1);
 					}else{
-						InstantiateFarmer();
+						InstantiateFighter();
 						//CmdInstantiateFighter();
 					}
 				}else {
-					InstantiateFarmer();
+					InstantiateFighter();
 					//CmdInstantiateFighter();
 				}
 			}

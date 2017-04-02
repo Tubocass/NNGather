@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,11 +30,20 @@ public class FighterController : DroneController
 	}
 	protected override void UpdateFlagLocation(int mom)
 	{
-		if(myMoM.unitID == mom  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+		if(isServer)
 		{
-			targetEnemy = null;
-			MoveTo(myMoM.FightAnchor);
+			if(myMoM.unitID == mom  && Vector3.Distance(Location, myMoM.FightAnchor)>orbit)
+			{
+				targetEnemy = null;
+				MoveTo(myMoM.FightAnchor);
+			}
 		}
+	}
+	[Server]
+	protected override void MoveRandomly()//Vector3[] PathArray
+	{
+		NavMeshPath rVector = RandomPath(myMoM.FightAnchor, 25);
+		RpcMoveTo(rVector.corners);
 	}
 	protected override void TargetLost(int id)
 	{
@@ -60,7 +71,7 @@ public class FighterController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 		//base.ArrivedAtTargetLocation();
-		if(myMoM!=null)
+		if(isServer)
 		{
 			if(IsTargetingEnemy())
 			{
@@ -92,9 +103,12 @@ public class FighterController : DroneController
 		{
 			if(agent.remainingDistance<1)
 			{
-				bMoving = false;
-				//Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
+				if(currntPoint<points-1)
+				{
+					currntPoint +=1;
+					currentVector = Path[currntPoint];
+					agent.SetDestination(currentVector);
+				}else bMoving = false;
 			}else
 			{
 				yield return new WaitForSeconds(0.5f);
@@ -154,7 +168,7 @@ public class FighterController : DroneController
 						enemies.Add(ot);
 					}
 				}
-				if(f.collider.CompareTag( "Drone"))
+				if(f.collider.CompareTag("Drone"))
 				{
 					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
 					if(ot!=null && !ot.teamID.Equals(teamID) && !enemies.Contains(ot))
@@ -243,6 +257,8 @@ public class FighterController : DroneController
 //	}
 	public override void OnCollisionEnter(Collision bang)
 	{
+		if(!isServer)
+		return;
 		if(bang.collider.CompareTag("Drone")||bang.collider.CompareTag("Sarlac")||bang.collider.CompareTag("MoM"))
 		{
 			Unit_Base ot = bang.gameObject.GetComponent<Unit_Base>();

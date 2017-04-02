@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DaughterController : MoMController 
 {
-	[SerializeField] protected float orbit = 15;
+	[SerializeField] protected float orbit = 15, delayStart = 15f;
 	bool bInBloom = true;
 	Vector3 birthHole;
 	protected override void OnEnable () 
@@ -23,11 +23,11 @@ public class DaughterController : MoMController
 
 	IEnumerator Bloom()
 	{
-		yield return new WaitForSeconds(30f);
+		yield return new WaitForSeconds(delayStart);
 		bInBloom = false;
 		StartCoroutine(SpawnTimer());
 		StartCoroutine(Hunger());
-		StartCoroutine(Idle());
+		//StartCoroutine(Idle());
 	}
 	IEnumerator SpawnTimer()
 	{

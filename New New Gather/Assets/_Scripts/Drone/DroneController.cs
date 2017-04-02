@@ -15,6 +15,8 @@ public class DroneController : Unit_Base
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+		if(GetComponentInChildren<MeshRenderer>().materials.Length>1)
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().materials[1];
 		sqrDist = orbit*orbit;
 		UnityEventManager.StartListeningInt("TargetUnavailable", TargetLost);
 	}
@@ -27,7 +29,8 @@ public class DroneController : Unit_Base
 	public virtual void RpcSetMoM(GameObject mom, Color tc)
 	{
 		base.SetMoM(mom);
-		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
+		OnChangeColor(tc);
+		//GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
 		StartCoroutine(Idle());
 	}
 
@@ -66,7 +69,7 @@ public class DroneController : Unit_Base
 	}
 
 
-	protected override IEnumerator Idle()
+	protected virtual IEnumerator Idle()
 	{
 		while(true)
 		{
@@ -76,6 +79,12 @@ public class DroneController : Unit_Base
 			}
 			yield return new WaitForSeconds(1);
 		}
+	}
+
+	protected virtual void ArrivedAtTargetLocation()
+	{
+		if(isServer)
+		MoveRandomly();
 	}
 
 }
