@@ -88,22 +88,22 @@ public class SarlacController : DroneController
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
-	protected override void MoveRandomly()
-	{
-//		Vector3 rVector = RandomVector(anchor, orbit);
-//		MoveTo(rVector);
-
-		UnityEngine.AI.NavMeshPath rVector = RandomPath(anchor, orbit);
-		if(rVector.status!=UnityEngine.AI.NavMeshPathStatus.PathPartial)
-		{
-			agent.SetPath(rVector);
-			agent.Resume();
-		}
-	}
+//	protected override void MoveRandomly()
+//	{
+////		Vector3 rVector = RandomVector(anchor, orbit);
+////		MoveTo(rVector);
+//
+//		UnityEngine.AI.NavMeshPath rVector = RandomPath(anchor, orbit);
+//		if(rVector.status!=UnityEngine.AI.NavMeshPathStatus.PathPartial)
+//		{
+//			agent.SetPath(rVector);
+//			agent.isStopped = false;
+//		}
+//	}
 	protected override void DaySwitch(bool b)
 	{
 		base.DaySwitch(b);
-		if(bDay)
+		if(isActive && bDay)
 		ReturnToHome();
 	}
 	protected void ReturnToHome()
@@ -133,7 +133,7 @@ public class SarlacController : DroneController
 				if(targetEnemy!=null)
 				{
 					MoveTo(targetEnemy.Location);
-				}else MoveRandomly();
+				}else MoveRandomly(anchor, orbit);
 			}
 		}else ReturnToHome();
 	}
@@ -183,45 +183,70 @@ public class SarlacController : DroneController
 	}
 	Unit_Base TargetNearest()
 	{
-		float nearestEnemyDist, newDist;
-		Unit_Base enemy = null;
-		enemies.RemoveAll(e=> !e.isActive);
-		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+//		float nearestEnemyDist, newDist;
+//		Unit_Base enemy = null;
+//		enemies.RemoveAll(e=> !e.isActive);
+//		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+//
+//		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+//		if(hits.Length>0)
+//		{
+//			foreach(RaycastHit f in hits)
+//			{
+//				if(f.collider.tag == "Drone")
+//				{
+//					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
+//					if(ot!=null && !enemies.Contains(ot))
+//					{
+//						enemies.Add(ot);
+//					}
+//				}
+//			}
+//		}
+//
+//		enemiesCopy = enemies.FindAll(e=> e.isActive && (e.Location-Location).sqrMagnitude<sqrDist);
+//		if(enemiesCopy.Count>0)
+//		{
+//			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+//			foreach(Unit_Base unit in enemiesCopy)
+//			{
+//				if(unit.isActive)
+//				{
+//					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+//					if(newDist <= nearestEnemyDist)
+//					{
+//						nearestEnemyDist = newDist;
+//						enemy = unit;
+//					}
+//				}else enemies.Remove(unit);
+//			}
+//		}
+//		return enemy;
 
-		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-		if(hits.Length>0)
+		Collider[] cols = Physics.OverlapSphere(transform.position,sightRange,mask,QueryTriggerInteraction.Ignore);
+		float nearestDist, newDist;
+		Collider temp = new Collider();
+		Unit_Base target = null;
+
+		if(cols.Length>0)
 		{
-			foreach(RaycastHit f in hits)
+			nearestDist = (cols[0].transform.position-transform.position).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			foreach(Collider o in cols)
 			{
-				if(f.collider.tag == "Drone")
+				if(o.CompareTag("Drone"))
 				{
-					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-					if(ot!=null && !enemies.Contains(ot))
+					newDist = (o.transform.position-transform.position).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+					if(newDist <= nearestDist)
 					{
-						enemies.Add(ot);
+						nearestDist = newDist;
+						temp = o;
 					}
 				}
 			}
+			if(temp!=null) //&& !Physics.Raycast(Muzzle.position,temp.transform.position-Muzzle.position,sightRange,levelMask))
+			target = temp.GetComponent<Unit_Base>();
 		}
-
-		enemiesCopy = enemies.FindAll(e=> e.isActive && (e.Location-Location).sqrMagnitude<sqrDist);
-		if(enemiesCopy.Count>0)
-		{
-			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-			foreach(Unit_Base unit in enemiesCopy)
-			{
-				if(unit.isActive)
-				{
-					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
-					if(newDist <= nearestEnemyDist)
-					{
-						nearestEnemyDist = newDist;
-						enemy = unit;
-					}
-				}else enemies.Remove(unit);
-			}
-		}
-		return enemy;
+		return target;
 	}
 
 	void Attack(Unit_Base target)
@@ -254,6 +279,7 @@ public class SarlacController : DroneController
 					if(numCarried<maxCarry)
 					ot.Attach(this.tran,tran.TransformPoint(nose));
 					else Attack(ot);
+
 					eaten++;
 					numCarried++;
 					if(numCarried>3)

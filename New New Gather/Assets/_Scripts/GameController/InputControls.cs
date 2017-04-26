@@ -12,20 +12,55 @@ public class InputControls :  NetworkBehaviour
 	Vector3 movement;
 	CameraFollow cam;
 	GUIController GUI;
+	PlayerMomController playerMoM;
 
+	void Awake()
+	{
+		//Camera.main.gameObject.SetActive(false);
+	}
 	void Start () 
 	{
-		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-		GUI = GameController.instance.GetComponent<GUIController>();
-		//mainMoMControl = GameObject.Find("MainMoM").GetComponent<MainMomController>();
+
 	}
+	public override void OnStartLocalPlayer ()
+    {
+		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+		//cam.gameObject.SetActive(false);
+		GUI = GameObject.FindObjectOfType<GUIController>();
+		playerMoM = GetComponent<PlayerMomController>();
+    }
+//	public override void OnStartClient ()
+//    {
+//		OnTeamChanged(playerMoM.teamID);
+//    }
+//
+//	public void OnTeamChanged(int newTeamNumber)
+//    {
+//		playerMoM.teamID = newTeamNumber;
+//		playerMoM.TeamColor =  playerMoM.teamID == 0 ? Color.blue : Color.red;
+//		GetComponentInChildren<Renderer>().material.color = teamColor;
+//    }
+//
+//	[Server]
+//    public static void SetPlayerTeam(GameObject newPlayer)
+//    {
+//        var player = newPlayer.GetComponent<Interact>();
+//        player.teamNumber = (int)Mathf.Repeat(playerCount, 2);
+//        playerCount++;
+//    }
+//
+//	[Command]
+//    void CmdSetTeam(GameObject player)
+//    {
+//        SetPlayerTeam(gameObject);
+//    }
 //	public void CreatFarmer()//UI hooks
 //	{
-//		PlayerMomController.MainMoM.CreateFarmer();
+//		playerMoM.CreateFarmer();
 //	}
 //	public void CreatFighter()
 //	{
-//		PlayerMomController.MainMoM.CreateFighter();
+//		playerMoM.CreateFighter();
 //	}
 	void Update () 
 	{
@@ -36,7 +71,7 @@ public class InputControls :  NetworkBehaviour
 		float lastInputX = Input.GetAxis ("Horizontal");
 		float lastInputY = Input.GetAxis ("Vertical");
 		float lastInputScroll = Input.GetAxis("Mouse ScrollWheel");
-		if(lastInputX > 0f || lastInputY > 0f || lastInputX < 0f || lastInputY < 0f)
+		if(lastInputX != 0f || lastInputY != 0f)
 		{
 			movement = new Vector3 	(speed * lastInputX,0 ,  speed * lastInputY);
 			cam.MoveTo(movement);
@@ -48,7 +83,7 @@ public class InputControls :  NetworkBehaviour
 			Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minFOV, maxFOV);
 		}
 
-		if(PlayerMomController.MainMoM!=null && PlayerMomController.MainMoM.isActive)
+		if(playerMoM!=null && playerMoM.isActive)
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
@@ -56,24 +91,24 @@ public class InputControls :  NetworkBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				//PlayerMomController.MainMoM.CreateFarmer();
-				PlayerMomController.MainMoM.CmdCreateFarmer();
+				//playerMoM.CreateFarmer();
+				playerMoM.CmdCreateFarmer();
 			}
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				PlayerMomController.MainMoM.CmdCreateFighter();
+				playerMoM.CmdCreateFighter();
 			}
 			if(Input.GetKeyDown(KeyCode.R))
 			{
-				PlayerMomController.MainMoM.CreateDaughter();
+				playerMoM.CreateDaughter();
 			}
 			if(Input.GetKeyDown(KeyCode.Z))
 			{
-				PlayerMomController.MainMoM.RecallFarmFlag();
+				playerMoM.RecallFarmFlag();
 			}
 			if(Input.GetKeyDown(KeyCode.C))
 			{
-				PlayerMomController.MainMoM.RecallFightFlag();
+				playerMoM.RecallFightFlag();
 			}
 			if (Input.GetMouseButtonDown (0)) 
 			{
@@ -82,7 +117,7 @@ public class InputControls :  NetworkBehaviour
 
 				if (Physics.Raycast (ray, out hit, 100f, mask)) 
 				{
-					PlayerMomController.MainMoM.PlaceFarmFlag(hit.point);
+					playerMoM.PlaceFarmFlag(hit.point);
 				}
 			}
 			if (Input.GetMouseButtonDown (1)) 
@@ -95,9 +130,9 @@ public class InputControls :  NetworkBehaviour
 					if(Input.GetKey(KeyCode.LeftShift))
 					{
 						Debug.Log("Super");
-						PlayerMomController.MainMoM.PlaceTeamFightFlag(hit.point);
+						playerMoM.PlaceTeamFightFlag(hit.point);
 					}
-					else PlayerMomController.MainMoM.PlaceFightFlag(hit.point);
+					else playerMoM.PlaceFightFlag(hit.point);
 				}
 			}
 		}

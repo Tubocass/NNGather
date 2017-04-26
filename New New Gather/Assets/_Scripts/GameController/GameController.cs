@@ -10,11 +10,12 @@ public class GameController :  NetworkBehaviour
 	static Transform DayLight, NightLight;
 	static float timer;
 	static SarlacController SarlacInstance;
-	[SerializeField] GameObject SarlacFab;
 	[SerializeField] float SunSpeed = 2f;
 	[SerializeField] float Timer = 30;
 	[SerializeField] bool bStartGame;
-	GenerateLevel levelGen;
+	public GenerateLevel levelGen;
+	public MoMController[] Players;
+	//int players = 0;
 	bool bDay;
 
 	private static GameController gameControl;
@@ -47,23 +48,20 @@ public class GameController :  NetworkBehaviour
 
 	void Start()
 	{
-		if(!isServer)
-		return;
-
-		levelGen = GetComponent<GenerateLevel>();
 		DayLight = GameObject.Find("Day Light").transform;
 		NightLight = GameObject.Find("Night Light").transform;
-		if(bStartGame)
-		//levelGen.Generate();
+		levelGen = GetComponent<GenerateLevel>();
+
+		if(!isServer)
+		return;
+		//Players = new GameObject[levelGen.moms];
+		Players = GameObject.FindObjectsOfType<MoMController>();
+		levelGen.Init();
 		timer = Timer;
-		if(SarlacInstance == null)
-		{
-			GameObject spawn = Instantiate(SarlacFab, Vector3.zero,Quaternion.identity) as GameObject;
-			SarlacInstance = spawn.GetComponent<SarlacController>();
-			SarlacInstance.isActive = false;
-			NetworkServer.Spawn(spawn);
-			StartCoroutine(Release());
-		}
+	
+		if(bStartGame)
+		StartNewGame();
+
 	}
 	public static float TeamSizePercent(int t)
 	{
@@ -90,8 +88,8 @@ public class GameController :  NetworkBehaviour
 
 	void Update()
 	{
-		if(!isServer)
-		return;
+//		if(!isServer)
+//		return;
 
 		DayLight.Rotate(DayLight.right,SunSpeed*Time.deltaTime,Space.World);
 		NightLight.Rotate(NightLight.right,SunSpeed*Time.deltaTime,Space.World);
@@ -129,10 +127,20 @@ public class GameController :  NetworkBehaviour
 		}else yield return Release();
 
 	}
-
+//	public void RegisterPlayer(GameObject go)
+//	{
+//		if(go != null && Players != null)
+//		{
+//			Players[players] = go;
+//			players++;
+//		}
+//	}
+[ServerCallback]
 	public void StartNewGame()
 	{
-		//SceneManager.LoadScene("Main");
+		//Load in all rleavant info
+		levelGen.PassInPlayers(Players);
 		levelGen.Generate();
+		SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
 	}
 }

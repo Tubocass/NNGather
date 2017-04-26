@@ -6,28 +6,14 @@ public class EnemyMoMController : MoMController
 {
 	float timer = 0f;
 
-	// Use this for initialization
-	protected override void OnEnable () 
-	{
-		base.Start();
-		base.OnEnable();
-		//StartCoroutine(SpawnTimer());
-	}
-//	protected override void Death ()
+
+//	protected override void OnEnable () 
 //	{
-//		base.Death ();
-//		newQueen();
+//		base.Start();
+//		base.OnEnable();
+//		//StartCoroutine(SpawnTimer());
 //	}
-//	public override void CreateFarmer()
-//	{
-//		if(FoodAmount>0)
-//		{
-//			FoodAmount -= 1;
-//			//UnityEventManager.TriggerEventInt("UpdateFood", FoodAmount);
-//			GameObject spawn = Instantiate(farmer,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
-//			spawn.GetComponent<FarmerController>().setMoM(transform, transform);
-//		}
-//	}
+
 [ServerCallback]
 	void Update()
 	{

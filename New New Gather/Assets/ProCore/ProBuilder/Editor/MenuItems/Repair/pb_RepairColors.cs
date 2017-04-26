@@ -30,7 +30,7 @@ namespace ProBuilder2.Actions
 				}
 			}
 
-			pb_Editor_Utility.ShowNotification("Rebuilt colors for " + count + " ProBuilder Objects.");
+			pb_EditorUtility.ShowNotification("Rebuilt colors for " + count + " ProBuilder Objects.");
 		}
 	}
 }

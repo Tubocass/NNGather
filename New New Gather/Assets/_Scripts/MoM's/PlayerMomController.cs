@@ -34,38 +34,41 @@ public class PlayerMomController : MoMController
 	bool bTeamFlag = false;
 	public static PlayerMomController MainMoM{
 		get{
-			if(main==null)
-			{
-				main = FindObjectOfType<PlayerMomController>();
-			}
+//			if(main==null)
+//			{
+//				main = FindObjectOfType<PlayerMomController>();
+//			}
 			return main;
 		}
 	}
 	static PlayerMomController main;
+	//Camera playerCam;
 
 	protected override void OnEnable()
 	{
-		//if(isLocalPlayer)
+		base.OnEnable();
+		if(isLocalPlayer)
 		{
-			base.OnEnable();
-			//main = this;
+			//playerCam.gameObject.SetActive(true);
+			main = this;
 			UnityEventManager.TriggerEvent("MainMomChange");
 			//teamID = 0;
 		}
 	}
 	protected override void Start()
 	{
-		//if(isLocalPlayer)
-		{
-			base.Start();
-			UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
-			UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
-		}
+		base.Start();
+		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
+		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+
+//		playerCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+//		playerCam.gameObject.SetActive(false);
 	}
 	public override void OnStartLocalPlayer()
 	{
 		Debug.Log("local idiot");
 		main = this;
+		UnityEventManager.TriggerEvent("MainMomChange");
 	}
 	protected override void Death ()
 	{
@@ -109,16 +112,16 @@ public class PlayerMomController : MoMController
 			}
 		}
 	}
-	[Command]
-	public void CmdInstantiateFarmer()
-	{
-		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
-		FarmerController fc = spawn.GetComponent<FarmerController>();
-		NetworkServer.Spawn(spawn);
-		fc.RpcSetMoM(this.gameObject, TeamColor);
-		Farmers.Add(fc);
-
-	}
+//	[Command]
+//	public void CmdInstantiateFarmer()
+//	{
+//		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
+//		FarmerController fc = spawn.GetComponent<FarmerController>();
+//		NetworkServer.Spawn(spawn);
+//		fc.RpcSetMoM(this.gameObject, TeamColor);
+//		Farmers.Add(fc);
+//
+//	}
 //	public override void CreateFighter()
 //	{
 //		if(fighters<fighterCap)
@@ -155,16 +158,16 @@ public class PlayerMomController : MoMController
 			}
 		}
 	}
-	[Command]
-	public void CmdInstantiateFighter()
-	{
-		GameObject spawn = Instantiate(fighterFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
-		FighterController fc = spawn.GetComponent<FighterController>();
-		NetworkServer.Spawn(spawn);
-		fc.RpcSetMoM(this.gameObject, TeamColor);
-		Fighters.Add(fc);
-
-	}
+//	[Command]
+//	public void CmdInstantiateFighter()
+//	{
+//		GameObject spawn = Instantiate(fighterFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
+//		FighterController fc = spawn.GetComponent<FighterController>();
+//		NetworkServer.Spawn(spawn);
+//		fc.RpcSetMoM(this.gameObject, TeamColor);
+//		Fighters.Add(fc);
+//
+//	}
 	public override void CreateDaughter()
 	{
 		if(daughters<daughterCap)

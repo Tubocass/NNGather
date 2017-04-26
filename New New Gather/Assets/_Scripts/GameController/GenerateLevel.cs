@@ -16,17 +16,20 @@ public class GenerateLevel : NetworkBehaviour
 	[Space(10)]
 
 	[SerializeField] Color[] Colors;
-	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
+	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
 	[Space(5)]
 
 	public static GameObject[] Pits;
-	GameObject[] MoMs;
+	public GameObject SarlacDude;
+	MoMController[] MoMs;
+	GameObject[] Spawns;
+	Vector3[] spawnPoints;
 	Vector3 groundSize;
-	int MoMCount, botCount;
+	int MoMCount, botCount, spCount;
 	public delegate GameObject SpawnFunction(Vector3 v);
 
 
-	public void Generate() 
+	public void Init() 
 	{
 		Unit_Base.TeamSize = new int[10];
 		Unit_Base.TotalCreated = 0;
@@ -37,70 +40,95 @@ public class GenerateLevel : NetworkBehaviour
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z - groundSize.z/8;
 		Pits = new GameObject[pits];
-		MoMs = new GameObject[moms+bots];
-
+		//MoMs = new GameObject[moms];
+		Spawns = new GameObject[moms+bots];
+		spawnPoints = new Vector3[moms+bots];
+	}
+	public void Generate() 
+	{
 		//Sarlac Pits
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
 
+		//NetworkStartPoints
+		SpawnObjects(bots+moms, xx, momsDistance, Vector3.zero, Spawns, SpawnStartPositions);
+
+		for(int i = 0; i<MoMs.Length; i++)
+		{
+			if(MoMs[i] != null)
+			{
+			  	//GameObject go = Instantiate(MoMs[i])as GameObject;
+				SetMoMObj(MoMs[i]);
+			}
+		}
+		for(int i = 0; i<bots; i++)
+		{
+			SpawnBots();
+		}
+		SarlacDude = SpawnSarlac();//The Sarlac needs to be have its enable and disable functions rewritten
+		SarlacDude.SetActive(false);
+	
 		//Day Plants
 		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants); //need to make them separate from Sarlac pits
 
 		//Bots
-		SpawnObjects(bots, xx, momsDistance, Vector3.zero, MoMs, SpawnBots);
+		//SpawnObjects(bots, xx, momsDistance, Vector3.zero, MoMs, SpawnBots);
 
 		//MoMs
 		//SpawnObjects(moms, xx, momsDistance, Vector3.zero, MoMs, SpawnMoM);
 	}
 
-	public void OnStartLocalPlayer()
+	GameObject SpawnStartPositions(Vector3 position)
 	{
+		Vector3 height = new Vector3(0,0.5f,0);
+		GameObject start = Instantiate(NetStartFab, position+height, Quaternion.identity) as GameObject;
+		spawnPoints[spCount] = position;
+		spCount++;
+		return start;
 	}
 
-	GameObject SpawnMoM(Vector3 position)
+	public void PassInPlayers(MoMController[] Players)
+	{
+		MoMs = Players;
+	}
+//	public GameObject SpawnMoM()
+//	{
+//		GameObject newMoM;
+//		Vector3 height = new Vector3(0,0.5f,0);
+//		newMoM = Instantiate(MainMoMFab, height, Quaternion.identity)as GameObject;
+//		SetMoMObj(newMoM.GetComponent<MoMController>());
+//		return newMoM;
+//	}
+	GameObject SpawnBots()
 	{
 		GameObject newMoM;
 		Vector3 height = new Vector3(0,0.5f,0);
-		newMoM = Instantiate(MainMoMFab, position+height, Quaternion.identity)as GameObject;
+		newMoM = Instantiate(EnemyMoMFab, height, Quaternion.identity)as GameObject;
 		SetMoMObj(newMoM.GetComponent<MoMController>());
-		//NetworkServer.SpawnWithClientAuthority(newMoM);
-		//NetworkServer.SpawnWithClientAuthority(newMoM, PlayerMomController.MainMoM.gameObject);
-
-//		newMoM.GetComponent<MoMController>().teamID = MoMCount;
-//		Unit_Base.TeamSize[MoMCount] += 1;
-//		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
-//		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
-//		MoMCount+=1;
+		NetworkServer.Spawn(newMoM);
 		return newMoM;
 	}
-	GameObject SpawnBots(Vector3 position)
-	{
-		GameObject newMoM;
-		Vector3 height = new Vector3(0,0.5f,0);
-		newMoM = Instantiate(EnemyMoMFab, position+height, Quaternion.identity)as GameObject;
-		SetMoMObj(newMoM.GetComponent<MoMController>());
-		//NetworkServer.Spawn(newMoM);
-//		newMoM.GetComponent<MoMController>().teamID = MoMCount;
-//		Unit_Base.TeamSize[MoMCount] += 1;
-//		newMoM.GetComponent<MoMController>().TeamColor = Colors[MoMCount];
-//		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
-//		MoMCount+=1;
-		return newMoM;
-	}
-	void SetMoMObj(MoMController newMoM)
+	public void SetMoMObj(MoMController newMoM)
 	{
 		newMoM.teamID = MoMCount;
 		Unit_Base.TeamSize[MoMCount] += 1;
 		newMoM.TeamColor = Colors[MoMCount];
-		newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
+		//newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
+		newMoM.transform.position = spawnPoints[MoMCount];
 		MoMCount+=1;
+	}
+	GameObject SpawnSarlac()
+	{
+		GameObject sarlac = Instantiate(SarlacFab, Vector3.zero,Quaternion.identity) as GameObject;
+		return sarlac;
 	}
 	GameObject SpawnSarlacPit(Vector3 position)
 	{
+		Vector3 height = new Vector3(0,0.5f,0);
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
 		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
 		GameObject[] plantObjs = new GameObject[nightPlants];
-		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position, plantObjs, (Vector3 pos)=>
+		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position+height, plantObjs, (Vector3 pos)=>
 		{
 			GameObject obj = Instantiate(NightPlantFab, pos, Quaternion.identity)as GameObject;
 			return obj; 

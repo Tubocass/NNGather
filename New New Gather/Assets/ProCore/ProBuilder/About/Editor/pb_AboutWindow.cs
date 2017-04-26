@@ -99,7 +99,6 @@ public class pb_AboutWindow : EditorWindow
 	private string ProductName = "";
 	// private string ProductIdentifer = "";
 	private string ProductVersion = "";
-	private string ProductRevision = "";
 	private string ChangelogPath = "";
 	private string BannerPath = ABOUT_ROOT + "/Images/Banner.png";
 
@@ -296,7 +295,7 @@ public class pb_AboutWindow : EditorWindow
 
 		// always bold the first line (cause it's the version info stuff)
 		scroll = EditorGUILayout.BeginScrollView(scroll);
-		GUILayout.Label(ProductName + "  |  version: " + ProductVersion + "  |  revision: " + ProductRevision, EditorStyles.boldLabel);
+		GUILayout.Label(ProductName + "  |  version: " + ProductVersion, EditorStyles.boldLabel);
 		GUILayout.Label("\n" + changelog);
 		EditorGUILayout.EndScrollView();
 		
@@ -356,7 +355,6 @@ public class pb_AboutWindow : EditorWindow
 		ProductName = "";
 		// ProductIdentifer = "";
 		ProductVersion = "";
-		ProductRevision = "";
 		ChangelogPath = "";
 
 		if(versionInfo != null)
@@ -370,9 +368,6 @@ public class pb_AboutWindow : EditorWindow
 				if(cheese.StartsWith("version:"))
 					ProductVersion = cheese.Replace("version: ", "").Trim();
 				else 
-				if(cheese.StartsWith("revision:"))
-					ProductRevision = cheese.Replace("revision: ", "").Trim();
-				else 
 				if(cheese.StartsWith("changelog:"))
 					ChangelogPath = cheese.Replace("changelog: ", "").Trim();
 			}
@@ -385,9 +380,9 @@ public class pb_AboutWindow : EditorWindow
 
 		if(changelogText)
 		{
-			string[] split = changelogText.text.Split( new string[] {"--"}, System.StringSplitOptions.RemoveEmptyEntries );
+			string[] split = Regex.Split(changelogText.text, "(?mi)^#\\s", RegexOptions.Multiline);
 			StringBuilder sb = new StringBuilder();
-			string[] newLineSplit = split[0].Trim().Split('\n');
+			string[] newLineSplit = split[1].Trim().Split('\n');
 			for(int i = 2; i < newLineSplit.Length; i++)
 				sb.AppendLine(newLineSplit[i]);
 			

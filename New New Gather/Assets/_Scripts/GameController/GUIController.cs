@@ -8,10 +8,11 @@ public class GUIController : MonoBehaviour
 	[SerializeField] RectTransform PauseScreen, ScoreScreen, NotificationPanel, StatPanel;
 	[SerializeField] Text foodText, healthText, statText1, statText2, notificationText;
 	PlayerMomController mainMoMControl;
+	int teams;
 
 	void OnEnable()
 	{
-		int teams =  GetComponent<GenerateLevel>().moms;
+		teams = 4; //GetComponent<GenerateLevel>().moms;
 		StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*teams)+15);
 		UnityEventManager.StartListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StartListeningInt("UpdateHealth", SetHealth);
@@ -62,6 +63,7 @@ public class GUIController : MonoBehaviour
 		healthText.text = "Health\n   "+ amount;
 	}
 
+
 	IEnumerator UpdateInfo()
 	{
 		while(true)
@@ -70,7 +72,7 @@ public class GUIController : MonoBehaviour
 			{
 				statText1.text = "Farmers: "+ PlayerMomController.MainMoM.farmers+ "\nFighters: "+ PlayerMomController.MainMoM.fighters+ "\nDaughters: "+ PlayerMomController.MainMoM.daughters;
 				statText2.text = "";
-				for(int i = 0; i< GetComponent<GenerateLevel>().moms;i++)
+				for(int i = 0; i< teams;i++)
 				{
 					statText2.text += string.Format("\nTeam {0}: {1} - {2:F1}%", i+1, Unit_Base.TeamSize[i], GameController.TeamSizePercent(i));
 				}

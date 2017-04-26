@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour
 	
 	Vector3 offset;                     // The initial offset from the target.
 	
-	void Start ()
+	void Awake ()
 	{
 		tran = GetComponent<Transform>();
 		// Calculate the initial offset.

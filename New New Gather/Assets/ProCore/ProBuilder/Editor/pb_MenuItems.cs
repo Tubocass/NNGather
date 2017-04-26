@@ -3,106 +3,58 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ProBuilder2.Common;
 using ProBuilder2.EditorCommon;
 
 public class pb_MenuItems : EditorWindow
 {
-	const string DOCUMENTATION_URL = "http://www.protoolsforunity3d.com/docs/probuilder/";
+	// const string DOCUMENTATION_URL = "http://www.protoolsforunity3d.com/docs/probuilder/";
+	const string DOCUMENTATION_URL = "http://procore3d.github.io/probuilder2/";
 
 	static pb_Editor editor { get { return pb_Editor.instance; } }
 
 #region WINDOW
 
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/About", false, 0)]
+	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/About", false, pb_Constant.MENU_ABOUT)]
 	public static void MenuInitAbout()
 	{
 		pb_AboutWindow.Init("Assets/ProCore/ProBuilder/About/pc_AboutEntry_ProBuilder.txt", true);
 	}
 
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Documentation", false, 0)]
+	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Documentation", false, pb_Constant.MENU_ABOUT)]
 	public static void MenuInitDocumentation()
 	{
 		Application.OpenURL(DOCUMENTATION_URL);
 	}
 
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/" + pb_Constant.PRODUCT_NAME + " Window", false, pb_Constant.MENU_WINDOW + 0)]
+	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/" + pb_Constant.PRODUCT_NAME + " Window", false, pb_Constant.MENU_EDITOR)]
 	public static void OpenEditorWindow()
 	{
 		pb_Editor.MenuOpenWindow();
 	}
-
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Shape Window %#k", false, pb_Constant.MENU_WINDOW + 2)]
-	public static void ShapeMenu()
-	{
-		EditorWindow.GetWindow(typeof(pb_Geometry_Interface), true, "Shape Menu", true);
-	}
-
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Vertex Color Palette", false, pb_Constant.MENU_WINDOW + 3)]
-	public static void InitVertexColorEditor()
-	{
-		// bool openInDockableWindow = !pb_Preferences_Internal.GetBool(pb_Constant.pbDefaultOpenInDockableWindow);
-		EditorWindow.GetWindow<pb_Vertex_Color_Toolbar>(true, "Vertex Colors", true);
-	}
-
-	/**
-	 * Finds a pb_Editor window (or makes one), then closes it.
-	 */
-	public static void ForceCloseEditor()
-	{
-		EditorWindow.GetWindow<pb_Editor>().Close();
-	}
 #endregion
 
-#region ProBuilder/Edit
+#region CONTEXT SENSITIVE SHORTCUTS
 
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Editor/Toggle Edit Level", false, pb_Constant.MENU_EDITOR + 0)]
-	public static void ToggleEditLevel()
+	static pb_Object[] selection { get { return Selection.transforms.GetComponents<pb_Object>(); } }
+
+	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Geometry/Extrude %e", true)]
+	static bool MenuVerifyExtrude()
 	{
-		editor.ToggleEditLevel();
-		switch(editor.editLevel)
-		{
-			case EditLevel.Top:
-				pb_Editor_Utility.ShowNotification("Top Level Editing");
-				break;
+		pb_Editor e = pb_Editor.instance;
 
-			case EditLevel.Geometry:
-				pb_Editor_Utility.ShowNotification("Geometry Editing");
-				break;
-		}
+		return 	e != null &&
+				e.editLevel == EditLevel.Geometry &&
+				selection != null &&
+				selection.Length > 0 &&
+				(selection.Any(x => x.SelectedEdgeCount > 0) || selection.Any(x => x.SelectedFaces.Length > 0));
 	}
 
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Editor/Toggle Selection Mode", false, pb_Constant.MENU_EDITOR + 1)]
-	public static void ToggleSelectMode()
+	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Geometry/Extrude %e", false, pb_Constant.MENU_GEOMETRY + 3)]
+	static void MenuDoExtrude()
 	{
-		editor.ToggleSelectionMode();
-		switch(editor.selectionMode)
-		{
-			case SelectMode.Face:
-				pb_Editor_Utility.ShowNotification("Editing Faces");
-				break;
-
-			case SelectMode.Vertex:
-				pb_Editor_Utility.ShowNotification("Editing Vertices");
-				break;
-
-			case SelectMode.Edge:
-				pb_Editor_Utility.ShowNotification("Editing Edges\n(Beta!)");
-				break;
-		}
-	}
-
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Editor/Toggle Handle Coordinates", false, pb_Constant.MENU_EDITOR + 2)]
-	public static void ToggleHandleAlignment()
-	{
-		editor.ToggleHandleAlignment();		
-		pb_Editor_Utility.ShowNotification("Handle Alignment: " + ((HandleAlignment)editor.handleAlignment).ToString());
-	}
-
-	[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Editor/Lightmap Settings Window", false, pb_Constant.MENU_EDITOR + 3)]
-	public static void LightmapWindowInit()
-	{
-		pb_Lightmap_Editor.Init(editor);
+		pb_Menu_Commands.MenuExtrude(selection, false);
 	}
 #endregion
 

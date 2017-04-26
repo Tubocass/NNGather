@@ -49,11 +49,11 @@ public class DaughterController : MoMController
 		birthHole = tran.position;
 		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
-	protected override void MoveRandomly()
-	{
-		Vector3 rVector = RandomVector(birthHole, orbit);
-		MoveTo(rVector);
-	}
+//	protected override void MoveRandomly()
+//	{
+//		UnityEngine.AI.NavMeshPath rVector = RandomPath(birthHole, orbit);
+//		RpcMoveTo(rVector.corners);
+//	}
 	public void Kill()//mostly used for upgrading into a MoM
 	{
 		Death();

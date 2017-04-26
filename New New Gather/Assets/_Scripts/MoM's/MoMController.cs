@@ -37,6 +37,7 @@ public class MoMController : Unit_Base
 			}
 	}
 	public List<FoodObject> Foods;
+	public Vector3 newLoc;
 	//[SyncVar(hook = "ColorChange")]public Color TeamColor;
 	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
@@ -59,9 +60,9 @@ public class MoMController : Unit_Base
 		Foods = new List<FoodObject>();
 		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
 		TeamColorMat.color = TeamColor;
-		daughters = 0;//I really
-		farmers = 0;//don't understand
-		fighters = 0;//why these have to be hard reset
+		daughters = 0;
+		farmers = 0;
+		fighters = 0;
 		foodAmount = startFood;
 		farmFlag = Instantiate(farmFlagFab) as GameObject; 
 		fightFlag = Instantiate(fightFlagFab) as GameObject;
@@ -371,7 +372,6 @@ public class MoMController : Unit_Base
 	void MoveToCenter()
 	{
 		//Debug.Log("Updating");
-		Vector3 newLoc;
 		float xx = Location.x, zz = Location.z;
 		int size = 1;
 		for(int i = foodQ.Count; i>0;i--)

@@ -57,7 +57,7 @@ public class FoodSpawner : NetworkBehaviour
 	}
 	GameObject InitialSpawn(Vector3 position)
 	{
-		GameObject food = Instantiate(foodObj, position, Quaternion.identity) as GameObject;
+		GameObject food = Instantiate(foodObj, position + new Vector3(0,.5f,0), Quaternion.identity) as GameObject;
 		//food.SetActive(false);
 		return food;
 	}
