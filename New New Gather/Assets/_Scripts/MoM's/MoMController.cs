@@ -386,7 +386,7 @@ public class MoMController : Unit_Base
 			}
 		}
 		newLoc = new Vector3(xx /size, 1f ,zz /size);
-		if(Vector3.Distance( transform.position, newLoc)>1)
+		if(Vector3.Distance( transform.position, newLoc)>4)
 		{
 			Debug.Log("I'm gonna move");
 			MoveTo(newLoc);

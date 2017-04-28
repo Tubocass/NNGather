@@ -41,16 +41,8 @@ public class DroneController : Unit_Base
 	}
 	public void Attach(Transform newParent, Vector3 point)
 	{
-//		bAttached = true;
-//		agent.Stop();
-//		bMoving = false;
-//		transform.SetParent(newParent);
-//		transform.localPosition = point;
-//		GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.None;
-//		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
 		var g = Instantiate(clone, point, Quaternion.identity)as GameObject;
 		g.transform.SetParent(newParent);
-		//g.transform.localPosition = point;
 		Death();
 	}
 	public void Detach()
@@ -84,8 +76,6 @@ public class DroneController : Unit_Base
 
 	protected virtual void ArrivedAtTargetLocation()
 	{
-//		if(isServer)
-//		MoveRandomly();
 	}
 
 }

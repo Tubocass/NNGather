@@ -83,12 +83,7 @@ public class FarmerController : DroneController, IAttachable
 		}
 	}
 
-	[Server]
-	protected override void MoveRandomly()//Vector3[] PathArray
-	{
-		NavMeshPath rVector = RandomPath(myMoM.FoodAnchor, 25);
-		RpcMoveTo(rVector.corners);
-	}
+
 	protected void ReturnToHome()
 	{
 		if(isServer)
@@ -126,7 +121,7 @@ public class FarmerController : DroneController, IAttachable
 				{
 					MoveTo(targetedFood.Location);
 				}
-				else MoveRandomly();
+				else MoveRandomly(myMoM.FoodAnchor,orbit);
 			}
 		}
 	}
@@ -168,14 +163,15 @@ public class FarmerController : DroneController, IAttachable
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
 
-		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-		if(hits.Length>0)
+		//RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		Collider[] cols = Physics.OverlapSphere(tran.position,sightRange,mask);
+		if(cols.Length>0)
 		{
-			foreach(RaycastHit f in hits)
+			foreach(Collider f in cols)
 			{
-				if(f.collider.CompareTag("Food"))
+				if(f.CompareTag("Food"))
 				{
-					FoodObject ot = f.collider.GetComponent<FoodObject>();
+					FoodObject ot = f.GetComponent<FoodObject>();
 					if(ot!=null && !myMoM.Foods.Contains(ot))
 					{
 						myMoM.Foods.Add(ot);

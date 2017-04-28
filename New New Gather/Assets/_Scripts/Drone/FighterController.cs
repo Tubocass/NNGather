@@ -39,12 +39,7 @@ public class FighterController : DroneController
 			}
 		}
 	}
-	[Server]
-	protected override void MoveRandomly()//Vector3[] PathArray
-	{
-		NavMeshPath rVector = RandomPath(myMoM.FightAnchor, 25);
-		RpcMoveTo(rVector.corners);
-	}
+
 	protected override void TargetLost(int id)
 	{
 		if(targetEnemy!=null && id == targetEnemy.unitID)
@@ -53,14 +48,9 @@ public class FighterController : DroneController
 			targetEnemy = null;
 			ArrivedAtTargetLocation();
 		}
-		// (enemies[enemies.FindIndex(e=> e.unitID == id)]);
 	}
 
-//	public override void setMoM(MoMController mom, Color tc)
-//	{
-//		base.setMoM(mom, tc);
-//		//StartCoroutine(LookForEnemies());
-//	}
+
 
 	protected override void Death()
 	{
@@ -70,7 +60,7 @@ public class FighterController : DroneController
 
 	protected override void ArrivedAtTargetLocation()
 	{
-		//base.ArrivedAtTargetLocation();
+
 		if(isServer)
 		{
 			if(IsTargetingEnemy())
@@ -86,16 +76,10 @@ public class FighterController : DroneController
 				if(targetEnemy!=null)
 				{
 					MoveTo(targetEnemy.Location);
-				}else MoveRandomly();
+				}else MoveRandomly(myMoM.FightAnchor,orbit);
 			}
 		}
 	}
-
-//	protected override void MoveRandomly()
-//	{
-//		Vector3 rVector = RandomVector(myMoM.FightAnchor, orbit);
-//		MoveTo(rVector);
-//	}
 
 	protected override IEnumerator MovingTo()
 	{
@@ -111,7 +95,7 @@ public class FighterController : DroneController
 				}else bMoving = false;
 			}else
 			{
-				yield return new WaitForSeconds(0.5f);
+				yield return new WaitForSeconds(1f);
 				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
 			}
 		}
@@ -143,11 +127,9 @@ public class FighterController : DroneController
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
-		//enemies.RemoveAll(e=> !e.isActive);
 		enemies.Clear();
-		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
-
 		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+
 		if(hits.Length>0)
 		{
 			foreach(RaycastHit f in hits)
@@ -222,39 +204,6 @@ public class FighterController : DroneController
 		else return false;
 	}
 
-//	bool CanTargetEnemy()
-//	{
-//		if(!IsTargetingEnemy())
-//		return true;
-//		else return false;
-//	}
-
-	//public override void OnTriggerEnter(Collider other)
-	//{
-//		if(CanTargetEnemy() && other.tag == "Drone")
-//		{
-//			Unit_Base ot = other.gameObject.GetComponent<Unit_Base>();
-//			if(ot!=null && ot.teamID!=teamID)
-//			{
-//				if(!enemies.Contains(ot))
-//				{
-//					enemies.Add(ot);
-//				}
-//			}
-//		}
-	//}
-//	public override void OnTriggerStay(Collider other)
-//	{
-////		if(other.tag == "Fighter")
-////		{
-////			DroneController ot = other.gameObject.GetComponent<DroneController>();
-////			if(ot!=null && ot.TeamID!=TeamID)
-////			{
-////				targetEnemy = ot.gameObject;
-////				navMove.MoveTo(ot.Location);
-////			}
-////		}	
-//	}
 	public override void OnCollisionEnter(Collision bang)
 	{
 		if(!isServer)
