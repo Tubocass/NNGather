@@ -64,12 +64,12 @@ public class PlayerMomController : MoMController
 //		playerCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 //		playerCam.gameObject.SetActive(false);
 	}
-	public override void OnStartLocalPlayer()
-	{
-		Debug.Log("local idiot");
-		main = this;
-		UnityEventManager.TriggerEvent("MainMomChange");
-	}
+//	public override void OnStartLocalPlayer()
+//	{
+//		Debug.Log("local idiot");
+//		main = this;
+//		UnityEventManager.TriggerEvent("MainMomChange");
+//	}
 	protected override void Death ()
 	{
 		base.Death();
@@ -100,7 +100,7 @@ public class PlayerMomController : MoMController
 					{
 						//reycycle.RpsSetMom
 						recycle.RpcSetMoM(this.gameObject, TeamColor);
-						recycle.transform.position = Location+new Vector3(1,0,1);
+						recycle.transform.position = SpawnMouth.position;
 					}else{
 						InstantiateFarmer();
 						//CmdInstantiateFarmer();
@@ -144,10 +144,8 @@ public class PlayerMomController : MoMController
 					FighterController recycle = Fighters.Find(f=> !f.isActive);
 					if(recycle!=null)
 					{
-						//reycycle.RpsSetMom
 						recycle.RpcSetMoM(this.gameObject, TeamColor);
-						recycle.transform.position = Location+new Vector3(1,0,1);
-					}else{
+						recycle.transform.position = SpawnMouth.position;
 						InstantiateFighter();
 						//CmdInstantiateFighter();
 					}

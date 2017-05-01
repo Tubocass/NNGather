@@ -10,58 +10,26 @@ public class InputControls :  NetworkBehaviour
 	[SerializeField] LayerMask mask;
 	[SerializeField] float speed = 10, maxFOV = 25, minFOV= 20, scrollSpeed = 3f;
 	Vector3 movement;
-	CameraFollow cam;
+	[SerializeField] GameObject camFab;
+	GameObject mainCam;
+	CameraFollow camFollow;
 	GUIController GUI;
 	PlayerMomController playerMoM;
 
-	void Awake()
-	{
-		//Camera.main.gameObject.SetActive(false);
-	}
-	void Start () 
-	{
 
-	}
-	public override void OnStartLocalPlayer ()
+	public override void OnStartClient ()
     {
-		cam =  GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-		//cam.gameObject.SetActive(false);
-		GUI = GameObject.FindObjectOfType<GUIController>();
 		playerMoM = GetComponent<PlayerMomController>();
+		GUI = GameObject.FindObjectOfType<GUIController>();
     }
-//	public override void OnStartClient ()
-//    {
-//		OnTeamChanged(playerMoM.teamID);
-//    }
-//
-//	public void OnTeamChanged(int newTeamNumber)
-//    {
-//		playerMoM.teamID = newTeamNumber;
-//		playerMoM.TeamColor =  playerMoM.teamID == 0 ? Color.blue : Color.red;
-//		GetComponentInChildren<Renderer>().material.color = teamColor;
-//    }
-//
-//	[Server]
-//    public static void SetPlayerTeam(GameObject newPlayer)
-//    {
-//        var player = newPlayer.GetComponent<Interact>();
-//        player.teamNumber = (int)Mathf.Repeat(playerCount, 2);
-//        playerCount++;
-//    }
-//
-//	[Command]
-//    void CmdSetTeam(GameObject player)
-//    {
-//        SetPlayerTeam(gameObject);
-//    }
-//	public void CreatFarmer()//UI hooks
-//	{
-//		playerMoM.CreateFarmer();
-//	}
-//	public void CreatFighter()
-//	{
-//		playerMoM.CreateFighter();
-//	}
+	public override void OnStartLocalPlayer()
+	{
+		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
+		mainCam.transform.Rotate(90,0,0);
+		camFollow =  mainCam.GetComponent<CameraFollow>();
+		camFollow.SetTarget(playerMoM.transform);
+		camFollow.SetFollow();
+	}
 	void Update () 
 	{
 		if(!isLocalPlayer)
@@ -74,7 +42,7 @@ public class InputControls :  NetworkBehaviour
 		if(lastInputX != 0f || lastInputY != 0f)
 		{
 			movement = new Vector3 	(speed * lastInputX,0 ,  speed * lastInputY);
-			cam.MoveTo(movement);
+			camFollow.MoveTo(movement);
 		}
 
 		if(lastInputScroll>0f || lastInputScroll<0f)
@@ -87,7 +55,7 @@ public class InputControls :  NetworkBehaviour
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
-				cam.SetFollow();
+				camFollow.SetFollow();
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{

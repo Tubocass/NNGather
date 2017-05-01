@@ -50,8 +50,6 @@ public class FighterController : DroneController
 		}
 	}
 
-
-
 	protected override void Death()
 	{
 		base.Death();
@@ -128,31 +126,32 @@ public class FighterController : DroneController
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
 		enemies.Clear();
-		RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		//RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
+		Collider[] cols = Physics.OverlapSphere(tran.position,sightRange,mask);
 
-		if(hits.Length>0)
+		if(cols.Length>0)
 		{
-			foreach(RaycastHit f in hits)
+			for(int e = 0; e<cols.Length; e++)
 			{
-				if(f.collider.CompareTag("Sarlac"))
+				if(cols[e].CompareTag("Sarlac"))
 				{
-					enemy = f.collider.GetComponent<SarlacController>();
+					enemy = cols[e].GetComponent<SarlacController>();
 					if(enemy!=null )
 					{
 						return enemy;
 					}
 				}
-				if(f.collider.CompareTag("MoM"))
+				if(cols[e].CompareTag("MoM"))
 				{
-					Unit_Base ot = f.collider.GetComponent<MoMController>();
-					if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
+					Unit_Base ot = cols[e].GetComponent<MoMController>();
+					if(ot!=null && !ot.teamID.Equals(teamID) && !enemies.Contains(ot))
 					{
 						enemies.Add(ot);
 					}
 				}
-				if(f.collider.CompareTag("Drone"))
+				if(cols[e].CompareTag("Drone"))
 				{
-					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
+					Unit_Base ot = cols[e].GetComponent<Unit_Base>();
 					if(ot!=null && !ot.teamID.Equals(teamID) && !enemies.Contains(ot))
 					{
 						enemies.Add(ot);
@@ -165,17 +164,17 @@ public class FighterController : DroneController
 		if(enemiesCopy.Count>0)
 		{
 			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-			foreach(Unit_Base unit in enemiesCopy)
+			for(int f = 0; f<enemiesCopy.Count;f++)
 			{
-				if(unit.isActive)
+				if(enemiesCopy[f].isActive)
 				{
-					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+					newDist = (enemiesCopy[f].Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
 					if(newDist <= nearestEnemyDist)
 					{
 						nearestEnemyDist = newDist;
-						enemy = unit;
+						enemy = enemiesCopy[f];
 					}
-				}else enemies.Remove(unit);
+				}//else enemies.Remove(enemiesCopy[f]);
 			}
 		}
 		return enemy;

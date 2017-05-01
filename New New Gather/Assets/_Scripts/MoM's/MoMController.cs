@@ -36,6 +36,7 @@ public class MoMController : Unit_Base
 			else return Location;
 			}
 	}
+	public Transform SpawnMouth;
 	public List<FoodObject> Foods;
 	public Vector3 newLoc;
 	//[SyncVar(hook = "ColorChange")]public Color TeamColor;
@@ -216,7 +217,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateFarmer()
 	{
-		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(farmerFab, SpawnMouth.position, FaceForward()) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
 		fc.RpcSetMoM(this.gameObject, TeamColor);
@@ -225,7 +226,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateFighter()
 	{
-		GameObject spawn = Instantiate(fighterFab,transform.position + new Vector3(1,0,1),Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(fighterFab,SpawnMouth.position, FaceForward()) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
 		fc.RpcSetMoM(this.gameObject, TeamColor);
@@ -234,11 +235,15 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateDaughter()
 	{
-		GameObject spawn = Instantiate(daughterFab, transform.position + new Vector3(-1,0,1),Quaternion.identity) as GameObject;
+		GameObject spawn = Instantiate(daughterFab, SpawnMouth.position, FaceForward()) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		NetworkServer.Spawn(spawn);
 		dc.RpcSetMoM(this.gameObject, TeamColor);
 		Daughters.Add(dc);
+	}
+	protected Quaternion FaceForward()
+	{
+		return Quaternion.LookRotation(SpawnMouth.position - transform.position);
 	}
 
 	public virtual void CedeDrones(MoMController newMoM)

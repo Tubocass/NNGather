@@ -51,7 +51,7 @@ public class CameraFollow : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		if(bFollowing)
+		if(target!=null && bFollowing)
 		{
 			// Create a postion the camera is aiming for based on the offset from the target.
 			targetCamPos = target.position + offset;

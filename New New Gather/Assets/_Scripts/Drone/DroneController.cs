@@ -19,6 +19,7 @@ public class DroneController : Unit_Base
 		TeamColorMat = GetComponentInChildren<MeshRenderer>().materials[1];
 		sqrDist = orbit*orbit;
 		UnityEventManager.StartListeningInt("TargetUnavailable", TargetLost);
+		StartCoroutine(Idle());
 	}
 	protected override void OnDisable()
 	{
@@ -35,10 +36,10 @@ public class DroneController : Unit_Base
 		StartCoroutine(Idle());
 	}
 
-	public void GoLimp()
-	{
-		
-	}
+//	public void GoLimp()
+//	{
+//		
+//	}
 	public void Attach(Transform newParent, Vector3 point)
 	{
 		var g = Instantiate(clone, point, Quaternion.identity)as GameObject;
@@ -70,7 +71,7 @@ public class DroneController : Unit_Base
 			{
 				ArrivedAtTargetLocation();
 			}
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(.25f);
 		}
 	}
 
