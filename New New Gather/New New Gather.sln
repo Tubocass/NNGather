@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New New Gather", "Assembly-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New New Gather", "Assembly-CSharp.csproj", "{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New New Gather", "Assembly-CSharp-Editor-firstpass.csproj", "{A8D6AB32-B07D-0472-4455-63023003C382}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New New Gather", "Assembly-CSharp-Editor.csproj", "{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}"
 EndProject
 Global
@@ -23,10 +21,6 @@ Global
 		{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8D6AB32-B07D-0472-4455-63023003C382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8D6AB32-B07D-0472-4455-63023003C382}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8D6AB32-B07D-0472-4455-63023003C382}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8D6AB32-B07D-0472-4455-63023003C382}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
