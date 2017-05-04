@@ -33,12 +33,14 @@ public class SarlacController : DroneController
 		canAttack=false;
 		StartCoroutine(Idle());
 		StartCoroutine(AttackCooldown());
-		//StartCoroutine(LookForEnemies());
+		bDay = GameController.instance.IsDayLight();
+		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 	}
-	protected override void OnDisable()
+	protected virtual void OnDisable()
 	{
-		StopAllCoroutines();
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
+
 	protected override void TargetLost(int id)
 	{
 		if(targetEnemy!=null && id == targetEnemy.unitID)
@@ -100,9 +102,10 @@ public class SarlacController : DroneController
 //			agent.isStopped = false;
 //		}
 //	}
-	protected override void DaySwitch(bool b)
+	protected void DaySwitch(bool b)
 	{
-		base.DaySwitch(b);
+		//base.DaySwitch(b);
+		bDay = b;
 		if(isActive && bDay)
 		ReturnToHome();
 	}
@@ -265,6 +268,11 @@ public class SarlacController : DroneController
 		yield return new WaitForSeconds(0.5f);
 		canAttack = true;
 	}
+	protected override void Death()
+	{
+		base.Death();
+		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
+	}
 	public override void OnCollisionEnter(Collision bang)
 	{
 		if(bang.collider.tag == "Drone")
@@ -306,7 +314,7 @@ public class SarlacController : DroneController
 			{
 				//PitController pc = bang.gameObject.GetComponent<PitController>();
 				this.bReturning = false;
-				GameController.StartTimer();
+				GameController.instance.StartTimer();
 				this.Death();
 			}
 		}

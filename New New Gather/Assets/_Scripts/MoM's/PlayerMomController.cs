@@ -5,172 +5,47 @@ using System.Collections.Generic;
 
 public class PlayerMomController : MoMController 
 {
-//	public new float Health{
-//		get
-//		{
-//			return health;
-//		}
-//		set
-//		{
-//			health+=value; 
-//			UnityEventManager.TriggerEvent("UpdateHealth", (int)Health);
-//			if(health<=0)
-//			{
-//				Death();
-//			}
-//		}
-//	}
-//	public new int FoodAmount{
-//		get
-//		{
-//			return foodAmount;
-//		}
-//		set
-//		{
-//			foodAmount+=value; 
-//			UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
-//		}
-//	}
+
 	bool bTeamFlag = false;
-	public static PlayerMomController MainMoM{
-		get{
-//			if(main==null)
-//			{
-//				main = FindObjectOfType<PlayerMomController>();
-//			}
-			return main;
-		}
-	}
-	static PlayerMomController main;
-	//Camera playerCam;
-
-	protected override void OnEnable()
-	{
-		base.OnEnable();
-		if(isLocalPlayer)
-		{
-			//playerCam.gameObject.SetActive(true);
-			main = this;
-			UnityEventManager.TriggerEvent("MainMomChange");
-			//teamID = 0;
-		}
-	}
-	protected override void Start()
-	{
-		base.Start();
-		UnityEventManager.TriggerEvent("UpdateHealth", (int)health);
-		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
-
-//		playerCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-//		playerCam.gameObject.SetActive(false);
-	}
-//	public override void OnStartLocalPlayer()
-//	{
-//		Debug.Log("local idiot");
-//		main = this;
-//		UnityEventManager.TriggerEvent("MainMomChange");
+//	public static PlayerMomController MainMoM{
+//		get{
+//			return main;
+//		}
 //	}
+//	static PlayerMomController main;
+
 	protected override void Death ()
 	{
-		base.Death();
+		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
+		//UnityEventManager.StopListeningBool("DayTime", DaySwitch);
+		StopAllCoroutines();
+		bMoving = false;
+		farmers = 0;
+		fighters = 0;
+		health = startHealth;
+		foodAmount = startFood;
+		Foods.Clear();
+		newQueen();
+		daughters = 0;
+		Start();
 	}
-
-//	public override void CreateFarmer()
-//	{
-//		if(farmers<farmerCap)
-//		{
-//			base.CreateFarmer();
-//		}
-//	}
 
 	[Command]
 	public void CmdCreateFarmer()
 	{
-		if(farmers<farmerCap)
-		{
-			if(FoodAmount>=farmerCost)
-			{
-				FoodAmount = -farmerCost;
-				farmers++;
-				Unit_Base.TeamSize[teamID] += 1;
-				if(Farmers.Count>0)
-				{
-					FarmerController recycle = Farmers.Find(f=> !f.isActive);
-					if(recycle!=null)
-					{
-						//reycycle.RpsSetMom
-						recycle.RpcSetMoM(this.gameObject, TeamColor);
-						recycle.transform.position = SpawnMouth.position;
-					}else{
-						InstantiateFarmer();
-						//CmdInstantiateFarmer();
-					}
-				}else {
-					InstantiateFarmer();
-					//CmdInstantiateFarmer();
-				}
-			}
-		}
+		CreateFarmer();
 	}
-//	[Command]
-//	public void CmdInstantiateFarmer()
-//	{
-//		GameObject spawn = Instantiate(farmerFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
-//		FarmerController fc = spawn.GetComponent<FarmerController>();
-//		NetworkServer.Spawn(spawn);
-//		fc.RpcSetMoM(this.gameObject, TeamColor);
-//		Farmers.Add(fc);
-//
-//	}
-//	public override void CreateFighter()
-//	{
-//		if(fighters<fighterCap)
-//		{
-//			base.CreateFighter();
-//		}
-//	}
 	[Command]
 	public void CmdCreateFighter()
 	{
-		if(fighters<fighterCap)
-		{
-			if(FoodAmount>=fighterCost)
-			{
-				FoodAmount = -fighterCost;
-				fighters++;
-				Unit_Base.TeamSize[teamID] += 1;
-				if(Fighters.Count>0)
-				{
-					FighterController recycle = Fighters.Find(f=> !f.isActive);
-					if(recycle!=null)
-					{
-						recycle.RpcSetMoM(this.gameObject, TeamColor);
-						recycle.transform.position = SpawnMouth.position;
-						InstantiateFighter();
-						//CmdInstantiateFighter();
-					}
-				}else {
-					InstantiateFighter();
-					//CmdInstantiateFighter();
-				}
-			}
-		}
+		CreateFighter();
 	}
-//	[Command]
-//	public void CmdInstantiateFighter()
-//	{
-//		GameObject spawn = Instantiate(fighterFab, Location + new Vector3(1,0,-1),Quaternion.identity) as GameObject;
-//		FighterController fc = spawn.GetComponent<FighterController>();
-//		NetworkServer.Spawn(spawn);
-//		fc.RpcSetMoM(this.gameObject, TeamColor);
-//		Fighters.Add(fc);
-//
-//	}
-	public override void CreateDaughter()
+	[Command]
+	public void CmdCreateDaughter()
 	{
 		if(daughters<daughterCap)
 		{
-			base.CreateDaughter();
+			CreateDaughter();
 		}
 	}
 	public override void PlaceFarmFlag(Vector3 location)

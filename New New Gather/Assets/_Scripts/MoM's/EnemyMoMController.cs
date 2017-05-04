@@ -7,12 +7,13 @@ public class EnemyMoMController : MoMController
 	float timer = 0f;
 
 
-//	protected override void OnEnable () 
-//	{
-//		base.Start();
-//		base.OnEnable();
-//		//StartCoroutine(SpawnTimer());
-//	}
+	protected override void OnEnable () 
+	{
+		//base.Start();
+		base.OnEnable();
+		//if(isServer)
+		//StartCoroutine(SpawnTimer());
+	}
 
 [ServerCallback]
 	void Update()
@@ -20,7 +21,7 @@ public class EnemyMoMController : MoMController
 		timer += Time.deltaTime;
 		switch((int)timer)
 		{
-			case 1:
+			case 2:
 			{
 				if(farmers<farmerCap)
 				CreateFarmer();
@@ -41,20 +42,29 @@ public class EnemyMoMController : MoMController
 			}
 		}
 	}
+
 //	IEnumerator SpawnTimer()
 //	{
-//		while(true)
+//		while(true&& isServer)
 //		{
 //			yield return new WaitForSeconds(1);
 //			if(farmers<farmerCap)
-//			CreateFarmer();
-//			yield return new WaitForSeconds(1);
-//			if(fighters<farmers/2)
-//			CreateFighter();
-//			yield return new WaitForSeconds(1);
+//			{
+//				CreateFarmer();
+//				yield return new WaitForSeconds(1);
+//			}
+//		
+//			if(fighters<farmers/2 && FoodAmount>2)
+//			{
+//				CreateFighter();
+//				yield return new WaitForSeconds(2);
+//			}
+//
 //			if(fighters + farmers>5 && daughters<=daughterCap)
-//			CreateDaughter();
-//			yield return new WaitForSeconds(4);
+//			{
+//				CreateDaughter();
+//				yield return new WaitForSeconds(4);
+//			}
 //		}
 //	}
 

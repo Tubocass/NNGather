@@ -1,34 +1,60 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class InputControls :  NetworkBehaviour
 {
-	//public GameObject farmer, soldier;
-	//GameObject farmFlag, fightFlag, mainMoM;
-	//Transform  mainMoMTran; //farmFlagTran, fightFlagTran,;
 	[SerializeField] LayerMask mask;
 	[SerializeField] float speed = 10, maxFOV = 25, minFOV= 20, scrollSpeed = 3f;
 	Vector3 movement;
-	[SerializeField] GameObject camFab;
-	GameObject mainCam;
+	[SerializeField] GameObject camFab, guiFab;
+	GameObject mainCam, canvas;
 	CameraFollow camFollow;
 	GUIController GUI;
 	PlayerMomController playerMoM;
 
-
-	public override void OnStartClient ()
-    {
-		playerMoM = GetComponent<PlayerMomController>();
-		GUI = GameObject.FindObjectOfType<GUIController>();
-    }
-	public override void OnStartLocalPlayer()
+//	void OnEnable ()
+//    {
+//		SceneManager.sceneLoaded += OnSceneLoaded;
+//    }
+//    void OnDisable()
+//    {
+//		SceneManager.sceneLoaded -= OnSceneLoaded;
+//    }
+//
+//    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+//    {
+//    	if(isLocalPlayer)
+//    	{
+//			
+//    	}
+//    }
+	void Awake()
 	{
+		playerMoM = GetComponent<PlayerMomController>();
 		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
 		mainCam.transform.Rotate(90,0,0);
-		camFollow =  mainCam.GetComponent<CameraFollow>();
-		camFollow.SetTarget(playerMoM.transform);
-		camFollow.SetFollow();
+		mainCam.SetActive(false);
+	}
+	public void Start()
+	{
+		if(isLocalPlayer)
+		{
+			mainCam.SetActive(true);
+			camFollow = mainCam.GetComponent<CameraFollow>();
+			camFollow.SetTarget(playerMoM.transform);
+			canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
+			GUI = canvas.GetComponent<GUIController>();
+			GUI.mainMoMControl = playerMoM;
+			UnityEventManager.TriggerEvent("UpdateHealth", (int)playerMoM.Health);
+			UnityEventManager.TriggerEvent("UpdateFood", playerMoM.FoodAmount);
+		}
+
+//		GUI.SetTeams(GameController.instance.numPlayers);
+//		NetworkServer.Spawn(canvas);
+//		NetworkServer.Spawn(mainCam);
+		//UnityEventManager.TriggerEvent("MainMomChange");
 	}
 	void Update () 
 	{
@@ -59,7 +85,6 @@ public class InputControls :  NetworkBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.Q))
 			{
-				//playerMoM.CreateFarmer();
 				playerMoM.CmdCreateFarmer();
 			}
 			if(Input.GetKeyDown(KeyCode.E))
@@ -68,7 +93,7 @@ public class InputControls :  NetworkBehaviour
 			}
 			if(Input.GetKeyDown(KeyCode.R))
 			{
-				playerMoM.CreateDaughter();
+				playerMoM.CmdCreateDaughter();
 			}
 			if(Input.GetKeyDown(KeyCode.Z))
 			{

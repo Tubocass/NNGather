@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class TestGameController :  NetworkBehaviour
 {
-
 	public SyncListInt Count = new SyncListInt();
 	[SyncVar]public int numPlayers = 0;
 	Interact[] Players;
@@ -44,7 +43,7 @@ public class TestGameController :  NetworkBehaviour
 			numPlayers = Players.Length;
 			for(int t = 0;t<numPlayers;t++)
 			{
-				Count.Add(0);
+				Count.Add(1);
 			}
 		}
 	}

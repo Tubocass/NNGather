@@ -7,9 +7,8 @@ public class CameraFollow : MonoBehaviour
 	public float smoothing = 5f;        // The speed with which the camera will be following.
 	public bool bFollowing = false;
 	Vector3 targetCamPos;
-	Transform tran;
-	
 	Vector3 offset;                     // The initial offset from the target.
+	Transform tran;
 	
 	void Awake ()
 	{
@@ -17,24 +16,25 @@ public class CameraFollow : MonoBehaviour
 		// Calculate the initial offset.
 		//offset = transform.position - target.position;
 	}
-	void OnEnable()
-	{
-		UnityEventManager.StartListening("MainMomChange",MoMChanged);
-	}
-	void OnDisable()
-	{
-		UnityEventManager.StopListening("MainMomChange",MoMChanged);
-	}
-	void MoMChanged()
-	{
-		if(PlayerMomController.MainMoM!=null)
-		SetTarget(PlayerMomController.MainMoM.transform);
-	}
+//	void OnEnable()
+//	{
+//		UnityEventManager.StartListening("MainMomChange",MoMChanged);
+//	}
+//	void OnDisable()
+//	{
+//		UnityEventManager.StopListening("MainMomChange",MoMChanged);
+//	}
+//	void MoMChanged()
+//	{
+//		if(PlayerMomController.MainMoM!=null)
+//		SetTarget(PlayerMomController.MainMoM.transform);
+//	}
 	public void SetTarget(Transform newTarget)
 	{
 		target = newTarget;
 		tran.position = new Vector3(newTarget.position.x, tran.position.y, newTarget.position.z);
 		offset = transform.position - target.position;
+		SetFollow();
 	}
 	public void MoveTo(Vector3 position)
 	{
@@ -47,7 +47,6 @@ public class CameraFollow : MonoBehaviour
 	{
 		bFollowing = true;
 	}
-
 	
 	void FixedUpdate ()
 	{

@@ -18,6 +18,7 @@ public class FighterController : DroneController
 	{
 		spark = GetComponentInChildren<ParticleSystem>();
 		enemies = new List<Unit_Base>();
+		targetEnemy = null;
 		mask = 1<<LayerMask.NameToLayer("Units");
 		canAttack=true;
 		base.OnEnable();
@@ -44,7 +45,7 @@ public class FighterController : DroneController
 	{
 		if(targetEnemy!=null && id == targetEnemy.unitID)
 		{
-			enemies.Remove(targetEnemy);
+			enemies.Clear();
 			targetEnemy = null;
 			ArrivedAtTargetLocation();
 		}

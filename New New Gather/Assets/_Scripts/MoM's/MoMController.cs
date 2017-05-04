@@ -16,7 +16,7 @@ public class MoMController : Unit_Base
 			foodAmount+=value; 
 			if(this.GetType()==typeof(PlayerMomController))
 			{
-				UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+				//UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 			}
 		}
 	}
@@ -47,13 +47,12 @@ public class MoMController : Unit_Base
 	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, hungerTime = 10;
-	[SyncVar][SerializeField] protected int foodAmount;
+	[SyncVar(hook = "SetFoodUI")][SerializeField] protected int foodAmount;
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
 	protected GameObject fightFlag, farmFlag;
-	[SerializeField] int qCount=0;
+	int qCount=0;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
-
 
 	protected override void OnEnable()
 	{
@@ -88,7 +87,12 @@ public class MoMController : Unit_Base
 //		}
 //		return myUnits;
 //	}
-
+	public void SetFoodUI(int h)
+	{
+		foodAmount = h;
+		if(isLocalPlayer && this.GetType()==typeof(PlayerMomController))
+		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
+	}
 	protected virtual void Start()
 	{	
 		if(isServer)
@@ -103,7 +107,7 @@ public class MoMController : Unit_Base
 		farmFlag.SetActive(false);
 		fightFlag.SetActive(false);
 		newQueen();
-		if(Unit_Base.TeamSize[teamID]==0)
+		if(GameController.instance.TeamSize[teamID]==0)
 		{
 			UnityEventManager.TriggerEvent("MoMDeath", teamID);
 		}
@@ -146,7 +150,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -farmerCost;
 			farmers++;
-			Unit_Base.TeamSize[teamID] += 1;
+			GameController.instance.TeamSize[teamID] += 1;
 			if(Farmers.Count>0)//Are there any farmer bots already?
 			{
 				FarmerController recycle = Farmers.Find(f=> !f.isActive);//are there inactive bots?
@@ -171,7 +175,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -fighterCost;
 			fighters++;
-			Unit_Base.TeamSize[teamID] += 1;
+			GameController.instance.TeamSize[teamID] += 1;
 			if(Fighters.Count>0)
 			{
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
@@ -192,26 +196,23 @@ public class MoMController : Unit_Base
 	{
 		if(FoodAmount>=daughterCost)
 		{
-//			Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
-//			if(Vector3.Distance(nearest,Location)<=20)
-//			{
-				FoodAmount = -daughterCost;
-				daughters++;
-				Unit_Base.TeamSize[teamID] += 1;
-				if(Daughters.Count>0)
+			FoodAmount = -daughterCost;
+			daughters++;
+			GameController.instance.TeamSize[teamID] += 1;
+			if(Daughters.Count>0)
+			{
+				DaughterController recycle = Daughters.Find(f=> !f.isActive);
+				if(recycle!=null)
 				{
-					DaughterController recycle = Daughters.Find(f=> !f.isActive);
-					if(recycle!=null)
-					{
-						recycle.RpcSetMoM(this.gameObject, TeamColor);
-						recycle.transform.position = Location+new Vector3(1,0,1);
-					}else{
-						InstantiateDaughter();
-					}
-				}else {
+					recycle.RpcSetMoM(this.gameObject, TeamColor);
+					recycle.transform.position = Location+new Vector3(1,0,1);
+				}else{
 					InstantiateDaughter();
 				}
-			//}
+			}else {
+				InstantiateDaughter();
+			}
+		
 		}
 	}
 	[Server]
@@ -294,17 +295,23 @@ public class MoMController : Unit_Base
 			{
 				if(this.GetType() == typeof(PlayerMomController) && p==0)
 				{
-					spawn = Instantiate(mMoMFab, princesses[p].Location, Quaternion.identity) as GameObject;
+					//spawn = Instantiate(mMoMFab, princesses[p].Location, Quaternion.identity) as GameObject;
+					tran.position = princesses[0].Location;
+					princesses[0].CedeDrones(this);
 				}else{
 					spawn = Instantiate(eMoMFAb, princesses[p].Location, Quaternion.identity) as GameObject;
+					mom = spawn.GetComponent<MoMController>();
+					mom.isActive = true;
+					mom.teamID = teamID;
+					mom.TeamColor = TeamColor;
+					mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+					princesses[p].CedeDrones(mom);
 				}
-
-				mom = spawn.GetComponent<MoMController>();
-				mom.isActive = true;
-				mom.teamID = teamID;
-				mom.TeamColor = TeamColor;
-				mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
-				princesses[p].CedeDrones(mom);
+//				mom = spawn.GetComponent<MoMController>();
+//				mom.isActive = true;
+//				mom.teamID = teamID;
+//				mom.TeamColor = TeamColor;
+//				mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 				princesses[p].Kill();
 			}
 		}else{
@@ -336,7 +343,6 @@ public class MoMController : Unit_Base
 		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = true;
 	}
-
 	public virtual void RecallFightFlag()
 	{
 		fightFlagTran.position = transform.position;

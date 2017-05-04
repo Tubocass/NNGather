@@ -17,18 +17,20 @@ public class DaughterController : MoMController
 	}
 	protected override void Start()
 	{
-		StopAllCoroutines();
-		StartCoroutine(Bloom());
-	}
-
-	IEnumerator Bloom()
-	{
-		yield return new WaitForSeconds(delayStart);
-		bInBloom = false;
+		//StopAllCoroutines();
+		//StartCoroutine(Bloom());
 		StartCoroutine(SpawnTimer());
 		StartCoroutine(Hunger());
-		//StartCoroutine(Idle());
 	}
+
+//	IEnumerator Bloom()
+//	{
+//		yield return new WaitForSeconds(delayStart);
+//		bInBloom = false;
+//		StartCoroutine(SpawnTimer());
+//		StartCoroutine(Hunger());
+//		//StartCoroutine(Idle());
+//	}
 	IEnumerator SpawnTimer()
 	{
 		while(true&& isServer)

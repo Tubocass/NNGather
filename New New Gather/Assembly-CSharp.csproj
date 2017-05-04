@@ -97,10 +97,10 @@
      <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGUI.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGameController.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\TestLobbyHook.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\walker.cs" />
      <Compile Include="Assets\_Scripts\Networking\CustomNetManager.cs" />
      <Compile Include="Assets\_Scripts\Networking\GatherLobbyHook.cs" />
-     <Compile Include="Assets\_Scripts\Networking\TestLobbyHook.cs" />
      <Compile Include="Assets\_Scripts\PanelController.cs" />
      <Compile Include="Assets\_Scripts\PitController.cs" />
      <Compile Include="Assets\_Scripts\SarlacController.cs" />

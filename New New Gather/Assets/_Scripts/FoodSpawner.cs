@@ -17,7 +17,7 @@ public class FoodSpawner : NetworkBehaviour
 	{
 		myTag = gameObject.tag;
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
-		DaySwitch(GameController.IsDayLight());
+		DaySwitch(GameController.instance.IsDayLight());
 	}
 	void OnDisable()
 	{
