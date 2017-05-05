@@ -53,7 +53,6 @@ public class GenerateLevel : NetworkBehaviour
 			{
 			  	//GameObject go = Instantiate(MoMs[i])as GameObject;
 				SetMoMObj(playerMoMs[i]);
-				MoMCount+=1;
 			}
 		}
 		for(int i = 0; i<bots; i++)
@@ -100,16 +99,15 @@ public class GenerateLevel : NetworkBehaviour
 		mom.TeamColor = Colors[MoMCount];
 		mom.teamID = MoMCount;
 		SetMoMObj(mom);
-		MoMCount+=1;
 		NetworkServer.Spawn(newMoM);
 		return newMoM;
 	}
 	public void SetMoMObj(MoMController newMoM)
 	{
-		GameController.instance.TeamSize[MoMCount] += 1;
+		GameController.instance.TeamSize[newMoM.teamID] += 1;
 		//newMoM.GetComponentInChildren<MeshRenderer>().material.color = Colors[MoMCount];
 		newMoM.transform.position = spawnPoints[MoMCount].transform.position;
-
+		MoMCount+=1;
 	}
 	GameObject SpawnSarlac()
 	{

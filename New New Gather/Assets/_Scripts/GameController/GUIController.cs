@@ -23,6 +23,7 @@ public class GUIController : MonoBehaviour
 	{
 		UnityEventManager.StopListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StopListeningInt("UpdateHealth", SetHealth);
+		UnityEventManager.StopListening("MainMomChange",MoMChanged);
 	}
 	void Update()
 	{
@@ -45,8 +46,13 @@ public class GUIController : MonoBehaviour
 	}
 	void MoMChanged()
 	{
-		SetFood(mainMoMControl.FoodAmount);
-		SetHealth((int)mainMoMControl.Health);
+		if(mainMoMControl!=null)
+		{
+			SetFood(mainMoMControl.FoodAmount);
+			SetHealth((int)mainMoMControl.Health);
+			SetTeams(GameController.instance.numPlayers);
+			StartCoroutine(UpdateInfo());
+		}
 	}
 	void Notify(int team)
 	{
@@ -72,18 +78,16 @@ public class GUIController : MonoBehaviour
 
 	IEnumerator UpdateInfo()
 	{
-		while(true)
+		while(GameController.instance.hasGameStarted)
 		{
-			if(mainMoMControl!= null && GameController.instance!=null)
+			if(mainMoMControl!= null && GameController.instance!=null && GameController.instance.TeamSize.Count>0)
 			{
-				SetTeams(GameController.instance.numPlayers);
 				statText1.text = "Farmers: "+ mainMoMControl.farmers+ "\nFighters: "+ mainMoMControl.fighters+ "\nDaughters: "+ mainMoMControl.daughters;
 				statText2.text = "";
 				for(int i = 0; i< GameController.instance.numPlayers;i++)
 				{
 					statText2.text += string.Format("\nTeam {0}: {1} - {2:F1}%", i+1, GameController.instance.TeamSize[i], GameController.instance.TeamSizePercent(i));
 				}
-				//statText2.text =  "Team 1: "+ t1 +" - "+ t1Percent + "%" +  "\nTeam 2: "+ t2 +" - "+t2Percent +"%" +"\nTeam 3: "+ t3 +" - "+ t3Percent +"%";
 			}
 			yield return new WaitForSeconds(.5f);
 		}

@@ -14,22 +14,6 @@ public class InputControls :  NetworkBehaviour
 	GUIController GUI;
 	PlayerMomController playerMoM;
 
-//	void OnEnable ()
-//    {
-//		SceneManager.sceneLoaded += OnSceneLoaded;
-//    }
-//    void OnDisable()
-//    {
-//		SceneManager.sceneLoaded -= OnSceneLoaded;
-//    }
-//
-//    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-//    {
-//    	if(isLocalPlayer)
-//    	{
-//			
-//    	}
-//    }
 	void Awake()
 	{
 		playerMoM = GetComponent<PlayerMomController>();
@@ -39,22 +23,32 @@ public class InputControls :  NetworkBehaviour
 	}
 	public void Start()
 	{
+		
+
 		if(isLocalPlayer)
 		{
+			canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
+			GUI = canvas.GetComponent<GUIController>();
+
+			CmdSetGUI(canvas);
 			mainCam.SetActive(true);
 			camFollow = mainCam.GetComponent<CameraFollow>();
 			camFollow.SetTarget(playerMoM.transform);
-			canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
-			GUI = canvas.GetComponent<GUIController>();
 			GUI.mainMoMControl = playerMoM;
-			UnityEventManager.TriggerEvent("UpdateHealth", (int)playerMoM.Health);
-			UnityEventManager.TriggerEvent("UpdateFood", playerMoM.FoodAmount);
+			canvas.SetActive(true);
+			UnityEventManager.TriggerEvent("MainMomChange");
+//			UnityEventManager.TriggerEvent("UpdateHealth", (int)playerMoM.Health);
+//			UnityEventManager.TriggerEvent("UpdateFood", playerMoM.FoodAmount);
 		}
-
-//		GUI.SetTeams(GameController.instance.numPlayers);
-//		NetworkServer.Spawn(canvas);
-//		NetworkServer.Spawn(mainCam);
-		//UnityEventManager.TriggerEvent("MainMomChange");
+	}
+	[Command]
+	public void CmdSetGUI(GameObject obj)
+	{
+//		canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
+//		GUI = canvas.GetComponent<GUIController>();
+//		canvas.SetActive(false);
+		obj.SetActive(false);
+		NetworkServer.Spawn(obj);
 	}
 	void Update () 
 	{
