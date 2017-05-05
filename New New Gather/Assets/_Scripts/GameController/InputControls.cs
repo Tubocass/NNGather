@@ -8,48 +8,19 @@ public class InputControls :  NetworkBehaviour
 	[SerializeField] LayerMask mask;
 	[SerializeField] float speed = 10, maxFOV = 25, minFOV= 20, scrollSpeed = 3f;
 	Vector3 movement;
-	[SerializeField] GameObject camFab, guiFab;
-	GameObject mainCam, canvas;
 	CameraFollow camFollow;
-	GUIController GUI;
 	PlayerMomController playerMoM;
 
 	void Awake()
 	{
-		playerMoM = GetComponent<PlayerMomController>();
-		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
-		mainCam.transform.Rotate(90,0,0);
-		mainCam.SetActive(false);
+		playerMoM = GetComponent<PlayerMomController>();//make sure this script is attached to player
 	}
-	public void Start()
+	public void SetCamera(CameraFollow cam)
 	{
-		
-
-		if(isLocalPlayer)
-		{
-			canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
-			GUI = canvas.GetComponent<GUIController>();
-
-			CmdSetGUI(canvas);
-			mainCam.SetActive(true);
-			camFollow = mainCam.GetComponent<CameraFollow>();
-			camFollow.SetTarget(playerMoM.transform);
-			GUI.mainMoMControl = playerMoM;
-			canvas.SetActive(true);
-			UnityEventManager.TriggerEvent("MainMomChange");
-//			UnityEventManager.TriggerEvent("UpdateHealth", (int)playerMoM.Health);
-//			UnityEventManager.TriggerEvent("UpdateFood", playerMoM.FoodAmount);
-		}
+		camFollow = cam;
+		camFollow.SetTarget(transform);//make sure this script is attached to player
 	}
-	[Command]
-	public void CmdSetGUI(GameObject obj)
-	{
-//		canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
-//		GUI = canvas.GetComponent<GUIController>();
-//		canvas.SetActive(false);
-		obj.SetActive(false);
-		NetworkServer.Spawn(obj);
-	}
+
 	void Update () 
 	{
 		if(!isLocalPlayer)

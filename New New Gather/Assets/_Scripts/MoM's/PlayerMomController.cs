@@ -5,14 +5,37 @@ using System.Collections.Generic;
 
 public class PlayerMomController : MoMController 
 {
+	[SerializeField] GameObject camFab, guiFab;
+	GameObject mainCam, canvas;
+	GUIController GUI;
+	bool bTeamFlag = false, bSetup = false;
 
-	bool bTeamFlag = false;
-//	public static PlayerMomController MainMoM{
-//		get{
-//			return main;
-//		}
-//	}
-//	static PlayerMomController main;
+	void Awake()
+	{
+		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
+		mainCam.transform.Rotate(90,0,0);
+		GetComponent<InputControls>().SetCamera(mainCam.GetComponent<CameraFollow>());
+		mainCam.SetActive(false);
+		canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
+		GUI = canvas.GetComponent<GUIController>();
+		GUI.mainMoMControl = this;
+		canvas.SetActive(false);
+	}
+
+	public void PlayerSetup()
+	{
+		mainCam.SetActive(true);
+		canvas.SetActive(true);
+		UnityEventManager.TriggerEvent("MainMomChange");//Sets values in GUI
+	}
+	void Update()
+	{
+		if(isLocalPlayer && GameController.instance.hasGameStarted && !bSetup)
+		{
+			PlayerSetup();
+			bSetup = true;
+		}
+	}
 
 	protected override void Death ()
 	{

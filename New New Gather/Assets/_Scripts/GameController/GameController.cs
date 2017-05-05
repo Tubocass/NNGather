@@ -12,7 +12,7 @@ public class GameController :  NetworkBehaviour
 	[SerializeField] float SunSpeed = 2f;
 	[SerializeField] float Timer = 30;
 	[SyncVar]public bool bStartGame, hasGameStarted = false;
-	MoMController[] Players;
+	PlayerMomController[] Players;
 	GenerateLevel levelGen;
 	Transform DayLight, NightLight;
 	SarlacController SarlacInstance;
@@ -144,7 +144,7 @@ public class GameController :  NetworkBehaviour
 		if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
 		{
 			//Load in all rleavant info
-			Players = GameObject.FindObjectsOfType<MoMController>();
+			Players = GameObject.FindObjectsOfType<PlayerMomController>();
 			numPlayers = Players.Length+levelGen.bots;
 			for(int t = 0; t<numPlayers; t++)
 			{
@@ -153,8 +153,9 @@ public class GameController :  NetworkBehaviour
 			levelGen.Init();
 			levelGen.PassInPlayers(Players);
 			levelGen.Generate();
-			SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
 			hasGameStarted = true;
+			SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
+		
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class GenerateLevel : NetworkBehaviour
 
 	public static GameObject[] Pits;
 	public GameObject SarlacDude;
-	MoMController[] playerMoMs;
+	PlayerMomController[] playerMoMs;
 	GameObject[] spawnPoints;
 	Vector3 groundSize;
 	[SyncVar]int MoMCount, botCount, spCount, moms;
@@ -77,7 +77,7 @@ public class GenerateLevel : NetworkBehaviour
 		return start;
 	}
 
-	public void PassInPlayers(MoMController[] Players)
+	public void PassInPlayers(PlayerMomController[] Players)
 	{
 		playerMoMs = Players;
 	}
