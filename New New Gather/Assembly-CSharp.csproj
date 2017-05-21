@@ -95,6 +95,7 @@
      <Compile Include="Assets\_Scripts\NetworkTestScripts\Interact.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\MouseLook.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkTestSpawner.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGUI.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGameController.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestLobbyHook.cs" />
@@ -104,6 +105,7 @@
      <Compile Include="Assets\_Scripts\PanelController.cs" />
      <Compile Include="Assets\_Scripts\PitController.cs" />
      <Compile Include="Assets\_Scripts\SarlacController.cs" />
+     <Compile Include="Assets\_Scripts\SyncListVector3.cs" />
      <Compile Include="Assets\_Scripts\Unit_Base.cs" />
      <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
      <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />

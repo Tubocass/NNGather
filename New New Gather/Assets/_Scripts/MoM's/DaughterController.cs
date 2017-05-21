@@ -49,7 +49,7 @@ public class DaughterController : MoMController
 		base.SetMoM(mom);
 		TeamColor = tc;
 		birthHole = tran.position;
-		GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+		//GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
 //	protected override void MoveRandomly()
 //	{

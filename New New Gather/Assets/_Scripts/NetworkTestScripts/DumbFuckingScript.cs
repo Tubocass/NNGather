@@ -15,7 +15,7 @@ public class DumbFuckingScript : NetworkBehaviour
 	public void RpcChangeColor(Color newColor)
 	{
 		print("I'm a dumbfuckingcube");
-		OnChangeColor(newColor);
+		myColor = newColor;
 	}
 
 	void OnChangeColor(Color newColor)

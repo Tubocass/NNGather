@@ -304,7 +304,7 @@ public class MoMController : Unit_Base
 					mom.isActive = true;
 					mom.teamID = teamID;
 					mom.TeamColor = TeamColor;
-					mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
+					//mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 					princesses[p].CedeDrones(mom);
 				}
 //				mom = spawn.GetComponent<MoMController>();

@@ -216,7 +216,7 @@ public class FarmerController : DroneController, IAttachable
 					}
 					targetedFood = null;
 					carriedFood = ot;
-					ot.RpcAttach(this.gameObject,nose);
+					ot.Attach(this.gameObject,nose);
 					foodLoc = ot.Location;
 					ReturnToHome();
 				}
@@ -229,7 +229,7 @@ public class FarmerController : DroneController, IAttachable
 			if(bangMoM.unitID == myMoM.unitID)
 			{
 				bangMoM.AddFoodLocation(foodLoc);
-				carriedFood.RpcDestroy();
+				carriedFood.Destroy();
 				carriedFood = null;
 				bReturning = false;
 			}

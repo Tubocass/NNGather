@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FoodSpawner : NetworkBehaviour 
 {
@@ -10,12 +11,16 @@ public class FoodSpawner : NetworkBehaviour
 	[SerializeField] GameObject foodObj;
  	GameObject[] foodPile;
 	Vector3[] spawnPoints;
+	public SyncListVector3 lines = new SyncListVector3();
+	LineRenderer vine;
+	int segments = 0;
 	bool bSpawnTime;
 	string myTag;
 
 	void OnEnable()
 	{
 		myTag = gameObject.tag;
+		vine = GetComponent<LineRenderer>();
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 		DaySwitch(GameController.instance.IsDayLight());
 	}
@@ -31,7 +36,24 @@ public class FoodSpawner : NetworkBehaviour
 		else bSpawnTime = !b;
 	}
 
+	public void AddLineSegment(Vector3 point)
+	{
+		lines.Add(point);
+	}
 
+	public override void OnStartClient()
+	{
+		base.OnStartClient();
+		//vine.SetPositions();
+		if(isServer)
+		{
+			vine.positionCount =lines.Count;
+			for(int i = 0; i<lines.Count;i++)
+			{
+				vine.SetPosition(i,lines[i]);
+			}
+		}
+	}
 	void Start () 
 	{
 		if(!isServer)
@@ -39,21 +61,15 @@ public class FoodSpawner : NetworkBehaviour
 
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
-		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);//Spawn 
-		for(int i = 0; i<amount; i++)//and then store the spawnpoint
+		//GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);
+		for(int i = 0; i<amount; i++)
 		{
 			spawnPoints[i] = foodPile[i].transform.position;
-			foodPile[i].SetActive(false);
 			foodPile[i].GetComponent<LineRenderer>().SetPosition(0,foodPile[i].transform.position);
 			foodPile[i].GetComponent<LineRenderer>().SetPosition(1,transform.position);
+			foodPile[i].SetActive(false);
 		}
 		StartCoroutine(SpawnFood());
-//		for(int i = 0; i<amount; i++)
-//		{
-//			GameObject newFood = Instantiate(foodObj, spawnPoints[i], Quaternion.identity) as GameObject;
-//			foodPile[i] = newFood.GetComponent<FoodObject>();
-//			foodPile[i].gameObject.SetActive(false);
-//		}
 	}
 	GameObject InitialSpawn(Vector3 position)
 	{
@@ -72,8 +88,6 @@ public class FoodSpawner : NetworkBehaviour
 				if(!foodPile[i].gameObject.activeSelf)
 				{
 					foodPile[i].GetComponent<FoodObject>().RpcReset(spawnPoints[i]);
-//					foodPile[i].transform.position = spawnPoints[i];
-//					foodPile[i].gameObject.SetActive(true);
 					if(bSpawnTime)
 					{
 						yield return new WaitForSeconds(3f);

@@ -122,20 +122,30 @@ public class GenerateLevel : NetworkBehaviour
 		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
 		GameObject[] plantObjs = new GameObject[nightPlants];
 		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position+height, plantObjs, (Vector3 pos)=>
-		{
+		{//SpawnNightPlants() essentially
 			GameObject obj = Instantiate(NightPlantFab, pos, Quaternion.identity)as GameObject;
+			Vector3 dir = pos - position;
+			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
+			FoodSpawner fs = obj.GetComponent<FoodSpawner>();
+			fs.AddLineSegment(pos);
+			fs.AddLineSegment(pos-dir);
+			fs.AddLineSegment(position);
+
+//			obj.GetComponent<LineRenderer>().SetPosition(0, pos);
+//			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
+//			obj.GetComponent<LineRenderer>().SetPosition(2, position);
 			return obj; 
 		});
 		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
-		for(int i = 0; i<nightPlants; i++)
-		{
-			Vector3 plantPos = plantObjs[i].transform.position;
-			Vector3 dir = plantPos - position;
-			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
-			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0, plantPos);
-			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, (plantPos- dir));
-			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
-		}
+//		for(int i = 0; i<nightPlants; i++)
+//		{
+//			Vector3 plantPos = plantObjs[i].transform.position;
+//			Vector3 dir = plantPos - position;
+//			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
+//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0, plantPos);
+//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, (plantPos- dir));
+//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
+//		}
 		if(g>0)
 		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position);
 		return newPit;
