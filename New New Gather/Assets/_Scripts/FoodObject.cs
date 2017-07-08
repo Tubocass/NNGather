@@ -9,7 +9,7 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 	public bool CanBeTargetted{get{return gameObject.activeSelf && !bAttached;}}
 	public Vector3 Location{get{return transform.position;}}
 	[SerializeField]private int id, idOffset = 1000;
-	[SerializeField]private bool bAttached;
+	[SerializeField][SyncVar]private bool bAttached;
 	LineRenderer lineRenderer;
 	SyncListVector3 lines = new SyncListVector3();
 	bool initialized;
@@ -36,19 +36,24 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 //	}
 	void Update()
 	{	
-		CmdSetMeStraight();
+		//CmdSetMeStraight();
+		if(isServer)
+		{
+			//RpcSetLines(lines.ToArray());
+		}
+
 	}
 
-	[Command]
-	void CmdSetMeStraight()
-	{
-		RpcSetLines(lines.ToArray());
-	}
-	[ClientRpc]
-	public void RpcSetLines(Vector3[] points)
-	{
-		lineRenderer.SetPositions(points);
-	}
+//	[Command]
+//	void CmdSetMeStraight()
+//	{
+//		RpcSetLines(lines.ToArray());
+//	}
+//	[ClientRpc]
+//	public void RpcSetLines(Vector3[] points)
+//	{
+//		lineRenderer.SetPositions(points);
+//	}
 	public void SetLine(int index,Vector3 point)
 	{
 		//lineRenderer.SetPosition(index,point);
@@ -64,9 +69,8 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 	[ClientRpc]
 	public void RpcDestroy()
 	{
-		transform.position = Vector3.zero;
-		Detach();
-		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
+		//transform.position = Vector3.zero;
+		//UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 		gameObject.SetActive(false);
 	}
 	public void Attach(GameObject newParent, Vector3 point)
@@ -74,15 +78,16 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 		transform.SetParent(newParent.transform);
 		transform.localPosition = point;
 		bAttached = true;
+		RpcAttach(newParent, point);
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 	}
 	[ClientRpc]
 	public void RpcAttach(GameObject newParent, Vector3 point)
 	{
 		transform.SetParent(newParent.transform);
-		transform.localPosition = point;
-		bAttached = true;
-		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
+		//transform.localPosition = point;
+		//bAttached = true;
+		//UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 	}
 
 	public void Reset(Vector3 position)
@@ -101,6 +106,13 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 	{
 		transform.SetParent(null);
 		bAttached = false;
+		RpcDetach();
+	}
+	[ClientRpc]
+	public void RpcDetach()
+	{
+		transform.SetParent(null);
+		//bAttached = false;
 	}
 
 

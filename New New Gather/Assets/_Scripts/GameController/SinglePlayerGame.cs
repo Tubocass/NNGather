@@ -1,32 +1,30 @@
-﻿using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameController :  NetworkBehaviour
+public class SinglePlayerGame : MonoBehaviour, IGameInstance 
 {
-	public SyncListInt TeamSize = new SyncListInt();
-	[SyncVar]public int numPlayers = 0;
-	[SerializeField] GameObject guiFab, PlayerFab;
+	public List<int> TeamSize = new List<int>();
+	public int numPlayers = 0;
+	[SerializeField] GameObject guiFab;
 	[SerializeField] float SunSpeed = 2f;
 	[SerializeField] float Timer = 30;
-	[SyncVar]public bool bStartGame, hasGameStarted = false;
+	public bool bStartGame, hasGameStarted = false;
 	PlayerMomController[] Players;
 	GenerateLevel levelGen;
 	Transform DayLight, NightLight;
 	SarlacController SarlacInstance;
-	bool bDay, bSinglePlayer;
-	int check;
+	bool bDay;
 
-	private static GameController gameControl;
-	public static GameController instance
+	private static SinglePlayerGame gameControl;
+	public static SinglePlayerGame instance
 	{
 		get
 		{
 			if (!gameControl)
 			{
-				gameControl = FindObjectOfType (typeof (GameController)) as GameController;
+				gameControl = FindObjectOfType (typeof (IGameInstance)) as SinglePlayerGame;
 				if (!gameControl)
 				{
 					Debug.LogError ("There needs to be one active GameController script on a GameObject in your scene.");
@@ -36,16 +34,12 @@ public class GameController :  NetworkBehaviour
 		}
 	}
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 		if(scene.name.Equals("Main"))
 		{
 			DayLight = GameObject.Find("Day Light").transform;
 			NightLight = GameObject.Find("Night Light").transform;
-			if(bSinglePlayer)
-			{
-				StartNewGame();
-			}
 		}
     }
 	void OnEnable()
@@ -142,28 +136,15 @@ public class GameController :  NetworkBehaviour
 //	}
 	public void CompleteSetup(int[] array)
 	{
-		bSinglePlayer = true;
 		levelGen.LoadLevelSettings(array[0],array[1],array[2]);
-
 	}
-	[Server]
 	public void StartNewGame()
 	{
-		check++;
-		if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
+		//check++;
+		//if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
 		{
-			//Load in all rleavant info	
-			if(bSinglePlayer)
-			{
-				Players = new PlayerMomController[1];
-				GameObject mom =  Instantiate(PlayerFab, Vector3.zero,Quaternion.identity) as GameObject;
-				Players[0] = mom.GetComponent<PlayerMomController>();
-				Players[0].name = "Player 1";
-				//Players[0].TeamColor = lobby.playerColor;
-			}else{
-				Players = GameObject.FindObjectsOfType<PlayerMomController>();
-			}
-
+			//Load in all rleavant info
+			Players = GameObject.FindObjectsOfType<PlayerMomController>();
 			numPlayers = Players.Length+levelGen.bots;
 			for(int t = 0; t<numPlayers; t++)
 			{

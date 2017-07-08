@@ -137,7 +137,7 @@ public class FarmerController : DroneController, IAttachable
 			}
 			if(fo.Id != carriedFood.Id)
 			{
-				carriedFood.RpcDestroy();
+				carriedFood.Destroy();
 				carriedFood = fo;
 			}
 			return true;

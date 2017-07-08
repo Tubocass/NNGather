@@ -27,6 +27,16 @@ public class GenerateLevel : NetworkBehaviour
 	[SyncVar]int MoMCount, botCount, spCount, moms;
 	public delegate GameObject SpawnFunction(Vector3 v);
 
+	public void LoadLevelSettings(int numBots, int sarlacPits, int plantsPerPit)
+	{
+		pits = sarlacPits;
+		nightPlants = plantsPerPit;
+		bots = numBots;
+	}
+	public void PassInPlayers(PlayerMomController[] Players)
+	{
+		playerMoMs = Players;
+	}
 	public void Init() 
 	{
 		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
@@ -59,7 +69,7 @@ public class GenerateLevel : NetworkBehaviour
 		{
 			SpawnBots();
 		}
-		SarlacDude = SpawnSarlac();//The Sarlac needs to be have its enable and disable functions rewritten
+		SarlacDude = SpawnSarlac();//The Sarlac needs to have its enable and disable functions rewritten
 		SarlacDude.SetActive(false);
 	
 		//Sarlac Pits
@@ -75,11 +85,6 @@ public class GenerateLevel : NetworkBehaviour
 		GameObject start = Instantiate(NetStartFab, position+height, Quaternion.identity) as GameObject;
 		spCount++;
 		return start;
-	}
-
-	public void PassInPlayers(PlayerMomController[] Players)
-	{
-		playerMoMs = Players;
 	}
 //	public GameObject SpawnMoM()
 //	{
@@ -126,10 +131,10 @@ public class GenerateLevel : NetworkBehaviour
 			GameObject obj = Instantiate(NightPlantFab, pos, Quaternion.identity)as GameObject;
 			Vector3 dir = pos - position;
 			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
-			FoodSpawner fs = obj.GetComponent<FoodSpawner>();
-			fs.AddLineSegment(pos);
-			fs.AddLineSegment(pos-dir);
-			fs.AddLineSegment(position);
+			NetworkTestSpawner fs = obj.GetComponent<NetworkTestSpawner>();
+//			fs.AddLineSegment(pos);
+//			fs.AddLineSegment(pos-dir);
+//			fs.AddLineSegment(position);
 
 //			obj.GetComponent<LineRenderer>().SetPosition(0, pos);
 //			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
@@ -150,7 +155,6 @@ public class GenerateLevel : NetworkBehaviour
 		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position);
 		return newPit;
 	}
-
 	GameObject SpawnDayPlants(Vector3 position)
 	{
 		//float angle = Vector3.Angle(position, new Vector3());
@@ -172,7 +176,6 @@ public class GenerateLevel : NetworkBehaviour
 			return obj; 
 		});
 	}
-
 	[Server]
 	public static void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
 	{
@@ -220,7 +223,6 @@ public class GenerateLevel : NetworkBehaviour
 			}
 		}while(created<amount);
 	}
-
 
 	public static Vector3 NearestTarget(GameObject[] Objects, Vector3 targetLoc)
 	{

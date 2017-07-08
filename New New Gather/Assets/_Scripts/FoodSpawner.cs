@@ -61,13 +61,13 @@ public class FoodSpawner : NetworkBehaviour
 
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
-		//GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);
+		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);
 		for(int i = 0; i<amount; i++)
 		{
 			spawnPoints[i] = foodPile[i].transform.position;
-			foodPile[i].GetComponent<LineRenderer>().SetPosition(0,foodPile[i].transform.position);
-			foodPile[i].GetComponent<LineRenderer>().SetPosition(1,transform.position);
-			foodPile[i].SetActive(false);
+			foodPile[i].GetComponent<FoodObject>().SetLine(0,foodPile[i].transform.position);
+			foodPile[i].GetComponent<FoodObject>().SetLine(1,transform.position);
+			foodPile[i].GetComponent<FoodObject>().Destroy();
 		}
 		StartCoroutine(SpawnFood());
 	}
