@@ -46,8 +46,6 @@ public class GenerateLevel : NetworkBehaviour
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
 		xx = groundSize.x - groundSize.x/8;
 		zz = groundSize.z - groundSize.z/8;
-
-
 	}
 	public void Generate() 
 	{
@@ -135,9 +133,9 @@ public class GenerateLevel : NetworkBehaviour
 //			fs.AddLineSegment(pos-dir);
 //			fs.AddLineSegment(position);
 
-//			obj.GetComponent<LineRenderer>().SetPosition(0, pos);
-//			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
-//			obj.GetComponent<LineRenderer>().SetPosition(2, position);
+			obj.GetComponent<LineRenderer>().SetPosition(0, pos);
+			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
+			obj.GetComponent<LineRenderer>().SetPosition(2, position);
 			return obj; 
 		});
 		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);

@@ -134,14 +134,14 @@ public class GameController :  NetworkBehaviour
 
 	}
 
-//	public void RegisterPlayer(GameObject go)
-//	{
-//		if(go != null && Players != null)
-//		{
-//			Players[players] = go;
-//			players++;
-//		}
-//	}
+	public void RegisterPlayer()
+	{
+		check++;
+		if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
+		{
+			StartNewGame();
+		}
+	}
 	public void CompleteSetup(int[] array)
 	{
 		bSinglePlayer = true;
@@ -153,36 +153,24 @@ public class GameController :  NetworkBehaviour
 	//[Server]
 	public void StartNewGame()
 	{
-		check++;
-		if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
+		//Load in all rleavant info	
+		if(bSinglePlayer)
 		{
-			levelGen.Init();
-			//Load in all rleavant info	
-			if(bSinglePlayer)
-			{
-//				Players = new PlayerMomController[1];
-//				GameObject mom =  Instantiate(PlayerFab, Vector3.zero,Quaternion.identity) as GameObject;
-//				Players[0] = mom.GetComponent<PlayerMomController>();
-//				Players[0].name = "Player 1";
-				ClientScene.AddPlayer(0);
-				Players = GameObject.FindObjectsOfType<PlayerMomController>();
-				//NetworkServer.AddPlayerForConnection(connectionToClient,mom,0);
-				//Players[0].TeamColor = lobby.playerColor;
-			}else{
-				Players = GameObject.FindObjectsOfType<PlayerMomController>();
-			}
-	
-			numPlayers = Players.Length+levelGen.bots;
-			for(int t = 0; t<numPlayers; t++)
-			{
-				TeamSize.Add(0);
-			}
-			//levelGen.Init();
-			levelGen.PassInPlayers(Players);
-			levelGen.Generate();
-			hasGameStarted = true;
-			SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
-		
+			ClientScene.AddPlayer(0);
 		}
+		Players = GameObject.FindObjectsOfType<PlayerMomController>();
+		numPlayers = Players.Length+levelGen.bots;
+		levelGen.Init();
+		for(int t = 0; t<numPlayers; t++)
+		{
+			TeamSize.Add(0);
+		}
+		//levelGen.Init();
+		levelGen.PassInPlayers(Players);
+		levelGen.Generate();
+		hasGameStarted = true;
+		SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
+	
+
 	}
 }

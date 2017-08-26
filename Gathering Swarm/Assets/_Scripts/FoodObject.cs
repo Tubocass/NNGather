@@ -56,8 +56,8 @@ public class FoodObject : NetworkBehaviour//, IAttachable
 //	}
 	public void SetLine(int index,Vector3 point)
 	{
-		//lineRenderer.SetPosition(index,point);
-		lines.Add(point);
+		lineRenderer.SetPosition(index,point);
+		//lines.Add(point);
 	}
 	public void Destroy()
 	{
