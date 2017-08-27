@@ -20,6 +20,10 @@ public class PlayerMomController : MoMController
 		GUI = canvas.GetComponent<GUIController>();
 		GUI.mainMoMControl = this;
 		canvas.SetActive(false);
+		farmFlag = Instantiate(farmFlagFab) as GameObject; 
+		fightFlag = Instantiate(fightFlagFab) as GameObject;
+		farmFlagTran = farmFlag.GetComponent<Transform>();
+		fightFlagTran = fightFlag.GetComponent<Transform>();
 	}
 
 	public void PlayerSetup()
@@ -39,18 +43,16 @@ public class PlayerMomController : MoMController
 
 	protected override void Death ()
 	{
-		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
-		//UnityEventManager.StopListeningBool("DayTime", DaySwitch);
-		StopAllCoroutines();
-		bMoving = false;
-		farmers = 0;
-		fighters = 0;
-		health = startHealth;
-		foodAmount = startFood;
-		Foods.Clear();
-		newQueen();
-		daughters = 0;
-		Start();
+		bool bContinue = false;
+		if(daughters>0)
+		bContinue = true;
+
+		base.Death();
+		if(bContinue)
+		{
+			isActive = true;
+			Start();
+		}
 	}
 
 	[Command]

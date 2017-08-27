@@ -64,11 +64,6 @@ public class GameController :  NetworkBehaviour
 		UnityEventManager.StopListening("StartGame",StartNewGame);
 	}
 
-	void Start()
-	{
-
-	
-	}
 	public float TeamSizePercent(int t)
 	{
 		if(TeamSize.Count>0)
@@ -150,13 +145,20 @@ public class GameController :  NetworkBehaviour
 		//StartNewGame();
 		//NetworkManager.singleton.StartHost();
 	}
-	//[Server]
+	[Server]
 	public void StartNewGame()
 	{
 		//Load in all rleavant info	
 		if(bSinglePlayer)
 		{
 			ClientScene.AddPlayer(0);
+		}else
+		{
+			check++;
+			if(NetworkLobbyManager.singleton!=null&& check < NetworkLobbyManager.singleton.numPlayers)
+			{
+				return;
+			}
 		}
 		Players = GameObject.FindObjectsOfType<PlayerMomController>();
 		numPlayers = Players.Length+levelGen.bots;

@@ -27,8 +27,8 @@ public class DroneController : Unit_Base
 		UnityEventManager.StopListeningInt("TargetUnavailable", TargetLost);
 		StopCoroutine(Idle());
 	}
-	[ClientRpc]
-	public virtual void RpcSetMoM(GameObject mom, Color tc)
+	//[ClientRpc]
+	public virtual void SetMoM(GameObject mom, Color tc)
 	{
 		base.SetMoM(mom);
 		TeamColor = tc;

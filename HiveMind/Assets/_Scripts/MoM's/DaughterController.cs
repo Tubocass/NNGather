@@ -6,7 +6,7 @@ public class DaughterController : MoMController
 {
 	[SerializeField] protected float orbit = 15, delayStart = 15f;
 	bool bInBloom = true;
-	Vector3 birthHole;
+
 	protected override void OnEnable () 
 	{
 		base.Start();
@@ -48,14 +48,8 @@ public class DaughterController : MoMController
 	{
 		base.SetMoM(mom);
 		TeamColor = tc;
-		birthHole = tran.position;
-		//GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 	}
-//	protected override void MoveRandomly()
-//	{
-//		UnityEngine.AI.NavMeshPath rVector = RandomPath(birthHole, orbit);
-//		RpcMoveTo(rVector.corners);
-//	}
+
 	public void Kill()//mostly used for upgrading into a MoM
 	{
 		Death();
@@ -63,12 +57,7 @@ public class DaughterController : MoMController
 
 	protected override void Death()
 	{
-		base.Death();
-		myMoM.daughters-=1;
-	}
-
-	protected override void newQueen()
-	{
+		//base.Death();
 		if(myMoM.isActive)
 		{
 			CedeDrones(myMoM);
@@ -76,5 +65,18 @@ public class DaughterController : MoMController
 		}else{
 			KillDrones();
 		}
+		myMoM.daughters-=1;
+		Foods.Clear();
+		UnityEventManager.TriggerEvent("TargetUnavailable",unitID);
+		bMoving = false;
+		isActive = false;
+		hasChanged = false;
+		if(teamID>=0&&GameController.instance.TeamSize[teamID]>0)
+		GameController.instance.TeamSize[teamID]-=1;
+	}
+
+	protected override void newQueen()
+	{
+		
 	}
 }

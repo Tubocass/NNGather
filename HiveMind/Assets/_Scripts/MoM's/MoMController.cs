@@ -56,19 +56,7 @@ public class MoMController : Unit_Base
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-		Foods = new List<FoodObject>();
-		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
-		TeamColorMat.color = TeamColor;
-		daughters = 0;
-		farmers = 0;
-		fighters = 0;
-		foodAmount = startFood;
-		farmFlag = Instantiate(farmFlagFab) as GameObject; 
-		fightFlag = Instantiate(fightFlagFab) as GameObject;
-		farmFlagTran = farmFlag.GetComponent<Transform>();
-		fightFlagTran = fightFlag.GetComponent<Transform>();
-		if(!MoMs.Contains(this))
-		MoMs.Add(this);
+
 	}
 
 //	public static int GetTeamSize(int teamNum) //function is valid, but I felt like using a static int would be cheaper
@@ -94,8 +82,16 @@ public class MoMController : Unit_Base
 	}
 	protected virtual void Start()
 	{	
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
+		TeamColorMat.color = TeamColor;
+
 		if(isServer)
 		{
+			Foods = new List<FoodObject>();
+			if(!MoMs.Contains(this))
+			MoMs.Add(this);
+			health = startHealth;
+			foodAmount = startFood;
 			StartCoroutine(UpdateLocation());
 			StartCoroutine(Hunger());
 		}
@@ -105,6 +101,7 @@ public class MoMController : Unit_Base
 		base.Death ();
 		farmFlag.SetActive(false);
 		fightFlag.SetActive(false);
+		Foods.Clear();
 		newQueen();
 		if(GameController.instance.TeamSize[teamID]==0)
 		{
@@ -156,7 +153,7 @@ public class MoMController : Unit_Base
 				if(recycle!=null)
 				{
 					//reycycle.RpsSetMom
-					recycle.RpcSetMoM(this.gameObject, TeamColor);
+					recycle.SetMoM(this.gameObject, TeamColor);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFarmer();//No inactives we can recycle
@@ -180,7 +177,7 @@ public class MoMController : Unit_Base
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
-					recycle.RpcSetMoM(this.gameObject, TeamColor);
+					recycle.SetMoM(this.gameObject, TeamColor);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFighter();
@@ -220,7 +217,7 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(farmerFab, SpawnMouth.position, FaceForward()) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
-		fc.RpcSetMoM(this.gameObject, TeamColor);
+		fc.SetMoM(this.gameObject, TeamColor);
 		Farmers.Add(fc);
 	}
 	[Server]
@@ -229,7 +226,7 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(fighterFab,SpawnMouth.position, FaceForward()) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
-		fc.RpcSetMoM(this.gameObject, TeamColor);
+		fc.SetMoM(this.gameObject, TeamColor);
 		Fighters.Add(fc);
 	}
 	[Server]
@@ -303,8 +300,8 @@ public class MoMController : Unit_Base
 					mom.isActive = true;
 					mom.teamID = teamID;
 					mom.TeamColor = TeamColor;
-					//mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 					princesses[p].CedeDrones(mom);
+					NetworkServer.Spawn(spawn);
 				}
 //				mom = spawn.GetComponent<MoMController>();
 //				mom.isActive = true;
