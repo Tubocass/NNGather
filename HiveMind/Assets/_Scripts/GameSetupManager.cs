@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class GameSetupManager : MonoBehaviour 
 {
-	int[] settings = {3,8,4};//bots,sarlac,plants
 	[SerializeField]Slider[] sliders;
+	int[] settings = {3,8,4};//bots,sarlac,plants
 	public NetworkManager nm;
 
 	public void OnChangeBotValue()
@@ -27,6 +27,7 @@ public class GameSetupManager : MonoBehaviour
 	public void StartGame()
 	{
 		nm.StartHost();
+		settings =  new int[]{(int)sliders[0].value, (int)sliders[1].value, (int)sliders[2].value};
 		GameController.instance.CompleteSetup(settings);
 
 	}

@@ -126,7 +126,7 @@ public class GenerateLevel : NetworkBehaviour
 	{
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
-		nightPlants = UnityEngine.Random.Range(3,7);// number of plants
+		//nightPlants = UnityEngine.Random.Range(1,nightPlants);// number of plants
 		GameObject[] plantObjs = new GameObject[nightPlants];
 		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position+height, plantObjs, (Vector3 pos)=>
 		{//SpawnNightPlants() essentially
@@ -143,16 +143,6 @@ public class GenerateLevel : NetworkBehaviour
 			obj.GetComponent<LineRenderer>().SetPosition(2, position);
 			return obj; 
 		},envMask);
-		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
-//		for(int i = 0; i<nightPlants; i++)
-//		{
-//			Vector3 plantPos = plantObjs[i].transform.position;
-//			Vector3 dir = plantPos - position;
-//			dir = dir/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
-//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(0, plantPos);
-//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(1, (plantPos- dir));
-//			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
-//		}
 		if(g>0)
 		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position, envMask);
 		return newPit;
