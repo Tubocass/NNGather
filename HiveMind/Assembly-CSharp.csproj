@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{72068B36-E27E-6C94-1B15-494C392561C6}</ProjectGuid>
+    <ProjectGuid>{3C0AFE8B-020A-6514-3EDE-9C36619A6A51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -46,54 +46,75 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Standard Assets\2D\Scripts\Camera2DFollow.cs" />
-     <Compile Include="Assets\Standard Assets\2D\Scripts\CameraFollow.cs" />
-     <Compile Include="Assets\Standard Assets\2D\Scripts\Platformer2DUserControl.cs" />
-     <Compile Include="Assets\Standard Assets\2D\Scripts\PlatformerCharacter2D.cs" />
-     <Compile Include="Assets\Standard Assets\2D\Scripts\Restarter.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\AutoCam.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\FreeLookCam.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\HandHeldCam.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\LookatTarget.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\PivotBasedCameraRig.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\ProtectCameraFromWallClip.cs" />
-     <Compile Include="Assets\Standard Assets\Cameras\Scripts\TargetFieldOfView.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
-     <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ActivateTrigger.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AlphaButtonClickMask.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AutoMobileShaderSwitch.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\AutoMoveAndRotate.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\CameraRefocus.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\CurveControlledBob.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\DragRigidbody.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\DynamicShadowSettings.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\EventSystemChecker.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FOVKick.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FPSCounter.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\FollowTarget.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ForcedReset.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\LerpControlledBob.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ObjectResetter.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\ParticleSystemDestroyer.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\PlatformSpecificContent.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SimpleActivatorMenu.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SimpleMouseRotator.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\SmoothFollow.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\TimedObjectActivator.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\TimedObjectDestructor.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\WaypointCircuit.cs" />
-     <Compile Include="Assets\Standard Assets\Utility\WaypointProgressTracker.cs" />
+     <Compile Include="Assets\Lobby\Scripts\DraggablePanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyCountdownPanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyHook.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyInfoPanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyMainMenu.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyManager.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayer.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayerList.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerEntry.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerList.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyTopPanel.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\CameraControls.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\Scripts\IcoBumpin.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Instantiation\ProBuilderInstantiate.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Misc\HueCube.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Procedural Mesh\ExtrudeRandomEdges.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Runtime Editing\RuntimeEdit.cs" />
+     <Compile Include="Assets\ProCore\ProBuilder\API Examples\Vertex Colors\HighlightNearestFace.cs" />
+     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
+     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
+     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+     <Compile Include="Assets\_Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\_Scripts\Drone\Detection.cs" />
+     <Compile Include="Assets\_Scripts\Drone\DroneController.cs" />
+     <Compile Include="Assets\_Scripts\Drone\FarmerController.cs" />
+     <Compile Include="Assets\_Scripts\Drone\FighterController.cs" />
+     <Compile Include="Assets\_Scripts\Drone\NavMove.cs" />
+     <Compile Include="Assets\_Scripts\FoodObject.cs" />
+     <Compile Include="Assets\_Scripts\FoodSpawner.cs" />
+     <Compile Include="Assets\_Scripts\GameController\GUIController.cs" />
+     <Compile Include="Assets\_Scripts\GameController\GameController.cs" />
+     <Compile Include="Assets\_Scripts\GameController\GenerateLevel.cs" />
+     <Compile Include="Assets\_Scripts\GameController\IGameInstance.cs" />
+     <Compile Include="Assets\_Scripts\GameController\InputControls.cs" />
+     <Compile Include="Assets\_Scripts\GameController\MultiPlayerGame.cs" />
+     <Compile Include="Assets\_Scripts\GameController\SinglePlayerGame.cs" />
+     <Compile Include="Assets\_Scripts\GameController\SoloGenerator.cs" />
+     <Compile Include="Assets\_Scripts\GameController\SuperManager.cs" />
+     <Compile Include="Assets\_Scripts\GameController\UnityEventManager.cs" />
+     <Compile Include="Assets\_Scripts\GameSetupManager.cs" />
+     <Compile Include="Assets\_Scripts\IAttachable.cs" />
+     <Compile Include="Assets\_Scripts\IUIState.cs" />
+     <Compile Include="Assets\_Scripts\LevelSettings.cs" />
+     <Compile Include="Assets\_Scripts\LightController.cs" />
+     <Compile Include="Assets\_Scripts\MenuScreenController.cs" />
+     <Compile Include="Assets\_Scripts\MoM&apos;s\DaughterController.cs" />
+     <Compile Include="Assets\_Scripts\MoM&apos;s\EnemyMoMController.cs" />
+     <Compile Include="Assets\_Scripts\MoM&apos;s\MoMController.cs" />
+     <Compile Include="Assets\_Scripts\MoM&apos;s\PlayerMomController.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\DumbFuckingScript.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\Interact.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\MouseLook.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkTestSpawner.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGUI.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGameController.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\TestLobbyHook.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\walker.cs" />
+     <Compile Include="Assets\_Scripts\Networking\CustomNetManager.cs" />
+     <Compile Include="Assets\_Scripts\Networking\GatherLobbyHook.cs" />
+     <Compile Include="Assets\_Scripts\PanelController.cs" />
+     <Compile Include="Assets\_Scripts\PitController.cs" />
+     <Compile Include="Assets\_Scripts\SarlacController.cs" />
+     <Compile Include="Assets\_Scripts\SyncListVector3.cs" />
+     <Compile Include="Assets\_Scripts\Unit_Base.cs" />
      <None Include="Assets\ProCore\ProBuilder\Shader\pb_TransparentOverlay.shader" />
      <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
      <None Include="Assets\ProCore\ProBuilder\Shader\StandardVC.shader" />
@@ -143,20 +164,24 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderCore-Unity5">
- <HintPath>C:/Users/Tubocass/Projects/NNGather/Gathering Swarm/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
+ <HintPath>C:/Users/Tubocass/Projects/NNGather/HiveMind/Assets/ProCore/ProBuilder/Classes/ProBuilderCore-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderMeshOps-Unity5">
- <HintPath>C:/Users/Tubocass/Projects/NNGather/Gathering Swarm/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+ <HintPath>C:/Users/Tubocass/Projects/NNGather/HiveMind/Assets/ProCore/ProBuilder/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="KDTree">
- <HintPath>C:/Users/Tubocass/Projects/NNGather/Gathering Swarm/Assets/ProCore/ProBuilder/Classes/ClassesLib/KDTree.dll</HintPath>
+ <HintPath>C:/Users/Tubocass/Projects/NNGather/HiveMind/Assets/ProCore/ProBuilder/Classes/ClassesLib/KDTree.dll</HintPath>
  </Reference>
  <Reference Include="pb_Stl">
- <HintPath>C:/Users/Tubocass/Projects/NNGather/Gathering Swarm/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
+ <HintPath>C:/Users/Tubocass/Projects/NNGather/HiveMind/Assets/ProCore/ProBuilder/Classes/ClassesLib/pb_Stl.dll</HintPath>
  </Reference>
  <Reference Include="Triangle">
- <HintPath>C:/Users/Tubocass/Projects/NNGather/Gathering Swarm/Assets/ProCore/ProBuilder/Classes/ClassesLib/Triangle.dll</HintPath>
+ <HintPath>C:/Users/Tubocass/Projects/NNGather/HiveMind/Assets/ProCore/ProBuilder/Classes/ClassesLib/Triangle.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{7925F9D2-9983-8CF9-E989-4CD00BBF3050}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 public class GenerateLevel : NetworkBehaviour 
 {
 	public static float xx, zz;
+	public LayerMask envMask, unitMask;
 	public int pits = 3, spClusterDist = 20, nightPlants = 5, nightPlantRadius = 15, nightPlantClusterDist = 5;
 	[Space(10)]
 
@@ -27,6 +29,7 @@ public class GenerateLevel : NetworkBehaviour
 	Vector3 height = new Vector3(0,0.5f,0);
 	[SyncVar]int MoMCount, botCount, spCount, moms;
 	public delegate GameObject SpawnFunction(Vector3 v);
+	float xd, zd;
 
 	public void LoadLevelSettings(int numBots, int sarlacPits, int plantsPerPit)
 	{
@@ -44,8 +47,10 @@ public class GenerateLevel : NetworkBehaviour
 		ground.SetActive(true);
 		NetworkServer.Spawn(ground);
 		groundSize = ground.GetComponent<MeshRenderer>().bounds.extents;
-		xx = groundSize.x - groundSize.x/8;
-		zz = groundSize.z - groundSize.z/8;
+		xx = groundSize.x - groundSize.x/20;
+		zz = groundSize.z - groundSize.z/20;
+		xd=xx;
+		zd=zz;
 	}
 	public void Generate() 
 	{
@@ -55,7 +60,7 @@ public class GenerateLevel : NetworkBehaviour
 		//MoMs = new GameObject[moms];
 		spawnPoints = new GameObject[moms];
 		//NetworkStartPoints
-		SpawnObjects(moms, xx, momsDistance, Vector3.zero, spawnPoints, SpawnStartPositions);
+		SpawnObjects(moms, xx, momsDistance, Vector3.zero, spawnPoints, SpawnStartPositions, unitMask);
 
 		for(int i = 0; i<playerMoMs.Length; i++)
 		{
@@ -73,7 +78,7 @@ public class GenerateLevel : NetworkBehaviour
 		SarlacDude.SetActive(false);
 	
 		//Sarlac Pits
-		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit);
+		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit, envMask);
 
 		//Day Plants
 		//SpawnObjects(dayScars, xx, dayPlantPitDistance, Vector3.zero, Pits, SpawnDayPlants); //need to make them separate from Sarlac pits
@@ -137,7 +142,7 @@ public class GenerateLevel : NetworkBehaviour
 			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
 			obj.GetComponent<LineRenderer>().SetPosition(2, position);
 			return obj; 
-		});
+		},envMask);
 		//SpawnObjects(NightPlantFab, nightPlants, nightPlantRadius, nightPlantClusterDist, position);
 //		for(int i = 0; i<nightPlants; i++)
 //		{
@@ -149,7 +154,7 @@ public class GenerateLevel : NetworkBehaviour
 //			plantObjs[i].GetComponent<LineRenderer>().SetPosition(2, position);
 //		}
 		if(g>0)
-		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position);
+		SpawnObjects(GlowFab, g, 15, nightPlantClusterDist, position, envMask);
 		return newPit;
 	}
 	GameObject SpawnDayPlants(Vector3 position)
@@ -159,22 +164,22 @@ public class GenerateLevel : NetworkBehaviour
 		GameObject scar = Instantiate(ScarFab, position, rand)as GameObject;
 	
 		//plants = UnityEngine.Random.Range(3,7);// number of plants
-		SpawnObjects(DayPlantFab, 2, nightPlantRadius, nightPlantClusterDist, position);
+		SpawnObjects(DayPlantFab, 2, nightPlantRadius, nightPlantClusterDist, position, envMask);
 
 		return scar;
 	}
 
-	public static void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position)
+	public static void SpawnObjects(GameObject fab, int amount, float radius, float clusterDist, Vector3 position, LayerMask mask)
 	{
 		GameObject[] objs = new GameObject[amount]; 
 		SpawnObjects(amount, radius, clusterDist, position, objs, (Vector3 pos)=>
 		{
 			GameObject obj = Instantiate(fab, pos, Quaternion.identity)as GameObject;
 			return obj; 
-		});
+		},mask);
 	}
 	[Server]
-	public static void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create)//, LayerMask mask
+	public static void SpawnObjects(int amount, float radius, float clusterDist, Vector3 position, GameObject[] objs, SpawnFunction create, LayerMask mask)
 	{
 		//GameObject[] objs = new GameObject[amount]; 
 		float clusterDistSqrd = clusterDist*clusterDist;
@@ -185,39 +190,57 @@ public class GenerateLevel : NetworkBehaviour
 
 		do{
 			Vector3 spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0f, UnityEngine.Random.Range(-radius,radius)+position.z);
-			Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
-			Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
+			spawnPoint.x = Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
+			spawnPoint.z = Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
 			Vector3 nearestLoc;
 
-			if(objs[0] == null)
+			if(!Physics.CheckSphere(spawnPoint, 2, mask))
 			{
-				objs[created] = create(spawnPoint);
-				NetworkServer.Spawn(objs[created]);
-				created++;
-			}else
-			{
-				nearestLoc = NearestTarget(objs, spawnPoint);
-				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
+				if(objs[0] == null)
 				{
 					objs[created] = create(spawnPoint);
 					NetworkServer.Spawn(objs[created]);
 					created++;
 				}else
 				{
-					do{
-						spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0f, UnityEngine.Random.Range(-radius,radius)+position.z);
-						Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
-						Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
-						nearestLoc = NearestTarget(objs, spawnPoint);
-						if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
-						{
-							objs[created] = create(spawnPoint);
-							NetworkServer.Spawn(objs[created]);
-							created++;
-						}
-					}while((nearestLoc-spawnPoint).sqrMagnitude<clusterDistSqrd);
+					nearestLoc = NearestTarget(objs, spawnPoint);
+					if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
+					{
+						objs[created] = create(spawnPoint);
+						NetworkServer.Spawn(objs[created]);
+						created++;
+					}
 				}
-			}
+			}else Debug.Log(spawnPoint.ToString()+", "+ mask.value);
+//			if(objs[0] == null)
+//			{
+//				objs[created] = create(spawnPoint);
+//				NetworkServer.Spawn(objs[created]);
+//				created++;
+//			}else
+//			{
+//				nearestLoc = NearestTarget(objs, spawnPoint);
+//				if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
+//				{
+//					objs[created] = create(spawnPoint);
+//					NetworkServer.Spawn(objs[created]);
+//					created++;
+//				}else
+//				{
+//					do{
+//						spawnPoint = new Vector3(UnityEngine.Random.Range(-radius,radius)+position.x, 0f, UnityEngine.Random.Range(-radius,radius)+position.z);
+//						Mathf.Clamp(spawnPoint.x, -GenerateLevel.xx, GenerateLevel.xx);
+//						Mathf.Clamp(spawnPoint.z, -GenerateLevel.zz, GenerateLevel.zz);
+//						nearestLoc = NearestTarget(objs, spawnPoint);
+//						if((nearestLoc-spawnPoint).sqrMagnitude>clusterDistSqrd)
+//						{
+//							objs[created] = create(spawnPoint);
+//							NetworkServer.Spawn(objs[created]);
+//							created++;
+//						}
+//					}while((nearestLoc-spawnPoint).sqrMagnitude<clusterDistSqrd);
+//				}
+//			}
 		}while(created<amount);
 	}
 

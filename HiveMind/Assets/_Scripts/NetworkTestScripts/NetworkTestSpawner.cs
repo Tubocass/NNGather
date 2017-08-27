@@ -19,10 +19,11 @@ public class NetworkTestSpawner : NetworkBehaviour
 
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
+		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn, LayerMask.NameToLayer("Food"));
 		for(int i = 0; i<amount; i++)
 		{
-			foodPile[i] = (GameObject)Instantiate(foodObj, transform.position+CreateSpawnPoint(3), Quaternion.identity);
-			NetworkServer.Spawn(foodPile[i]);
+			//foodPile[i] = (GameObject)Instantiate(foodObj, transform.position+CreateSpawnPoint(3), Quaternion.identity);
+			//NetworkServer.Spawn(foodPile[i]);
 			spawnPoints[i] = foodPile[i].transform.position;
 			foodPile[i].GetComponent<FoodObject>().SetLine(0,foodPile[i].transform.position);
 			foodPile[i].GetComponent<FoodObject>().SetLine(1,transform.position);
@@ -30,7 +31,12 @@ public class NetworkTestSpawner : NetworkBehaviour
 		}
 		StartCoroutine(SpawnFood());
 	}
-
+	GameObject InitialSpawn(Vector3 position)
+	{
+		GameObject food = Instantiate(foodObj, position + new Vector3(0,.5f,0), Quaternion.identity) as GameObject;
+		//food.SetActive(false);
+		return food;
+	}
 	Vector3 CreateSpawnPoint(float radius)
 	{
 		Vector2 point = Random.insideUnitCircle;

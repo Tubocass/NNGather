@@ -61,7 +61,7 @@ public class FoodSpawner : NetworkBehaviour
 
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
-		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn);
+		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn, LayerMask.NameToLayer("Food"));
 		for(int i = 0; i<amount; i++)
 		{
 			spawnPoints[i] = foodPile[i].transform.position;
