@@ -80,54 +80,11 @@ public class FighterController : DroneController
 		}
 	}
 
-	protected override IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				if(currntPoint<points-1)
-				{
-					currntPoint +=1;
-					currentVector = Path[currntPoint];
-					agent.SetDestination(currentVector);
-				}else bMoving = false;
-			}else
-			{
-				yield return new WaitForSeconds(1f);
-				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
-			}
-		}
-	}
-//
-//	IEnumerator LookForEnemies()
-//	{
-//		while(true)
-//		{
-//			RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-//			if(hits.Length>0)
-//			{
-//				foreach(RaycastHit f in hits)
-//				{
-//					if(f.collider.tag == "Drone"||f.collider.tag == "Sarlac"||f.collider.tag == "MoM")
-//					{
-//						Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-//						if(ot!=null && ot.teamID!=teamID && !enemies.Contains(ot))
-//						{
-//							enemies.Add(ot);
-//						}
-//					}
-//				}
-//			}
-//			yield return new WaitForSeconds(2f);
-//		}
-//	}
 	Unit_Base TargetNearest()
 	{
 		float nearestEnemyDist, newDist;
 		Unit_Base enemy = null;
 		enemies.Clear();
-		//RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
 		Collider[] cols = Physics.OverlapSphere(tran.position,sightRange,mask);
 
 		if(cols.Length>0)
@@ -175,7 +132,7 @@ public class FighterController : DroneController
 						nearestEnemyDist = newDist;
 						enemy = enemiesCopy[f];
 					}
-				}//else enemies.Remove(enemiesCopy[f]);
+				}
 			}
 		}
 		return enemy;

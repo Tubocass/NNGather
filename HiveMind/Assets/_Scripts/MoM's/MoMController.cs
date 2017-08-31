@@ -99,8 +99,6 @@ public class MoMController : Unit_Base
 	protected override void Death ()
 	{
 		base.Death ();
-		farmFlag.SetActive(false);
-		fightFlag.SetActive(false);
 		Foods.Clear();
 		newQueen();
 		if(GameController.instance.TeamSize[teamID]==0)
@@ -354,10 +352,9 @@ public class MoMController : Unit_Base
 		{
 			foodQ.Dequeue();
 			foodQ.Enqueue(loc);
-			Debug.Log("newness");
 		}else {
 			qCount+=1;
-			foodQ.Enqueue(loc);//Debug.Log("newness");
+			foodQ.Enqueue(loc);
 		}
 		FoodAmount = 1;
 	}
@@ -378,7 +375,6 @@ public class MoMController : Unit_Base
 	[Server]
 	void MoveToCenter()
 	{
-		//Debug.Log("Updating");
 		float xx = Location.x, zz = Location.z;
 		int size = 1;
 		for(int i = foodQ.Count; i>0;i--)
@@ -395,7 +391,6 @@ public class MoMController : Unit_Base
 		newLoc = new Vector3(xx /size, 1f ,zz /size);
 		if(Vector3.Distance( transform.position, newLoc)>4)
 		{
-			Debug.Log("I'm gonna move");
 			MoveTo(newLoc);
 		}
 	}

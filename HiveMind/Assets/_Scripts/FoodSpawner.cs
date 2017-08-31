@@ -87,7 +87,7 @@ public class FoodSpawner : NetworkBehaviour
 			{
 				if(!foodPile[i].gameObject.activeSelf)
 				{
-					foodPile[i].GetComponent<FoodObject>().RpcReset(spawnPoints[i]);
+					foodPile[i].GetComponent<FoodObject>().Reset(spawnPoints[i]);
 					if(bSpawnTime)
 					{
 						yield return new WaitForSeconds(3f);

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class DaughterController : MoMController 
 {
 	[SerializeField] protected float orbit = 15, delayStart = 15f;
-	bool bInBloom = true;
 
 	protected override void OnEnable () 
 	{
@@ -13,7 +12,6 @@ public class DaughterController : MoMController
 		base.OnEnable();
 		farmers = 0;
 		fighters = 0;
-		bInBloom = true;
 	}
 	protected override void Start()
 	{

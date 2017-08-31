@@ -43,10 +43,15 @@ public class PlayerMomController : MoMController
 
 	protected override void Death ()
 	{
+		farmFlag.SetActive(false);
+		fightFlag.SetActive(false);
+
 		bool bContinue = false;
 		if(daughters>0)
-		bContinue = true;
+		{
+			bContinue = true;
 
+		}
 		base.Death();
 		if(bContinue)
 		{

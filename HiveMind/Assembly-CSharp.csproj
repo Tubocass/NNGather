@@ -82,16 +82,10 @@
      <Compile Include="Assets\_Scripts\GameController\GUIController.cs" />
      <Compile Include="Assets\_Scripts\GameController\GameController.cs" />
      <Compile Include="Assets\_Scripts\GameController\GenerateLevel.cs" />
-     <Compile Include="Assets\_Scripts\GameController\IGameInstance.cs" />
      <Compile Include="Assets\_Scripts\GameController\InputControls.cs" />
-     <Compile Include="Assets\_Scripts\GameController\MultiPlayerGame.cs" />
-     <Compile Include="Assets\_Scripts\GameController\SinglePlayerGame.cs" />
-     <Compile Include="Assets\_Scripts\GameController\SoloGenerator.cs" />
-     <Compile Include="Assets\_Scripts\GameController\SuperManager.cs" />
      <Compile Include="Assets\_Scripts\GameController\UnityEventManager.cs" />
      <Compile Include="Assets\_Scripts\GameSetupManager.cs" />
      <Compile Include="Assets\_Scripts\IAttachable.cs" />
-     <Compile Include="Assets\_Scripts\IUIState.cs" />
      <Compile Include="Assets\_Scripts\LevelSettings.cs" />
      <Compile Include="Assets\_Scripts\LightController.cs" />
      <Compile Include="Assets\_Scripts\MenuScreenController.cs" />
@@ -108,7 +102,6 @@
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGameController.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestLobbyHook.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\walker.cs" />
-     <Compile Include="Assets\_Scripts\Networking\CustomNetManager.cs" />
      <Compile Include="Assets\_Scripts\Networking\GatherLobbyHook.cs" />
      <Compile Include="Assets\_Scripts\PanelController.cs" />
      <Compile Include="Assets\_Scripts\PitController.cs" />

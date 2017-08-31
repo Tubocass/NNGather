@@ -6,10 +6,8 @@ public class EnemyMoMController : MoMController
 {
 	float timer = 0f;
 
-
 	protected override void OnEnable () 
 	{
-		//base.Start();
 		base.OnEnable();
 		//if(isServer)
 		//StartCoroutine(SpawnTimer());

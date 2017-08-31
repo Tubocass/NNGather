@@ -18,7 +18,7 @@ public class InputControls :  NetworkBehaviour
 	public void SetCamera(CameraFollow cam)
 	{
 		camFollow = cam;
-		camFollow.SetTarget(transform);//make sure this script is attached to player
+		camFollow.SetTarget(transform);
 	}
 
 	void Update () 

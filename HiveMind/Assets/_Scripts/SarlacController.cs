@@ -7,8 +7,6 @@ public class SarlacController : DroneController
 	[SerializeField] float attackStrength;
 	public Vector3 anchor;
 	[SerializeField] int maxEaten;
-	//[SerializeField] protected float orbit = 25;
-	//float sqrDist = 20f*20f;
 	Unit_Base targetEnemy;
 	GameObject[] enemiesCarried;
 	[SerializeField]int numCarried, maxCarry;
@@ -31,13 +29,13 @@ public class SarlacController : DroneController
 		enemiesCarried = new GameObject[maxCarry];
 		mask = 1<<LayerMask.NameToLayer("Units");
 		canAttack=false;
-		StartCoroutine(Idle());
 		StartCoroutine(AttackCooldown());
 		bDay = GameController.instance.IsDayLight();
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 	}
-	protected virtual void OnDisable()
+	protected override void OnDisable()
 	{
+		base.OnDisable();
 		UnityEventManager.StopListeningBool("DayTime", DaySwitch);
 	}
 
@@ -49,59 +47,13 @@ public class SarlacController : DroneController
 			targetEnemy = null;
 			ArrivedAtTargetLocation();
 		}
-		// (enemies[enemies.FindIndex(e=> e.unitID == id)]);
 	}
 	public override void TakeDamage(float damage)
 	{
 		eaten++;
 		targetEnemy = TargetNearest();
 	}
-//	protected override IEnumerator Idle()
-//	{
-//		while(true)
-//		{
-//			if(!bMoving)
-//			{
-//				ArrivedAtTargetLocation();
-//			}
-//			yield return new WaitForSeconds(1);
-//		}
-//	}
-	protected override IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				if(currntPoint<points-1)
-				{
-					currntPoint +=1;
-					currentVector = Path[currntPoint];
-					agent.SetDestination(currentVector);
-				}else bMoving = false;
-				//Debug.Log("I arrived");
-				//controller.ArrivedAtTargetLocation(); //Apparently this is causing a huge buffer oveload
-			}else
-			{
-				//if(bReturning) ReturnToHome();
-				//else 
-				if(IsTargetingEnemy()) MoveTo(targetEnemy.Location);
-			}
-			yield return new WaitForSeconds(0.5f);
-		}
-	}
-//	protected override void MoveRandomly()
-//	{
-////		Vector3 rVector = RandomVector(anchor, orbit);
-////		MoveTo(rVector);
-//
-//		UnityEngine.AI.NavMeshPath rVector = RandomPath(anchor, orbit);
-//		if(rVector.status!=UnityEngine.AI.NavMeshPathStatus.PathPartial)
-//		{
-//			agent.SetPath(rVector);
-//			agent.isStopped = false;
-//		}
-//	}
+
 	protected void DaySwitch(bool b)
 	{
 		//base.DaySwitch(b);
@@ -117,7 +69,6 @@ public class SarlacController : DroneController
 	}
 	protected override void ArrivedAtTargetLocation()
 	{
-		//base.ArrivedAtTargetLocation();
 		if(!isServer)
 		return;
 
@@ -186,46 +137,6 @@ public class SarlacController : DroneController
 	}
 	Unit_Base TargetNearest()
 	{
-//		float nearestEnemyDist, newDist;
-//		Unit_Base enemy = null;
-//		enemies.RemoveAll(e=> !e.isActive);
-//		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
-//
-//		RaycastHit[] hits = Physics.SphereCastAll(Location,20,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-//		if(hits.Length>0)
-//		{
-//			foreach(RaycastHit f in hits)
-//			{
-//				if(f.collider.tag == "Drone")
-//				{
-//					Unit_Base ot = f.collider.GetComponent<Unit_Base>();
-//					if(ot!=null && !enemies.Contains(ot))
-//					{
-//						enemies.Add(ot);
-//					}
-//				}
-//			}
-//		}
-//
-//		enemiesCopy = enemies.FindAll(e=> e.isActive && (e.Location-Location).sqrMagnitude<sqrDist);
-//		if(enemiesCopy.Count>0)
-//		{
-//			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-//			foreach(Unit_Base unit in enemiesCopy)
-//			{
-//				if(unit.isActive)
-//				{
-//					newDist = (unit.Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
-//					if(newDist <= nearestEnemyDist)
-//					{
-//						nearestEnemyDist = newDist;
-//						enemy = unit;
-//					}
-//				}else enemies.Remove(unit);
-//			}
-//		}
-//		return enemy;
-
 		Collider[] cols = Physics.OverlapSphere(transform.position,sightRange,mask,QueryTriggerInteraction.Ignore);
 		float nearestDist, newDist;
 		Collider temp = new Collider();
@@ -246,7 +157,7 @@ public class SarlacController : DroneController
 					}
 				}
 			}
-			if(temp!=null) //&& !Physics.Raycast(Muzzle.position,temp.transform.position-Muzzle.position,sightRange,levelMask))
+			if(temp!=null)
 			target = temp.GetComponent<Unit_Base>();
 		}
 		return target;
@@ -256,8 +167,6 @@ public class SarlacController : DroneController
 	{
 		spark.Play();
 		target.Health = -attackStrength;
-		//eaten++;
-		//Health = -2;
 		canAttack = false;
 		if(this.isActive)
 		StartCoroutine(AttackCooldown());

@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\Todo\TodoList.cs">
+    <Files>
+      <File FileName="Assets\_Scripts\MoM's\MoMController.cs" Line="101" Column="17" />
+      <File FileName="Assets\_Scripts\MoM's\PlayerMomController.cs" Line="44" Column="34" />
+      <File FileName="Assets\_Scripts\GameController\GenerateLevel.cs" Line="115" Column="57" />
+      <File FileName="Assets\_Scripts\MoM's\DaughterController.cs" Line="8" Column="2" />
+      <File FileName="Assets\Editor\Todo\TodoList.cs" Line="32" Column="41" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

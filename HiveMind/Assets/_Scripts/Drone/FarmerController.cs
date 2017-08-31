@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class FarmerController : DroneController, IAttachable 
+public class FarmerController : DroneController 
 {
 	/*public IBehaviour BState 
 	{
@@ -63,25 +63,25 @@ public class FarmerController : DroneController, IAttachable
 		}
 	}
 
-	protected override IEnumerator MovingTo()
-	{
-		while(bMoving)
-		{
-			if(agent.remainingDistance<1)
-			{
-				if(currntPoint<points-1)
-				{
-					currntPoint +=1;
-					currentVector = Path[currntPoint];
-					agent.SetDestination(currentVector);
-				}else bMoving = false;
-			}else{
-				if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>2) 
-				ReturnToHome();
-			}
-			yield return new WaitForSeconds(0.5f);
-		}
-	}
+//	protected override IEnumerator MovingTo()
+//	{
+//		while(bMoving)
+//		{
+//			if(agent.remainingDistance<1)
+//			{
+//				if(currntPoint<points-1)
+//				{
+//					currntPoint +=1;
+//					currentVector = Path[currntPoint];
+//					agent.SetDestination(currentVector);
+//				}else bMoving = false;
+//			}else{
+//				if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>2) 
+//				ReturnToHome();
+//			}
+//			yield return new WaitForSeconds(0.5f);
+//		}
+//	}
 
 
 	protected void ReturnToHome()
@@ -153,7 +153,7 @@ public class FarmerController : DroneController, IAttachable
 
 	bool CanTargetFood()
 	{
-		if(!IsTargetingFood() && !IsCarryingFood() && !bInDanger)
+		if(!IsTargetingFood() && !IsCarryingFood())
 		return true;
 		else return false;
 	}

@@ -129,22 +129,13 @@ public class GameController :  NetworkBehaviour
 
 	}
 
-	public void RegisterPlayer()
-	{
-		check++;
-		if(check.Equals(NetworkLobbyManager.singleton.numPlayers))
-		{
-			StartNewGame();
-		}
-	}
 	public void CompleteSetup(int[] array)
 	{
 		bSinglePlayer = true;
 		SceneManager.LoadSceneAsync("Main");
 		levelGen.LoadLevelSettings(array[0],array[1],array[2]);
-		//StartNewGame();
-		//NetworkManager.singleton.StartHost();
 	}
+
 	[Server]
 	public void StartNewGame()
 	{
@@ -167,7 +158,6 @@ public class GameController :  NetworkBehaviour
 		{
 			TeamSize.Add(0);
 		}
-		//levelGen.Init();
 		levelGen.PassInPlayers(Players);
 		levelGen.Generate();
 		hasGameStarted = true;
