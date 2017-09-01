@@ -13,6 +13,7 @@ public class GenerateLevel : NetworkBehaviour
 	public int bots = 2, momsDistance = 20;
 	[Space(10)]
 	Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+	bool[] availableColors;
 	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
 	[Space(5)]
 	public static GameObject[] Pits;
@@ -34,6 +35,29 @@ public class GenerateLevel : NetworkBehaviour
 	public void PassInPlayers(PlayerMomController[] Players)
 	{
 		playerMoMs = Players;
+		for(int c = 0; c<playerMoMs.Length; c++)
+		{
+			for(int a = 0; a<availableColors.Length; a++)
+			{
+				if(playerMoMs[c].TeamColor.Equals(Colors[a]))
+				{
+					availableColors[a] = false;
+					break;
+				}
+			}
+		}
+	}
+	Color SelectColor()
+	{
+		for(int c = 0; c<availableColors.Length; c++)
+		{
+			if(availableColors[c])
+			{
+				availableColors[c] = false;
+				return Colors[c];
+			}
+		}
+		return Color.white;
 	}
 	public void Init() 
 	{
@@ -45,6 +69,11 @@ public class GenerateLevel : NetworkBehaviour
 		zz = groundSize.z - groundSize.z/20;
 		xd=xx;
 		zd=zz;
+		availableColors = new bool[Colors.Length];
+		for(int c = 0; c<availableColors.Length; c++)
+		{
+			availableColors[c] = true;
+		}
 	}
 	public void Generate() 
 	{
@@ -86,7 +115,7 @@ public class GenerateLevel : NetworkBehaviour
 		MoMController mom;
 		newMoM = Instantiate(EnemyMoMFab, height, Quaternion.identity)as GameObject;
 		mom = newMoM.GetComponent<MoMController>();
-		mom.TeamColor = Colors[MoMCount];
+		mom.TeamColor = SelectColor();
 		mom.teamID = MoMCount;
 		SetMoMObj(mom);
 		NetworkServer.Spawn(newMoM);
