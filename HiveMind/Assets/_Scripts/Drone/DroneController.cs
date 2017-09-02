@@ -28,6 +28,9 @@ public class DroneController : Unit_Base
 	}
 	void Update()
 	{
+		if(!isServer)
+		return;
+
 		if(agent.remainingDistance<1)
 		{
 			ArrivedAtTargetLocation();

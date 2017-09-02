@@ -26,6 +26,16 @@ public class TestGameController :  NetworkBehaviour
 			return gameControl;
 		}
 	}
+
+	void OnEnable()
+	{
+		DontDestroyOnLoad(this.gameObject);
+		UnityEventManager.StartListening("StartGame",StartGame);
+	}
+	void OnDisable()
+	{
+		UnityEventManager.StopListening("StartGame",StartGame);
+	}
 	public float TeamSizePercent(int t)
 	{
 		float totalPop =0;
@@ -35,16 +45,18 @@ public class TestGameController :  NetworkBehaviour
 		}
 		return Count[t]/totalPop*100;
 	}
-	void Start()
+	[Server]
+	void StartGame()
 	{
-		if(isServer)
+		numPlayers++;
+		if(numPlayers<NetworkLobbyManager.singleton.numPlayers)
 		{
-			Players = GameObject.FindObjectsOfType<Interact>();
-			numPlayers = Players.Length;
-			for(int t = 0;t<numPlayers;t++)
-			{
-				Count.Add(1);
-			}
+			return;
+		}
+		Players = GameObject.FindObjectsOfType<Interact>();
+		for(int t = 0;t<numPlayers;t++)
+		{
+			Count.Add(1);
 		}
 	}
 }

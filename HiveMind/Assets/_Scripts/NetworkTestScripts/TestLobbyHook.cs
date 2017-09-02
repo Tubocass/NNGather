@@ -13,6 +13,9 @@ public class TestLobbyHook : LobbyHook
 
         player.name = lobby.name;
         player.teamColor = lobby.playerColor;
+        player.teamNumber = playerCount;
+        playerCount++;
+		UnityEventManager.TriggerEvent("StartGame");
 		//GameController.instance.RegisterPlayer(gamePlayer);
     }
 }

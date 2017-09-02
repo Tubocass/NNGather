@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class GenerateLevel : NetworkBehaviour 
 {
-	public static float xx, zz;
+	public static float xx=80, zz=80;
 	public LayerMask envMask, unitMask;
 	public int pits = 3, spClusterDist = 20, nightPlants = 5, nightPlantRadius = 15, nightPlantClusterDist = 5;
 	[Space(10)]
