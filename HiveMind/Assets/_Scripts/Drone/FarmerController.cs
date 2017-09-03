@@ -84,13 +84,18 @@ public class FarmerController : DroneController
 //	}
 
 
-	protected void ReturnToHome()
+	protected IEnumerator ReturnToHome()
 	{
 		if(isServer)
 		{
 			bReturning = true;
-			MoveTo(myMoM.Location);
+			while(bReturning && myMoM!=null)
+			{
+				MoveTo(myMoM.Location);
+				yield return new WaitForSeconds(1f);
+			}
 		}
+		yield return null;
 	}
 
 	protected override void TargetLost(int id)
@@ -108,7 +113,7 @@ public class FarmerController : DroneController
 		{
 			if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
 			{
-				ReturnToHome();
+				StartCoroutine(ReturnToHome());
 			}
 			if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
 			{
@@ -218,7 +223,7 @@ public class FarmerController : DroneController
 					carriedFood = ot;
 					ot.Attach(this.gameObject,nose);
 					foodLoc = ot.Location;
-					ReturnToHome();
+					StartCoroutine(ReturnToHome());
 				}
 			}
 		}

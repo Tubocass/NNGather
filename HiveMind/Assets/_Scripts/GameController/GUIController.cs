@@ -50,7 +50,7 @@ public class GUIController : MonoBehaviour
 		{
 			SetFood(mainMoMControl.FoodAmount);
 			SetHealth((int)mainMoMControl.Health);
-			SetTeams(GameController.instance.numPlayers);
+			SetTeams(GameController.instance.TeamSize.Count);
 			StartCoroutine(UpdateInfo());
 		}
 	}
@@ -78,7 +78,7 @@ public class GUIController : MonoBehaviour
 
 	IEnumerator UpdateInfo()
 	{
-		while(GameController.instance.hasGameStarted)
+		while(mainMoMControl!=null)
 		{
 			if(mainMoMControl!= null && GameController.instance!=null && GameController.instance.TeamSize.Count>0)
 			{

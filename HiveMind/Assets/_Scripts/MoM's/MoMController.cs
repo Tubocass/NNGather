@@ -315,11 +315,12 @@ public class MoMController : Unit_Base
 
 	public virtual void PlaceFarmFlag(Vector3 location)
 	{
-		farmFlag.SetActive(true);
-		farmFlagTran.position = location;
-		//farmFlagFab.GetComponent<ParticleSystem>().Play();
+//		farmFlag.SetActive(true);
+//		farmFlagTran.position = location;
+//		//farmFlagFab.GetComponent<ParticleSystem>().Play();
 		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
-		activeFarmFlag = true;
+
+//		activeFarmFlag = true;
 	}
 	public virtual void RecallFarmFlag()
 	{

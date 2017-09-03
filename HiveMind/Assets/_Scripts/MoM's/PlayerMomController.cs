@@ -12,33 +12,25 @@ public class PlayerMomController : MoMController
 
 	void Awake()
 	{
-		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
-		mainCam.transform.Rotate(90,0,0);
-		GetComponent<InputControls>().SetCamera(mainCam.GetComponent<CameraFollow>());
-		mainCam.SetActive(false);
-		canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
-		GUI = canvas.GetComponent<GUIController>();
-		GUI.mainMoMControl = this;
-		canvas.SetActive(false);
 		farmFlag = Instantiate(farmFlagFab) as GameObject; 
 		fightFlag = Instantiate(fightFlagFab) as GameObject;
 		farmFlagTran = farmFlag.GetComponent<Transform>();
 		fightFlagTran = fightFlag.GetComponent<Transform>();
 	}
 
-	public void PlayerSetup()
+	public override void OnStartLocalPlayer()
 	{
-		mainCam.SetActive(true);
-		canvas.SetActive(true);
-		UnityEventManager.TriggerEvent("MainMomChange");//Sets values in GUI
+		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
+		mainCam.transform.Rotate(90,0,0);
+		GetComponent<InputControls>().SetCamera(mainCam.GetComponent<CameraFollow>());
+		canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
+		GUI = canvas.GetComponent<GUIController>();
+		GUI.mainMoMControl = this;
 	}
-	void Update()
+	protected override void Start()
 	{
-		if(isLocalPlayer && GameController.instance.hasGameStarted && !bSetup)
-		{
-			PlayerSetup();
-			bSetup = true;
-		}
+		base.Start();
+		UnityEventManager.TriggerEvent("MainMomChange");//Sets values in GUI
 	}
 
 	protected override void Death ()
@@ -78,11 +70,25 @@ public class PlayerMomController : MoMController
 			CreateDaughter();
 		}
 	}
-	public override void PlaceFarmFlag(Vector3 location)
+	[Command]
+	public void CmdPlaceFarmFlag(Vector3 location)
 	{
 		base.PlaceFarmFlag(location);
-		farmFlag.GetComponent<ParticleSystem>().Play();
+		//farmFlag.GetComponent<ParticleSystem>().Play();
 	}
+	public void PlaceFarmFlag(Vector3 location)
+	{
+		farmFlag.SetActive(true);
+		farmFlagTran.position = location;
+		activeFarmFlag = true;
+		farmFlag.GetComponent<ParticleSystem>().Play();
+		CmdPlaceFarmFlag(location);
+	}
+//	public void PlaceFarmFlag(Vector3 location)
+//	{
+//		base.PlaceFarmFlag(location);
+//		farmFlag.GetComponent<ParticleSystem>().Play();
+//	}
 	public override void RecallFarmFlag()
 	{
 		base.RecallFarmFlag();

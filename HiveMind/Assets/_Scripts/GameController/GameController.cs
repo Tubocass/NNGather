@@ -9,7 +9,7 @@ public class GameController :  NetworkBehaviour
 {
 	public SyncListInt TeamSize = new SyncListInt();
 	[SyncVar]public int numPlayers = 0;
-	[SerializeField] GameObject guiFab, PlayerFab;
+	//[SerializeField] GameObject guiFab, PlayerFab;
 	[SerializeField] float SunSpeed = 2f;
 	[SerializeField] float Timer = 30;
 	[SyncVar]public bool bStartGame, hasGameStarted = false;
@@ -162,7 +162,5 @@ public class GameController :  NetworkBehaviour
 		levelGen.Generate();
 		hasGameStarted = true;
 		SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
-	
-
 	}
 }

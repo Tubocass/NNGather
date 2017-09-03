@@ -60,7 +60,7 @@ public class FighterController : DroneController
 	protected override void ArrivedAtTargetLocation()
 	{
 
-		if(isServer)
+		if(isServer && myMoM!= null)
 		{
 			if(IsTargetingEnemy())
 			{
