@@ -63,27 +63,6 @@ public class FarmerController : DroneController
 		}
 	}
 
-//	protected override IEnumerator MovingTo()
-//	{
-//		while(bMoving)
-//		{
-//			if(agent.remainingDistance<1)
-//			{
-//				if(currntPoint<points-1)
-//				{
-//					currntPoint +=1;
-//					currentVector = Path[currntPoint];
-//					agent.SetDestination(currentVector);
-//				}else bMoving = false;
-//			}else{
-//				if(bReturning&&Vector3.Distance(myMoM.Location,currentVector)>2) 
-//				ReturnToHome();
-//			}
-//			yield return new WaitForSeconds(0.5f);
-//		}
-//	}
-
-
 	protected IEnumerator ReturnToHome()
 	{
 		if(isServer)

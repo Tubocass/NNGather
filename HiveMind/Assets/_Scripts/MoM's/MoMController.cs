@@ -14,10 +14,6 @@ public class MoMController : Unit_Base
 		set
 		{
 			foodAmount+=value; 
-			if(this.GetType()==typeof(PlayerMomController))
-			{
-				//UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
-			}
 		}
 	}
 	public Vector3 FoodAnchor
@@ -36,7 +32,6 @@ public class MoMController : Unit_Base
 			else return Location;
 			}
 	}
-	public Transform SpawnMouth;
 	public List<FoodObject> Foods;
 	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
@@ -45,6 +40,7 @@ public class MoMController : Unit_Base
 	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, hungerTime = 10;
+	Vector3 SpawnMouth{get{return tran.TransformPoint(new Vector3(1f,0,0));}}
 	[SyncVar(hook = "SetFoodUI")][SerializeField] protected int foodAmount;
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
@@ -53,49 +49,41 @@ public class MoMController : Unit_Base
 	Vector3 newLoc;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
+	void Awake()
+	{
+		farmFlag = Instantiate(farmFlagFab) as GameObject; 
+		fightFlag = Instantiate(fightFlagFab) as GameObject;
+		farmFlagTran = farmFlag.GetComponent<Transform>();
+		fightFlagTran = fightFlag.GetComponent<Transform>();
+	}
 	protected override void OnEnable()
 	{
 		base.OnEnable();
-
+		foodAmount = startFood;
 	}
 
-//	public static int GetTeamSize(int teamNum) //function is valid, but I felt like using a static int would be cheaper
-//	{
-//		int myUnits = 0;
-//		List<MoMController> moms = new List<MoMController>();
-//		moms = MoMs.FindAll(d=> d.isActive && d.teamID==teamNum);
-//
-//		if(moms.Count>0)
-//		{
-//			foreach(MoMController d in moms)
-//			{
-//				myUnits += d.farmers + d.fighters + 1;
-//			}
-//		}
-//		return myUnits;
-//	}
+	protected override void Start()
+	{	
+		base.Start();
+		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
+		TeamColorMat.color = TeamColor;
+		if(isServer)
+		{
+			Foods = new List<FoodObject>();
+			if(!MoMs.Contains(this))
+			MoMs.Add(this);
+			StartCoroutine(UpdateLocation());
+			StartCoroutine(Hunger());
+		}
+	}
+
 	public void SetFoodUI(int h)
 	{
 		foodAmount = h;
 		if(isLocalPlayer && this.GetType()==typeof(PlayerMomController))
 		UnityEventManager.TriggerEvent("UpdateFood", foodAmount);
 	}
-	protected virtual void Start()
-	{	
-		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
-		TeamColorMat.color = TeamColor;
 
-		if(isServer)
-		{
-			Foods = new List<FoodObject>();
-			if(!MoMs.Contains(this))
-			MoMs.Add(this);
-			health = startHealth;
-			foodAmount = startFood;
-			StartCoroutine(UpdateLocation());
-			StartCoroutine(Hunger());
-		}
-	}
 	protected override void Death ()
 	{
 		base.Death ();
@@ -212,7 +200,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateFarmer()
 	{
-		GameObject spawn = Instantiate(farmerFab, SpawnMouth.position, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(farmerFab, SpawnMouth, FaceForward()) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject, TeamColor);
@@ -221,7 +209,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateFighter()
 	{
-		GameObject spawn = Instantiate(fighterFab,SpawnMouth.position, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(fighterFab,SpawnMouth, FaceForward()) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject, TeamColor);
@@ -230,7 +218,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateDaughter()
 	{
-		GameObject spawn = Instantiate(daughterFab, SpawnMouth.position, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(daughterFab, SpawnMouth, FaceForward()) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		NetworkServer.Spawn(spawn);
 		dc.RpcSetMoM(this.gameObject, TeamColor);
@@ -238,7 +226,7 @@ public class MoMController : Unit_Base
 	}
 	protected Quaternion FaceForward()
 	{
-		return Quaternion.LookRotation(SpawnMouth.position - transform.position);
+		return Quaternion.LookRotation(SpawnMouth - transform.position);
 	}
 
 	public virtual void CedeDrones(MoMController newMoM)
@@ -301,11 +289,6 @@ public class MoMController : Unit_Base
 					princesses[p].CedeDrones(mom);
 					NetworkServer.Spawn(spawn);
 				}
-//				mom = spawn.GetComponent<MoMController>();
-//				mom.isActive = true;
-//				mom.teamID = teamID;
-//				mom.TeamColor = TeamColor;
-//				mom.GetComponentInChildren<MeshRenderer>().material.color = TeamColor;
 				princesses[p].Kill();
 			}
 		}else{
@@ -315,36 +298,31 @@ public class MoMController : Unit_Base
 
 	public virtual void PlaceFarmFlag(Vector3 location)
 	{
-//		farmFlag.SetActive(true);
-//		farmFlagTran.position = location;
-//		//farmFlagFab.GetComponent<ParticleSystem>().Play();
+		farmFlag.SetActive(true);
+		farmFlagTran.position = location;
+		activeFarmFlag = true;
 		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
-
-//		activeFarmFlag = true;
 	}
 	public virtual void RecallFarmFlag()
 	{
 		farmFlagTran.position = transform.position;
-		//farmFlag.GetComponent<ParticleSystem>().Stop();
 		farmFlag.SetActive(false);
-		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
 		activeFarmFlag = false;
+		UnityEventManager.TriggerEvent("PlaceFarmFlag", unitID);
 	}
 	public virtual void PlaceFightFlag(Vector3 location)
 	{
 		fightFlag.SetActive(true);
 		fightFlagTran.position = location;
-		//fightFlag.GetComponent<ParticleSystem>().Play();
-		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = true;
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 	}
 	public virtual void RecallFightFlag()
 	{
 		fightFlagTran.position = transform.position;
-		//fightFlag.GetComponent<ParticleSystem>().Stop();
 		fightFlag.SetActive(false);
-		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 		activeFightFlag = false;
+		UnityEventManager.TriggerEvent("PlaceFightFlag", unitID);
 	}
 
 	public virtual void AddFoodLocation(Vector3 loc)
@@ -365,11 +343,13 @@ public class MoMController : Unit_Base
 		while(true)
 		{
 			if(foodQ.Count>0)
-			if(myMoM!= null && myMoM.isActive)
 			{
-				AddFoodLocation(myMoM.transform.position);
+				if(myMoM!= null && myMoM.isActive)
+				{
+					AddFoodLocation(myMoM.transform.position);
+				}
+				MoveToCenter();
 			}
-			MoveToCenter();
 			yield return new WaitForSeconds(10);
 		}
 	}

@@ -162,5 +162,6 @@ public class GameController :  NetworkBehaviour
 		levelGen.Generate();
 		hasGameStarted = true;
 		SarlacInstance = levelGen.SarlacDude.GetComponent<SarlacController>();
+		StartCoroutine(Release());
 	}
 }

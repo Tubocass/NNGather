@@ -78,7 +78,6 @@ public class GenerateLevel : NetworkBehaviour
 	public void Generate() 
 	{
 		moms = GameController.instance.numPlayers;
-		Unit_Base.TotalCreated = 0;
 		Pits = new GameObject[pits];
 		spawnPoints = new GameObject[moms];
 		//NetworkStartPoints
@@ -130,6 +129,7 @@ public class GenerateLevel : NetworkBehaviour
 	GameObject SpawnSarlac()
 	{
 		GameObject sarlac = Instantiate(SarlacFab, Vector3.zero,Quaternion.identity) as GameObject;
+		NetworkServer.Spawn(sarlac);
 		return sarlac;
 	}
 	GameObject SpawnSarlacPit(Vector3 position)

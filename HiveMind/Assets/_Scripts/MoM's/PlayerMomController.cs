@@ -10,14 +10,6 @@ public class PlayerMomController : MoMController
 	GUIController GUI;
 	bool bTeamFlag = false, bSetup = false;
 
-	void Awake()
-	{
-		farmFlag = Instantiate(farmFlagFab) as GameObject; 
-		fightFlag = Instantiate(fightFlagFab) as GameObject;
-		farmFlagTran = farmFlag.GetComponent<Transform>();
-		fightFlagTran = fightFlag.GetComponent<Transform>();
-	}
-
 	public override void OnStartLocalPlayer()
 	{
 		mainCam = (GameObject)Instantiate(camFab, transform.position + Vector3.up *30, Quaternion.identity);
@@ -48,7 +40,7 @@ public class PlayerMomController : MoMController
 		if(bContinue)
 		{
 			isActive = true;
-			Start();
+			OnEnable();
 		}
 	}
 
@@ -70,25 +62,21 @@ public class PlayerMomController : MoMController
 			CreateDaughter();
 		}
 	}
-	[Command]
-	public void CmdPlaceFarmFlag(Vector3 location)
-	{
-		base.PlaceFarmFlag(location);
-		//farmFlag.GetComponent<ParticleSystem>().Play();
-	}
-	public void PlaceFarmFlag(Vector3 location)
-	{
+
+	public override void PlaceFarmFlag(Vector3 location)
+	{//called on client from InputController
+		CmdPlaceFarmFlag(location);
 		farmFlag.SetActive(true);
 		farmFlagTran.position = location;
 		activeFarmFlag = true;
 		farmFlag.GetComponent<ParticleSystem>().Play();
-		CmdPlaceFarmFlag(location);
 	}
-//	public void PlaceFarmFlag(Vector3 location)
-//	{
-//		base.PlaceFarmFlag(location);
-//		farmFlag.GetComponent<ParticleSystem>().Play();
-//	}
+	[Command]
+	public void CmdPlaceFarmFlag(Vector3 location)
+	{
+		base.PlaceFarmFlag(location);
+
+	}
 	public override void RecallFarmFlag()
 	{
 		base.RecallFarmFlag();
@@ -96,8 +84,17 @@ public class PlayerMomController : MoMController
 	}
 	public override void PlaceFightFlag(Vector3 location)
 	{
-		base.PlaceFightFlag(location);
+		CmdPlaceFightFlag(location);
+		fightFlag.SetActive(true);
+		fightFlagTran.position = location;
+		activeFightFlag = true;
 		fightFlag.GetComponent<ParticleSystem>().Play();
+	}
+	[Command]
+	public void CmdPlaceFightFlag(Vector3 location)
+	{
+		base.PlaceFightFlag(location);
+
 	}
 	public override void RecallFightFlag()
 	{
