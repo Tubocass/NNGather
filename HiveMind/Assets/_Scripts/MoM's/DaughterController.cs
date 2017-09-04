@@ -4,31 +4,14 @@ using System.Collections.Generic;
 
 public class DaughterController : MoMController 
 {
-	[SerializeField] protected float orbit = 15, delayStart = 15f;
-
-	protected override void OnEnable () 
+	protected override void Start ()
 	{
-		base.Start();
-		base.OnEnable();
-		farmers = 0;
-		fighters = 0;
+		base.Start ();
+		if(isServer)
+		{
+			StartCoroutine(SpawnTimer());
+		}
 	}
-	protected override void Start()
-	{
-		//StopAllCoroutines();
-		//StartCoroutine(Bloom());
-		StartCoroutine(SpawnTimer());
-		StartCoroutine(Hunger());
-	}
-
-//	IEnumerator Bloom()
-//	{
-//		yield return new WaitForSeconds(delayStart);
-//		bInBloom = false;
-//		StartCoroutine(SpawnTimer());
-//		StartCoroutine(Hunger());
-//		//StartCoroutine(Idle());
-//	}
 	IEnumerator SpawnTimer()
 	{
 		while(true&& isServer)
@@ -71,10 +54,5 @@ public class DaughterController : MoMController
 		hasChanged = false;
 		if(teamID>=0&&GameController.instance.TeamSize[teamID]>0)
 		GameController.instance.TeamSize[teamID]-=1;
-	}
-
-	protected override void newQueen()
-	{
-		
 	}
 }
