@@ -97,6 +97,7 @@
      <Compile Include="Assets\_Scripts\NetworkTestScripts\Interact.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\MouseLook.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" />
+     <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\NetworkTestSpawner.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGUI.cs" />
      <Compile Include="Assets\_Scripts\NetworkTestScripts\TestGameController.cs" />

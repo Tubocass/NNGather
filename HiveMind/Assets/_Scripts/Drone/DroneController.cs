@@ -10,6 +10,7 @@ public class DroneController : Unit_Base
 	[SerializeField] protected float orbit = 25, sightRange;
 	[SerializeField] protected Vector3 nose; //set in editor
 	protected float sqrDist;
+	protected NetworkTransformChild childTransform;
 
 	protected override void OnEnable()
 	{
@@ -18,6 +19,9 @@ public class DroneController : Unit_Base
 		TeamColorMat = GetComponentInChildren<MeshRenderer>().materials[1];
 		sqrDist = orbit*orbit;
 		UnityEventManager.StartListeningInt("TargetUnavailable", TargetLost);
+//		childTransform = GetComponent<NetworkTransformChild>();
+//		if(childTransform!=null)
+//		childTransform.enabled = false;
 		//StartCoroutine(Idle());
 	}
 	protected override void OnDisable()

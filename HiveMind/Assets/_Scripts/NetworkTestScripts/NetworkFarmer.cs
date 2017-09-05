@@ -4,19 +4,21 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AI;
 
-public class NetworkAI : NetworkBehaviour
+public class NetworkFarmer : NetworkBehaviour
 {
+	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
+	public Vector3 Location{get{return transform.position;}}
 	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
-	[SerializeField] protected bool bMoving;
 	[SerializeField] int tries;
-	[SerializeField] Vector3[] Path;
-	[SerializeField] int points, currntPoint;
 	protected Transform tran;
 	protected UnityEngine.AI.NavMeshAgent agent;
-	protected bool bDay;
 	float maxDistanceSqrd, minDistanceSqrd;
 	FoodObject targetedFood, carriedFood;
+	public Interact myMoM;
+	bool bReturning;
+	Vector3 foodLoc;
+	int teamID;
 
 	protected virtual void OnEnable () 
 	{
@@ -25,9 +27,17 @@ public class NetworkAI : NetworkBehaviour
 		tran = transform;
 		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		currentVector = tran.position;
-		//StartCoroutine(Idle());
 	}
+	protected void OnDisable()
+	{}
 
+	public virtual void SetMoM(GameObject mom, Color tc)
+	{
+		isActive = true;
+		myMoM = mom.GetComponent<Interact>();
+		teamID = myMoM.teamID;
+		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
+	}
 	public Vector3 RandomPath(Vector3 origin, float range)
 	{
 		Vector3 rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
@@ -50,8 +60,6 @@ public class NetworkAI : NetworkBehaviour
 	{
 		if(!location.Equals(Vector3.zero))
 		{
-//			currentVector = location; 
-//			agent.SetDestination(currentVector);
 			NavMeshPath path = new NavMeshPath();
 			agent.CalculatePath(location, path);
 			agent.SetPath(path);
@@ -64,51 +72,7 @@ public class NetworkAI : NetworkBehaviour
 		currentVector = loc; 
 		agent.SetDestination(currentVector);
 	}
-//	[ClientRpc]
-//	public void RpcMoveTo(Vector3[] PathArray)
-//	{
-//		StopCoroutine("MovingTo");
-//		bMoving = true;
-//		points = PathArray.Length;
-//		if(points>0)
-//		{
-//			currntPoint = 0;
-//			Path = PathArray;
-//			currentVector = Path[currntPoint];
-//			agent.SetDestination(currentVector);
-//			StartCoroutine("MovingTo");
-//		}
-//	}
-//
-//	protected virtual IEnumerator MovingTo()
-//	{
-//		while(bMoving)
-//		{
-//			if(agent.remainingDistance<1)
-//			{
-//				if(currntPoint<points-1)
-//				{
-//					currntPoint +=1;
-//					currentVector = Path[currntPoint];
-//					agent.SetDestination(currentVector);
-//				}else bMoving = false;
-//				//Debug.Log("I arrived");
-//			}
-//			yield return new WaitForSeconds(0.5f);
-//		}
-//	}
-//
-//	protected virtual IEnumerator Idle()
-//	{
-//		while(true)
-//		{
-//			if(!bMoving)
-//			{
-//				ArrivedAtTargetLocation();
-//			}
-//			yield return new WaitForSeconds(1);
-//		}
-//	}
+
 	void Update()
 	{
 		if(!isServer)
@@ -121,14 +85,25 @@ public class NetworkAI : NetworkBehaviour
 	}
 	protected virtual void ArrivedAtTargetLocation()
 	{
-		if(isServer)
+		if(isServer && myMoM!=null)
 		{
-			targetedFood = TargetNearest();
-			if(targetedFood!=null)
+			if(IsCarryingFood() && Vector3.Distance(myMoM.Location, Location)>1)
+			{
+				StartCoroutine(ReturnToHome());
+			}
+			if(IsTargetingFood() && Vector3.Distance(targetedFood.Location, Location)>1)
 			{
 				MoveTo(targetedFood.Location);
 			}
-			else MoveRandomly();
+			if(CanTargetFood())
+			{
+				targetedFood = TargetNearest();
+				if(targetedFood!=null)
+				{
+					MoveTo(targetedFood.Location);
+				}
+				else MoveRandomly();
+			}
 		}
 	}
 
@@ -226,31 +201,44 @@ public class NetworkAI : NetworkBehaviour
 			{
 				if(IsTargetingFood() || CanTargetFood())
 				{
-//					if(IsTargetingFood()&& ot.Id != targetedFood.Id)
-//					{
-//						return;
-//					}
+					if(IsTargetingFood()&& ot.Id != targetedFood.Id)
+					{
+						return;
+					}
 					targetedFood = null;
 					carriedFood = ot;
 					ot.Attach(this.gameObject,new Vector3(0,0,1));
-					//foodLoc = ot.Location;
-					//StartCoroutine(ReturnToHome());
+					foodLoc = ot.Location;
+					StartCoroutine(ReturnToHome());
 				}
 			}
 		}
-//		if(IsCarryingFood() && bang.collider.tag == "MoM")
-//		{
-//			MoMController bangMoM = bang.gameObject.GetComponent<MoMController>();
-//			if(bangMoM.unitID == myMoM.unitID)
-//			{
-//				bangMoM.AddFoodLocation(foodLoc);
-//				carriedFood.Destroy();
-//				carriedFood = null;
-//				bReturning = false;
-//			}
-//		}
+		if(IsCarryingFood() && bang.collider.tag == "MoM")
+		{
+			Interact bangMoM = bang.gameObject.GetComponent<Interact>();
+			if(bangMoM.unitID == myMoM.unitID)
+			{
+				//bangMoM.AddFoodLocation(foodLoc);
+				carriedFood.Destroy();
+				carriedFood = null;
+				bReturning = false;
+			}
+		}
 	}
 	public void OnTriggerEnter(Collider other)
 	{}
+	protected IEnumerator ReturnToHome()
+	{
+		if(isServer)
+		{
+			bReturning = true;
+			while(bReturning && myMoM!=null)
+			{
+				MoveTo(myMoM.transform.position);
+				yield return new WaitForSeconds(1f);
+			}
+		}
+		yield return null;
+	}
 
 }

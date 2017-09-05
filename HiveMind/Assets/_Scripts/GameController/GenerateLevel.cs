@@ -14,7 +14,7 @@ public class GenerateLevel : NetworkBehaviour
 	[Space(10)]
 	Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
 	bool[] availableColors;
-	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
+	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab, FarmerFab, FighterFab;//prefabs
 	[Space(5)]
 	public static GameObject[] Pits;
 	public GameObject SarlacDude;
@@ -92,11 +92,10 @@ public class GenerateLevel : NetworkBehaviour
 		}
 		for(int i = 0; i<bots; i++)
 		{
-			SpawnBots();
+			SpawnEnemyMoMs();
 		}
 		SarlacDude = SpawnSarlac();//The Sarlac needs to have its enable and disable functions rewritten
 		SarlacDude.SetActive(false);
-	
 		//Sarlac Pits
 		SpawnObjects(pits, xx, spClusterDist, Vector3.zero, Pits, SpawnSarlacPit, envMask);
 	}
@@ -108,7 +107,7 @@ public class GenerateLevel : NetworkBehaviour
 		return start;
 	}
 
-	GameObject SpawnBots()
+	GameObject SpawnEnemyMoMs()
 	{
 		GameObject newMoM;
 		MoMController mom;

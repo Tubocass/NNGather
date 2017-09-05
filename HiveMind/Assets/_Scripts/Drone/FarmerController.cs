@@ -201,6 +201,8 @@ public class FarmerController : DroneController
 					targetedFood = null;
 					carriedFood = ot;
 					ot.Attach(this.gameObject,nose);
+//					childTransform.enabled = true;
+//					childTransform.target = ot.transform;
 					foodLoc = ot.Location;
 					StartCoroutine(ReturnToHome());
 				}
@@ -213,6 +215,8 @@ public class FarmerController : DroneController
 			if(bangMoM.unitID == myMoM.unitID)
 			{
 				bangMoM.AddFoodLocation(foodLoc);
+//				childTransform.target = null;
+//				childTransform.enabled = false;
 				carriedFood.Destroy();
 				carriedFood = null;
 				bReturning = false;
