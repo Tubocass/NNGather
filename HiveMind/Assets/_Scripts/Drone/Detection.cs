@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Detection : MonoBehaviour 
 {
-	NetworkFarmer controller;
+	Unit_Base controller;
 	// Use this for initialization
 	void Start () 
 	{
-		controller = transform.parent.GetComponent<NetworkFarmer>();
+		controller = transform.parent.GetComponent<Unit_Base>();
 	}
 	
 	void OnTriggerEnter(Collider other)
