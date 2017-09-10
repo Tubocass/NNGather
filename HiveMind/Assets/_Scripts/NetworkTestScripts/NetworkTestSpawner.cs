@@ -23,7 +23,8 @@ public class NetworkTestSpawner : NetworkBehaviour
 		for(int i = 0; i<amount; i++)
 		{
 			spawnPoints[i] = foodPile[i].transform.position;
-			//foodPile[i].SetActive(false);
+			foodPile[i].SetActive(false);
+			foodPile[i].GetComponent<FoodObject>().RpcDestroy();
 		}
 		StartCoroutine(SpawnFood());
 	}

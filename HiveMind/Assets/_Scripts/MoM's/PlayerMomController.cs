@@ -19,6 +19,11 @@ public class PlayerMomController : MoMController
 		GUI = canvas.GetComponent<GUIController>();
 		GUI.mainMoMControl = this;
 	}
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+		TeamColor = new Color(0.765f,0.225f,0.638f,1f);
+	}
 	protected override void Start()
 	{
 		base.Start();

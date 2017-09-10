@@ -12,10 +12,10 @@ public class FoodObject : NetworkBehaviour
 	[SerializeField][SyncVar]private bool bAttached;
 	LineRenderer lineRenderer;
 	SyncListVector3 lines = new SyncListVector3();
-	NetworkTransform tran;
+	//NetworkTransform tran;
 	void Start()
 	{
-		tran = GetComponent<NetworkTransform>();
+		//tran = GetComponent<NetworkTransform>();
 	}
 	void OnEnable()
 	{
@@ -33,7 +33,7 @@ public class FoodObject : NetworkBehaviour
 	}
 	public void Destroy()
 	{
-		tran.transform.position = Vector3.zero;
+		transform.position = Vector3.zero;
 		Detach();
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 		gameObject.SetActive(false);
@@ -47,8 +47,8 @@ public class FoodObject : NetworkBehaviour
 	}
 	public void Attach(GameObject newParent, Vector3 point)
 	{
-		tran.transform.SetParent(newParent.transform);
-		tran.transform.localPosition = point;
+		transform.SetParent(newParent.transform);
+		transform.localPosition = point;
 		bAttached = true;
 		RpcAttach(newParent, point);
 		UnityEventManager.TriggerEvent("TargetUnavailable",Id);
@@ -56,8 +56,8 @@ public class FoodObject : NetworkBehaviour
 	[ClientRpc]
 	public void RpcAttach(GameObject newParent, Vector3 point)
 	{
-		tran.transform.SetParent(newParent.transform);
-		tran.transform.localPosition = point;
+		transform.SetParent(newParent.transform);
+		transform.localPosition = point;
 		//bAttached = true;
 		//UnityEventManager.TriggerEvent("TargetUnavailable",Id);
 	}
@@ -65,26 +65,26 @@ public class FoodObject : NetworkBehaviour
 	public void Reset(Vector3 position)
 	{
 		gameObject.SetActive(true);
-		tran.transform.position = position;
+		transform.position = position;
 		RpcReset(position);
 	}
 	[ClientRpc]
 	public void RpcReset(Vector3 position)
 	{
 		gameObject.SetActive(true);
-		tran.transform.position = position;
+		transform.position = position;
 	}
 
 	public void Detach()
 	{
-		tran.transform.SetParent(null);
+		transform.SetParent(null);
 		bAttached = false;
 		RpcDetach();
 	}
 	[ClientRpc]
 	public void RpcDetach()
 	{
-		tran.transform.SetParent(null);
+		transform.SetParent(null);
 		//bAttached = false;
 	}
 

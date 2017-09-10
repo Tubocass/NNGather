@@ -11,6 +11,7 @@ public class NetworkFarmer : NetworkBehaviour
 	[SerializeField] protected float MaxHoverDistance = 20, MinHoverDistance = 1;
 	[SerializeField] protected Vector3 currentVector;
 	[SerializeField] int tries;
+	[SerializeField] Vector3[] pathArray;
 	protected Transform tran;
 	protected UnityEngine.AI.NavMeshAgent agent;
 	float maxDistanceSqrd, minDistanceSqrd;
@@ -18,7 +19,8 @@ public class NetworkFarmer : NetworkBehaviour
 	public Interact myMoM;
 	bool bReturning;
 	Vector3 foodLoc;
-	int teamID;
+	int teamID, currentPoint;
+	[SyncVar] bool bMoving = false;
 
 	protected virtual void OnEnable () 
 	{
@@ -41,15 +43,15 @@ public class NetworkFarmer : NetworkBehaviour
 	public Vector3 RandomPath(Vector3 origin, float range)
 	{
 		Vector3 rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
-		UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
-		agent.CalculatePath(rando,path);
+		//UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+		//agent.CalculatePath(rando,path);
 		float dist = (rando-tran.position).sqrMagnitude;
 		tries = 10;
-		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd) || (path.status == UnityEngine.AI.NavMeshPathStatus.PathPartial))
+		while(tries>0 && (dist>maxDistanceSqrd|| dist<minDistanceSqrd))// || (path.status == UnityEngine.AI.NavMeshPathStatus.PathPartial))
 		{
 			tries--;
 			rando = new Vector3(Random.Range(-range,range)+origin.x, origin.y,Random.Range(-range,range)+origin.z);
-			agent.CalculatePath(rando,path);
+			//agent.CalculatePath(rando,path);
 			dist = (rando-tran.position).sqrMagnitude;
 		}
 		return rando;
@@ -63,7 +65,14 @@ public class NetworkFarmer : NetworkBehaviour
 			NavMeshPath path = new NavMeshPath();
 			agent.CalculatePath(location, path);
 			agent.SetPath(path);
-			RpcMoveTo(location);
+			pathArray = path.corners;
+			if(path.corners.Length>2)
+			{
+				bMoving = true;
+				currentPoint = 1;
+				currentVector = path.corners[currentPoint];
+			}else{ currentVector = path.corners[1];}
+			RpcMoveTo(currentVector);
 		}
 	}
 	[ClientRpc]
@@ -75,12 +84,20 @@ public class NetworkFarmer : NetworkBehaviour
 
 	void Update()
 	{
-		if(!isServer)
-		return;
-
-		if(agent.remainingDistance<1)
+		if(isServer)
 		{
-			ArrivedAtTargetLocation();
+			if(agent.remainingDistance<1)
+			{
+				ArrivedAtTargetLocation();
+				bMoving = false;
+			}else{
+				if(bMoving&& currentPoint<agent.path.corners.Length && Vector3.Distance(tran.position,currentVector)<1f)
+				{
+					currentPoint++;
+					currentVector = agent.path.corners[currentPoint];
+					RpcMoveTo(currentVector);
+				}
+			}
 		}
 	}
 	protected virtual void ArrivedAtTargetLocation()
@@ -118,8 +135,6 @@ public class NetworkFarmer : NetworkBehaviour
 	{
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
-
-		//RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
 		Collider[] cols = Physics.OverlapSphere(tran.position,20,1<<LayerMask.NameToLayer("Food"));
 		if(cols.Length>0)
 		{
@@ -235,7 +250,7 @@ public class NetworkFarmer : NetworkBehaviour
 			while(bReturning && myMoM!=null)
 			{
 				MoveTo(myMoM.transform.position);
-				yield return new WaitForSeconds(1f);
+				yield return new WaitForSeconds(5f);
 			}
 		}
 		yield return null;

@@ -1,6 +1,6 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Drone\Detection.cs">
     <Files>
       <File FileName="Assets\_Scripts\MoM's\MoMController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\Unit_Base.cs" Line="1" Column="1" />
@@ -12,11 +12,12 @@
       <File FileName="Assets\_Scripts\Drone\DroneController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\InputControls.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\Networking\GatherLobbyHook.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Drone\Detection.cs" Line="10" Column="59" />
+      <File FileName="Assets\_Scripts\Drone\Detection.cs" Line="20" Column="3" />
       <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GameController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GenerateLevel.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs" Line="184" Column="2" NotebookId="1" />
+      <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\AppData\Local\Temp\HiveMind_Assets__Scripts_Unit_Base_Before_b7b2d48442bd97ae983c1c1a0798dc87ad4a6bd1.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

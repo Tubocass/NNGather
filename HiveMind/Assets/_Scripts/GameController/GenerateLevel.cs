@@ -12,9 +12,10 @@ public class GenerateLevel : NetworkBehaviour
 	[Space(10)]
 	public int bots = 2, momsDistance = 20;
 	[Space(10)]
-	Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+	Color gatherColor = new Color(0.765f,0.225f,0.638f,1f);
+	Color[] Colors;// = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
 	bool[] availableColors;
-	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab, FarmerFab, FighterFab;//prefabs
+	public GameObject Ground, NightPlantFab, DayPlantFab, ScarFab, SarlacFab, Sarlac_PitFab, EnemyMoMFab, MainMoMFab, NetStartFab, GlowFab;//prefabs
 	[Space(5)]
 	public static GameObject[] Pits;
 	public GameObject SarlacDude;
@@ -69,6 +70,7 @@ public class GenerateLevel : NetworkBehaviour
 		zz = groundSize.z - groundSize.z/20;
 		xd=xx;
 		zd=zz;
+		Colors = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
 		availableColors = new bool[Colors.Length];
 		for(int c = 0; c<availableColors.Length; c++)
 		{
@@ -145,6 +147,7 @@ public class GenerateLevel : NetworkBehaviour
 			obj.GetComponent<LineRenderer>().SetPosition(0, pos);
 			obj.GetComponent<LineRenderer>().SetPosition(1, (pos - dir));
 			obj.GetComponent<LineRenderer>().SetPosition(2, position);
+			obj.transform.SetParent(newPit.transform);
 			return obj; 
 		},envMask);
 		if(g>0)
