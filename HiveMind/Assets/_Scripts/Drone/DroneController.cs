@@ -41,11 +41,11 @@ public class DroneController : Unit_Base
 		}
 	}
 	//[ClientRpc]
-	public virtual void SetMoM(GameObject mom, Color tc)
-	{
-		base.SetMoM(mom);
-		TeamColor = tc;
-	}
+//	public virtual void SetMoM(GameObject mom, Color tc)
+//	{
+//		base.SetMoM(mom);
+//		TeamColor = tc;
+//	}
 
 	public void Attach(Transform newParent, Vector3 point)
 	{

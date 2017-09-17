@@ -1,27 +1,29 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Drone\Detection.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\MoM's\DaughterController.cs">
     <Files>
-      <File FileName="Assets\_Scripts\MoM's\MoMController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Unit_Base.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Unit_Base.cs" Line="11" Column="17" />
+      <File FileName="Assets\_Scripts\MoM's\MoMController.cs" Line="173" Column="5" />
+      <File FileName="Assets\_Scripts\MoM's\DaughterController.cs" Line="37" Column="11" />
+      <File FileName="Assets\_Scripts\Drone\DroneController.cs" Line="46" Column="10" />
+      <File FileName="Assets\_Scripts\Drone\FarmerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs" Line="67" Column="24" />
       <File FileName="Assets\_Scripts\FoodObject.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkTestSpawner.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\NetworkTestScripts\Interact.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GUIController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Drone\FarmerController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Drone\DroneController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\GameController\InputControls.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Networking\GatherLobbyHook.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Drone\Detection.cs" Line="20" Column="3" />
-      <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\Drone\Detection.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GameController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GenerateLevel.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\NetworkTestScripts\NetworkFarmer.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\AppData\Local\Temp\HiveMind_Assets__Scripts_Unit_Base_Before_b7b2d48442bd97ae983c1c1a0798dc87ad4a6bd1.cs" Line="1" Column="1" />
+      <File FileName="Assets\Lobby\Scripts\Lobby\LobbyPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Scripts\MoM's\PlayerMomController.cs" Line="13" Column="43" />
+      <File FileName="Assets\_Scripts\MoM's\EnemyMoMController.cs" Line="37" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Tubocass\Projects\NNGather\HiveMind\Assets\_Scripts\NetworkTestScripts\NetworkTestSpawner.cs" line="48" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

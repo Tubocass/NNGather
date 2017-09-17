@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,12 +25,12 @@ public class DaughterController : MoMController
 			yield return new WaitForSeconds(4);
 		}
 	}
-
-	public void RpcSetMoM(GameObject mom, Color tc)
-	{
-		base.SetMoM(mom);
-		TeamColor = tc;
-	}
+	//[ClientRpc]
+//	public override void SetMoM(GameObject mom, Color tc)
+//	{
+//		base.SetMoM(mom);
+//		TeamColor = tc;
+//	}
 
 	public void Kill()//mostly used for upgrading into a MoM
 	{

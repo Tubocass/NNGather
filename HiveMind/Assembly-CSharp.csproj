@@ -77,6 +77,7 @@
      <Compile Include="Assets\_Scripts\Drone\FarmerController.cs" />
      <Compile Include="Assets\_Scripts\Drone\FighterController.cs" />
      <Compile Include="Assets\_Scripts\Drone\NavMove.cs" />
+     <Compile Include="Assets\_Scripts\Drone\SpriteDrone.cs" />
      <Compile Include="Assets\_Scripts\FoodObject.cs" />
      <Compile Include="Assets\_Scripts\FoodSpawner.cs" />
      <Compile Include="Assets\_Scripts\GameController\GUIController.cs" />

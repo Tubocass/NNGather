@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AI;
 
-public class NetworkFarmer : NetworkBehaviour
+public class SpriteDrone : NetworkBehaviour
 {
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}
@@ -30,7 +30,7 @@ public class NetworkFarmer : NetworkBehaviour
 		minDistanceSqrd = MinHoverDistance*MinHoverDistance;
 		tran = transform;
 		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
+		TeamColorMat = GetComponentInChildren<SpriteRenderer>().material;
 		currentVector = tran.position;
 	}
 	protected void OnDisable()
@@ -52,7 +52,7 @@ public class NetworkFarmer : NetworkBehaviour
 		isActive = true;
 		myMoM = mom.GetComponent<Interact>();
 		teamID = myMoM.teamID;
-		GetComponentInChildren<MeshRenderer>().materials[1].color = tc;
+		GetComponentsInChildren<SpriteRenderer>()[1].material.color = tc;
 	}
 	public Vector3 RandomPath(Vector3 origin, float range)
 	{

@@ -139,7 +139,7 @@ public class MoMController : Unit_Base
 				if(recycle!=null)
 				{
 					//reycycle.RpsSetMom
-					recycle.SetMoM(this.gameObject, TeamColor);
+					recycle.SetMoM(this.gameObject);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFarmer();//No inactives we can recycle
@@ -163,7 +163,7 @@ public class MoMController : Unit_Base
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
-					recycle.SetMoM(this.gameObject, TeamColor);
+					recycle.SetMoM(this.gameObject);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateFighter();
@@ -173,7 +173,7 @@ public class MoMController : Unit_Base
 			}
 		}
 	}
-
+	[Server]
 	public virtual void CreateDaughter()
 	{
 		if(FoodAmount>=daughterCost)
@@ -186,7 +186,7 @@ public class MoMController : Unit_Base
 				DaughterController recycle = Daughters.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
-					recycle.RpcSetMoM(this.gameObject, TeamColor);
+					recycle.SetMoM(this.gameObject);
 					recycle.transform.position = Location+new Vector3(1,0,1);
 				}else{
 					InstantiateDaughter();
@@ -203,7 +203,7 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(farmerFab, SpawnMouth, FaceForward()) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
-		fc.SetMoM(this.gameObject, TeamColor);
+		fc.SetMoM(this.gameObject);
 		Farmers.Add(fc);
 	}
 	[Server]
@@ -212,7 +212,7 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(fighterFab,SpawnMouth, FaceForward()) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
-		fc.SetMoM(this.gameObject, TeamColor);
+		fc.SetMoM(this.gameObject);
 		Fighters.Add(fc);
 	}
 	[Server]
@@ -221,7 +221,7 @@ public class MoMController : Unit_Base
 		GameObject spawn = Instantiate(daughterFab, SpawnMouth, FaceForward()) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		NetworkServer.Spawn(spawn);
-		dc.RpcSetMoM(this.gameObject, TeamColor);
+		dc.SetMoM(this.gameObject);
 		Daughters.Add(dc);
 	}
 	protected Quaternion FaceForward()
