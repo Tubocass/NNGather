@@ -41,6 +41,13 @@ public class EnemyMoMController : MoMController
 		}
 	}
 
+	void MakeDecision()
+	{
+		/*
+			
+		*/
+	}
+
 //	IEnumerator SpawnTimer()
 //	{
 //		while(true&& isServer)

@@ -7,7 +7,11 @@ public class GUIController : MonoBehaviour
 {
 	[SerializeField] RectTransform PauseScreen, ScoreScreen, NotificationPanel, StatPanel;
 	[SerializeField] Text foodText, healthText, statText1, statText2, notificationText;
+	[SerializeField] Image foodDisplay, healthDisplay;
 	public MoMController mainMoMControl;
+
+	// FoodDisplay foodDisplay;
+	// HealthDisplay healthDisplay;
 
 	void OnEnable()
 	{
@@ -70,10 +74,12 @@ public class GUIController : MonoBehaviour
 	void SetFood(int amount)//called by event
 	{
 		foodText.text = "Food\n   "+ amount;
+		foodDisplay.transform.localScale = new Vector3(1, (float)amount/mainMoMControl.maxFood, 1);
 	}
 	void SetHealth(int amount)//called by event
 	{
 		healthText.text = "Health\n   "+ amount;
+		healthDisplay.transform.localScale = new Vector3(1, (float)amount/mainMoMControl.startHealth, 1);
 	}
 
 	IEnumerator UpdateInfo()

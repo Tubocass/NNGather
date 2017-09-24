@@ -90,6 +90,7 @@
      <Compile Include="Assets\_Scripts\LevelSettings.cs" />
      <Compile Include="Assets\_Scripts\LightController.cs" />
      <Compile Include="Assets\_Scripts\MenuScreenController.cs" />
+     <Compile Include="Assets\_Scripts\MoM&apos;s\AIController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\DaughterController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\EnemyMoMController.cs" />
      <Compile Include="Assets\_Scripts\MoM&apos;s\MoMController.cs" />

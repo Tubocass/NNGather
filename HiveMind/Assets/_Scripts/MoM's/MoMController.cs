@@ -33,20 +33,22 @@ public class MoMController : Unit_Base
 			}
 	}
 	public List<FoodObject> Foods;
+	public int maxFood = 20;
 	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
 	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
 	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
 	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
 	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
-	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost = 8, daughterCap = 6, startFood = 5, hungerTime = 10;
-	Vector3 SpawnMouth{get{return tran.TransformPoint(new Vector3(1f,0,0));}}
+	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost, daughterCap = 6, startFood = 5, hungerTime = 10;
 	[SyncVar(hook = "SetFoodUI")][SerializeField] protected int foodAmount;
+	protected GameObject fightFlag, farmFlag;
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
-	protected GameObject fightFlag, farmFlag;
+	Vector3 SpawnMouth{get{return tran.TransformPoint(new Vector3(1f,0,0));}}
+	Quaternion FaceForward{get{return Quaternion.LookRotation(SpawnMouth - transform.position);}}
 	int qCount=0;
-	Vector3 newLoc;
+	protected Vector3 foodMidpoint;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
 	void Awake()
@@ -176,9 +178,9 @@ public class MoMController : Unit_Base
 	[Server]
 	public virtual void CreateDaughter()
 	{
-		if(FoodAmount>=daughterCost)
+		if(FoodAmount>=maxFood)
 		{
-			FoodAmount = -daughterCost;
+			FoodAmount = -maxFood;
 			daughters++;
 			GameController.instance.TeamSize[teamID] += 1;
 			if(Daughters.Count>0)
@@ -194,13 +196,13 @@ public class MoMController : Unit_Base
 			}else {
 				InstantiateDaughter();
 			}
-		
+			maxFood +=10;
 		}
 	}
 	[Server]
 	protected void InstantiateFarmer()
 	{
-		GameObject spawn = Instantiate(farmerFab, SpawnMouth, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(farmerFab, SpawnMouth, FaceForward) as GameObject;
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject);
@@ -209,7 +211,7 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateFighter()
 	{
-		GameObject spawn = Instantiate(fighterFab,SpawnMouth, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(fighterFab,SpawnMouth, FaceForward) as GameObject;
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject);
@@ -218,15 +220,11 @@ public class MoMController : Unit_Base
 	[Server]
 	protected void InstantiateDaughter()
 	{
-		GameObject spawn = Instantiate(daughterFab, SpawnMouth, FaceForward()) as GameObject;
+		GameObject spawn = Instantiate(daughterFab, SpawnMouth, FaceForward) as GameObject;
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		NetworkServer.Spawn(spawn);
 		dc.SetMoM(this.gameObject);
 		Daughters.Add(dc);
-	}
-	protected Quaternion FaceForward()
-	{
-		return Quaternion.LookRotation(SpawnMouth - transform.position);
 	}
 
 	public virtual void CedeDrones(MoMController newMoM)
@@ -335,6 +333,7 @@ public class MoMController : Unit_Base
 			qCount+=1;
 			foodQ.Enqueue(loc);
 		}
+		if(FoodAmount<maxFood)
 		FoodAmount = 1;
 	}
 
@@ -369,10 +368,10 @@ public class MoMController : Unit_Base
 				zz += v.z;
 			}
 		}
-		newLoc = new Vector3(xx /size, 1f ,zz /size);
-		if(Vector3.Distance( transform.position, newLoc)>4)
+		foodMidpoint = new Vector3(xx /size, 1f ,zz /size);
+		if(Vector3.Distance( transform.position, foodMidpoint)>4)
 		{
-			MoveTo(newLoc);
+			MoveTo(foodMidpoint);
 		}
 	}
 }
