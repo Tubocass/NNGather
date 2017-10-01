@@ -152,6 +152,10 @@ public class GameController :  NetworkBehaviour
 			}
 		}
 		Players = GameObject.FindObjectsOfType<PlayerMomController>();
+		if(bSinglePlayer)
+		{
+			Players[0].TeamColor = new Color(0.765f,0.225f,0.638f,1f);
+		}
 		numPlayers = Players.Length+levelGen.bots;
 		levelGen.Init();
 		for(int t = 0; t<numPlayers; t++)

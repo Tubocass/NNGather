@@ -18,7 +18,6 @@ public class GUIController : MonoBehaviour
 		UnityEventManager.StartListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StartListeningInt("UpdateHealth", SetHealth);
 		UnityEventManager.StartListeningInt("MoMDeath", Notify);
-		UnityEventManager.StartListening("MainMomChange",MoMChanged);
 		StartCoroutine(UpdateInfo());
 //		healthText.text =  "Health: " + 0;
 //		scoreText.text =  "Food: " + 0;
@@ -27,7 +26,6 @@ public class GUIController : MonoBehaviour
 	{
 		UnityEventManager.StopListeningInt("UpdateFood", SetFood);
 		UnityEventManager.StopListeningInt("UpdateHealth", SetHealth);
-		UnityEventManager.StopListening("MainMomChange",MoMChanged);
 	}
 	void Update()
 	{
@@ -48,10 +46,11 @@ public class GUIController : MonoBehaviour
 	{
 		StatPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (float)(30*t)+15);
 	}
-	void MoMChanged()
+	public void SetMoM(PlayerMomController MoM)
 	{
-		if(mainMoMControl!=null)
+		if(MoM!=null)
 		{
+			mainMoMControl = MoM;
 			SetFood(mainMoMControl.FoodAmount);
 			SetHealth((int)mainMoMControl.Health);
 			SetTeams(GameController.instance.TeamSize.Count);
