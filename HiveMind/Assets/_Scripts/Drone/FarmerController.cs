@@ -25,7 +25,7 @@ public class FarmerController : DroneController
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
 	LayerMask mask;
-	List<FoodObject> foods;
+	List<FoodObject> foods = new List<FoodObject>();
 	bool bReturning;
 
 	protected override void OnEnable()
@@ -146,23 +146,8 @@ public class FarmerController : DroneController
 	{
 		float nearestFoodDist, newDist;
 		FoodObject food = null;
-
+		//foods.Clear();
 		//RaycastHit[] hits = Physics.SphereCastAll(Location,sightRange,tran.forward,1,mask, QueryTriggerInteraction.Ignore);
-		Collider[] cols = Physics.OverlapSphere(tran.position,sightRange,mask);
-		if(cols.Length>0)
-		{
-			foreach(Collider f in cols)
-			{
-				if(f.CompareTag("Food"))
-				{
-					FoodObject ot = f.GetComponent<FoodObject>();
-					if(ot!=null && !myMoM.Foods.Contains(ot))
-					{
-						myMoM.Foods.Add(ot);
-					}
-				}
-			}
-		}
 
 		foods = myMoM.Foods.FindAll(e=> e.CanBeTargetted && (e.Location-Location).sqrMagnitude<sqrDist);
 
@@ -178,6 +163,24 @@ public class FarmerController : DroneController
 					food = f;
 				}
 			}
+		}else
+		{
+			Collider[] cols = Physics.OverlapSphere(tran.position,sightRange,mask);
+			if(cols.Length>0)
+			{
+				foreach(Collider f in cols)
+				{
+					if(f.CompareTag("Food"))
+					{
+						FoodObject ot = f.GetComponent<FoodObject>();
+						if(ot!=null && ot.CanBeTargetted && !myMoM.Foods.Contains(ot))
+						{
+							myMoM.Foods.Add(ot);
+						}
+					}
+				}
+			}
+
 		}
 		return food;
 	}

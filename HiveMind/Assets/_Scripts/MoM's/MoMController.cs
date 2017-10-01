@@ -45,10 +45,10 @@ public class MoMController : Unit_Base
 	protected GameObject fightFlag, farmFlag;
 	protected Transform farmFlagTran, fightFlagTran;
 	protected bool activeFarmFlag, activeFightFlag;
+	protected Vector3 foodMidpoint;
 	Vector3 SpawnMouth{get{return tran.TransformPoint(new Vector3(1f,0,0));}}
 	Quaternion FaceForward{get{return Quaternion.LookRotation(SpawnMouth - transform.position);}}
 	int qCount=0;
-	protected Vector3 foodMidpoint;
 	Queue<Vector3> foodQ = new Queue<Vector3>(10);
 
 	void Awake()

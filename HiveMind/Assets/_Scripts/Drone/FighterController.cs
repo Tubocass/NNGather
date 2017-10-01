@@ -59,7 +59,6 @@ public class FighterController : DroneController
 
 	protected override void ArrivedAtTargetLocation()
 	{
-
 		if(isServer && myMoM!= null)
 		{
 			if(IsTargetingEnemy())
@@ -118,19 +117,19 @@ public class FighterController : DroneController
 			}
 		}
 
-		enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
-		if(enemiesCopy.Count>0)
+		//enemiesCopy = enemies.FindAll(e=> e.isActive && e.teamID!=teamID && (e.Location-Location).sqrMagnitude<sqrDist);
+		if(enemies.Count>0)
 		{
-			nearestEnemyDist = (enemiesCopy[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
-			for(int f = 0; f<enemiesCopy.Count;f++)
+			nearestEnemyDist = (enemies[0].Location-Location).sqrMagnitude; //Vector3.Distance(Location,enemies[0].Location);
+			for(int f = 0; f<enemies.Count;f++)
 			{
-				if(enemiesCopy[f].isActive)
+				if(enemies[f].isActive)
 				{
-					newDist = (enemiesCopy[f].Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
+					newDist = (enemies[f].Location-Location).sqrMagnitude;//Vector3.Distance(Location,unit.Location);
 					if(newDist <= nearestEnemyDist)
 					{
 						nearestEnemyDist = newDist;
-						enemy = enemiesCopy[f];
+						enemy = enemies[f];
 					}
 				}
 			}
