@@ -9,6 +9,7 @@ public class NetworkTestSpawner : NetworkBehaviour
 	[SerializeField] int amount = 4;
 	[SerializeField] float radius = 3, clusterDist = 1;
 	[SerializeField] GameObject foodObj;
+	LineRenderer lineRender;
  	GameObject[] foodPile;
 	Vector3[] spawnPoints;
 
@@ -16,7 +17,7 @@ public class NetworkTestSpawner : NetworkBehaviour
 	{
 		if(!isServer)
 		return;
-
+		lineRender = GetComponent<LineRenderer>();
 		foodPile = new GameObject[amount];
 		spawnPoints = new Vector3[amount];
 		GenerateLevel.SpawnObjects(amount, radius, clusterDist, Location, foodPile, InitialSpawn, LayerMask.NameToLayer("Food"));
@@ -36,7 +37,17 @@ public class NetworkTestSpawner : NetworkBehaviour
 		//food.SetActive(false);
 		return food;
 	}
+	void SetVine()
+	{
+	//endpoint is within a 90 degree arc facing outward from pit.
+		Vector3 endPoint = new Vector3(Random.Range(-4f,4f), 0, Random.Range(-4f,4f));
+		Vector3 dir = (endPoint - transform.position)/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
+		Vector3 midPoint = endPoint - dir;
 
+		lineRender.SetPosition(0, transform.position);
+		lineRender.SetPosition(1, (midPoint));
+		lineRender.SetPosition(2, endPoint);
+	}
 	IEnumerator SpawnFood()
 	{
 		while(true)
