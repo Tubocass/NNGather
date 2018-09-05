@@ -4,31 +4,43 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.IO;
 
 public class GameSetupManager : MonoBehaviour 
 {
 	[SerializeField]Slider[] sliders;
-	int[] settings = {3,8,4};//bots,sarlac,plants
 	public NetworkManager nm;
+    int bots, sarlacs, foodScarcity;
+    LevelProperties lvlProps;
+    private string gameDataProjectFilePath = "/StreamingAssets/data.json";
+    Color[] teamColors = new Color[5];
 
-	public void OnChangeBotValue()
+    public void OnChangeBotValue(int b)
 	{
-		settings[0] = (int)sliders[0].value;
+        bots = b;
 	}
-	public void OnChangeSarlacValue()
+	public void OnChangeSarlacValue(int s)
 	{
-		settings[1] = (int)sliders[1].value;
+        sarlacs = s;
 	}
-	public void OnChangePlantValue()
+	public void OnChangePlantValue(int p)
 	{
-		settings[2] = (int)sliders[2].value;
+        foodScarcity = p;
 	}
 
-	public void StartGame()
+    public void SaveGameData()
+    {
+        lvlProps = new LevelProperties(bots,sarlacs,teamColors);
+        string dataAsJson = JsonUtility.ToJson(lvlProps);
+
+        string filePath = Application.dataPath + gameDataProjectFilePath;
+        File.WriteAllText(filePath, dataAsJson);
+
+    }
+
+    public void StartGame()
 	{
 		nm.StartHost();
-		settings =  new int[]{(int)sliders[0].value, (int)sliders[1].value, (int)sliders[2].value};
-		GameController.instance.CompleteSetup(settings);
 
 	}
 }

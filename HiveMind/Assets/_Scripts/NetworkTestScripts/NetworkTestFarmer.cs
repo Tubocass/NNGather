@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AI;
 
-public class NetworkFarmer : NetworkBehaviour
+public class NetworkTestFarmer : NetworkBehaviour
 {
 	public bool isActive{get{return gameObject.activeSelf;}set{gameObject.SetActive(value); if(value==false)OnDisable();}}
 	public Vector3 Location{get{return transform.position;}}

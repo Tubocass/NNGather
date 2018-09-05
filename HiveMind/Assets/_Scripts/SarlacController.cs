@@ -111,7 +111,7 @@ public class SarlacController : DroneController
 				}else Destroy(fo.gameObject);
 			}
 		}
-		return numCarried>0?true:false;
+		return numCarried>0 ? true:false;
 	}
 
 	bool IsTargetingFood()

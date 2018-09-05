@@ -6,22 +6,7 @@ using System.Collections.Generic;
 
 public class FarmerController : DroneController 
 {
-	/*public IBehaviour BState 
-	{
-		get{ return behaviourState; }
-		set 
-		{
-			if (behaviourState != null)
-			{
-				behaviourState.ExitState ();
-			}
-			behaviourState = value;
-			behaviourState.EnterState ();
-		}
-	}
-	private IBehaviour behaviourState;
-	public BWander WanderState;
-	*/
+
 	Vector3 foodLoc;
 	FoodObject carriedFood, targetedFood;
 	LayerMask mask;

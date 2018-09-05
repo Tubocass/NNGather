@@ -3,6 +3,21 @@ using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using System.IO;
+
+[System.Serializable]
+struct LevelProperties
+{
+    public int bots, sarlacs;
+    public Color[] teamColors;
+    public LevelProperties(int b, int s, Color[] colors)
+    {
+        this.bots = b;
+        this.sarlacs = s;
+        this.teamColors = colors;
+    }
+
+}
 
 public class GenerateLevel : NetworkBehaviour 
 {
@@ -25,15 +40,31 @@ public class GenerateLevel : NetworkBehaviour
 	Vector3 height = new Vector3(0,0.5f,0);
 	[SyncVar]int MoMCount, botCount, spCount, moms;
 	public delegate GameObject SpawnFunction(Vector3 v);
-	float xd, zd;
+	float xd, zd;//for debugging
+    private string gameDataProjectFilePath = "/StreamingAssets/data.json";
+    LevelProperties levelProps;
 
-	public void LoadLevelSettings(int numBots, int sarlacPits, int plantsPerPit)
+    public void LoadLevelSettings(int numBots, int sarlacPits, int plantsPerPit)
 	{
 		pits = sarlacPits;
 		nightPlants = plantsPerPit;
 		bots = numBots;
 	}
-	public void PassInPlayers(PlayerMomController[] Players)
+    private void LoadGameData()
+    {
+        string filePath = Application.dataPath + gameDataProjectFilePath;
+
+        if (File.Exists(filePath))
+        {
+            string dataAsJson = File.ReadAllText(filePath);
+            levelProps = JsonUtility.FromJson<LevelProperties>(dataAsJson);
+        }
+        else
+        {
+            levelProps = new LevelProperties();
+        }
+    }
+    public void PassInPlayers(PlayerMomController[] Players)
 	{
 		playerMoMs = Players;
 		for(int c = 0; c<playerMoMs.Length; c++)
