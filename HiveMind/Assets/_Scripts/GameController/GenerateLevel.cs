@@ -5,27 +5,13 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.IO;
 
-[System.Serializable]
-struct LevelProperties
-{
-    public int bots, sarlacs;
-    public Color[] teamColors;
-    public LevelProperties(int b, int s, Color[] colors)
-    {
-        this.bots = b;
-        this.sarlacs = s;
-        this.teamColors = colors;
-    }
-
-}
-
 public class GenerateLevel : NetworkBehaviour 
 {
-	public static float xx=80, zz=80;
-	public LayerMask envMask, unitMask;
-	public int pits = 3, spClusterDist = 20, nightPlants = 5, nightPlantRadius = 15, nightPlantClusterDist = 5;
+	[SerializeField] static float xx=80, zz=80;
+	[SerializeField] LayerMask envMask, unitMask;
+	[SerializeField] int pits = 3, spClusterDist = 20, plantsPerPit = 5, nightPlantRadius = 15, nightPlantClusterDist = 5, momsDistance = 20;
 	[Space(10)]
-	public int bots = 2, momsDistance = 20;
+	public int bots = 2;
 	[Space(10)]
 	Color gatherColor = new Color(0.765f,0.225f,0.638f,1f);
 	Color[] Colors;// = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
@@ -44,12 +30,6 @@ public class GenerateLevel : NetworkBehaviour
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
     LevelProperties levelProps;
 
-    public void LoadLevelSettings(int numBots, int sarlacPits, int plantsPerPit)
-	{
-		pits = sarlacPits;
-		nightPlants = plantsPerPit;
-		bots = numBots;
-	}
     private void LoadGameData()
     {
         string filePath = Application.dataPath + gameDataProjectFilePath;
@@ -93,6 +73,7 @@ public class GenerateLevel : NetworkBehaviour
 	}
 	public void Init() 
 	{
+        LoadGameData();
 		var ground = (GameObject)Instantiate(Ground, Vector3.zero, Quaternion.identity);
 		ground.SetActive(true);
 		NetworkServer.Spawn(ground);
@@ -101,7 +82,8 @@ public class GenerateLevel : NetworkBehaviour
 		zz = groundSize.z - groundSize.z/20;
 		xd=xx;
 		zd=zz;
-		Colors = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        //Colors = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        Colors = levelProps.teamColors;
 		availableColors = new bool[Colors.Length];
 		for(int c = 0; c<availableColors.Length; c++)
 		{
@@ -110,6 +92,7 @@ public class GenerateLevel : NetworkBehaviour
 	}
 	public void Generate() 
 	{
+        bots = levelProps.bots;
 		moms = GameController.instance.numPlayers;
 		Pits = new GameObject[pits];
 		spawnPoints = new GameObject[moms];
@@ -168,8 +151,8 @@ public class GenerateLevel : NetworkBehaviour
 	{
 		GameObject newPit =	Instantiate(Sarlac_PitFab, position, Quaternion.identity)as GameObject;
 		int g = UnityEngine.Random.Range(0,3);// number of glow rocks
-		GameObject[] plantObjs = new GameObject[nightPlants];
-		SpawnObjects(nightPlants, nightPlantRadius,nightPlantClusterDist, position+height, plantObjs, (Vector3 pos)=>
+		GameObject[] plantObjs = new GameObject[plantsPerPit];
+		SpawnObjects(plantsPerPit, nightPlantRadius,nightPlantClusterDist, position+height, plantObjs, (Vector3 pos)=>
 		{//SpawnNightPlants() essentially
 			GameObject obj = Instantiate(NightPlantFab, pos, Quaternion.identity)as GameObject;
 			Vector3 dir = pos - position;

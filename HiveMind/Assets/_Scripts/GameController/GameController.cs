@@ -18,7 +18,7 @@ public class GameController :  NetworkBehaviour
 	Transform DayLight, NightLight;
 	SarlacController SarlacInstance;
 	bool bDay, bSinglePlayer;
-	int check;
+	int playerCheckIn;
 
 	private static GameController gameControl;
 	public static GameController instance
@@ -133,7 +133,6 @@ public class GameController :  NetworkBehaviour
 	{
 		bSinglePlayer = true;
 		SceneManager.LoadSceneAsync("Main");
-		levelGen.LoadLevelSettings(array[0],array[1],array[2]);
 	}
 
 	[Server]
@@ -145,8 +144,8 @@ public class GameController :  NetworkBehaviour
 			ClientScene.AddPlayer(0);
 		}else
 		{
-			check++;
-			if(NetworkLobbyManager.singleton!=null&& check < NetworkLobbyManager.singleton.numPlayers)
+			playerCheckIn++;
+			if(NetworkLobbyManager.singleton!=null&& playerCheckIn < NetworkLobbyManager.singleton.numPlayers)
 			{
 				return;
 			}

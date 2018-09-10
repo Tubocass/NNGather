@@ -8,12 +8,15 @@ using System.IO;
 
 public class GameSetupManager : MonoBehaviour 
 {
-	[SerializeField]Slider[] sliders;
-	public NetworkManager nm;
+    //[SerializeField]Slider[] sliders;
+    //private NetworkManager nm;
+    [SerializeField] string seed;
     int bots, sarlacs, foodScarcity;
     LevelProperties lvlProps;
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
-    Color[] teamColors = new Color[5];
+    [SerializeField] Color[] teamColors = new Color[5];
+    [SerializeField] NewLevelGenerator newGen;
+    int[,] mapSize;
 
     public void OnChangeBotValue(int b)
 	{
@@ -30,17 +33,20 @@ public class GameSetupManager : MonoBehaviour
 
     public void SaveGameData()
     {
-        lvlProps = new LevelProperties(bots,sarlacs,teamColors);
+        mapSize = new int[64, 64];
+        seed = Time.time.ToString();
+        lvlProps = new LevelProperties(seed, bots, sarlacs, teamColors, mapSize);
         string dataAsJson = JsonUtility.ToJson(lvlProps);
 
         string filePath = Application.dataPath + gameDataProjectFilePath;
         File.WriteAllText(filePath, dataAsJson);
-
+        StartGame();
     }
 
     public void StartGame()
 	{
-		nm.StartHost();
-
-	}
+        //nm.StartHost();
+        SceneManager.LoadSceneAsync("LevelGeneration");
+       // newGen.Init();
+    }
 }
