@@ -73,6 +73,7 @@
     <Compile Include="Assets\_Scripts\GameController\GenerateLevel.cs" />
     <Compile Include="Assets\_Scripts\GameController\GUIController.cs" />
     <Compile Include="Assets\_Scripts\GameController\InputControls.cs" />
+    <Compile Include="Assets\_Scripts\GameController\LevelGeneratorEditor.cs" />
     <Compile Include="Assets\_Scripts\GameController\LevelProperties.cs" />
     <Compile Include="Assets\_Scripts\GameController\NewGameController.cs" />
     <Compile Include="Assets\_Scripts\GameController\NewLevelGenerator.cs" />

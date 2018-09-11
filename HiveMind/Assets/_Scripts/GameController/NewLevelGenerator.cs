@@ -23,10 +23,10 @@ public class NewLevelGenerator: MonoBehaviour
     }
     public void Init()
     {
-        LoadGameData();
+        //LoadGameData();
         map = new int[width, height];
         RandomizeMap();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             SmoothMap();
         }
@@ -54,6 +54,10 @@ public class NewLevelGenerator: MonoBehaviour
     }
     void RandomizeMap()
     {
+        if(useRandomSeed)
+        {
+            seed = Time.time.ToString();
+        }
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Debug.Log(seed.ToString()+ ", is Random?"+ useRandomSeed.ToString());
         for (int x = 0; x < width; x++)
