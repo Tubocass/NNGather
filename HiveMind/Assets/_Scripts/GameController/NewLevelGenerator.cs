@@ -43,6 +43,9 @@ public class NewLevelGenerator: MonoBehaviour
             string dataAsJson = File.ReadAllText(filePath);
             levelProps = JsonUtility.FromJson<LevelProperties>(dataAsJson);
             Debug.Log("File Loaded");
+            seed = levelProps.seed;
+            useRandomSeed = levelProps.useRandomSeed;
+            map = levelProps.map;
         }
         else
         {
@@ -51,12 +54,8 @@ public class NewLevelGenerator: MonoBehaviour
     }
     void RandomizeMap()
     {
-        if (useRandomSeed)
-        {
-            seed = levelProps.seed.ToString();
-        }
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-
+        Debug.Log(seed.ToString()+ ", is Random?"+ useRandomSeed.ToString());
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)

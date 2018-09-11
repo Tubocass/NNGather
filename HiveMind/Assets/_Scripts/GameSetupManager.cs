@@ -17,6 +17,7 @@ public class GameSetupManager : MonoBehaviour
     [SerializeField] Color[] teamColors = new Color[5];
     [SerializeField] NewLevelGenerator newGen;
     int[,] mapSize;
+    bool useRandomSeed;
 
     public void OnChangeBotValue(int b)
 	{
@@ -30,12 +31,24 @@ public class GameSetupManager : MonoBehaviour
 	{
         foodScarcity = p;
 	}
+    public void OnChangeSeedValue(string s)
+    {
+        seed = s;
+    }
+    public void OnChangeRandomSeed(bool b)
+    {
+        useRandomSeed = b;
+    }
 
     public void SaveGameData()
     {
         mapSize = new int[64, 64];
-        seed = Time.time.ToString();
-        lvlProps = new LevelProperties(seed, bots, sarlacs, teamColors, mapSize);
+        if (useRandomSeed)
+        {
+            seed = Time.time.ToString();
+        }
+ 
+        lvlProps = new LevelProperties(seed, useRandomSeed, bots, sarlacs, teamColors, mapSize);
         string dataAsJson = JsonUtility.ToJson(lvlProps);
 
         string filePath = Application.dataPath + gameDataProjectFilePath;
