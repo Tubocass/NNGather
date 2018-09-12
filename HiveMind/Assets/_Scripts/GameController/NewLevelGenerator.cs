@@ -13,7 +13,8 @@ public class NewLevelGenerator: MonoBehaviour
     public int randomFillPercent;
     int[,] map;
     //use a Scriptable obj to hold all my Prefab refernces.
-    [SerializeField] GameObject[] terrainTiles;
+    GameObject[] terrainTiles;
+    [SerializeField] PrefabContainer prefabs;
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
     LevelProperties levelProps;
 
@@ -23,7 +24,8 @@ public class NewLevelGenerator: MonoBehaviour
     }
     public void Init()
     {
-        //LoadGameData();
+        terrainTiles = prefabs.tilePrefabs;
+        LoadGameData();
         map = new int[width, height];
         RandomizeMap();
         for (int i = 0; i < 4; i++)

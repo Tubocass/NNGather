@@ -77,6 +77,7 @@
     <Compile Include="Assets\_Scripts\GameController\LevelProperties.cs" />
     <Compile Include="Assets\_Scripts\GameController\NewGameController.cs" />
     <Compile Include="Assets\_Scripts\GameController\NewLevelGenerator.cs" />
+    <Compile Include="Assets\_Scripts\GameController\PrefabContainer.cs" />
     <Compile Include="Assets\_Scripts\GameController\UnityEventManager.cs" />
     <Compile Include="Assets\_Scripts\GameSetupManager.cs" />
     <Compile Include="Assets\_Scripts\IAttachable.cs" />
