@@ -62,11 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\ClickToMove.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\Detection.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\DroneController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\FarmerController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\FighterController.cs" />
-    <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\NavMove.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Drone\SpriteDrone.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\FoodObject.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\GameController.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\InputControls.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\LevelGeneratorEditor.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\LevelProperties.cs" />
+    <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\MeshGenerator.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\NewLevelGenerator.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\NewGameController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\PrefabContainer.cs" />
