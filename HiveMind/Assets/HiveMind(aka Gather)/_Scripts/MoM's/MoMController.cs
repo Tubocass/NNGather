@@ -91,9 +91,9 @@ public class MoMController : Unit_Base
 		base.Death ();
 		Foods.Clear();
 		newQueen();
-		if(GameController.instance.TeamSize[teamID]==0)
+		if(NewGameController.Instance.TeamSize[teamID]==0)
 		{
-			UnityEventManager.TriggerEvent("MoMDeath", teamID);
+			UnityEventManager.TriggerEvent("MoMDeath", teamID);//sends notification to GUI
 		}
 	}
 
@@ -134,7 +134,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -farmerCost;
 			farmers++;
-			GameController.instance.TeamSize[teamID] += 1;
+            NewGameController.Instance.TeamSize[teamID] += 1;
 			if(Farmers.Count>0)//Are there any farmer bots already?
 			{
 				FarmerController recycle = Farmers.Find(f=> !f.isActive);//are there inactive bots?
@@ -159,7 +159,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -fighterCost;
 			fighters++;
-			GameController.instance.TeamSize[teamID] += 1;
+            NewGameController.Instance.TeamSize[teamID] += 1;
 			if(Fighters.Count>0)
 			{
 				FighterController recycle = Fighters.Find(f=> !f.isActive);
@@ -182,7 +182,7 @@ public class MoMController : Unit_Base
 		{
 			FoodAmount = -maxFood;
 			daughters++;
-			GameController.instance.TeamSize[teamID] += 1;
+            NewGameController.Instance.TeamSize[teamID] += 1;
 			if(Daughters.Count>0)
 			{
 				DaughterController recycle = Daughters.Find(f=> !f.isActive);

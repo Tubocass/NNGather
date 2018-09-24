@@ -93,7 +93,7 @@ public class GenerateLevel : NetworkBehaviour
 	public void Generate() 
 	{
         bots = levelProps.bots;
-		moms = GameController.instance.numPlayers;
+		moms = GameController.Instance.numPlayers;
 		Pits = new GameObject[pits];
 		spawnPoints = new GameObject[moms];
 		//NetworkStartPoints
@@ -137,7 +137,7 @@ public class GenerateLevel : NetworkBehaviour
 	}
 	public void SetMoMObj(MoMController newMoM)
 	{
-		GameController.instance.TeamSize[newMoM.teamID] += 1;
+		GameController.Instance.TeamSize[newMoM.teamID] += 1;
 		newMoM.transform.position = spawnPoints[MoMCount].transform.position;
 		MoMCount+=1;
 	}

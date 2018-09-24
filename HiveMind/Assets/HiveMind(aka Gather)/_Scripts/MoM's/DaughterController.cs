@@ -53,7 +53,7 @@ public class DaughterController : MoMController
 		bMoving = false;
 		isActive = false;
 		hasChanged = false;
-		if(teamID>=0&&GameController.instance.TeamSize[teamID]>0)
-		GameController.instance.TeamSize[teamID]-=1;
+		if(teamID>=0&& NewGameController.Instance.TeamSize[teamID]>0)
+            NewGameController.Instance.TeamSize[teamID]-=1;
 	}
 }

@@ -30,7 +30,7 @@ public class SarlacController : DroneController
 		mask = 1<<LayerMask.NameToLayer("Units");
 		canAttack=false;
 		StartCoroutine(AttackCooldown());
-		bDay = GameController.instance.IsDayLight();
+		bDay = GameController.Instance.IsDayLight();
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 	}
 	protected override void OnDisable()
@@ -223,7 +223,7 @@ public class SarlacController : DroneController
 			{
 				//PitController pc = bang.gameObject.GetComponent<PitController>();
 				this.bReturning = false;
-				GameController.instance.StartTimer();
+				GameController.Instance.StartTimer();
 				this.Death();
 			}
 		}

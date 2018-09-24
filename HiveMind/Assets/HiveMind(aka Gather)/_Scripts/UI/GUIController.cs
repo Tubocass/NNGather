@@ -53,7 +53,7 @@ public class GUIController : MonoBehaviour
 			mainMoMControl = MoM;
 			SetFood(mainMoMControl.FoodAmount);
 			SetHealth((int)mainMoMControl.Health);
-			SetTeams(GameController.instance.TeamSize.Count);
+			SetTeams(NewGameController.Instance.NumberOfTeams);
 			StartCoroutine(UpdateInfo());
 		}
 	}
@@ -85,13 +85,13 @@ public class GUIController : MonoBehaviour
 	{
 		while(mainMoMControl!=null)
 		{
-			if(mainMoMControl!= null && GameController.instance!=null && GameController.instance.TeamSize.Count>0)
+			if(mainMoMControl!= null && NewGameController.Instance!=null && NewGameController.Instance.TeamSize.Count>0)
 			{
 				statText1.text = "Farmers: "+ mainMoMControl.farmers+ "\nFighters: "+ mainMoMControl.fighters+ "\nDaughters: "+ mainMoMControl.daughters;
 				statText2.text = "";
-				for(int i = 0; i< GameController.instance.numPlayers;i++)
+				for(int i = 0; i< NewGameController.Instance.NumberOfTeams;i++)
 				{
-					statText2.text += string.Format("\nTeam {0}: {1} - {2:F1}%", i+1, GameController.instance.TeamSize[i], GameController.instance.TeamSizePercent(i));
+					statText2.text += string.Format("\nTeam {0}: {1} - {2:F1}%", i+1, NewGameController.Instance.TeamSize[i], NewGameController.Instance.TeamSizePercent(i));
 				}
 			}
 			yield return new WaitForSeconds(.5f);

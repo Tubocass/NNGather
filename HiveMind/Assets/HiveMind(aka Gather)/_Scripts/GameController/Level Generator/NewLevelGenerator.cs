@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.IO;
 using UnityEngine;
 
 public class NewLevelGenerator: MonoBehaviour
@@ -13,10 +12,13 @@ public class NewLevelGenerator: MonoBehaviour
     public int randomFillPercent, minRoomSize, minWallSize;
     int[,] map;
     //use a Scriptable obj to hold all my Prefab refernces.
-    GameObject[] terrainTiles;
-    [SerializeField] PrefabContainer prefabs;
-    private string gameDataProjectFilePath = "/StreamingAssets/data.json";
-    LevelProperties levelProps;
+    //GameObject[] terrainTiles;
+    [SerializeField] readonly PrefabContainer prefabs;
+    /*
+     * //create basic map, iterate PCG of level objects (caves, plants, bots)
+     * GameObject[] containerOfBots, containerOfSarlacs, containerOfPlants;
+     * GameObject Sun, Moon; //lighting sources
+     */
 
     private void Start()
     {
@@ -24,7 +26,7 @@ public class NewLevelGenerator: MonoBehaviour
     }
     public void Init()
     {
-        terrainTiles = prefabs.tilePrefabs;
+       // terrainTiles = prefabs.tilePrefabs;
        // LoadGameData();
         map = new int[width, height];
         RandomizeMap();
@@ -56,24 +58,6 @@ public class NewLevelGenerator: MonoBehaviour
         //CreateTiles();
     }
 
-    private void LoadGameData()
-    {
-        string filePath = Application.dataPath + gameDataProjectFilePath;
-
-        if (File.Exists(filePath))
-        {
-            string dataAsJson = File.ReadAllText(filePath);
-            levelProps = JsonUtility.FromJson<LevelProperties>(dataAsJson);
-            Debug.Log("File Loaded");
-            seed = levelProps.seed;
-            useRandomSeed = levelProps.useRandomSeed;
-            map = levelProps.map;
-        }
-        else
-        {
-            levelProps = new LevelProperties();
-        }
-    }
     void ProcessMap()
     {
         List<List<Coord>> wallRegions = GetRegions(1);

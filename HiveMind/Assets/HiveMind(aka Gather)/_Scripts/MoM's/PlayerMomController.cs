@@ -25,7 +25,7 @@ public class PlayerMomController : MoMController
 	protected override void Start()
 	{
 		base.Start();
-		GUI.SetMoM(this);
+        GUI.SetMoM(this);
 	}
 
 	protected override void Death ()

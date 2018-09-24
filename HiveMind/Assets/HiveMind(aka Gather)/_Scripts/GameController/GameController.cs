@@ -17,11 +17,11 @@ public class GameController :  NetworkBehaviour
 	GenerateLevel levelGen;
 	Transform DayLight, NightLight;
 	SarlacController SarlacInstance;
-	bool bDay, bSinglePlayer;
+	[SerializeField]bool bDay, bSinglePlayer;
 	int playerCheckIn;
 
 	private static GameController gameControl;
-	public static GameController instance
+	public static GameController Instance
 	{
 		get
 		{
@@ -114,13 +114,13 @@ public class GameController :  NetworkBehaviour
 	}
 	public void StartTimer()
 	{
-		instance.StartCoroutine(Release());
+		Instance.StartCoroutine(Release());
 	}
 	public IEnumerator Release()
 	{
 		yield return new WaitForSeconds(Timer);
 		GameObject spawnPoint = GenerateLevel.Pits[Random.Range(0,GenerateLevel.Pits.Length-1)];
-		if(spawnPoint!=null&& !GameController.instance.IsDayLight())
+		if(spawnPoint!=null&& !GameController.Instance.IsDayLight())
 		{
 			SarlacInstance.anchor = spawnPoint.transform.position;
 			SarlacInstance.transform.position = spawnPoint.transform.position;
