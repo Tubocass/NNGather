@@ -20,6 +20,7 @@ public class SarlacController : DroneController
 	protected override void OnEnable()
 	{
 		base.OnEnable();
+        anchor = tran.position;
 		TeamColorMat = GetComponentInChildren<MeshRenderer>().material;
 		eaten = 0;
 		bMoving = false;
@@ -30,7 +31,7 @@ public class SarlacController : DroneController
 		mask = 1<<LayerMask.NameToLayer("Units");
 		canAttack=false;
 		StartCoroutine(AttackCooldown());
-		bDay = GameController.Instance.IsDayLight();
+		bDay = NewGameController.Instance.IsDaylight;
 		UnityEventManager.StartListeningBool("DayTime", DaySwitch);
 	}
 	protected override void OnDisable()
@@ -64,8 +65,8 @@ public class SarlacController : DroneController
 	protected void ReturnToHome()
 	{
 		bReturning = true;
-		Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
-		MoveTo(nearest);
+		//Vector3 nearest = GenerateLevel.NearestTarget(GenerateLevel.Pits,Location);
+		MoveTo(anchor);
 	}
 	protected override void ArrivedAtTargetLocation()
 	{
@@ -223,7 +224,7 @@ public class SarlacController : DroneController
 			{
 				//PitController pc = bang.gameObject.GetComponent<PitController>();
 				this.bReturning = false;
-				GameController.Instance.StartTimer();
+				//GameController.Instance.StartTimer();
 				this.Death();
 			}
 		}

@@ -38,11 +38,10 @@ public class NetworkTestSpawner : NetworkBehaviour
 		return food;
 	}
 	void SetVine()
-	{
-	//endpoint is within a 90 degree arc facing outward from pit.
+	{//Copied from GenerateLevel
 		Vector3 endPoint = new Vector3(Random.Range(-4f,4f), 0, Random.Range(-4f,4f));
 		Vector3 dir = (endPoint - transform.position)/2+ new Vector3(Random.Range(-4f,4f), 0, 0);
-		Vector3 midPoint = endPoint - dir;
+		Vector3 midPoint = endPoint - dir; //slides the middle of the line along x axis
 
 		lineRender.SetPosition(0, transform.position);
 		lineRender.SetPosition(1, (midPoint));

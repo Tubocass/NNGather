@@ -7,8 +7,8 @@ public class PlayerMomController : MoMController
 {
 	[SerializeField] GameObject camFab, guiFab;
 	GameObject mainCam, canvas;
-	GUIController GUI;
-	bool bTeamFlag = false, bSetup = false;
+	public GUIController GUI;
+	bool isTeamFightFlagActive = false, isSetup = false;
 
 	public override void OnStartLocalPlayer()
 	{
@@ -105,7 +105,7 @@ public class PlayerMomController : MoMController
 		base.RecallFightFlag();
 		fightFlag.GetComponent<ParticleSystem>().Stop();
 	
-		if(bTeamFlag)
+		if(isTeamFightFlagActive)
 		RecallTeamFightFlag();
 	}
 	public void PlaceTeamFightFlag(Vector3 location)
@@ -133,11 +133,11 @@ public class PlayerMomController : MoMController
 				otherMoMs[p].PlaceFightFlag(location);
 			}
 		}
-		bTeamFlag = true;
+		isTeamFightFlagActive = true;
 	}
 	public void RecallTeamFightFlag()
 	{
-		bTeamFlag = false;
+		isTeamFightFlagActive = false;
 		List<DaughterController> princesses = new List<DaughterController>();
 		if(daughters>0)
 		{
