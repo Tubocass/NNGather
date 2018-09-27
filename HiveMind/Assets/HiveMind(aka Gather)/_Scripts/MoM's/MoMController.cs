@@ -35,10 +35,10 @@ public class MoMController : Unit_Base
 	public List<FoodObject> Foods;
 	public int maxFood = 20;
 	[SyncVar]public int farmers = 0, fighters = 0, daughters = 0;//counters
-	protected static List<FarmerController> Farmers = new List<FarmerController>();//object pool
-	protected static List<FighterController> Fighters = new List<FighterController>();//object pool
-	protected static List<DaughterController> Daughters = new List<DaughterController>();//object pool
-	protected static List<MoMController> MoMs = new List<MoMController>();//object pool
+	protected static List<FarmerController> FarmerPool = new List<FarmerController>();//object pool
+	protected static List<FighterController> FighterPool = new List<FighterController>();//object pool
+	protected static List<DaughterController> DaughterPool = new List<DaughterController>();//object pool
+	protected static List<MoMController> MoMPool = new List<MoMController>();//object pool
 	[SerializeField] protected GameObject farmerFab, fighterFab, daughterFab, eMoMFAb, mMoMFab,  farmFlagFab, fightFlagFab;
 	[SerializeField] protected int farmerCost = 1, farmerCap = 42, fighterCost = 2, fighterCap = 42, daughterCost, daughterCap = 6, startFood = 5, hungerTime = 10;
 	[SyncVar(hook = "SetFoodUI")][SerializeField] protected int foodAmount;
@@ -72,8 +72,8 @@ public class MoMController : Unit_Base
 		if(isServer)
 		{
 			Foods = new List<FoodObject>();
-			if(!MoMs.Contains(this))
-			MoMs.Add(this);
+			if(!MoMPool.Contains(this))
+			MoMPool.Add(this);
 			StartCoroutine(UpdateLocation());
 			StartCoroutine(Hunger());
 		}
@@ -126,7 +126,6 @@ public class MoMController : Unit_Base
 			}else Health = -1;
 		}
 	}
-
 	[Server]
 	public virtual void CreateFarmer()
 	{
@@ -135,9 +134,9 @@ public class MoMController : Unit_Base
 			FoodAmount = -farmerCost;
 			farmers++;
             NewGameController.Instance.TeamSize[teamID] += 1;
-			if(Farmers.Count>0)//Are there any farmer bots already?
+			if(FarmerPool.Count>0)//Are there any farmer bots already?
 			{
-				FarmerController recycle = Farmers.Find(f=> !f.isActive);//are there inactive bots?
+				FarmerController recycle = FarmerPool.Find(f=> !f.isActive);//are there inactive bots?
 				if(recycle!=null)
 				{
 					//reycycle.RpsSetMom
@@ -160,9 +159,9 @@ public class MoMController : Unit_Base
 			FoodAmount = -fighterCost;
 			fighters++;
             NewGameController.Instance.TeamSize[teamID] += 1;
-			if(Fighters.Count>0)
+			if(FighterPool.Count>0)
 			{
-				FighterController recycle = Fighters.Find(f=> !f.isActive);
+				FighterController recycle = FighterPool.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
 					recycle.SetMoM(this.gameObject);
@@ -183,9 +182,9 @@ public class MoMController : Unit_Base
 			FoodAmount = -maxFood;
 			daughters++;
             NewGameController.Instance.TeamSize[teamID] += 1;
-			if(Daughters.Count>0)
+			if(DaughterPool.Count>0)
 			{
-				DaughterController recycle = Daughters.Find(f=> !f.isActive);
+				DaughterController recycle = DaughterPool.Find(f=> !f.isActive);
 				if(recycle!=null)
 				{
 					recycle.SetMoM(this.gameObject);
@@ -206,7 +205,7 @@ public class MoMController : Unit_Base
 		FarmerController fc = spawn.GetComponent<FarmerController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject);
-		Farmers.Add(fc);
+		FarmerPool.Add(fc);
 	}
 	[Server]
 	protected void InstantiateFighter()
@@ -215,7 +214,7 @@ public class MoMController : Unit_Base
 		FighterController fc = spawn.GetComponent<FighterController>();
 		NetworkServer.Spawn(spawn);
 		fc.SetMoM(this.gameObject);
-		Fighters.Add(fc);
+		FighterPool.Add(fc);
 	}
 	[Server]
 	protected void InstantiateDaughter()
@@ -224,13 +223,13 @@ public class MoMController : Unit_Base
 		DaughterController dc = spawn.GetComponent<DaughterController>();
 		NetworkServer.Spawn(spawn);
 		dc.SetMoM(this.gameObject);
-		Daughters.Add(dc);
+		DaughterPool.Add(dc);
 	}
 
 	public virtual void CedeDrones(MoMController newMoM)
 	{
-		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
-		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FarmerController> farmTransfers = FarmerPool.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FighterController> fightTransfers = FighterPool.FindAll(f=> f.isActive && f.myMoM==this);
 		foreach(FarmerController f in farmTransfers)
 		{
 			f.SetMoM(newMoM.gameObject);
@@ -244,8 +243,8 @@ public class MoMController : Unit_Base
 	}
 	protected void KillDrones()
 	{
-		List<FarmerController> farmTransfers = Farmers.FindAll(f=> f.isActive && f.myMoM==this);
-		List<FighterController> fightTransfers = Fighters.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FarmerController> farmTransfers = FarmerPool.FindAll(f=> f.isActive && f.myMoM==this);
+		List<FighterController> fightTransfers = FighterPool.FindAll(f=> f.isActive && f.myMoM==this);
 		foreach(FarmerController f in farmTransfers)
 		{
 			f.Health = -20;
@@ -259,9 +258,9 @@ public class MoMController : Unit_Base
 	protected virtual void newQueen()
 	{
 		List<DaughterController> princesses = new List<DaughterController>();
-		if(Daughters.Count>0)
+		if(DaughterPool.Count>0)
 		{
-			princesses = Daughters.FindAll(f=> f.isActive && f.myMoM==this);
+			princesses = DaughterPool.FindAll(f=> f.isActive && f.myMoM==this);
 		}
 
 		if(princesses.Count>0)

@@ -72,7 +72,6 @@
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\GameController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\GenerateLevel.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\InputControls.cs" />
-    <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\LevelGeneratorEditor.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\LevelProperties.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\MeshGenerator.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\GameController\Level Generator\NewLevelGenerator.cs" />

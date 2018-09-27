@@ -36,13 +36,10 @@ public class NewGameController : NetworkBehaviour
     [SerializeField] GameObject camFab, guiFab;
     PlayerMomController[] Players;
     [SerializeField] EnemyMoMController[] enemies;
-    protected static List<FarmerController> FarmerPool = new List<FarmerController>();//object pool
-    protected static List<FighterController> FighterPool = new List<FighterController>();//object pool
-    protected static List<DaughterController> DaughterPool = new List<DaughterController>();//object pool
-    protected static List<MoMController> MoMPool = new List<MoMController>();//object pool
 
-    // GUIController
+    // GUI Setup
     // Object pools for units
+    // IsGameOver
 
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
     LevelProperties levelProps;

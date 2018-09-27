@@ -114,10 +114,10 @@ public class PlayerMomController : MoMController
 		fightFlag.GetComponent<ParticleSystem>().Play();
 		List<DaughterController> princesses = new List<DaughterController>();
 		List<MoMController> otherMoMs = new List<MoMController>();
-		otherMoMs = MoMs.FindAll(f=> f.isActive && f.teamID == teamID && f.unitID != unitID);
+		otherMoMs = MoMPool.FindAll(f=> f.isActive && f.teamID == teamID && f.unitID != unitID);
 		if(daughters>0)
 		{
-			princesses = Daughters.FindAll(f=> f.isActive && f.teamID == teamID);
+			princesses = DaughterPool.FindAll(f=> f.isActive && f.teamID == teamID);
 		}
 		if(princesses.Count>0)
 		{
@@ -141,7 +141,7 @@ public class PlayerMomController : MoMController
 		List<DaughterController> princesses = new List<DaughterController>();
 		if(daughters>0)
 		{
-			princesses = Daughters.FindAll(f=> f.isActive && f.myMoM==this);
+			princesses = DaughterPool.FindAll(f=> f.isActive && f.myMoM==this);
 		}
 		if(princesses.Count>0)
 		{
