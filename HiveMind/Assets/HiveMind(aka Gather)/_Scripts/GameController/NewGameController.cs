@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.IO;
-public class NewGameController : MonoBehaviour
+public class NewGameController : NetworkBehaviour
 {
     private static NewGameController gameControl;
     public static NewGameController Instance
@@ -35,6 +35,7 @@ public class NewGameController : MonoBehaviour
     int numPlayers = 0;
     [SerializeField] GameObject camFab, guiFab;
     PlayerMomController[] Players;
+    [SerializeField] EnemyMoMController[] enemies;
     protected static List<FarmerController> FarmerPool = new List<FarmerController>();//object pool
     protected static List<FighterController> FighterPool = new List<FighterController>();//object pool
     protected static List<DaughterController> DaughterPool = new List<DaughterController>();//object pool
@@ -46,11 +47,14 @@ public class NewGameController : MonoBehaviour
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
     LevelProperties levelProps;
 
-    private void Start()
+    public override void OnStartServer()
     {
+        base.OnStartServer();
         //levelGen.Init();
-        Players = GameObject.FindObjectsOfType<PlayerMomController>();
-        numPlayers = Players.Length + Bots.Count;
+
+        Players = FindObjectsOfType<PlayerMomController>();
+        enemies = FindObjectsOfType<EnemyMoMController>();
+        numPlayers = Players.Length + enemies.Length;
         for (int t = 0; t < numPlayers; t++)
         {
             TeamSize.Add(0);
@@ -69,6 +73,7 @@ public class NewGameController : MonoBehaviour
         }*/
         
     }
+
     private void LoadGameData()
     {
         string filePath = Application.dataPath + gameDataProjectFilePath;
