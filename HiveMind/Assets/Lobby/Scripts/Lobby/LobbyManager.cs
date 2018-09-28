@@ -415,7 +415,7 @@ namespace Prototype.NetworkLobby
         public override void OnClientError(NetworkConnection conn, int errorCode)
         {
             ChangeTo(mainMenuPanel);
-            infoPanel.Display("Cient error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
+            infoPanel.Display("Client error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
         }
     }
 }
