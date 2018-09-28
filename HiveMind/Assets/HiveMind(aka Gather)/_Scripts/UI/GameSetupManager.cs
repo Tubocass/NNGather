@@ -6,19 +6,78 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.IO;
 
+[System.Serializable]
+public struct PlayerSelection
+{
+    public bool isHuman;
+    public string name;
+    public int teamNumber;
+    public Color teamColor;
+
+    public PlayerSelection(bool human, string tag, int team, Color color)
+    {
+        isHuman = human;
+        name = tag;
+        teamNumber = team;
+        teamColor = color;
+    }
+}
 public class GameSetupManager : MonoBehaviour 
 {
     //[SerializeField]Slider[] sliders;
     //private NetworkManager nm;
     [SerializeField] string seed;
-    int bots, sarlacs, foodScarcity;
+    int bots, humans, sarlacs, foodScarcity;
     LevelProperties lvlProps;
     private string gameDataProjectFilePath = "/StreamingAssets/data.json";
+
     [SerializeField] Color[] teamColors = new Color[5];
-    [SerializeField] NewLevelGenerator newGen;
+    bool[] availableColors;
+    int[] colorIndexes;
+ 
+    [SerializeField] int maxPlayers;
+    TeamSelection[] teamSelections;
+    bool[] activePlayers;
+    [SerializeField] GameObject TeamSelectPrefab;
+    [SerializeField] Transform teamSelectRow;
+
     int[,] mapSize;
     bool useRandomSeed;
 
+    private void Start()
+    {
+        availableColors = new bool[teamColors.Length];
+        activePlayers = new bool[maxPlayers];
+        colorIndexes = new int[maxPlayers];
+
+        for (int c = 0; c < availableColors.Length; c++)
+        {
+            availableColors[c] = true;
+        }
+
+        teamSelections = new TeamSelection[maxPlayers];
+        PlayerSelection[] players = new PlayerSelection[maxPlayers];
+
+        for(int t = 0; t<maxPlayers; t++)
+        {
+            colorIndexes[t] = -1;
+            activePlayers[t] = true;
+            if (t==0)
+            {
+                players[t] = new PlayerSelection(true, "Human", t, SelectColor(t));
+            }
+            else
+            {
+                players[t] = new PlayerSelection(false, "AI", t, SelectColor(t));
+            }
+            colorIndexes[t] = t;
+            GameObject teamSelectItem = Instantiate(TeamSelectPrefab, teamSelectRow);
+            teamSelections[t] = teamSelectItem.GetComponent<TeamSelection>();
+            teamSelections[t].manager = this;
+            teamSelections[t].Setup(players[t]);
+              
+        }
+    }
     public void OnChangeBotValue(int b)
 	{
         bots = b;
@@ -40,19 +99,52 @@ public class GameSetupManager : MonoBehaviour
         useRandomSeed = b;
     }
 
+    public Color SelectColor(int team)
+    {
+        int prevIndex = colorIndexes[team];
+        for (int c = 0; c < availableColors.Length; c++)
+        {
+            if (availableColors[c])
+            {
+                availableColors[c] = false;
+                colorIndexes[team] = c;
+                if (prevIndex != -1)
+                {
+                    availableColors[prevIndex] = true;
+                }
+
+                return teamColors[c];
+            }
+        } 
+        return Color.white;
+    }
+    public void ConfirmPlayer(int team,bool isActive)
+    {
+        activePlayers[team] = isActive;
+    }
+
     public void SaveGameData()
     {
+        PlayerSelection[] players = new PlayerSelection[maxPlayers];
+        for(int p = 0;p<maxPlayers;p++)
+        {
+            if (activePlayers[p])
+            {
+                players[p] = teamSelections[p].AddPlayer();
+            }
+        }
+
         mapSize = new int[64, 64];
         if (useRandomSeed)
         {
             seed = Time.time.ToString();
         }
  
-        lvlProps = new LevelProperties(seed, useRandomSeed, bots, sarlacs, teamColors, mapSize);
+        lvlProps = new LevelProperties(seed, useRandomSeed, bots, sarlacs, players, teamColors, mapSize);
         string dataAsJson = JsonUtility.ToJson(lvlProps);
-
         string filePath = Application.dataPath + gameDataProjectFilePath;
         File.WriteAllText(filePath, dataAsJson);
+
         StartGame();
     }
 

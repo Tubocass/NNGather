@@ -104,6 +104,7 @@
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\UI\MenuScreenController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\UI\PanelController.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\UI\SliderText.cs" />
+    <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\UI\TeamSelection.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\Unit_Base.cs" />
     <Compile Include="Assets\HiveMind(aka Gather)\_Scripts\VineTestScript.cs" />
     <Compile Include="Assets\Lobby\Scripts\DraggablePanel.cs" />
