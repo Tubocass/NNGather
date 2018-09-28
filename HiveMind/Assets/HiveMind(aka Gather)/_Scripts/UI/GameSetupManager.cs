@@ -35,7 +35,7 @@ public class GameSetupManager : MonoBehaviour
     bool[] availableColors;
     int[] colorIndexes;
  
-    [SerializeField] int maxPlayers;
+    [SerializeField] int maxPlayers = 4;
     TeamSelection[] teamSelections;
     bool[] activePlayers;
     [SerializeField] GameObject TeamSelectPrefab;
@@ -78,17 +78,17 @@ public class GameSetupManager : MonoBehaviour
               
         }
     }
-    public void OnChangeBotValue(int b)
+    public void OnChangeBotValue(float b)
 	{
-        bots = b;
+        bots = (int)b;
 	}
-	public void OnChangeSarlacValue(int s)
+	public void OnChangeSarlacValue(float s)
 	{
-        sarlacs = s;
+        sarlacs = (int)s;
 	}
-	public void OnChangePlantValue(int p)
+	public void OnChangePlantValue(float p)
 	{
-        foodScarcity = p;
+        foodScarcity = (int)p;
 	}
     public void OnChangeSeedValue(string s)
     {
@@ -135,9 +135,16 @@ public class GameSetupManager : MonoBehaviour
         }
         PlayerSelection[] players = new PlayerSelection[numPlayers];
         for (int p = 0; p < numPlayers; p++)
-        { 
-            players[p] = teamSelections[p].AddPlayer();
-            
+        {
+            for (int ap = 0; ap < maxPlayers; ap++)
+            {
+                if (activePlayers[ap])
+                { 
+                    players[p] = teamSelections[ap].AddPlayer();
+                    activePlayers[ap] = false;
+                    break;
+                }
+            }
         }
 
         mapSize = new int[64, 64];

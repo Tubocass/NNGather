@@ -13,6 +13,7 @@ public class NewLevelGenerator: NetworkBehaviour
     public int randomFillPercent, minRoomSize, minWallSize;
     LevelProperties levelProps;
     [SerializeField] private GameObject EnemyMoMFab;
+    PlayerMomController Player;
     int[,] map;
     [SerializeField] GameObject[] spawnPoints;
     private int MoMCount;
@@ -83,24 +84,31 @@ public class NewLevelGenerator: NetworkBehaviour
     {
         //Create NetworStartPoints for players
     }
+    [Server]
     public void SpawnMoMs(PlayerSelection[] players)
     {
         GameObject newMoM = null;
         MoMController mom;
         for (int p = 0; p < players.Length; p++)
         {
-            if(players[p].isHuman)
+            if (!players[p].playerHandle.Equals(""))
             {
-                MoMCount += 1;
+                if (players[p].isHuman)
+                {
+                    //ClientScene.AddPlayer(0);
+                    //Player = FindObjectOfType<PlayerMomController>();
+                    //SetMoMObj(Player);
+                    MoMCount += 1;
+                }
+                else
+                {
+                    newMoM = Instantiate(EnemyMoMFab, objectHeight, Quaternion.identity) as GameObject;
+                    mom = newMoM.GetComponent<MoMController>();
+                    mom.TeamColor = players[MoMCount].teamColor;
+                    SetMoMObj(mom);
+                    NetworkServer.Spawn(newMoM);
+                }
             }
-            else
-            {
-                newMoM = Instantiate(EnemyMoMFab, objectHeight, Quaternion.identity) as GameObject;
-                mom = newMoM.GetComponent<MoMController>();
-                mom.TeamColor = players[MoMCount].teamColor;
-                SetMoMObj(mom);
-                NetworkServer.Spawn(newMoM);
-            }  
         }
     }
     void SetMoMObj(MoMController newMoM)
