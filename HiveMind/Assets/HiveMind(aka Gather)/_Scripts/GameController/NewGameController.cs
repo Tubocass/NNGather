@@ -34,8 +34,8 @@ public class NewGameController : NetworkBehaviour
     public bool IsDaylight = true;
     int numPlayers = 0;
     [SerializeField] GameObject camFab, guiFab;
-    PlayerMomController[] Players;
-    [SerializeField] EnemyMoMController[] enemies;
+    //PlayerMomController[] Players;
+    //[SerializeField] EnemyMoMController[] enemies;
 
     // GUI Setup
     // Object pools for units
@@ -47,11 +47,12 @@ public class NewGameController : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        LoadGameData();
         //levelGen.Init();
 
-        Players = FindObjectsOfType<PlayerMomController>();
-        enemies = FindObjectsOfType<EnemyMoMController>();
-        numPlayers = Players.Length + enemies.Length;
+        //Players = FindObjectsOfType<PlayerMomController>();
+        //enemies = FindObjectsOfType<EnemyMoMController>();
+        numPlayers = levelProps.players.Length;
         for (int t = 0; t < numPlayers; t++)
         {
             TeamSize.Add(0);
@@ -68,7 +69,6 @@ public class NewGameController : NetworkBehaviour
             GUI = canvas.GetComponent<GUIController>();
             GUI.SetMoM(Players[p]);
         }*/
-        
     }
 
     private void LoadGameData()

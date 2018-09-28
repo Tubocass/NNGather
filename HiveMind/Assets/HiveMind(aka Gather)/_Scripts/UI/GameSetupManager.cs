@@ -10,14 +10,14 @@ using System.IO;
 public struct PlayerSelection
 {
     public bool isHuman;
-    public string name;
+    public string playerHandle;
     public int teamNumber;
     public Color teamColor;
 
     public PlayerSelection(bool human, string tag, int team, Color color)
     {
         isHuman = human;
-        name = tag;
+        playerHandle = tag;
         teamNumber = team;
         teamColor = color;
     }
@@ -125,13 +125,19 @@ public class GameSetupManager : MonoBehaviour
 
     public void SaveGameData()
     {
-        PlayerSelection[] players = new PlayerSelection[maxPlayers];
+        int numPlayers = 0;
         for(int p = 0;p<maxPlayers;p++)
         {
             if (activePlayers[p])
             {
-                players[p] = teamSelections[p].AddPlayer();
+                numPlayers += 1;
             }
+        }
+        PlayerSelection[] players = new PlayerSelection[numPlayers];
+        for (int p = 0; p < numPlayers; p++)
+        { 
+            players[p] = teamSelections[p].AddPlayer();
+            
         }
 
         mapSize = new int[64, 64];
@@ -140,7 +146,7 @@ public class GameSetupManager : MonoBehaviour
             seed = Time.time.ToString();
         }
  
-        lvlProps = new LevelProperties(seed, useRandomSeed, bots, sarlacs, players, teamColors, mapSize);
+        lvlProps = new LevelProperties(seed, useRandomSeed, bots, sarlacs, players, mapSize);
         string dataAsJson = JsonUtility.ToJson(lvlProps);
         string filePath = Application.dataPath + gameDataProjectFilePath;
         File.WriteAllText(filePath, dataAsJson);

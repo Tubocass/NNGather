@@ -16,15 +16,17 @@ public class TeamSelection : MonoBehaviour
    
     public void Setup(PlayerSelection player)
     {
-        colorBox.color = player.teamColor;
         myColor = player.teamColor;
-        nameText.text = player.name;
+        myName = player.playerHandle;
         team = player.teamNumber;
         isHuman = player.isHuman;
+
+        colorBox.color = player.teamColor;
+        nameText.text = player.playerHandle;
     }
     public PlayerSelection AddPlayer()
     {
-        PlayerSelection player = new PlayerSelection(isHuman, name, team, myColor);
+        PlayerSelection player = new PlayerSelection(isHuman, myName, team, myColor);
         return player;
     }
     public void ToggleActive(bool active)

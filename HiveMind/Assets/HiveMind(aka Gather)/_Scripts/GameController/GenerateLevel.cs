@@ -82,8 +82,8 @@ public class GenerateLevel : NetworkBehaviour
 		zz = groundSize.z - groundSize.z/20;
 		xd=xx;
 		zd=zz;
-        //Colors = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
-        Colors = levelProps.teamColors;
+        Colors = new Color[] { gatherColor, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        //Colors = levelProps.teamColors;
 		availableColors = new bool[Colors.Length];
 		for(int c = 0; c<availableColors.Length; c++)
 		{
