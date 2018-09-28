@@ -22,7 +22,7 @@ public class NewGameController : NetworkBehaviour
             return gameControl;
         }
     }
-    //private NewLevelGenerator levelGen;
+    private NewLevelGenerator levelGen;
     public List<int> TeamSize = new List<int>();
     List<MoMController> Bots = new List<MoMController>();
     public int NumberOfTeams {
@@ -48,15 +48,19 @@ public class NewGameController : NetworkBehaviour
     {
         base.OnStartServer();
         LoadGameData();
-        //levelGen.Init();
-
-        //Players = FindObjectsOfType<PlayerMomController>();
-        //enemies = FindObjectsOfType<EnemyMoMController>();
+        levelGen = GetComponent<NewLevelGenerator>();
         numPlayers = levelProps.players.Length;
+
         for (int t = 0; t < numPlayers; t++)
         {
             TeamSize.Add(0);
         }
+
+        levelGen.SpawnMoMs(levelProps.players);
+
+        //Players = FindObjectsOfType<PlayerMomController>();
+        //enemies = FindObjectsOfType<EnemyMoMController>();
+
         //In a networkgame this should be done on [Client] only 
         /*for (int p = 0; p < Players.Length; p++)
         {

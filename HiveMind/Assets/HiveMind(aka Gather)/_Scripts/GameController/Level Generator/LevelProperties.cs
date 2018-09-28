@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-class LevelProperties
+public class LevelProperties
 {
     public string seed;
     public bool useRandomSeed;

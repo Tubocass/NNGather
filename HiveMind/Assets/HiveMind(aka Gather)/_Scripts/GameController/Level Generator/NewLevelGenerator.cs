@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class NewLevelGenerator: MonoBehaviour
+public class NewLevelGenerator: NetworkBehaviour
 {
     public int width = 64, height = 64, hallwayWidth = 4;
     public bool useRandomSeed = true;
     public string seed;
     [Range(0, 100)]
     public int randomFillPercent, minRoomSize, minWallSize;
+    LevelProperties levelProps;
+    [SerializeField] private GameObject EnemyMoMFab;
     int[,] map;
+    [SerializeField] GameObject[] spawnPoints;
+    private int MoMCount;
+    Vector3 objectHeight = new Vector3(0, 0.5f, 0);
+
     //use a Scriptable obj to hold all my Prefab refernces.
     //GameObject[] terrainTiles;
     [SerializeField] readonly PrefabContainer prefabs;
@@ -26,8 +33,9 @@ public class NewLevelGenerator: MonoBehaviour
     }
     public void Init()
     {
-       // terrainTiles = prefabs.tilePrefabs;
-       // LoadGameData();
+        // terrainTiles = prefabs.tilePrefabs;
+        // LoadGameData();
+        //levelProps = properties;
         map = new int[width, height];
         RandomizeMap();
         for (int i = 0; i < 4; i++)
@@ -58,6 +66,50 @@ public class NewLevelGenerator: MonoBehaviour
         //CreateTiles();
     }
 
+    /*
+      * for(players.length)
+      * {
+      *      if(players[i].isHuman)
+      *      {
+      *          spawn player
+      *      }else
+      *      {
+      *          spawn bot
+      *      }
+      *      SetPositionAndColor();
+      * }
+      * */
+    public void PlaceSpawnPoints()
+    {
+        //Create NetworStartPoints for players
+    }
+    public void SpawnMoMs(PlayerSelection[] players)
+    {
+        GameObject newMoM = null;
+        MoMController mom;
+        for (int p = 0; p < players.Length; p++)
+        {
+            if(players[p].isHuman)
+            {
+                MoMCount += 1;
+            }
+            else
+            {
+                newMoM = Instantiate(EnemyMoMFab, objectHeight, Quaternion.identity) as GameObject;
+                mom = newMoM.GetComponent<MoMController>();
+                mom.TeamColor = players[MoMCount].teamColor;
+                SetMoMObj(mom);
+                NetworkServer.Spawn(newMoM);
+            }  
+        }
+    }
+    void SetMoMObj(MoMController newMoM)
+    {
+        newMoM.teamID = MoMCount;
+        newMoM.transform.position = spawnPoints[MoMCount].transform.position;
+        NewGameController.Instance.TeamSize[newMoM.teamID] += 1;
+        MoMCount += 1;
+    }
     void ProcessMap()
     {
         List<List<Coord>> wallRegions = GetRegions(1);

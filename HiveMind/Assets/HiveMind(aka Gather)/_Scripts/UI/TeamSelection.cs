@@ -9,7 +9,7 @@ public class TeamSelection : MonoBehaviour
     public Button colorButton;
     [SerializeField] Image colorBox;
     [SerializeField] Text nameText;
-    public Color myColor;
+    Color myColor;
     string myName;
     bool isHuman;
     int team, colorIndex;
@@ -35,7 +35,8 @@ public class TeamSelection : MonoBehaviour
     }
    public void ChangeColor()
     {
-        colorBox.color = manager.SelectColor(team);
+        myColor = manager.SelectColor(team);
+        colorBox.color = myColor;
     }
     /*
      * OnToggle: Fade in/out row, add to number of players

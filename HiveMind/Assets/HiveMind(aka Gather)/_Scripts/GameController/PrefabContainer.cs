@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PrefabContainer : ScriptableObject
 {
+    public Hashtable prefabList;
     public GameObject[] objectPrefabs, tilePrefabs;
 }
