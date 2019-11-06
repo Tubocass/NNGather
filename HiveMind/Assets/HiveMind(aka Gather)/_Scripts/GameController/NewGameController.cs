@@ -24,7 +24,7 @@ public class NewGameController : NetworkBehaviour
     }
     private NewLevelGenerator levelGen;
     public List<int> TeamSize = new List<int>();
-    List<MoMController> Bots = new List<MoMController>();
+    //List<MoMController> Bots = new List<MoMController>();
     public int NumberOfTeams {
         get
         {
@@ -34,8 +34,6 @@ public class NewGameController : NetworkBehaviour
     public bool IsDaylight = true;
     int numPlayers = 0;
     [SerializeField] GameObject camFab, guiFab;
-    //PlayerMomController[] Players;
-    //[SerializeField] EnemyMoMController[] enemies;
 
     // GUI Setup
     // Object pools for units
@@ -57,22 +55,6 @@ public class NewGameController : NetworkBehaviour
         }
 
         levelGen.SpawnMoMs(levelProps.players);
-
-        //Players = FindObjectsOfType<PlayerMomController>();
-        //enemies = FindObjectsOfType<EnemyMoMController>();
-
-        //In a networkgame this should be done on [Client] only 
-        /*for (int p = 0; p < Players.Length; p++)
-        {
-            GameObject mainCam, canvas;
-            GUIController GUI;
-            mainCam = (GameObject)Instantiate(camFab, Players[p].transform.position + Vector3.up * 30, Quaternion.identity);
-            mainCam.transform.Rotate(90, 0, 0);
-            Players[p].GetComponent<InputControls>().SetCamera(mainCam.GetComponent<CameraFollow>());
-            canvas = (GameObject)Instantiate(guiFab, Vector3.zero, Quaternion.identity);
-            GUI = canvas.GetComponent<GUIController>();
-            GUI.SetMoM(Players[p]);
-        }*/
     }
 
     private void LoadGameData()
@@ -84,9 +66,6 @@ public class NewGameController : NetworkBehaviour
             string dataAsJson = File.ReadAllText(filePath);
             levelProps = JsonUtility.FromJson<LevelProperties>(dataAsJson);
             Debug.Log("File Loaded");
-            //seed = levelProps.seed;
-            //useRandomSeed = levelProps.useRandomSeed;
-            //map = levelProps.map;
         }
         else
         {
@@ -107,5 +86,4 @@ public class NewGameController : NetworkBehaviour
         }
         else return 0f;
     }
-
 }

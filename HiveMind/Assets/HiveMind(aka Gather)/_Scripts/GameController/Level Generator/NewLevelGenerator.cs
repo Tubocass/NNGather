@@ -18,7 +18,6 @@ public class NewLevelGenerator: NetworkBehaviour
     [SerializeField] GameObject[] spawnPoints;
     private int MoMCount;
     Vector3 objectHeight = new Vector3(0, 0.5f, 0);
-
     //use a Scriptable obj to hold all my Prefab refernces.
     //GameObject[] terrainTiles;
     [SerializeField] readonly PrefabContainer prefabs;
@@ -67,19 +66,6 @@ public class NewLevelGenerator: NetworkBehaviour
         //CreateTiles();
     }
 
-    /*
-      * for(players.length)
-      * {
-      *      if(players[i].isHuman)
-      *      {
-      *          spawn player
-      *      }else
-      *      {
-      *          spawn bot
-      *      }
-      *      SetPositionAndColor();
-      * }
-      * */
     public void PlaceSpawnPoints()
     {
         //Create NetworStartPoints for players
@@ -105,13 +91,13 @@ public class NewLevelGenerator: NetworkBehaviour
                     newMoM = Instantiate(EnemyMoMFab, objectHeight, Quaternion.identity) as GameObject;
                     mom = newMoM.GetComponent<MoMController>();
                     mom.TeamColor = players[MoMCount].teamColor;
-                    SetMoMObj(mom);
+                    MomSetup(mom);
                     NetworkServer.Spawn(newMoM);
                 }
             }
         }
     }
-    void SetMoMObj(MoMController newMoM)
+    void MomSetup(MoMController newMoM)
     {
         newMoM.teamID = MoMCount;
         newMoM.transform.position = spawnPoints[MoMCount].transform.position;

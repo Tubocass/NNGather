@@ -112,7 +112,7 @@ public class MeshGenerator : MonoBehaviour
         EdgeCollider2D[] currentColliders = gameObject.GetComponents<EdgeCollider2D>();
         for (int i = 0; i < currentColliders.Length; i++)
         {
-            Destroy(currentColliders[i]);
+            DestroyImmediate(currentColliders[i]);
         }
 
         CalculateMeshOutlines();
