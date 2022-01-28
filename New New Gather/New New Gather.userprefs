@@ -9,10 +9,10 @@
       <File FileName="Assets\_Scripts\FoodSpawner.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GameController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\LightController.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\GameController\InputControls.cs" Line="53" Column="2" />
+      <File FileName="Assets\_Scripts\GameController\InputControls.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\GameController\GUIController.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\CameraFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\NetworkTestScripts\Interact.cs" Line="106" Column="27" />
+      <File FileName="Assets\_Scripts\NetworkTestScripts\Interact.cs" Line="1" Column="1" />
       <File FileName="Assets\_Scripts\NetworkTestScripts\DumbFuckingScript.cs" Line="8" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
