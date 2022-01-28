@@ -1,9 +1,9 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{4AA9553C-FEB0-2472-DB5F-E05633985B90}") = "New New Gather", "Assembly-CSharp.csproj", "{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{48AEF1FF-DDF7-51F6-520A-F74A6FE7085F}"
 EndProject
-Project("{4AA9553C-FEB0-2472-DB5F-E05633985B90}") = "New New Gather", "Assembly-CSharp-Editor.csproj", "{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{BB2D9AF1-B8AD-77EB-261F-37A3E869D67B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
