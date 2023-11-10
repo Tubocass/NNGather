@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Gather.AI;
+
+namespace gather
+{
+
+    public class State_Engage : IBehaviorState
+    {
+        Drone droneController;
+        ITarget target;
+        public event TargetEvent TargetLost;
+        public event TargetEvent TargetReached;
+        Blackboard context;
+        SearchConfig searchConfig;
+
+        public State_Engage(Drone droneController, Blackboard bb, SearchConfig config)
+        {
+            this.droneController = droneController;
+            context = bb;
+            searchConfig = config;
+        }
+
+        public void EnterState()
+        {
+            //Debug.Log("Engaging");
+            target = context.GetValue<ITarget>(Configs.Target);
+            if(target !=null)
+            {
+                droneController.SetDestination(target.Location());
+                droneController.StartCoroutine(MoveToTarget());
+
+            }
+        }
+
+        public void AssesSituation()
+        {
+            if (!target.CanTarget(droneController.GetTeam())
+                || Vector3.Distance(target.Location(), droneController.Location()) > searchConfig.searchDist)
+            {
+                TargetLost?.Invoke();
+            }
+            else
+            {
+                droneController.SetDestination(target.Location());
+            }
+        }
+
+        public void ExitState()
+        {
+            target = null;
+            droneController.StopAllCoroutines();
+        }
+
+        string IBehaviorState.ToString()
+        {
+            return States.engage;
+        }
+
+        public IEnumerator MoveToTarget()
+        {
+            while (target != null && Vector3.Distance(target.Location(), droneController.Location()) > 1)
+            {
+                droneController.SetDestination(target.Location());
+                yield return new WaitForSeconds(0.25f);
+            }
+            TargetReached?.Invoke();
+        }
+
+    }
+}
