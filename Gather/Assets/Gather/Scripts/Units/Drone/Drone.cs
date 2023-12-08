@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PolyNav;
+using Gather.AI;
 
 namespace gather
 {
@@ -9,7 +10,8 @@ namespace gather
     {
         protected Queen myQueen;
         protected Transform queensTransform;
-        protected State_Return returnState;
+        //protected State_Return returnState;
+        protected AIController_Interface AIController;
 
         public IBehaviorState BehaviorState
         {
@@ -29,8 +31,8 @@ namespace gather
         protected override void Awake()
         {
             base.Awake();
-            
-            returnState = new State_Return(this);
+
+            //returnState = new State_Return(this);
             navAgent.OnDestinationReached += ReachedDestination;
 
         }
@@ -40,10 +42,7 @@ namespace gather
             //base.OnDisable();
             //myQueen = null;
             queensTransform = null;
-            if (BehaviorState != null)
-            {
-                BehaviorState.ExitState();
-            }
+            AIController?.Disable();
         }
 
         public virtual void SetQueen(Queen queenie)
@@ -52,10 +51,14 @@ namespace gather
             queensTransform = queenie.transform;
         }
 
-        protected virtual void QueenMoved()
+        public Queen GetMyQueen()
         {
-
+            return myQueen;
         }
+
+        //protected virtual void QueenMoved()
+        //{
+        //}
         public void SetDestination(Vector2 location)
         {
             navAgent.SetDestination(location);
@@ -63,10 +66,7 @@ namespace gather
 
         protected virtual void ReachedDestination()
         {
-            if (BehaviorState != null)
-            {
-                BehaviorState.AssesSituation();
-            }
+            AIController?.AssessSituation();
         }
 
         public void HaltNavigation()

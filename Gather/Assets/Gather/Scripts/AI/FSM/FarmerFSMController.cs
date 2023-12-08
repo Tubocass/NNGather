@@ -35,7 +35,7 @@ namespace Gather.AI
         public void Enable(int team)
         {
             enemyDetector.SetTeam(team);
-            drone.getMyQueen().QueenMove += returnState.QueenMoved;
+            drone.GetMyQueen().QueenMove += returnState.QueenMoved;
 
             SearchForFood();
         }
@@ -47,18 +47,24 @@ namespace Gather.AI
                 if (BehaviorState.ToString() != States.returnToQueen)
                 {
                     BehaviorState = returnState;
+                }else
+                {
+                    BehaviorState.AssesSituation();
                 }
             }
             else if (BehaviorState.ToString() != States.search)
             {
                 SearchForFood();
+            }else
+            {
+                BehaviorState.AssesSituation();
             }
         }
 
         public override void Disable()
         {
             base.Disable();
-            drone.getMyQueen().QueenMove -= returnState.QueenMoved;
+            drone.GetMyQueen().QueenMove -= returnState.QueenMoved;
         }
 
         void SearchForFood()
