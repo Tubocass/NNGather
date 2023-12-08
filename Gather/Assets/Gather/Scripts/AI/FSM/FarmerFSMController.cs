@@ -1,0 +1,76 @@
+﻿using System.Collections;
+using UnityEngine;
+using gather;
+
+namespace Gather.AI
+{
+    public class FarmerFSMController : FSMController, AIController_Interface
+    {
+        SearchConfig foodSearchConfig;
+        SearchConfig enemySearchConfig;
+        State_Search searchState;
+        State_Flee fleeState;
+        State_Return returnState;
+
+        EnemyDetector enemyDetector;
+        FarmerDrone drone;
+        Blackboard context = new Blackboard();
+
+        public FarmerFSMController(FarmerDrone farmerDrone, EnemyDetector enemyDetector, Blackboard context)
+        {
+            this.drone = farmerDrone;
+            this.enemyDetector = enemyDetector;
+            this.context = context;
+
+
+            searchState = new State_Search(drone, context.GetValue<SearchConfig>(Configs.SearchConfig));
+            fleeState = new State_Flee(drone, context.GetValue<SearchConfig>(Configs.EnemySearchConfig));
+            returnState = new State_Return(drone);
+            
+            enemyDetector.SetEnemyType(unit => unit.GetType() == typeof(FighterDrone));
+            enemyDetector.EnemyDetected += Flee;
+            enemyDetector.AllClear += AssessSituation;
+        }
+
+        public void Enable(int team)
+        {
+            enemyDetector.SetTeam(team);
+            drone.getMyQueen().QueenMove += returnState.QueenMoved;
+
+            SearchForFood();
+        }
+
+        public void AssessSituation()
+        {
+            if (drone.IsCarryingFood())
+            {
+                if (BehaviorState.ToString() != States.returnToQueen)
+                {
+                    BehaviorState = returnState;
+                }
+            }
+            else if (BehaviorState.ToString() != States.search)
+            {
+                SearchForFood();
+            }
+        }
+
+        public override void Disable()
+        {
+            base.Disable();
+            drone.getMyQueen().QueenMove -= returnState.QueenMoved;
+        }
+
+        void SearchForFood()
+        {
+            BehaviorState = searchState;
+        }
+
+        void Flee()
+        {
+            //HaltNavigation();
+            //fleeState.SetEnemiesList(enemyDetector.GetEnemiesList());
+            BehaviorState = fleeState;
+        }
+    }
+}
