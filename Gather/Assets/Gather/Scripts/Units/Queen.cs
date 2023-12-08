@@ -18,6 +18,23 @@ namespace gather
         private int farmerCost = 1, fighterCost = 2;
         public Counter foodCounter;
 
+        IEnumerator SpawnDrones()
+        {
+            while(true)
+            {
+                float spawnChance = Random.value;
+
+                if(spawnChance > .8f)
+                {
+                    SpawnFighter();
+                }else
+                {
+                    SpawnFarmer();
+                }
+                yield return new WaitForSeconds(2f);
+            }
+        }
+
         protected override void Awake()
         {
             base.Awake();
@@ -32,6 +49,7 @@ namespace gather
             SetTeamColor();
             Collect?.Invoke(foodCounter.amount);
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
+            StartCoroutine("SpawnDrones");
         }
 
         private void OnDisable()
