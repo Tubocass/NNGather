@@ -40,6 +40,7 @@ namespace gather
             base.Awake();
             foodCounter = ScriptableObject.CreateInstance<Counter>();
             foodCounter.SetAmount(5);
+            navAgent.OnDestinationReached += ReachedDestination;
         }
 
         protected void Start()
@@ -49,7 +50,7 @@ namespace gather
             SetTeamColor();
             Collect?.Invoke(foodCounter.amount);
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
-            StartCoroutine("SpawnDrones");
+            //StartCoroutine("SpawnDrones");
         }
 
         private void OnDisable()
@@ -62,8 +63,8 @@ namespace gather
             if (foodCounter.amount >= farmerCost)
             {
                 FarmerDrone farmer = droneFactory.SpawnDrone<FarmerDrone>(myTransform.position).GetComponent<FarmerDrone>();
-                farmer.SetTeam(teamConfig);
                 farmer.SetQueen(this);
+                farmer.SetTeam(teamConfig);
 
                 teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, 1);
                 foodCounter.AddAmount(-farmerCost);
@@ -111,6 +112,11 @@ namespace gather
             }
             newPosition /= size;
             navAgent.SetDestination(newPosition);
+            QueenMove?.Invoke();
+        }
+
+        void ReachedDestination()
+        {
             QueenMove?.Invoke();
         }
     }

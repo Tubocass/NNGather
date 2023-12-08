@@ -30,5 +30,16 @@ namespace gather
                 parentDrone.PickupFood(pellet);
             }
         }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (parentDrone.IsCarryingFood())
+            {
+                if (collision.gameObject.CompareTag(Tags.queen))
+                {
+                    parentDrone.DropoffFood(collision.gameObject.GetComponent<Queen>());
+                }
+            }
+        }
     }
 }

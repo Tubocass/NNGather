@@ -26,6 +26,7 @@ namespace gather
         private void OnEnable()
         {
             myCollider.enabled = true;
+            isTargeted = false;
         }
         public void Targeted(int team, bool target)
         {
