@@ -9,13 +9,13 @@ namespace gather
     public class GameController : MonoBehaviour
     {
         CameraController cameraController;
-        [SerializeField] Button farmerButton; //  temporary
-        [SerializeField] Button fighterButton; //  temporary
+        //[SerializeField] Button farmerButton; //  temporary
+        //[SerializeField] Button fighterButton; //  temporary
         [SerializeField] Queen playerQueen; //  will eventually be spawned after world setup
         Blackboard globalContext = new Blackboard();
         [SerializeField] UIController uiController;
         [SerializeField] int numTeams;
-        TeamConfig[] teams;
+        [SerializeField] TeamConfig[] teams;
 
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace gather
 
         private void Start()
         {
-           
+            StartGame();
         }
     }
 }
