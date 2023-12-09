@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using gather;
+﻿using gather;
 
 namespace Gather.AI
 {
@@ -26,7 +24,6 @@ namespace Gather.AI
         private int hunger = 1;
         int targetFoodCount;
 
-
         public QueenFSMController (Queen queen, Blackboard context)
         {
             this.queen = queen;
@@ -51,9 +48,6 @@ namespace Gather.AI
 
         public void AssessSituation()
         {
-            /* 
-             * called on Gather
-            */
             BehaviorState.AssesSituation();
         }
 

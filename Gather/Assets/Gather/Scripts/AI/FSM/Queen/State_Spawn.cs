@@ -9,8 +9,8 @@ namespace Gather.AI
         public GameEvent Finished;
         Queen queen;
         Blackboard context;
-        TeamConfig teamConfig;
-        private int farmerCost = 1, fighterCost = 2;
+        //TeamConfig teamConfig;
+        //private int farmerCost = 1, fighterCost = 2;
         private int farmerCap = 6, fighterCap = 3;
         private int farmers, fighters;
 
@@ -19,13 +19,14 @@ namespace Gather.AI
             this.queen = queen;
             this.context = context;
         }
+
         public void EnterState()
         {
             // spawn how many of what
             farmers = 0;
             fighters = 0;
             queen.StartCoroutine(SpawnDrones());
-            Debug.Log("Spawning");
+            //Debug.Log("Spawning");
         }
 
         public void AssesSituation()

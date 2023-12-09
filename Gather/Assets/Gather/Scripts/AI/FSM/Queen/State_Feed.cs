@@ -27,7 +27,7 @@ namespace Gather.AI
 
         public void AssesSituation()
         {
-            Debug.Log("Food left to eat " + (targetFoodCount - foodCounter.amount));
+            //Debug.Log("Food left to eat " + (targetFoodCount - foodCounter.amount));
             if(foodCounter.amount >= targetFoodCount)
             {
                 Finished?.Invoke();

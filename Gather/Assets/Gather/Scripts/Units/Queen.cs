@@ -6,35 +6,17 @@ namespace gather
 {
     public class Queen : Unit
     {
-        DroneFactory droneFactory;
         public LocationEvent redFlag;
         public LocationEvent greenFlag;
         public FoodEvent Collect;
         public GameEvent QueenMove;
         public AIController_Interface AIController;
+        DroneFactory droneFactory;
         Blackboard context = new Blackboard();
-        //[SerializeField] int food = 5;
         [SerializeField] int foodQueueSize = 10;
         Queue<Vector2> foodLocations;
         private int farmerCost = 1, fighterCost = 2;
         public Counter foodCounter;
-
-        //IEnumerator SpawnDrones()
-        //{
-        //    while(true)
-        //    {
-        //        float spawnChance = Random.value;
-
-        //        if(spawnChance > .8f)
-        //        {
-        //            SpawnFighter();
-        //        }else
-        //        {
-        //            SpawnFarmer();
-        //        }
-        //        yield return new WaitForSeconds(2f);
-        //    }
-        //}
 
         protected override void Awake()
         {
@@ -56,7 +38,6 @@ namespace gather
             context.SetValue(Configs.FoodLocations, foodLocations);
             AIController = new QueenFSMController(this, context);
             AIController.Enable(GetTeam());
-            //StartCoroutine("SpawnDrones");
         }
 
         private void OnDisable()
@@ -104,24 +85,10 @@ namespace gather
             {
                 foodLocations.Dequeue();
                 foodLocations.Enqueue(fromLocation);
-                //MovePosition();
             }
 
             AIController.AssessSituation();
         }
-
-        //void MovePosition()
-        //{
-        //    Vector2 newPosition =  Location();
-        //    int size = foodLocations.Count;
-        //    for (int np = size; np > 0; np--)
-        //    {
-        //        newPosition += foodLocations.Dequeue();
-        //    }
-        //    newPosition /= size;
-        //    navAgent.SetDestination(newPosition);
-        //    QueenMove?.Invoke();
-        //}
 
         void ReachedDestination()
         {

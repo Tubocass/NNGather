@@ -18,7 +18,6 @@ namespace Gather.AI
 
         public void EnterState()
         {
-
             Queue<Vector2> foods = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
             Vector2 newPosition = queen.Location();
             int size = foods.Count;
