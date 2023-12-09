@@ -36,11 +36,6 @@ namespace gather
             return myQueen;
         }
 
-        public void SetDestination(Vector2 location)
-        {
-            navAgent.SetDestination(location);
-        }
-
         protected virtual void ReachedDestination()
         {
             AIController?.AssessSituation();

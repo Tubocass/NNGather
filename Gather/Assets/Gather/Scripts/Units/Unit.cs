@@ -52,5 +52,10 @@ namespace gather
         {
             return teamConfig.Team != team && gameObject.activeSelf;
         }
+
+        public void SetDestination(Vector2 location)
+        {
+            navAgent.SetDestination(location);
+        }
     }
 }

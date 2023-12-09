@@ -33,11 +33,6 @@ namespace Gather.AI
             BehaviorState.AssesSituation();
         }
 
-        public override void Disable()
-        {
-            base.Disable();
-        }
-
         public void TargetFound()
         {
             BehaviorState = engageState;
