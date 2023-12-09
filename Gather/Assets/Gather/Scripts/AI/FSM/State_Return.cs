@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using gather;
 
-namespace gather
+namespace Gather.AI
 {
     public class State_Return : IBehaviorState
     {

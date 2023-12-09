@@ -50,7 +50,7 @@ namespace gather
             SetTeamColor();
             Collect?.Invoke(foodCounter.amount);
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
-            //StartCoroutine("SpawnDrones");
+            StartCoroutine("SpawnDrones");
         }
 
         private void OnDisable()

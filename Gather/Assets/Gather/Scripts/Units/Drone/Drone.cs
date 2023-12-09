@@ -10,39 +10,19 @@ namespace gather
     {
         protected Queen myQueen;
         protected Transform queensTransform;
-        //protected State_Return returnState;
         protected AIController_Interface AIController;
-
-        public IBehaviorState BehaviorState
-        {
-            get { return behaviorState; }
-            set
-            {
-                if (behaviorState != null)
-                {
-                    behaviorState.ExitState();
-                }
-                behaviorState = value;
-                behaviorState.EnterState();
-            }
-        }
-        private IBehaviorState behaviorState;
 
         protected override void Awake()
         {
             base.Awake();
 
-            //returnState = new State_Return(this);
             navAgent.OnDestinationReached += ReachedDestination;
-
         }
 
         protected virtual void OnDisable()
         {
-            //base.OnDisable();
-            //myQueen = null;
-            queensTransform = null;
             AIController?.Disable();
+            queensTransform = null;
         }
 
         public virtual void SetQueen(Queen queenie)
@@ -56,9 +36,6 @@ namespace gather
             return myQueen;
         }
 
-        //protected virtual void QueenMoved()
-        //{
-        //}
         public void SetDestination(Vector2 location)
         {
             navAgent.SetDestination(location);

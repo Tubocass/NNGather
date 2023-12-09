@@ -7,20 +7,13 @@ namespace gather
     public class FighterDrone : Drone
     {
         [SerializeField] SearchConfig enemySearchConfig;
-        State_Hunt huntState;
-        State_Engage engageState;
         Blackboard context = new Blackboard();
 
         protected override void Awake()
         {
             base.Awake();
-
-            huntState = new State_Hunt(this, context, enemySearchConfig);
-            huntState.TargetFound += TargetFound;
-
-            engageState = new State_Engage(this, context, enemySearchConfig);
-            engageState.TargetLost += StartHunt;
-            engageState.TargetReached += StartHunt;
+            context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
+            AIController = new FighterFSMController(this, context);
         }
 
         private void OnDrawGizmosSelected()
@@ -36,7 +29,7 @@ namespace gather
 
         private void Enable()
         {
-            StartHunt();
+            AIController.Enable(GetTeam());
         }
 
         protected override void OnDisable()
@@ -50,16 +43,6 @@ namespace gather
         {
             base.SetQueen(queenie);
             queenie.redFlag += SetDestination;
-        }
-
-        public void TargetFound()
-        {
-            BehaviorState = engageState;
-        }
-
-        public void StartHunt()
-        {
-            BehaviorState = huntState;
         }
     }
 }

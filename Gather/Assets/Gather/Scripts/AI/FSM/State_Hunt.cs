@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Gather.AI;
+using gather;
 
-namespace gather
+namespace Gather.AI
 {
     public class State_Hunt : IBehaviorState
     {
@@ -15,11 +13,11 @@ namespace gather
         public event TargetEvent TargetFound;
 
 
-        public State_Hunt(FighterDrone fighter, Blackboard bb, SearchConfig config)
+        public State_Hunt(FighterDrone fighter, Blackboard bb)
         {
             drone = fighter;
             context = bb;
-            this.config = config;
+            config = context.GetValue<SearchConfig>(Configs.EnemySearchConfig);
         }
 
         public void Clear()

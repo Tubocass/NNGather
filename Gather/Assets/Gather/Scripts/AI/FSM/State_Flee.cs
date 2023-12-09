@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gather;
 
-namespace gather
+namespace Gather.AI
 {
     public class State_Flee : IBehaviorState
     {
         List<Unit> enemies;
         Drone drone;
-        //Vector3 dangerZone;
         SearchConfig config;
 
-        public State_Flee(Drone drone, SearchConfig config)
+        public State_Flee(Drone drone, Blackboard context)
         {
             this.drone = drone;
-            this.config = config;
+            this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
         public void AssesSituation()
         {
@@ -23,7 +23,7 @@ namespace gather
 
         public void EnterState()
         {
-            Debug.Log("Fleeing");
+            //Debug.Log("Fleeing");
             Flee();
         }
 
@@ -48,19 +48,15 @@ namespace gather
            
             if (enemies.Count > 0)
             {
-                //Debug.Log("Enemies: " + enemies.Count);
-                //dangerZone = enemies[0].Location();
-                //for(int e = 1; e<enemies.Count; e++)
-                //{
-                //    dangerZone += enemies[e].Location();
-                //}
-                //dangerZone /= enemies.Count;
-
-                //Debug.DrawRay(drone.Location(), drone.Location() - dangerZone);
-
+                //DebugDrawVector(DangerZone(enemies));
                 drone.SetDestination(drone.Location() + (drone.Location() - DangerZone(enemies)) );
                 drone.StartCoroutine(RunFromTarget());
             }
+        }
+
+        void DebugDrawVector(Vector3 direction)
+        {
+            Debug.DrawRay(drone.Location(), drone.Location() - direction);
         }
 
         private List<Unit> DetectEnemies()

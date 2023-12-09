@@ -6,25 +6,22 @@ namespace Gather.AI
 {
     public class FarmerFSMController : FSMController, AIController_Interface
     {
-        SearchConfig foodSearchConfig;
-        SearchConfig enemySearchConfig;
         State_Search searchState;
         State_Flee fleeState;
         State_Return returnState;
 
         EnemyDetector enemyDetector;
         FarmerDrone drone;
-        Blackboard context = new Blackboard();
+        //Blackboard context = new Blackboard();
 
         public FarmerFSMController(FarmerDrone farmerDrone, EnemyDetector enemyDetector, Blackboard context)
         {
             this.drone = farmerDrone;
             this.enemyDetector = enemyDetector;
-            this.context = context;
+            //this.context = context;
 
-
-            searchState = new State_Search(drone, context.GetValue<SearchConfig>(Configs.SearchConfig));
-            fleeState = new State_Flee(drone, context.GetValue<SearchConfig>(Configs.EnemySearchConfig));
+            searchState = new State_Search(drone, context);
+            fleeState = new State_Flee(drone, context);
             returnState = new State_Return(drone);
             
             enemyDetector.SetEnemyType(unit => unit.GetType() == typeof(FighterDrone));

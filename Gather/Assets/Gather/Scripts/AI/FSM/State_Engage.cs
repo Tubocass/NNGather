@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Gather.AI;
+using gather;
 
-namespace gather
+namespace Gather.AI
 {
-
     public class State_Engage : IBehaviorState
     {
         Drone droneController;
@@ -15,11 +14,11 @@ namespace gather
         Blackboard context;
         SearchConfig searchConfig;
 
-        public State_Engage(Drone droneController, Blackboard bb, SearchConfig config)
+        public State_Engage(Drone droneController, Blackboard bb)
         {
             this.droneController = droneController;
             context = bb;
-            searchConfig = config;
+            searchConfig = context.GetValue<SearchConfig>(Configs.EnemySearchConfig);
         }
 
         public void EnterState()
@@ -67,6 +66,5 @@ namespace gather
             }
             TargetReached?.Invoke();
         }
-
     }
 }

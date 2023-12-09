@@ -11,8 +11,6 @@ namespace gather
         Vector2 foodLocation = Vector2.zero;
         [SerializeField] SearchConfig foodSearchConfig;
         [SerializeField] SearchConfig enemySearchConfig;
-        //State_Search searchState;
-        //State_Flee fleeState;
         bool appQuit = false;
         EnemyDetector enemyDetector;
         List<FighterDrone> enemies = new List<FighterDrone>();
@@ -26,14 +24,7 @@ namespace gather
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             enemyDetector = GetComponentInChildren<EnemyDetector>();
             AIController = new FarmerFSMController(this, enemyDetector, context);
-
-            //enemyDetector.SetEnemyType(unit => unit.GetType() == typeof(FighterDrone));
-            //enemyDetector.EnemyDetected += Flee;
-            //enemyDetector.AllClear += Idle;
-            //searchState = new State_Search(this, foodSearchConfig);
-            //fleeState = new State_Flee(this, enemySearchConfig);
         }
-
 
         public override void SetTeam(TeamConfig config)
         {
@@ -44,8 +35,6 @@ namespace gather
         private void Enable()
         {
             AIController.Enable(GetTeam());
-            //enemyDetector.SetTeam(GetTeam());
-            //SearchForFood();
         }
 
         protected override void OnDisable()
@@ -56,8 +45,8 @@ namespace gather
             }
             base.OnDisable();
             teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, -1);
-            //myQueen.QueenMove -= QueenMoved;
             myQueen.greenFlag -= SetDestination;
+            myQueen = null;
             if (carriedFood)
             {
                 carriedFood.Detach();
@@ -75,46 +64,9 @@ namespace gather
             return carriedFood != null;
         }
 
-        //void Idle()
-        //{
-        //    if (IsCarryingFood())
-        //    {
-        //        if (BehaviorState.ToString() != States.returnToQueen)
-        //        {
-        //            BehaviorState = returnState;
-        //        }
-        //    }
-        //    else if (BehaviorState.ToString() != States.search)
-        //    {
-        //        SearchForFood();
-        //    }
-        //}
-
-        //void SearchForFood()
-        //{
-        //    BehaviorState = searchState;
-        //}
-
-        //public void Flee()
-        //{
-        //    //HaltNavigation();
-        //    //fleeState.SetEnemiesList(enemyDetector.GetEnemiesList());
-        //    BehaviorState = fleeState;
-        //}
-
-        //protected override void QueenMoved()
-        //{
-        //    base.QueenMoved();
-        //    if(BehaviorState.ToString() == States.returnToQueen)
-        //    {
-        //        BehaviorState.AssesSituation();
-        //    }
-        //}
-
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            //queenie.QueenMove += QueenMoved;
             queenie.greenFlag += SetDestination;
         }
 
@@ -130,7 +82,6 @@ namespace gather
             foodLocation = carriedFood.Location();
             HaltNavigation();
             AIController.AssessSituation();
-            //BehaviorState = returnState;
         }
 
         public void DropoffFood(Queen queenie)
@@ -142,7 +93,6 @@ namespace gather
                 carriedFood = null;
                 queenie.Gather(foodLocation);
                 AIController.AssessSituation();
-                //SearchForFood();
             }
         }
     }

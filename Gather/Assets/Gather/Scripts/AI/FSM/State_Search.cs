@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using gather;
 
-namespace gather
+namespace Gather.AI
 {
     public class State_Search : IBehaviorState
     {
@@ -12,10 +11,10 @@ namespace gather
         SearchConfig config;
         int team;
         
-        public State_Search(FarmerDrone drone, SearchConfig config)
+        public State_Search(FarmerDrone drone, Blackboard context)
         {
             this.drone = drone;
-            this.config = config;
+            this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
         public void EnterState()
