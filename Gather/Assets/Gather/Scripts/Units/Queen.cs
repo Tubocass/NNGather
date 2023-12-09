@@ -53,6 +53,7 @@ namespace gather
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.TeamConfig, teamConfig);
+            context.SetValue(Configs.FoodLocations, foodLocations);
             AIController = new QueenFSMController(this, context);
             AIController.Enable(GetTeam());
             //StartCoroutine("SpawnDrones");
@@ -105,7 +106,6 @@ namespace gather
                 foodLocations.Enqueue(fromLocation);
                 //MovePosition();
             }
-            context.SetValue(Configs.FoodLocations, foodLocations);
 
             AIController.AssessSituation();
         }
