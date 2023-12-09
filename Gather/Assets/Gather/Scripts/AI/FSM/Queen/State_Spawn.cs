@@ -7,42 +7,61 @@ namespace Gather.AI
     public class State_Spawn : IBehaviorState
     {
         public GameEvent Finished;
+        Queen queen;
+        Blackboard context;
+        TeamConfig teamConfig;
+        private int farmerCost = 1, fighterCost = 2;
+        private int farmerCap = 6, fighterCap = 3;
+        private int farmers, fighters;
 
-        public State_Spawn (Queen quuen, Blackboard context)
+        public State_Spawn (Queen queen, Blackboard context)
         {
-            // spawn how many of what
+            this.queen = queen;
+            this.context = context;
         }
         public void EnterState()
         {
-            throw new System.NotImplementedException();
+            // spawn how many of what
+            farmers = 0;
+            fighters = 0;
+            queen.StartCoroutine(SpawnDrones());
+            Debug.Log("Spawning");
         }
 
         public void AssesSituation()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void ExitState()
         {
-            throw new System.NotImplementedException();
+            queen.StopCoroutine(SpawnDrones());
+        }
+
+        string IBehaviorState.ToString()
+        {
+            return States.spawn;
         }
 
         IEnumerator SpawnDrones()
         {
-            while (true)
+            while (farmers < farmerCap || fighters < fighterCap)
             {
                 float spawnChance = Random.value;
 
-                if (spawnChance > .8f)
+                if (spawnChance > .66f)
                 {
-                    //SpawnFighter();
+                    queen.SpawnFighter();
+                    fighters++;
                 }
                 else
                 {
-                    //SpawnFarmer();
+                    queen.SpawnFarmer();
+                    farmers++;
                 }
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
             }
+            Finished?.Invoke();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using gather;
 
@@ -18,7 +18,8 @@ namespace Gather.AI
 
         public void EnterState()
         {
-            Queue foods = context.GetValue<Queue>(Configs.FoodLocations);
+
+            Queue<Vector2> foods = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
             Vector2 newPosition = queen.Location();
             int size = foods.Count;
             for (int np = size; np > 0; np--)
@@ -32,12 +33,16 @@ namespace Gather.AI
 
         public void AssesSituation()
         {
-            throw new System.NotImplementedException();
         }
 
         public void ExitState()
         {
             //QueenMove?.Invoke();
+        }
+
+        string IBehaviorState.ToString()
+        {
+            return States.move;
         }
     }
 }

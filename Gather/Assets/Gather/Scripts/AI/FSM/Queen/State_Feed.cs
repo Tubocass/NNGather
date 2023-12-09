@@ -9,24 +9,26 @@ namespace Gather.AI
         public GameEvent Finished;
         Queen queen;
         Blackboard context;
-        int targetFoodCount;
-        Counter foodCount;
+        int targetFoodCount = 10;
+        Counter foodCounter;
 
         public State_Feed(Queen queen, Blackboard context)
         {
             this.queen = queen;
             this.context = context;
+            foodCounter = context.GetValue<Counter>(Configs.FoodCounter);
+
         }
 
         public void EnterState()
         {
-            targetFoodCount = context.GetValue<int>(Configs.TargetFoodCount);
-            foodCount = context.GetValue<Counter>(Configs.FoodCounter);
+            //targetFoodCount = context.GetValue<int>(Configs.TargetFoodCount);
         }
 
         public void AssesSituation()
         {
-            if(foodCount.amount >= targetFoodCount)
+            Debug.Log("Food left to eat " + (targetFoodCount - foodCounter.amount));
+            if(foodCounter.amount >= targetFoodCount)
             {
                 Finished?.Invoke();
             }
@@ -34,6 +36,11 @@ namespace Gather.AI
 
         public void ExitState()
         {
+        }
+
+        string IBehaviorState.ToString()
+        {
+            return States.feed;
         }
     }
 }

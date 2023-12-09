@@ -10,5 +10,5 @@ public static class Configs
     public static readonly string FoodLocations = "foodLocs";
     public static readonly string TargetFoodCount = "targetFoodCount";
     public static readonly string FoodCounter = "foodCounter";
-
+    public static readonly string TeamConfig = "teamConfig";
 }

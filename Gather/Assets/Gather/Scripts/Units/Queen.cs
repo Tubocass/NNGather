@@ -1,7 +1,6 @@
-using PolyNav;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gather.AI;
 
 namespace gather
 {
@@ -12,28 +11,30 @@ namespace gather
         public LocationEvent greenFlag;
         public FoodEvent Collect;
         public GameEvent QueenMove;
+        public AIController_Interface AIController;
+        Blackboard context = new Blackboard();
         //[SerializeField] int food = 5;
         [SerializeField] int foodQueueSize = 10;
         Queue<Vector2> foodLocations;
         private int farmerCost = 1, fighterCost = 2;
         public Counter foodCounter;
 
-        IEnumerator SpawnDrones()
-        {
-            while(true)
-            {
-                float spawnChance = Random.value;
+        //IEnumerator SpawnDrones()
+        //{
+        //    while(true)
+        //    {
+        //        float spawnChance = Random.value;
 
-                if(spawnChance > .8f)
-                {
-                    SpawnFighter();
-                }else
-                {
-                    SpawnFarmer();
-                }
-                yield return new WaitForSeconds(2f);
-            }
-        }
+        //        if(spawnChance > .8f)
+        //        {
+        //            SpawnFighter();
+        //        }else
+        //        {
+        //            SpawnFarmer();
+        //        }
+        //        yield return new WaitForSeconds(2f);
+        //    }
+        //}
 
         protected override void Awake()
         {
@@ -50,7 +51,11 @@ namespace gather
             SetTeamColor();
             Collect?.Invoke(foodCounter.amount);
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
-            StartCoroutine("SpawnDrones");
+            context.SetValue(Configs.FoodCounter, foodCounter);
+            context.SetValue(Configs.TeamConfig, teamConfig);
+            AIController = new QueenFSMController(this, context);
+            AIController.Enable(GetTeam());
+            //StartCoroutine("SpawnDrones");
         }
 
         private void OnDisable()
@@ -90,7 +95,7 @@ namespace gather
         {
             Collect?.Invoke(1);
             foodCounter.AddAmount(1);
-            if(foodLocations.Count < foodQueueSize)
+            if (foodLocations.Count < foodQueueSize)
             {
                 foodLocations.Enqueue(fromLocation);
             }
@@ -98,22 +103,25 @@ namespace gather
             {
                 foodLocations.Dequeue();
                 foodLocations.Enqueue(fromLocation);
-                MovePosition();
+                //MovePosition();
             }
+            context.SetValue(Configs.FoodLocations, foodLocations);
+
+            AIController.AssessSituation();
         }
 
-        void MovePosition()
-        {
-            Vector2 newPosition =  Location();
-            int size = foodLocations.Count;
-            for (int np = size; np > 0; np--)
-            {
-                newPosition += foodLocations.Dequeue();
-            }
-            newPosition /= size;
-            navAgent.SetDestination(newPosition);
-            QueenMove?.Invoke();
-        }
+        //void MovePosition()
+        //{
+        //    Vector2 newPosition =  Location();
+        //    int size = foodLocations.Count;
+        //    for (int np = size; np > 0; np--)
+        //    {
+        //        newPosition += foodLocations.Dequeue();
+        //    }
+        //    newPosition /= size;
+        //    navAgent.SetDestination(newPosition);
+        //    QueenMove?.Invoke();
+        //}
 
         void ReachedDestination()
         {
