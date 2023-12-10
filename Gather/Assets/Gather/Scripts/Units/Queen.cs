@@ -8,7 +8,7 @@ namespace gather
     {
         public LocationEvent redFlag;
         public LocationEvent greenFlag;
-        public FoodEvent Collect;
+        //public FoodEvent Collect;
         public GameEvent QueenMove;
         public AIController_Interface AIController;
         DroneFactory droneFactory;
@@ -17,6 +17,7 @@ namespace gather
         Queue<Vector2> foodLocations;
         private int farmerCost = 1, fighterCost = 2;
         public Counter foodCounter;
+        float timer;
 
         protected override void Awake()
         {
@@ -31,13 +32,23 @@ namespace gather
             foodLocations = new Queue<Vector2>(foodQueueSize);
             droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
             SetTeamColor();
-            Collect?.Invoke(foodCounter.amount);
+            //Collect?.Invoke(foodCounter.amount);
             teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.TeamConfig, teamConfig);
             context.SetValue(Configs.FoodLocations, foodLocations);
             AIController = new QueenFSMController(this, context);
             AIController.Enable(GetTeam());
+        }
+
+        private void Update()
+        {
+            timer += Time.deltaTime;
+            if(timer >= 0.125)
+            {
+                timer = 0;
+                AIController.AssessSituation();
+            }
         }
 
         private void OnDisable()
@@ -55,7 +66,7 @@ namespace gather
 
                 teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, 1);
                 foodCounter.AddAmount(-farmerCost);
-                Collect?.Invoke(-farmerCost);
+                //Collect?.Invoke(-farmerCost);
             }
         }
 
@@ -69,15 +80,15 @@ namespace gather
 
                 teamConfig.SetUnitCount(TeamConfig.UnitType.Fighter, 1);
                 foodCounter.AddAmount(-fighterCost);
-                Collect?.Invoke(-fighterCost);
+                //Collect?.Invoke(-fighterCost);
             }
         }
 
         public void Gather(Vector2 fromLocation)
         {
-            Collect?.Invoke(1);
+            //Collect?.Invoke(1);
             foodCounter.AddAmount(1);
-            if (foodLocations.Count < foodQueueSize)
+            if (!foodLocations.Contains(fromLocation) && foodLocations.Count < foodQueueSize)
             {
                 foodLocations.Enqueue(fromLocation);
             }
@@ -87,7 +98,7 @@ namespace gather
                 foodLocations.Enqueue(fromLocation);
             }
 
-            AIController.AssessSituation();
+            //AIController.AssessSituation();
         }
 
         void ReachedDestination()

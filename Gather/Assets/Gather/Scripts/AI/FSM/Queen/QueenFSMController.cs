@@ -1,4 +1,6 @@
 ﻿using gather;
+using UnityEngine;
+using System.Collections.Generic;
 
 namespace Gather.AI
 {
@@ -20,13 +22,15 @@ namespace Gather.AI
         Counter foodCounter;
         TeamConfig teamConfig;
         Blackboard context;
-        
+        QueenStatus queenStatus;
+        Queue<Vector2> foodLocations;
+
         private int hunger = 1;
         int targetFoodCount;
 
         public QueenFSMController (Queen queen, Blackboard context)
         {
-            this.queen = queen;
+            //this.queen = queen;
             this.context = context;
             moveState = new State_Move(queen, context);
             feedState = new State_Feed(queen, context);
@@ -41,6 +45,7 @@ namespace Gather.AI
         {
             foodCounter = context.GetValue<Counter>(Configs.FoodCounter);
             teamConfig = context.GetValue<TeamConfig>(Configs.TeamConfig);
+            foodLocations = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
 
             Spawn();
             AssessSituation();
@@ -56,6 +61,12 @@ namespace Gather.AI
             BehaviorState = moveState;
         }
 
+        public void Move(Vector2 target)
+        {
+            moveState.SetTargetDestination(target);
+            BehaviorState = moveState;
+        }
+
         public void Feed()
         {
             BehaviorState = feedState;
@@ -63,7 +74,51 @@ namespace Gather.AI
 
         public void Spawn()
         {
+            SpawnJob job = new SpawnJob(8, 2);
+            context.SetValue(Configs.SpawnJob, job);
             BehaviorState = spawnState;
+        }
+    }
+    
+    public class QueenStatus
+    {
+        public enum FoodStatus { None, Low, Medium, Full}
+        public enum DroneStatus { None, Low, Medium, Full}
+
+        public FoodStatus foodStatus;
+        public DroneStatus farmerStatus;
+        public DroneStatus fighterStatus;
+
+        public FoodStatus EvalFood(Counter foodCounter)
+        {
+            /*
+             * account for: 
+             * hunger
+             * food limit
+            */
+            return FoodStatus.None;
+        }
+
+        public DroneStatus EvalFarmers(TeamConfig team)
+        {
+            /*
+             * account for: 
+             * food status
+             * farmer cap
+            */
+            return DroneStatus.None;
+        }
+
+        public DroneStatus EvalFighters(TeamConfig team)
+        {
+            return DroneStatus.None;
+        }
+
+        public void Evaluate(TeamConfig team, Counter foodCounter)
+        {
+            foodStatus = EvalFood(foodCounter);
+            farmerStatus = EvalFarmers(team);
+            fighterStatus = EvalFighters(team);
         }
     }
 }

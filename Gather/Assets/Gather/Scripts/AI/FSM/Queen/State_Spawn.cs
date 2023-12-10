@@ -13,6 +13,8 @@ namespace Gather.AI
         //private int farmerCost = 1, fighterCost = 2;
         private int farmerCap = 6, fighterCap = 3;
         private int farmers, fighters;
+        //QueenStatus queenStatus;
+        SpawnJob job;
 
         public State_Spawn (Queen queen, Blackboard context)
         {
@@ -25,6 +27,7 @@ namespace Gather.AI
             // spawn how many of what
             farmers = 0;
             fighters = 0;
+            job = context.GetValue<SpawnJob>(Configs.SpawnJob);
             queen.StartCoroutine(SpawnDrones());
             //Debug.Log("Spawning");
         }
@@ -46,23 +49,38 @@ namespace Gather.AI
 
         IEnumerator SpawnDrones()
         {
-            while (farmers < farmerCap || fighters < fighterCap)
+            while (!job.complete)
             {
-                float spawnChance = Random.value;
-
-                if (spawnChance > .66f)
+                if(farmers < job.farmers)
                 {
-                    queen.SpawnFighter();
-                    fighters++;
-                }
-                else
-                {
-                    queen.SpawnFarmer();
                     farmers++;
+                    queen.SpawnFarmer();
                 }
+                else if(fighters < job.fighters)
+                {
+                    fighters++;
+                    queen.SpawnFighter();
+                }else
+                {
+                    job.complete = true;
+                }
+                
                 yield return new WaitForSeconds(1f);
             }
             Finished?.Invoke();
+        }
+    }
+    public class SpawnJob
+    {
+        public int farmers;
+        public int fighters;
+        public bool complete;
+
+        public SpawnJob(int farmers, int fighters)
+        {
+            this.farmers = farmers;
+            this.fighters = fighters;
+            complete = false;
         }
     }
 }

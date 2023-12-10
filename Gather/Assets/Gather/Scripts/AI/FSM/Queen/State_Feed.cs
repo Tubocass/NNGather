@@ -11,13 +11,13 @@ namespace Gather.AI
         Blackboard context;
         int targetFoodCount = 10;
         Counter foodCounter;
+        int ticks = 0;
 
         public State_Feed(Queen queen, Blackboard context)
         {
             this.queen = queen;
             this.context = context;
             foodCounter = context.GetValue<Counter>(Configs.FoodCounter);
-
         }
 
         public void EnterState()
@@ -27,9 +27,15 @@ namespace Gather.AI
 
         public void AssesSituation()
         {
-            //Debug.Log("Food left to eat " + (targetFoodCount - foodCounter.amount));
-            if(foodCounter.amount >= targetFoodCount)
+            ticks++;
+            Debug.Log("Ticks: " + ticks);
+            if (foodCounter.amount >= targetFoodCount)
             {
+                Debug.Log("gathered enough food");
+                Finished?.Invoke();
+            }else if(ticks >= 64)
+            {
+                Debug.Log("Times up");
                 Finished?.Invoke();
             }
         }

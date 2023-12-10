@@ -11,4 +11,6 @@ public static class Configs
     public static readonly string TargetFoodCount = "targetFoodCount";
     public static readonly string FoodCounter = "foodCounter";
     public static readonly string TeamConfig = "teamConfig";
+    public static readonly string QueenStatus = "queenStatus";
+    public static readonly string SpawnJob = "spawnJob";
 }
