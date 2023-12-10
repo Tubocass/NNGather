@@ -30,6 +30,7 @@ namespace Gather.AI
             {
                 if (!targetFood.CanTarget(team))
                 {
+                    targetFood.Targeted(team, false);
                     targetFood = null;
                 }else
                 {

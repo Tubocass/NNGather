@@ -40,7 +40,7 @@ namespace gather
         }
         public bool CanTarget(int team)
         {
-            isTargeted = targetedByTeam.TryGetValue(team, out isTargeted);
+            targetedByTeam.TryGetValue(team, out isTargeted);
             return gameObject.activeSelf && !(isTargeted || isPickedUp);
         }
 
