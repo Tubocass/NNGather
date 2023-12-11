@@ -21,7 +21,7 @@ namespace gather
             navAgent = GetComponent<PolyNavAgent>();
         }
 
-        public Vector3 Location()
+        public Vector2 Location()
         {
             return myTransform.position;
         }

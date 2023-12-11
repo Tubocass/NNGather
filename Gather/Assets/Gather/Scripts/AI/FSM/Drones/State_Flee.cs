@@ -54,7 +54,7 @@ namespace Gather.AI
             }
         }
 
-        void DebugDrawVector(Vector3 direction)
+        void DebugDrawVector(Vector2 direction)
         {
             Debug.DrawRay(drone.Location(), drone.Location() - direction);
         }
@@ -64,9 +64,9 @@ namespace Gather.AI
             return TargetSystem.FindTargetsByCount<Unit>(
                 config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.GetType() == typeof(FighterDrone) && f.GetTeam() != drone.GetTeam());
         }
-        private Vector3 DangerZone(List<Unit> enemies)
+        private Vector2 DangerZone(List<Unit> enemies)
         {
-            Vector3 dangerZone = enemies[0].Location();
+            Vector2 dangerZone = enemies[0].Location();
             for (int e = 1; e < enemies.Count; e++)
             {
                 dangerZone += enemies[e].Location();

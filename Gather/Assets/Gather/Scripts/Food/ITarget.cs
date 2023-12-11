@@ -6,6 +6,6 @@ namespace gather
     public interface ITarget 
     {
         bool CanTarget(int team);
-        public Vector3 Location();
+        public Vector2 Location();
     }
 }

@@ -12,7 +12,7 @@ namespace gather
         bool isPickedUp = false;
         bool isTargeted = false;
 
-        public Vector3 Location()
+        public Vector2 Location()
         {
             return myTransform.position;
         }
