@@ -10,8 +10,6 @@ namespace Gather.AI
         Queen queen;
         Blackboard context;
         //TeamConfig teamConfig;
-        //private int farmerCost = 1, fighterCost = 2;
-        private int farmerCap = 6, fighterCap = 3;
         private int farmers, fighters;
         //QueenStatus queenStatus;
         SpawnJob job;

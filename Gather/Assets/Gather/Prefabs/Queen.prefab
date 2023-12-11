@@ -99,8 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamConfig: {fileID: 0}
+  spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
   foodQueueSize: 10
-  foodCounter: {fileID: 0}
+  foodReserve: 5
 --- !u!70 &6439568929991540249
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

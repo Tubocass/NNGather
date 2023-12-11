@@ -24,12 +24,11 @@ namespace Gather.AI
         {
             if(targetDestination != Vector2.zero)
             {
-                queen.SetDestination(targetDestination);
+                queen.SetDestination(targetDestination, DestinationReached);
             }else
             {
                 MoveToFoodCenter();
             }
-            //QueenMove?.Invoke();
         }
 
         public void SetTargetDestination(Vector2 target)
@@ -46,15 +45,12 @@ namespace Gather.AI
                 targetDestination += foods.Dequeue();
             }
             targetDestination /= size;
-            queen.SetDestination(targetDestination);
+            queen.SetDestination(targetDestination, DestinationReached);
         }
 
         public void AssesSituation()
         {
-            //if(Vector2.Distance(queen.Location(), targetDestination) <= float.Epsilon)
-            //{
-            //    QueenMove?.Invoke();
-            //}
+         
         }
 
         public void ExitState()
@@ -65,6 +61,11 @@ namespace Gather.AI
         string IBehaviorState.ToString()
         {
             return States.move;
+        }
+        
+        void DestinationReached(bool reached)
+        {
+            QueenMove?.Invoke();
         }
     }
 }

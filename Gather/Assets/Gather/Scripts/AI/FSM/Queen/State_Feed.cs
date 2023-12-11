@@ -28,14 +28,11 @@ namespace Gather.AI
         public void AssesSituation()
         {
             ticks++;
-            Debug.Log("Ticks: " + ticks);
             if (foodCounter.amount >= targetFoodCount)
             {
-                Debug.Log("gathered enough food");
                 Finished?.Invoke();
             }else if(ticks >= 64)
             {
-                Debug.Log("Times up");
                 Finished?.Invoke();
             }
         }

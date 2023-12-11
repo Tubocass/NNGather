@@ -36,7 +36,7 @@ namespace Gather.AI
             feedState = new State_Feed(queen, context);
             spawnState = new State_Spawn(queen, context);
 
-            queen.QueenMove += Feed;
+            moveState.QueenMove += Feed;
             feedState.Finished += Spawn;
             spawnState.Finished += Move;
         }

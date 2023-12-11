@@ -57,5 +57,10 @@ namespace gather
         {
             navAgent.SetDestination(location);
         }
+
+        public void SetDestination(Vector2 location, System.Action<bool> callback)
+        {
+            navAgent.SetDestination(location, callback);
+        }
     }
 }
