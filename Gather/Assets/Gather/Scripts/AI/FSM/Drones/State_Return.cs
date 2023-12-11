@@ -20,11 +20,15 @@ namespace Gather.AI
 
         public void EnterState()
         {
+            drone.GetMyQueen().QueenMove += QueenMoved;
+
             drone.ReturnToQueen();
         }
 
         public void ExitState()
         {
+            drone.GetMyQueen().QueenMove -= QueenMoved;
+
         }
         string IBehaviorState.ToString()
         {
