@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gather.AI
 {
-    public class QueenFSMController : FSMController, AIController_Interface
+    public class QueenFSM_Controller : FSM_Controller, AIController_Interface
     {
         //Blackboard context = new Blackboard();
 
@@ -28,7 +28,7 @@ namespace Gather.AI
         private int hunger = 1;
         int targetFoodCount;
 
-        public QueenFSMController (Queen queen, Blackboard context)
+        public QueenFSM_Controller (Queen queen, Blackboard context)
         {
             //this.queen = queen;
             this.context = context;

@@ -35,7 +35,7 @@ namespace gather
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.TeamConfig, teamConfig);
             context.SetValue(Configs.FoodLocations, foodLocations);
-            AIController = new QueenFSMController(this, context);
+            AIController = new QueenFSM_Controller(this, context);
             AIController.Enable(GetTeam());
         }
 

@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class FighterFSMController : FSMController, AIController_Interface
+    public class FighterFSM_Controller : FSM_Controller, AIController_Interface
     {
         //EnemyDetector enemyDetector;
         //FighterDrone drone;
@@ -13,7 +13,7 @@ namespace Gather.AI
         State_Hunt huntState;
         State_Engage engageState;
 
-        public FighterFSMController (FighterDrone drone, Blackboard context)
+        public FighterFSM_Controller (FighterDrone drone, Blackboard context)
         {
             huntState = new State_Hunt(drone, context);
             huntState.TargetFound += TargetFound;

@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class FarmerFSMController : FSMController, AIController_Interface
+    public class FarmerFSM_Controller : FSM_Controller, AIController_Interface
     {
         State_Search searchState;
         State_Flee fleeState;
@@ -14,7 +14,7 @@ namespace Gather.AI
         FarmerDrone drone;
         //Blackboard context = new Blackboard();
 
-        public FarmerFSMController(FarmerDrone farmerDrone, EnemyDetector enemyDetector, Blackboard context)
+        public FarmerFSM_Controller(FarmerDrone farmerDrone, EnemyDetector enemyDetector, Blackboard context)
         {
             this.drone = farmerDrone;
             this.enemyDetector = enemyDetector;

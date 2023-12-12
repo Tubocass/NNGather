@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275d62b2ff8e22e40b587c919b91a0b9, type: 3}
   m_Name: SpawnConfig
   m_EditorClassIdentifier: 
-  farmerCost: 0
-  fighterCost: 0
-  farmerCap: 0
-  fighterCap: 0
+  farmerCost: 1
+  fighterCost: 2
+  farmerCap: 16
+  fighterCap: 8

@@ -13,7 +13,7 @@ namespace gather
         {
             base.Awake();
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
-            AIController = new FighterFSMController(this, context);
+            AIController = new FighterFSM_Controller(this, context);
         }
 
         private void OnDrawGizmosSelected()

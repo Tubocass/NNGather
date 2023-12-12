@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public abstract class FSMController
+    public abstract class FSM_Controller
     {
         public IBehaviorState BehaviorState
         {

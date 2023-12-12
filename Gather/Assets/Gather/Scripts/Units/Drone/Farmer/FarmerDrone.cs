@@ -23,7 +23,7 @@ namespace gather
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             enemyDetector = GetComponentInChildren<EnemyDetector>();
-            AIController = new FarmerFSMController(this, enemyDetector, context);
+            AIController = new FarmerFSM_Controller(this, enemyDetector, context);
         }
 
         public override void SetTeam(TeamConfig config)
