@@ -39,20 +39,20 @@ namespace Gather.AI
         {
             if (drone.IsCarryingFood())
             {
-                if (BehaviorState.ToString() != States.returnToQueen)
+                if (ActiveState.GetStateName() != States.returnToQueen)
                 {
-                    BehaviorState = returnState;
+                    ActiveState = returnState;
                 }else
                 {
-                    BehaviorState.AssesSituation();
+                    ActiveState.Update();
                 }
             }
-            else if (BehaviorState.ToString() != States.search)
+            else if (ActiveState.GetStateName() != States.search)
             {
                 SearchForFood();
             }else
             {
-                BehaviorState.AssesSituation();
+                ActiveState.Update();
             }
         }
 
@@ -63,14 +63,14 @@ namespace Gather.AI
 
         void SearchForFood()
         {
-            BehaviorState = searchState;
+            ActiveState = searchState;
         }
 
         void Flee()
         {
             //HaltNavigation();
             //fleeState.SetEnemiesList(enemyDetector.GetEnemiesList());
-            BehaviorState = fleeState;
+            ActiveState = fleeState;
         }
     }
 }

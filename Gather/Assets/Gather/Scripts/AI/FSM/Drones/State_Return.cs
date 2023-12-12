@@ -2,7 +2,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Return : IBehaviorState
+    public class State_Return : FSM_State
     {
         Drone drone;
         public State_Return(Drone drone)
@@ -13,22 +13,23 @@ namespace Gather.AI
         {
             drone.ReturnToQueen();
         }
-        public void AssesSituation()
-        {
-            drone.ReturnToQueen();
-        }
 
-        public void EnterState()
+        public override void EnterState()
         {
 
             drone.ReturnToQueen();
         }
 
-        public void ExitState()
+        public override void Update()
+        {
+            drone.ReturnToQueen();
+        }
+
+        public override void ExitState()
         {
 
         }
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.returnToQueen;
         }

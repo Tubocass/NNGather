@@ -5,7 +5,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Flee : IBehaviorState
+    public class State_Flee : FSM_State
     {
         List<Unit> enemies;
         Drone drone;
@@ -16,23 +16,24 @@ namespace Gather.AI
             this.drone = drone;
             this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
-        public void AssesSituation()
-        {
-            Flee();
-        }
 
-        public void EnterState()
+        public override void EnterState()
         {
             //Debug.Log("Fleeing");
             Flee();
         }
 
-        public void ExitState()
+        public override void Update()
+        {
+            Flee();
+        }
+
+        public override void ExitState()
         {
             drone.StopAllCoroutines();
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.flee;
         }

@@ -5,7 +5,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Engage : IBehaviorState
+    public class State_Engage : FSM_State
     {
         Drone droneController;
         ITarget target;
@@ -52,7 +52,7 @@ namespace Gather.AI
             droneController.StopAllCoroutines();
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.engage;
         }

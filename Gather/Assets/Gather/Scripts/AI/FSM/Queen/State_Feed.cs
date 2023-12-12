@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Feed : IBehaviorState
+    public class State_Feed : FSM_State
     {
         public GameEvent Finished;
         Queen queen;
@@ -41,7 +41,7 @@ namespace Gather.AI
         {
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.feed;
         }

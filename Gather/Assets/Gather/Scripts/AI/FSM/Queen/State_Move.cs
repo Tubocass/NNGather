@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Move : IBehaviorState
+    public class State_Move : FSM_State
     {
         public GameEvent QueenMove;
         Queen queen;
@@ -20,7 +20,7 @@ namespace Gather.AI
 
         }
 
-        public void EnterState()
+        public override void EnterState()
         {
             if(targetDestination != Vector2.zero)
             {
@@ -48,21 +48,21 @@ namespace Gather.AI
             queen.SetDestination(targetDestination, DestinationReached);
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
          
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
             targetDestination = Vector2.zero;
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.move;
         }
-        
+
         void DestinationReached(bool reached)
         {
             QueenMove?.Invoke();

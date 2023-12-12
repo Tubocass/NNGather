@@ -30,17 +30,17 @@ namespace Gather.AI
 
         public void AssessSituation()
         {
-            BehaviorState.AssesSituation();
+            ActiveState.Update();
         }
 
         public void TargetFound()
         {
-            BehaviorState = engageState;
+            ActiveState = engageState;
         }
 
         public void StartHunt()
         {
-            BehaviorState = huntState;
+            ActiveState = huntState;
         }
     }
 }

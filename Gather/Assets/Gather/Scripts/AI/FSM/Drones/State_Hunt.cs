@@ -3,7 +3,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Hunt : IBehaviorState
+    public class State_Hunt : FSM_State
     {
         List<Unit> enemies = new List<Unit>();
         FighterDrone drone;
@@ -26,13 +26,13 @@ namespace Gather.AI
             target = null;
         }
         
-        public void EnterState()
+        public override void EnterState()
         {
             //Debug.Log("Hunting");
             Hunt();
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
             if (target && !target.CanTarget(drone.GetTeam()))
             {
@@ -44,12 +44,12 @@ namespace Gather.AI
             }
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
             Clear();
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.hunt;
         }

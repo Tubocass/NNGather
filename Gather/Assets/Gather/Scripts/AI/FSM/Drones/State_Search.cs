@@ -3,7 +3,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Search : IBehaviorState
+    public class State_Search : FSM_State
     {
         List<FoodPellet> foodPellets = new List<FoodPellet>();
         FarmerDrone drone;
@@ -17,14 +17,14 @@ namespace Gather.AI
             this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
-        public void EnterState()
+        public override void EnterState()
         {
             team = drone.GetTeam();
             Search();
 
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
             if (targetFood)
             {
@@ -44,12 +44,12 @@ namespace Gather.AI
             }
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
             Clear();
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.search;
         }

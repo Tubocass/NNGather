@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
-using gather;
-
-namespace Gather.AI
+﻿namespace Gather.AI
 {
     public abstract class FSM_Controller
     {
-        public IBehaviorState BehaviorState
+        public FSM_State ActiveState
         {
             get { return behaviorState; }
             set
@@ -19,13 +15,13 @@ namespace Gather.AI
                 behaviorState.EnterState();
             }
         }
-        private IBehaviorState behaviorState;
+        private FSM_State behaviorState;
 
         public virtual void Disable()
         {
-            if (BehaviorState != null)
+            if (ActiveState != null)
             {
-                BehaviorState.ExitState();
+                ActiveState.ExitState();
             }
         }
     }

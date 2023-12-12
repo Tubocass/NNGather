@@ -7,6 +7,6 @@ namespace Gather.AI
     {
         public bool isValid();
         public void OnTransition();
-        public IBehaviorState GetNextState();
+        public FSM_State GetNextState();
     }
 }

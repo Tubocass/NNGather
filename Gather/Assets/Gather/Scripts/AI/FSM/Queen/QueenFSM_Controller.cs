@@ -53,30 +53,30 @@ namespace Gather.AI
 
         public void AssessSituation()
         {
-            BehaviorState.AssesSituation();
+            ActiveState.Update();
         }
 
         public void Move()
         {
-            BehaviorState = moveState;
+            ActiveState = moveState;
         }
 
         public void Move(Vector2 target)
         {
             moveState.SetTargetDestination(target);
-            BehaviorState = moveState;
+            ActiveState = moveState;
         }
 
         public void Feed()
         {
-            BehaviorState = feedState;
+            ActiveState = feedState;
         }
 
         public void Spawn()
         {
             SpawnJob job = new SpawnJob(8, 2);
             context.SetValue(Configs.SpawnJob, job);
-            BehaviorState = spawnState;
+            ActiveState = spawnState;
         }
     }
     

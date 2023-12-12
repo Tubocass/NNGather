@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class State_Spawn : IBehaviorState
+    public class State_Spawn : FSM_State
     {
         public GameEvent Finished;
         Queen queen;
@@ -20,7 +20,7 @@ namespace Gather.AI
             this.context = context;
         }
 
-        public void EnterState()
+        public override void EnterState()
         {
             // spawn how many of what
             farmers = 0;
@@ -30,17 +30,17 @@ namespace Gather.AI
             //Debug.Log("Spawning");
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
             
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
             queen.StopCoroutine(SpawnDrones());
         }
 
-        string IBehaviorState.ToString()
+        public override string GetStateName()
         {
             return States.spawn;
         }
