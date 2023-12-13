@@ -12,18 +12,13 @@ namespace gather
         [SerializeField] SearchConfig foodSearchConfig;
         [SerializeField] SearchConfig enemySearchConfig;
         bool appQuit = false;
-        EnemyDetector enemyDetector;
         Blackboard context = new Blackboard();
-
-        bool enemyDetected;
 
         protected override void Awake()
         {
             base.Awake();
-            enemyDetector = GetComponentInChildren<EnemyDetector>();
-            enemyDetector.SetEnemyType(unit => unit.GetType() == typeof(FighterDrone));
-            enemyDetector.EnemyDetected += SetEnemyDetected;
-
+            enemyDetector.SetEnemyType(unit => unit is FighterDrone);
+            context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FarmerFSM_Controller(this, context);
@@ -34,17 +29,7 @@ namespace gather
             base.SetTeam(config);
             Enable();
         }
-
-        void SetEnemyDetected(bool status)
-        {
-            enemyDetected = status;
-        }
-
-        public bool GetEnemyDetected()
-        {
-            return enemyDetected;
-        }
-
+     
         private void Enable()
         {
             enemyDetector.SetTeam(GetTeam());

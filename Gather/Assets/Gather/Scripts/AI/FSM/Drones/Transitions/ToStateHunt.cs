@@ -14,7 +14,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return true;
+            return false;
         }
 
         public FSM_State GetNextState()

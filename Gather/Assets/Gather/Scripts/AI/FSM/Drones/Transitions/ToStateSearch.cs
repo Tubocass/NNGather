@@ -26,6 +26,7 @@ namespace Gather.AI
 
         public void OnTransition()
         {
+            //Debug.Log("Start search");
         }
     }
 }

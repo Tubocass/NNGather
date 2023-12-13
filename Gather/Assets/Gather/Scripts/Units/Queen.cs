@@ -8,7 +8,6 @@ namespace gather
     {
         public LocationEvent redFlag;
         public LocationEvent greenFlag;
-        //public GameEvent QueenMove;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
         Blackboard context = new Blackboard();

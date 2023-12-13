@@ -65,12 +65,10 @@ namespace Gather.AI
                 targetFood = TargetSystem.TargetNearest<FoodPellet>(drone.Location(), foodPellets);
                 drone.SetDestination(targetFood.Location());
             }
-            else
+            else if (!drone.IsMoving)
             {
-                if(!drone.IsMoving)
-                {
+                
                     drone.MoveRandomly();
-                }
             }
         }
     }

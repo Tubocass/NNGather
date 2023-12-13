@@ -14,6 +14,8 @@ namespace gather
         protected SpriteRenderer spriteRenderer;
         protected PolyNavAgent navAgent;
         protected FSM_Controller fsmController;
+        protected EnemyDetector enemyDetector;
+        bool enemyDetected;
         float timer;
         protected bool isMoving;
         // Animator
@@ -25,6 +27,8 @@ namespace gather
             myTransform = transform; 
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
+            enemyDetector = GetComponentInChildren<EnemyDetector>();
+            enemyDetector.EnemyDetected += SetEnemyDetected;
         }
 
         private void Update()
@@ -45,6 +49,7 @@ namespace gather
         public virtual void SetTeam(TeamConfig config)
         {
             this.teamConfig = config;
+            enemyDetector.SetTeam(GetTeam());
             SetTeamColor();
         }
 
@@ -83,6 +88,16 @@ namespace gather
         void DestinationReached(bool reached)
         {
             isMoving = !reached;
+        }
+
+        void SetEnemyDetected(bool status)
+        {
+            enemyDetected = status;
+        }
+
+        public bool GetEnemyDetected()
+        {
+            return enemyDetected;
         }
     }
 }

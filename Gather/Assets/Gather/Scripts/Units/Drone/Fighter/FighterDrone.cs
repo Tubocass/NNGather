@@ -8,18 +8,20 @@ namespace gather
     {
         [SerializeField] SearchConfig enemySearchConfig;
         Blackboard context = new Blackboard();
-        bool enemyDetected;
 
         protected override void Awake()
         {
             base.Awake();
+            enemyDetector.SetEnemyType(unit => unit is Drone);
+            enemyDetector.SetRadius(enemySearchConfig.searchDist);
+            context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FighterFSM_Controller(this, context);
         }
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawSphere(transform.position, enemySearchConfig.searchDist);
+            //Gizmos.DrawSphere(transform.position, enemySearchConfig.searchDist);
         }
 
         public override void SetTeam(TeamConfig config)
@@ -44,16 +46,6 @@ namespace gather
         {
             base.SetQueen(queenie);
             queenie.redFlag += SetDestination;
-        }
-
-        void SetEnemyDetected(bool status)
-        {
-            enemyDetected = status;
-        }
-
-        public bool GetEnemyDetected()
-        {
-            return enemyDetected;
         }
     }
 }

@@ -10,10 +10,12 @@ namespace Gather.AI
         List<Unit> enemies;
         Drone drone;
         SearchConfig config;
+        EnemyDetector enemyDetector;
 
         public State_Flee(FarmerDrone drone, Blackboard context)
         {
             this.drone = drone;
+            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
             config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
@@ -25,7 +27,7 @@ namespace Gather.AI
 
         public override void Update()
         {
-            Flee();
+            //Flee();
         }
 
         public override void ExitState()
@@ -45,7 +47,7 @@ namespace Gather.AI
 
         void Flee()
         {
-            enemies = DetectEnemies();
+            enemies = enemyDetector.GetEnemiesList();
            
             if (enemies.Count > 0)
             {

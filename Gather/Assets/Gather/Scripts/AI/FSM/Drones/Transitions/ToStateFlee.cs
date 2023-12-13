@@ -1,4 +1,5 @@
 ﻿using gather;
+using UnityEngine;
 
 namespace Gather.AI
 {
@@ -19,6 +20,7 @@ namespace Gather.AI
 
         public FSM_State GetNextState()
         {
+            OnTransition();
             return nextState;
         }
 

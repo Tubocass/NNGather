@@ -50,7 +50,7 @@ namespace Gather.AI
             while (true)
             {
                 float chance = Random.value;
-                if (chance >= 1)
+                if (chance >= 0.66)
                 {
                     queen.SpawnFighter();
                 }

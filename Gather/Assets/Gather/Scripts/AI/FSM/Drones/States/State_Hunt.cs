@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using gather;
+using UnityEngine;
 
 namespace Gather.AI
 {
@@ -8,27 +9,24 @@ namespace Gather.AI
         List<Unit> enemies = new List<Unit>();
         FighterDrone drone;
         Unit target;
-        SearchConfig config;
         Blackboard context;
-        public event TargetEvent TargetFound;
+        EnemyDetector enemyDetector;
 
 
         public State_Hunt(FighterDrone fighter, Blackboard bb)
         {
             drone = fighter;
             context = bb;
-            config = context.GetValue<SearchConfig>(Configs.EnemySearchConfig);
+            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 
         public void Clear()
         {
-            enemies.Clear();
             target = null;
         }
         
         public override void EnterState()
         {
-            //Debug.Log("Hunting");
             Hunt();
         }
 
@@ -41,6 +39,10 @@ namespace Gather.AI
             if(target == null)
             {
                 Hunt();
+            } 
+            else
+            {
+                drone.SetDestination(target.Location());
             }
         }
 
@@ -61,15 +63,14 @@ namespace Gather.AI
 
         void Hunt()
         {
-            enemies = TargetSystem.FindTargetsByCount<Unit>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, e => e.CanTarget(drone.GetTeam()));
+            //enemies = TargetSystem.FindTargetsByCount<Unit>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, e => e.CanTarget(drone.GetTeam()));
+            enemies = enemyDetector.GetEnemiesList();
 
             if (enemies.Count > 0)
             {
                 target = TargetSystem.TargetNearest<Unit>(drone.Location(), enemies);
-                context.SetValue<ITarget>(Configs.Target, target);
-                TargetFound?.Invoke();
             }
-            else
+            else if(!drone.IsMoving)
             {
                 drone.MoveRandomly();
             }

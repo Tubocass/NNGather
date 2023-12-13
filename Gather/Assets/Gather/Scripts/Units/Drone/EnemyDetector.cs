@@ -8,9 +8,13 @@ namespace gather
     {
         List<Unit> enemies = new List<Unit>();
         public StatusEvent EnemyDetected;
-        Predicate<Unit> enemyCheck;
-
+        Predicate<Unit> enemyCheck = unit => unit.isActiveAndEnabled;
         int team;
+        CircleCollider2D searchCollider;
+        private void Awake()
+        {
+            searchCollider = GetComponent<CircleCollider2D>();
+        }
 
         public void SetTeam(int team)
         {
@@ -25,6 +29,13 @@ namespace gather
         public List<Unit> GetEnemiesList()
         {
             return enemies;
+        }
+
+        public void SetRadius(float size)
+        {
+            searchCollider = GetComponent<CircleCollider2D>();
+
+            searchCollider.radius = size;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +53,7 @@ namespace gather
                     enemies.Add(enemy);
                 }
                 EnemyDetected?.Invoke(true);
+                //Debug.Log("EnemyDetected");
             }
         }
 
