@@ -13,7 +13,6 @@ namespace gather
         [SerializeField] SearchConfig enemySearchConfig;
         bool appQuit = false;
         EnemyDetector enemyDetector;
-        //List<FighterDrone> enemies = new List<FighterDrone>();
         Blackboard context = new Blackboard();
 
         bool enemyDetected;
@@ -93,9 +92,9 @@ namespace gather
         public void PickupFood(FoodPellet pellet)
         {
             // called by collider on child transform
+            HaltNavigation();
             carriedFood = pellet;
             foodLocation = carriedFood.Location();
-            HaltNavigation();
             fsmController.Update();
         }
 

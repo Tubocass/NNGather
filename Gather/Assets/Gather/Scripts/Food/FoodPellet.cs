@@ -28,20 +28,22 @@ namespace gather
             myCollider.enabled = true;
             isTargeted = false;
         }
-        public void Targeted(int team, bool target)
-        {
-            if (targetedByTeam.ContainsKey(team))
-            {
-                targetedByTeam[team] = target;
-            } else
-            {
-                targetedByTeam.Add(team, target);
-            }
-        }
+
+        //public void Targeted(int team, bool target)
+        //{
+        //    if (targetedByTeam.ContainsKey(team))
+        //    {
+        //        targetedByTeam[team] = target;
+        //    } else
+        //    {
+        //        targetedByTeam.Add(team, target);
+        //    }
+        //}
+
         public bool CanTarget(int team)
         {
             targetedByTeam.TryGetValue(team, out isTargeted);
-            return gameObject.activeSelf && !(isTargeted || isPickedUp);
+            return gameObject.activeSelf && !(isPickedUp);
         }
 
         public void Attach(Transform newParent)

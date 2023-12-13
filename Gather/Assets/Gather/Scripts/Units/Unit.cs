@@ -15,7 +15,7 @@ namespace gather
         protected PolyNavAgent navAgent;
         protected FSM_Controller fsmController;
         float timer;
-        bool isMoving;
+        protected bool isMoving;
         // Animator
 
         public bool IsMoving { get { return isMoving; } }

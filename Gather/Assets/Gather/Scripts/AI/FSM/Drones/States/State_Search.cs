@@ -27,16 +27,13 @@ namespace Gather.AI
 
         public override void Update()
         {
-            if (targetFood)
+            if (targetFood && !targetFood.CanTarget(team))
             {
-                if (!targetFood.CanTarget(team))
-                {
-                    //Debug.Log("Lost Target");
-                    targetFood.Targeted(team, false);
-                    targetFood = null;
-                }
+                Debug.Log("Lost Target");
+                //targetFood.Targeted(team, false);
+                targetFood = null;
             }
-            if (!drone.IsMoving && !drone.IsCarryingFood() && !targetFood)
+            if (!targetFood)
             {
                 Search();
             }
@@ -59,7 +56,7 @@ namespace Gather.AI
             foodPellets.Clear();
             if (targetFood)
             {
-                targetFood.Targeted(team, false);
+                //targetFood.Targeted(team, false);
                 targetFood = null;
             }
 
@@ -72,12 +69,15 @@ namespace Gather.AI
             if (foodPellets.Count > 0)
             {
                 targetFood = TargetSystem.TargetNearest<FoodPellet>(drone.Location(), foodPellets);
-                targetFood.Targeted(team, true);
+                //targetFood.Targeted(team, true);
                 drone.SetDestination(targetFood.Location());
             }
             else
             {
-                drone.MoveRandomly();
+                if(!drone.IsMoving)
+                {
+                    drone.MoveRandomly();
+                }
             }
         }
     }

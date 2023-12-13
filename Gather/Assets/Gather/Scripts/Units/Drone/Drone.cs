@@ -16,7 +16,6 @@ namespace gather
         {
             base.Awake();
 
-            //navAgent.OnDestinationReached += ReachedDestination;
         }
 
         protected virtual void OnDisable()
@@ -36,14 +35,10 @@ namespace gather
             return myQueen;
         }
 
-        protected virtual void ReachedDestination(bool reached)
-        {
-            //fsmController?.Update();
-        }
-
         public void HaltNavigation()
         {
             navAgent.Stop();
+            isMoving = false;
         }
 
         public void MoveRandomly()
