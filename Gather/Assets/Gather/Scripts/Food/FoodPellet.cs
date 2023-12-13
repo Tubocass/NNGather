@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace gather
@@ -8,9 +6,7 @@ namespace gather
     {
         Collider2D myCollider;
         Transform myTransform;
-        Dictionary<int, bool> targetedByTeam = new Dictionary<int, bool>();
         bool isPickedUp = false;
-        bool isTargeted = false;
 
         public Vector2 Location()
         {
@@ -26,23 +22,10 @@ namespace gather
         private void OnEnable()
         {
             myCollider.enabled = true;
-            isTargeted = false;
         }
-
-        //public void Targeted(int team, bool target)
-        //{
-        //    if (targetedByTeam.ContainsKey(team))
-        //    {
-        //        targetedByTeam[team] = target;
-        //    } else
-        //    {
-        //        targetedByTeam.Add(team, target);
-        //    }
-        //}
 
         public bool CanTarget(int team)
         {
-            targetedByTeam.TryGetValue(team, out isTargeted);
             return gameObject.activeSelf && !(isPickedUp);
         }
 
@@ -51,7 +34,6 @@ namespace gather
             myTransform.SetParent(newParent);
             myCollider.enabled = false;
             isPickedUp = true;
-            targetedByTeam.Clear();
         }
 
         public void Detach()

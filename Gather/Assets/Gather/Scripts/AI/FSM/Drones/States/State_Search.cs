@@ -29,8 +29,6 @@ namespace Gather.AI
         {
             if (targetFood && !targetFood.CanTarget(team))
             {
-                Debug.Log("Lost Target");
-                //targetFood.Targeted(team, false);
                 targetFood = null;
             }
             if (!targetFood)
@@ -38,8 +36,6 @@ namespace Gather.AI
                 Search();
             }
         }
-
-     
 
         public override void ExitState()
         {
@@ -56,10 +52,8 @@ namespace Gather.AI
             foodPellets.Clear();
             if (targetFood)
             {
-                //targetFood.Targeted(team, false);
                 targetFood = null;
             }
-
         }
 
         void Search()
@@ -69,7 +63,6 @@ namespace Gather.AI
             if (foodPellets.Count > 0)
             {
                 targetFood = TargetSystem.TargetNearest<FoodPellet>(drone.Location(), foodPellets);
-                //targetFood.Targeted(team, true);
                 drone.SetDestination(targetFood.Location());
             }
             else
