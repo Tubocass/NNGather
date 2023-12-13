@@ -17,7 +17,6 @@ namespace Gather.AI
             this.queen = queen;
             this.context = context;
             foods = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
-
         }
 
         public override void EnterState()

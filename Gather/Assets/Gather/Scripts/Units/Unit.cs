@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PolyNav;
+using Gather.AI;
 
 
 namespace gather
@@ -12,6 +13,8 @@ namespace gather
         protected Transform myTransform;
         protected SpriteRenderer spriteRenderer;
         protected PolyNavAgent navAgent;
+        protected FSM_Controller fsmController;
+        float timer;
         // Animator
 
         protected virtual void Awake()
@@ -19,6 +22,16 @@ namespace gather
             myTransform = transform; 
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
+        }
+
+        private void Update()
+        {
+            timer += Time.deltaTime;
+            if (timer >= 0.125)
+            {
+                timer = 0;
+                fsmController.Update();
+            }
         }
 
         public Vector2 Location()

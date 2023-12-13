@@ -2,20 +2,40 @@
 {
     public abstract class FSM_Controller
     {
+        private FSM_State activeState;
+        protected FSM_State initialState;
+
         public FSM_State ActiveState
         {
-            get { return behaviorState; }
+            get { return activeState; }
             set
             {
-                if (behaviorState != null)
+                if (activeState != null)
                 {
-                    behaviorState.ExitState();
+                    activeState.ExitState();
                 }
-                behaviorState = value;
-                behaviorState.EnterState();
+                activeState = value;
+                activeState.EnterState();
             }
         }
-        private FSM_State behaviorState;
+
+        public virtual void Enable()
+        {
+            ActiveState = initialState;
+        }
+
+        public void Update()
+        {
+            foreach(FSM_Transistion transistion in ActiveState.transistions)
+            {
+                if(transistion.isValid())
+                {
+                    ActiveState = transistion.GetNextState();
+                }
+            }
+            ActiveState.Update();
+
+        }
 
         public virtual void Disable()
         {

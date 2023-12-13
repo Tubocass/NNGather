@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using gather;
+using UnityEngine;
 
 namespace Gather.AI
 {
@@ -30,12 +31,9 @@ namespace Gather.AI
             {
                 if (!targetFood.CanTarget(team))
                 {
+                    //Debug.Log("Lost Target");
                     targetFood.Targeted(team, false);
                     targetFood = null;
-                }else
-                {
-                    // this should technically only hit if the food was moved by god myself
-                    drone.SetDestination(targetFood.Location());
                 }
             }
             if (!drone.IsCarryingFood() && !targetFood)

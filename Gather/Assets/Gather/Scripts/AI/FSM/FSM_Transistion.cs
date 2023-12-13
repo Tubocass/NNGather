@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Gather.AI
+﻿namespace Gather.AI
 {
     public interface FSM_Transistion
     {

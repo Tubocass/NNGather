@@ -21,16 +21,13 @@ namespace Gather.AI
             engageState = new State_Engage(drone, context);
             engageState.TargetLost += StartHunt;
             engageState.TargetReached += StartHunt;
+
+            initialState = huntState;
         }
-        public void Enable(int team)
+        public void Enable()
         {
             //enemyDetector.SetTeam(team);
-            StartHunt();
-        }
-
-        public void AssessSituation()
-        {
-            ActiveState.Update();
+            ActiveState = initialState;
         }
 
         public void TargetFound()

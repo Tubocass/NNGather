@@ -5,8 +5,8 @@ namespace Gather.AI
 {
     public interface AIController_Interface
     {
-        public void Enable(int team);
-        public void AssessSituation();
+        public void Enable();
+        public void Update();
         public void Disable();
 
     }

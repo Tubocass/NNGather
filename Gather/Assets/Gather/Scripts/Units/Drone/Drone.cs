@@ -10,7 +10,6 @@ namespace gather
     {
         protected Queen myQueen;
         protected Transform queensTransform;
-        protected AIController_Interface AIController;
 
         protected override void Awake()
         {
@@ -21,7 +20,7 @@ namespace gather
 
         protected virtual void OnDisable()
         {
-            AIController?.Disable();
+            fsmController?.Disable();
             queensTransform = null;
         }
 
@@ -38,7 +37,7 @@ namespace gather
 
         protected virtual void ReachedDestination()
         {
-            AIController?.AssessSituation();
+            //fsmController?.Update();
         }
 
         public void HaltNavigation()

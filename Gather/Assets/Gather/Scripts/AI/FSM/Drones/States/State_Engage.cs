@@ -21,7 +21,7 @@ namespace Gather.AI
             searchConfig = context.GetValue<SearchConfig>(Configs.EnemySearchConfig);
         }
 
-        public void EnterState()
+        public override void EnterState()
         {
             //Debug.Log("Engaging");
             target = context.GetValue<ITarget>(Configs.Target);
@@ -29,11 +29,10 @@ namespace Gather.AI
             {
                 droneController.SetDestination(target.Location());
                 droneController.StartCoroutine(MoveToTarget());
-
             }
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
             if (!target.CanTarget(droneController.GetTeam())
                 || Vector3.Distance(target.Location(), droneController.Location()) > searchConfig.searchDist)
@@ -46,7 +45,7 @@ namespace Gather.AI
             }
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
             target = null;
             droneController.StopAllCoroutines();

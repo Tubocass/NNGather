@@ -7,8 +7,7 @@ namespace gather
     public class EnemyDetector : MonoBehaviour
     {
         List<Unit> enemies = new List<Unit>();
-        public GameEvent EnemyDetected;
-        public GameEvent AllClear;
+        public StatusEvent EnemyDetected;
         Predicate<Unit> enemyCheck = (unit => unit.isActiveAndEnabled);
 
         int team;
@@ -42,7 +41,7 @@ namespace gather
                 {
                     enemies.Add(enemy);
                 }
-                EnemyDetected?.Invoke();
+                EnemyDetected?.Invoke(true);
             }
         }
 
@@ -61,7 +60,7 @@ namespace gather
                     enemies.Remove(enemy);
                     if(enemies.Count == 0)
                     {
-                        AllClear?.Invoke();
+                        EnemyDetected?.Invoke(false);
                     }
                 }
             }

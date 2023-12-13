@@ -13,4 +13,5 @@ public static class Configs
     public static readonly string TeamConfig = "teamConfig";
     public static readonly string QueenStatus = "queenStatus";
     public static readonly string SpawnJob = "spawnJob";
+    public static readonly string EnemyDetector = "enemyDetector";
 }

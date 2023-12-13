@@ -11,10 +11,10 @@ namespace Gather.AI
         Drone drone;
         SearchConfig config;
 
-        public State_Flee(Drone drone, Blackboard context)
+        public State_Flee(FarmerDrone drone, Blackboard context)
         {
             this.drone = drone;
-            this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
+            config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
         public override void EnterState()

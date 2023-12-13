@@ -9,7 +9,6 @@ namespace gather
         public LocationEvent redFlag;
         public LocationEvent greenFlag;
         //public GameEvent QueenMove;
-        public AIController_Interface AIController;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
         Blackboard context = new Blackboard();
@@ -17,7 +16,6 @@ namespace gather
         [SerializeField] int foodReserve = 5;
         Queue<Vector2> foodLocations;
         Counter foodCounter;
-        float timer;
 
         protected override void Awake()
         {
@@ -35,18 +33,8 @@ namespace gather
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.TeamConfig, teamConfig);
             context.SetValue(Configs.FoodLocations, foodLocations);
-            AIController = new QueenFSM_Controller(this, context);
-            AIController.Enable(GetTeam());
-        }
-
-        private void Update()
-        {
-            timer += Time.deltaTime;
-            if(timer >= 0.125)
-            {
-                timer = 0;
-                AIController.AssessSituation();
-            }
+            fsmController = new QueenFSM_Controller(this, context);
+            fsmController.Enable();
         }
 
         private void OnDisable()
@@ -92,6 +80,28 @@ namespace gather
                 foodLocations.Dequeue();
                 foodLocations.Enqueue(fromLocation);
             }
+        }
+
+        public float AverageDistanceFromFood()
+        {
+            Vector2 avgPos = Location();
+            Vector2[] locations = foodLocations.ToArray();
+            int size = foodLocations.Count + 1;
+            for (int ap = 0; ap < locations.Length; ap++)
+            {
+                avgPos += locations[ap];
+            }
+           return Vector2.Distance(Location(), avgPos /= size);
+        }
+
+        public bool IsFoodLow()
+        {
+            return foodCounter.amount <= foodReserve;
+        }
+
+        public bool IsFoodFull()
+        {
+            return foodCounter.amount >= 20;
         }
 
         public Blackboard GetBlackboard()

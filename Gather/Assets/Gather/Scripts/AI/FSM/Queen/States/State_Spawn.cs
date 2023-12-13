@@ -10,7 +10,7 @@ namespace Gather.AI
         Queen queen;
         Blackboard context;
         //TeamConfig teamConfig;
-        private int farmers, fighters;
+        //private int farmers, fighters;
         //QueenStatus queenStatus;
         SpawnJob job;
 
@@ -23,9 +23,9 @@ namespace Gather.AI
         public override void EnterState()
         {
             // spawn how many of what
-            farmers = 0;
-            fighters = 0;
-            job = context.GetValue<SpawnJob>(Configs.SpawnJob);
+            //farmers = 0;
+            //fighters = 0;
+            //job = context.GetValue<SpawnJob>(Configs.SpawnJob);
             queen.StartCoroutine(SpawnDrones());
             //Debug.Log("Spawning");
         }
@@ -47,25 +47,34 @@ namespace Gather.AI
 
         IEnumerator SpawnDrones()
         {
-            while (!job.complete)
+            float chance = Random.value;
+            if(chance >= 1)
             {
-                if(farmers < job.farmers)
-                {
-                    farmers++;
-                    queen.SpawnFarmer();
-                }
-                else if(fighters < job.fighters)
-                {
-                    fighters++;
-                    queen.SpawnFighter();
-                }else
-                {
-                    job.complete = true;
-                }
-                
-                yield return new WaitForSeconds(1f);
+                queen.SpawnFighter();
+            }else
+            {
+                queen.SpawnFarmer();
             }
-            Finished?.Invoke();
+            yield return new WaitForSeconds(1f);
+            //while (!job.complete)
+            //{
+            //    if(farmers < job.farmers)
+            //    {
+            //        farmers++;
+            //        queen.SpawnFarmer();
+            //    }
+            //    else if(fighters < job.fighters)
+            //    {
+            //        fighters++;
+            //        queen.SpawnFighter();
+            //    }else
+            //    {
+            //        job.complete = true;
+            //    }
+
+            //    yield return new WaitForSeconds(1f);
+            //}
+            //Finished?.Invoke();
         }
     }
     public class SpawnJob

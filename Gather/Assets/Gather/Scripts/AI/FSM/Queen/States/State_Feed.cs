@@ -20,24 +20,24 @@ namespace Gather.AI
             foodCounter = context.GetValue<Counter>(Configs.FoodCounter);
         }
 
-        public void EnterState()
+        public override void EnterState()
         {
             //targetFoodCount = context.GetValue<int>(Configs.TargetFoodCount);
         }
 
-        public void AssesSituation()
+        public override void Update()
         {
-            ticks++;
-            if (foodCounter.amount >= targetFoodCount)
-            {
-                Finished?.Invoke();
-            }else if(ticks >= 64)
-            {
-                Finished?.Invoke();
-            }
+            //ticks++;
+            //if (foodCounter.amount >= targetFoodCount)
+            //{
+            //    Finished?.Invoke();
+            //}else if(ticks >= 64)
+            //{
+            //    Finished?.Invoke();
+            //}
         }
 
-        public void ExitState()
+        public override void ExitState()
         {
         }
 

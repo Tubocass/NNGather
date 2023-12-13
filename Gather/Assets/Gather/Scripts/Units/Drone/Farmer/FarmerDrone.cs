@@ -16,14 +16,18 @@ namespace gather
         List<FighterDrone> enemies = new List<FighterDrone>();
         Blackboard context = new Blackboard();
 
+        bool enemyDetected;
 
         protected override void Awake()
         {
             base.Awake();
+            enemyDetector = GetComponentInChildren<EnemyDetector>();
+            enemyDetector.SetEnemyType(unit => unit.GetType() == typeof(FighterDrone));
+            enemyDetector.EnemyDetected += SetEnemyDetected;
+
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
-            enemyDetector = GetComponentInChildren<EnemyDetector>();
-            AIController = new FarmerFSM_Controller(this, enemyDetector, context);
+            fsmController = new FarmerFSM_Controller(this, context);
         }
 
         public override void SetTeam(TeamConfig config)
@@ -32,9 +36,20 @@ namespace gather
             Enable();
         }
 
+        void SetEnemyDetected(bool status)
+        {
+            enemyDetected = status;
+        }
+
+        public bool GetEnemyDetected()
+        {
+            return enemyDetected;
+        }
+
         private void Enable()
         {
-            AIController.Enable(GetTeam());
+            enemyDetector.SetTeam(GetTeam());
+            fsmController.Enable();
         }
 
         protected override void OnDisable()
@@ -81,7 +96,7 @@ namespace gather
             carriedFood = pellet;
             foodLocation = carriedFood.Location();
             HaltNavigation();
-            AIController.AssessSituation();
+            fsmController.Update();
         }
 
         public void DropoffFood(Queen queenie)
@@ -92,7 +107,7 @@ namespace gather
                 carriedFood.Consume();
                 carriedFood = null;
                 queenie.Gather(foodLocation);
-                AIController.AssessSituation();
+                fsmController.Update();
             }
         }
     }
