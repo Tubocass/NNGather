@@ -10,11 +10,6 @@ namespace Gather.AI
             this.drone = drone;
         }
 
-        public void QueenMoved()
-        {
-            drone.ReturnToQueen();
-        }
-
         public override void EnterState()
         {
 

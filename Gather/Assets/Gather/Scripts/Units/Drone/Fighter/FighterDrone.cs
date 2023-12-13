@@ -8,6 +8,7 @@ namespace gather
     {
         [SerializeField] SearchConfig enemySearchConfig;
         Blackboard context = new Blackboard();
+        bool enemyDetected;
 
         protected override void Awake()
         {
@@ -43,6 +44,16 @@ namespace gather
         {
             base.SetQueen(queenie);
             queenie.redFlag += SetDestination;
+        }
+
+        void SetEnemyDetected(bool status)
+        {
+            enemyDetected = status;
+        }
+
+        public bool GetEnemyDetected()
+        {
+            return enemyDetected;
         }
     }
 }

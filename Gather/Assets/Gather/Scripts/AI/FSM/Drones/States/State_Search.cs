@@ -36,11 +36,13 @@ namespace Gather.AI
                     targetFood = null;
                 }
             }
-            if (!drone.IsCarryingFood() && !targetFood)
+            if (!drone.IsMoving && !drone.IsCarryingFood() && !targetFood)
             {
                 Search();
             }
         }
+
+     
 
         public override void ExitState()
         {

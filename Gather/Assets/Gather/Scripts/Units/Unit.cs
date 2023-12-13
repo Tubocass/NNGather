@@ -7,7 +7,7 @@ using Gather.AI;
 
 namespace gather
 {
-    public class Unit : MonoBehaviour, ITarget
+    public abstract class Unit : MonoBehaviour, ITarget
     {
         public TeamConfig teamConfig;
         protected Transform myTransform;
@@ -15,7 +15,10 @@ namespace gather
         protected PolyNavAgent navAgent;
         protected FSM_Controller fsmController;
         float timer;
+        bool isMoving;
         // Animator
+
+        public bool IsMoving { get { return isMoving; } }
 
         protected virtual void Awake()
         {
@@ -68,12 +71,18 @@ namespace gather
 
         public void SetDestination(Vector2 location)
         {
-            navAgent.SetDestination(location);
+            isMoving = true;
+            navAgent.SetDestination(location, DestinationReached);
         }
 
         public void SetDestination(Vector2 location, System.Action<bool> callback)
         {
             navAgent.SetDestination(location, callback);
+        }
+
+        void DestinationReached(bool reached)
+        {
+            isMoving = !reached;
         }
     }
 }

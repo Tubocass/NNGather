@@ -8,7 +8,7 @@ namespace gather
     {
         List<Unit> enemies = new List<Unit>();
         public StatusEvent EnemyDetected;
-        Predicate<Unit> enemyCheck = (unit => unit.isActiveAndEnabled);
+        Predicate<Unit> enemyCheck;
 
         int team;
 

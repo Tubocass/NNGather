@@ -2,19 +2,19 @@
 
 namespace Gather.AI
 {
-    public class ToStateFeed : FSM_Transistion
+    public class ToStateEngage : FSM_Transistion
     {
-        Queen queen;
+        FighterDrone drone;
         FSM_State nextState;
-        public ToStateFeed(Queen queen, FSM_State next)
+        public ToStateEngage(FighterDrone drone, FSM_State next)
         {
-            this.queen = queen;
+            this.drone = drone;
             this.nextState = next;
         }
 
         public bool isValid()
         {
-            return queen.IsFoodLow() && !queen.IsMoving;
+            return true;
         }
 
         public FSM_State GetNextState()

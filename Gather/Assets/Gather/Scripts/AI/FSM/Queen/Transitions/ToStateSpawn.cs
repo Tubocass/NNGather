@@ -14,7 +14,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return queen.IsFoodFull();
+            return queen.IsFoodFull() && !queen.IsMoving;
         }
 
         public FSM_State GetNextState()

@@ -47,15 +47,19 @@ namespace Gather.AI
 
         IEnumerator SpawnDrones()
         {
-            float chance = Random.value;
-            if(chance >= 1)
+            while (true)
             {
-                queen.SpawnFighter();
-            }else
-            {
-                queen.SpawnFarmer();
+                float chance = Random.value;
+                if (chance >= 1)
+                {
+                    queen.SpawnFighter();
+                }
+                else
+                {
+                    queen.SpawnFarmer();
+                }
+                yield return new WaitForSeconds(1f);
             }
-            yield return new WaitForSeconds(1f);
             //while (!job.complete)
             //{
             //    if(farmers < job.farmers)

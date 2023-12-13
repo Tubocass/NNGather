@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gather.AI
 {
-    public class QueenFSM_Controller : FSM_Controller, AIController_Interface
+    public class QueenFSM_Controller : FSM_Controller
     {
         //Blackboard context = new Blackboard();
 

@@ -13,7 +13,7 @@ namespace gather
         [SerializeField] SearchConfig enemySearchConfig;
         bool appQuit = false;
         EnemyDetector enemyDetector;
-        List<FighterDrone> enemies = new List<FighterDrone>();
+        //List<FighterDrone> enemies = new List<FighterDrone>();
         Blackboard context = new Blackboard();
 
         bool enemyDetected;

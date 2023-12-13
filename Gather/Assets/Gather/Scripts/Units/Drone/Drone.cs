@@ -11,11 +11,12 @@ namespace gather
         protected Queen myQueen;
         protected Transform queensTransform;
 
+
         protected override void Awake()
         {
             base.Awake();
 
-            navAgent.OnDestinationReached += ReachedDestination;
+            //navAgent.OnDestinationReached += ReachedDestination;
         }
 
         protected virtual void OnDisable()
@@ -35,7 +36,7 @@ namespace gather
             return myQueen;
         }
 
-        protected virtual void ReachedDestination()
+        protected virtual void ReachedDestination(bool reached)
         {
             //fsmController?.Update();
         }

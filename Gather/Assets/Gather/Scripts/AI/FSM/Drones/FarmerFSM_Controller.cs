@@ -4,7 +4,7 @@ using gather;
 
 namespace Gather.AI
 {
-    public class FarmerFSM_Controller : FSM_Controller, AIController_Interface
+    public class FarmerFSM_Controller : FSM_Controller
     {
         State_Search searchState;
         State_Flee fleeState;
