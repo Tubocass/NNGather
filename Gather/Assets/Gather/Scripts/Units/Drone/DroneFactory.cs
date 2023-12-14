@@ -14,12 +14,26 @@ namespace gather
 
         private DroneFactory() { }
 
+        private void Awake()
+        {
+            //List<GameObject> starterPool = new List<GameObject>();
+            //GameObject drone;
+            //TeamConfig tempTeam = ScriptableObject.CreateInstance<TeamConfig>();
+            //for (int pool = 50; pool > 0; pool --)
+            //{
+            //    drone = Instantiate(farmerPrefab, Vector3.zero, Quaternion.identity);
+            //    drone.GetComponent<FarmerDrone>().SetTeam(tempTeam);
+            //    drone.SetActive(false);
+            //    starterPool.Add(drone);
+            //}
+            //pools.Add(typeof(FarmerDrone), starterPool);
+        }
+
         public GameObject SpawnDrone<T>(Vector3 location)
         {
             List<GameObject> drones;
             GameObject drone;
             GameObject prefab = typeof(T) == typeof(FarmerDrone) ? farmerPrefab : fighterPrefab;
-            //GameObject prefab = prefabs.Find(pf => ;
             if (!prefab)
             {
                 // throw error

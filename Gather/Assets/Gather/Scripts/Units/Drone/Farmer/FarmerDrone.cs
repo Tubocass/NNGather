@@ -18,6 +18,7 @@ namespace gather
         {
             base.Awake();
             enemyDetector.SetEnemyType(unit => unit is FighterDrone);
+            enemyDetector.SetSearchConfig(enemySearchConfig);
             context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
@@ -44,7 +45,7 @@ namespace gather
             }
             base.OnDisable();
             teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, -1);
-            myQueen.greenFlag -= SetDestination;
+            //myQueen.greenFlag -= SetDestination;
             myQueen = null;
             if (carriedFood)
             {
@@ -66,7 +67,7 @@ namespace gather
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            queenie.greenFlag += SetDestination;
+            //queenie.greenFlag += SetDestination;
         }
 
         public void SetCarriedFood(FoodPellet pellet)

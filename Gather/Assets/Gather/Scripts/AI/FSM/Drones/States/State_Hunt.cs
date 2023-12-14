@@ -64,6 +64,7 @@ namespace Gather.AI
         void Hunt()
         {
             //enemies = TargetSystem.FindTargetsByCount<Unit>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, e => e.CanTarget(drone.GetTeam()));
+            enemyDetector.Detect();
             enemies = enemyDetector.GetEnemiesList();
 
             if (enemies.Count > 0)

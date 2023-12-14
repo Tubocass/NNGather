@@ -97,7 +97,7 @@ namespace gather
 
         public bool GetEnemyDetected()
         {
-            return enemyDetected;
+            return enemyDetector.Detect();
         }
     }
 }
