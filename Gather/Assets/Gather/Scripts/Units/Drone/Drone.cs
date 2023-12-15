@@ -12,7 +12,7 @@ namespace gather
         //    base.Awake();
         //}
 
-        protected virtual void OnDisable()
+        protected override void OnDisable()
         {
             fsmController?.Disable();
             queensTransform = null;

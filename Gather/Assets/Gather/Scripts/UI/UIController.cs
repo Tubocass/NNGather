@@ -28,8 +28,8 @@ namespace Gather.UI
         {
             if (playerTeam)
             {
-                farmerDisplay.count = playerTeam.GetUnitCounter(TeamConfig.UnitType.Farmer);
-                fighterDisplay.count = playerTeam.GetUnitCounter(TeamConfig.UnitType.Fighter);
+                farmerDisplay.count = playerTeam.GetUnitCounter(UnitType.Farmer);
+                fighterDisplay.count = playerTeam.GetUnitCounter(UnitType.Fighter);
             }
             if (playerQueen)
             {

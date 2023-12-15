@@ -10,15 +10,17 @@ namespace gather
         FoodPellet carriedFood;
         Vector2 foodLocation = Vector2.zero;
         [SerializeField] SearchConfig foodSearchConfig;
-        [SerializeField] SearchConfig enemySearchConfig;
         bool appQuit = false;
         Blackboard context = new Blackboard();
+        UnitType[] enemyTypes = { UnitType.Fighter };
+
 
         protected override void Awake()
         {
             base.Awake();
-            enemyDetector.SetEnemyType(unit => unit is FighterDrone);
-            enemyDetector.SetSearchConfig(enemySearchConfig);
+            //enemyDetector.SetEnemyType(unit => unit is FighterDrone);
+            enemyDetector.SetEnemyTypes(enemyTypes);
+
             context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
@@ -44,7 +46,6 @@ namespace gather
                 return;
             }
             base.OnDisable();
-            teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, -1);
             //myQueen.greenFlag -= SetDestination;
             myQueen = null;
             if (carriedFood)

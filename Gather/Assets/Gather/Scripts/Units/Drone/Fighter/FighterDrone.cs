@@ -6,14 +6,16 @@ namespace gather
 {
     public class FighterDrone : Drone
     {
-        [SerializeField] SearchConfig enemySearchConfig;
         Blackboard context = new Blackboard();
+        UnitType[] enemyTypes = {UnitType.Farmer, UnitType.Fighter};
+
 
         protected override void Awake()
         {
             base.Awake();
-            enemyDetector.SetEnemyType(unit => unit is Drone);
-            enemyDetector.SetRadius(enemySearchConfig.searchDist);
+            //enemyDetector.SetEnemyType(unit => unit is Drone);
+            enemyDetector.SetEnemyTypes(enemyTypes);
+
             context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FighterFSM_Controller(this, context);
@@ -38,7 +40,6 @@ namespace gather
         protected override void OnDisable()
         {
             base.OnDisable();
-            teamConfig.SetUnitCount(TeamConfig.UnitType.Fighter, -1);
             context.Clear();
         }
 

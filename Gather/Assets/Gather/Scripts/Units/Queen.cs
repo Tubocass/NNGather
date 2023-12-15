@@ -13,6 +13,7 @@ namespace gather
         Blackboard context = new Blackboard();
         [SerializeField] int foodQueueSize = 10;
         [SerializeField] int foodReserve = 5;
+        [SerializeField] int startingFood = 5;
         Queue<Vector2> foodLocations;
         Counter foodCounter;
 
@@ -20,7 +21,7 @@ namespace gather
         {
             base.Awake();
             foodCounter = ScriptableObject.CreateInstance<Counter>();
-            foodCounter.SetAmount(5);
+            foodCounter.SetAmount(startingFood);
         }
 
         protected void Start()
@@ -28,17 +29,12 @@ namespace gather
             foodLocations = new Queue<Vector2>(foodQueueSize);
             droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
             SetTeamColor();
-            teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, 1);
+            teamConfig.SetUnitCount(UnitType.Queen, 1);
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.TeamConfig, teamConfig);
             context.SetValue(Configs.FoodLocations, foodLocations);
             fsmController = new QueenFSM_Controller(this, context);
             fsmController.Enable();
-        }
-
-        private void OnDisable()
-        {
-            teamConfig.SetUnitCount(TeamConfig.UnitType.Queen, -1);
         }
 
         public void SpawnFarmer()
@@ -49,7 +45,7 @@ namespace gather
                 farmer.SetQueen(this);
                 farmer.SetTeam(teamConfig);
 
-                teamConfig.SetUnitCount(TeamConfig.UnitType.Farmer, 1);
+                teamConfig.SetUnitCount(UnitType.Farmer, 1);
                 foodCounter.AddAmount(-spawnConfig.farmerCost);
             }
         }
@@ -62,7 +58,7 @@ namespace gather
                 fighter.SetTeam(teamConfig);
                 fighter.SetQueen(this);
 
-                teamConfig.SetUnitCount(TeamConfig.UnitType.Fighter, 1);
+                teamConfig.SetUnitCount(UnitType.Fighter, 1);
                 foodCounter.AddAmount(-spawnConfig.fighterCost);
             }
         }

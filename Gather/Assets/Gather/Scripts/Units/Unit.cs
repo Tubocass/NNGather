@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PolyNav;
 using Gather.AI;
@@ -15,7 +13,9 @@ namespace gather
         protected PolyNavAgent navAgent;
         protected FSM_Controller fsmController;
         protected EnemyDetector enemyDetector;
-        bool enemyDetected;
+        [SerializeField] protected SearchConfig enemySearchConfig;
+        [SerializeField] protected UnitType unitType;
+        [SerializeField] float updateTime = 0.125f;
         float timer;
         protected bool isMoving;
         // Animator
@@ -27,14 +27,13 @@ namespace gather
             myTransform = transform; 
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
-            enemyDetector = GetComponentInChildren<EnemyDetector>();
-            enemyDetector.EnemyDetected += SetEnemyDetected;
+            enemyDetector = new EnemyDetector(this, enemySearchConfig);
         }
 
         private void Update()
         {
             timer += Time.deltaTime;
-            if (timer >= 0.125)
+            if (timer >= updateTime)
             {
                 timer = 0;
                 fsmController.Update();
@@ -69,6 +68,11 @@ namespace gather
             gameObject.SetActive(false);
         }
 
+        protected virtual void OnDisable()
+        {
+            teamConfig.SetUnitCount(unitType, -1);
+        }
+
         public bool CanTarget(int team)
         {
             return teamConfig.Team != team && gameObject.activeSelf;
@@ -90,14 +94,14 @@ namespace gather
             isMoving = !reached;
         }
 
-        void SetEnemyDetected(bool status)
-        {
-            enemyDetected = status;
-        }
-
         public bool GetEnemyDetected()
         {
             return enemyDetector.Detect();
+        }
+
+        public UnitType GetUnitType()
+        {
+            return unitType;
         }
     }
 }

@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace gather
 {
-    public class EnemyDetector : MonoBehaviour
+    public class EnemyDetector
     {
-        List<Unit> enemies = new List<Unit>();
-        public StatusEvent EnemyDetected;
-        Predicate<Unit> enemyCheck = unit => unit.isActiveAndEnabled;
-        int team;
-        //CircleCollider2D searchCollider;
         [SerializeField] SearchConfig config;
+        Unit unitController;
+        List<Unit> enemies = new List<Unit>();
+        UnitType[] enemyTypes = new UnitType[1];
+        int team;
+        //Predicate<Unit> enemyCheck = unit => unit.isActiveAndEnabled;
 
-        private void Awake()
+        public EnemyDetector(Unit unitController, SearchConfig config)
         {
-            //searchCollider = GetComponent<CircleCollider2D>();
+            this.unitController = unitController;
+            this.config = config;
         }
 
         public void SetTeam(int team)
@@ -23,21 +25,19 @@ namespace gather
             this.team = team;
         }
 
-        public void SetEnemyType(Predicate<Unit> unitType)
+        //public void SetEnemyType(Predicate<Unit> unitType)
+        //{
+        //    enemyCheck = unitType;
+        //}
+
+        public void SetEnemyTypes(UnitType[] enemyTypes)
         {
-            enemyCheck = unitType;
+            this.enemyTypes = enemyTypes; 
         }
 
         public List<Unit> GetEnemiesList()
         {
             return enemies;
-        }
-
-        public void SetRadius(float size)
-        {
-            //searchCollider = GetComponent<CircleCollider2D>();
-
-            //searchCollider.radius = size;
         }
 
         public void SetSearchConfig(SearchConfig config)
@@ -48,48 +48,8 @@ namespace gather
         public bool Detect()
         {
             enemies = TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, config.searchTag, transform.position, config.searchDist, config.searchLayer, f => enemyCheck(f) && f.GetTeam() != team);
+                config.searchAmount, config.searchTag, unitController.Location(), config.searchDist, config.searchLayer, f => enemyTypes.Contains(f.GetUnitType()) && f.GetTeam() != team);
             return enemies.Count > 0;
         }
-
-        //private void OnTriggerEnter2D(Collider2D collision)
-        //{
-        //    if (!collision.CompareTag(Tags.units))
-        //    {
-        //        return;
-        //    }
-
-        //    Unit enemy = collision.GetComponent<Unit>();
-        //    if (enemyCheck(enemy) && enemy.GetTeam() != team)
-        //    {
-        //        if (!enemies.Contains(enemy))
-        //        {
-        //            enemies.Add(enemy);
-        //        }
-        //        EnemyDetected?.Invoke(true);
-        //        //Debug.Log("EnemyDetected");
-        //    }
-        //}
-
-        //private void OnTriggerExit2D(Collider2D collision)
-        //{
-        //    if (!collision.CompareTag(Tags.units))
-        //    {
-        //        return;
-        //    }
-
-        //    Unit enemy = collision.GetComponent<Unit>();
-        //    if (enemyCheck(enemy) && enemy.GetTeam() != team)
-        //    {
-        //        if (enemies.Contains(enemy))
-        //        {
-        //            enemies.Remove(enemy);
-        //            if (enemies.Count == 0)
-        //            {
-        //                EnemyDetected?.Invoke(false);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
