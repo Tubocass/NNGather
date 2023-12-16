@@ -9,7 +9,8 @@ namespace gather
         FoodFactory foodFactory;
         [SerializeField] int range = 4;
         [SerializeField] float timer = 5f;
-
+        [SerializeField] bool variableTime;
+        [SerializeField] float variableTimeAmount = 1f;
 
         private void Awake()
         {
@@ -21,6 +22,11 @@ namespace gather
                 int x = (int)Mathf.Round(Random.Range(-range, range));
                 int y = (int)Mathf.Round(Random.Range(-range, range));
                 spawnPositions[p] = new Vector3(x,y,0);
+            }
+            if(variableTime)
+            {
+                float varTime = Random.Range(-variableTimeAmount, variableTimeAmount);
+                timer += varTime;
             }
             InvokeRepeating("Respawn", 0f, timer);
         }

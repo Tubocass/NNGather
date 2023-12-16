@@ -96,3 +96,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 4
+  timer: 9
+  variableTime: 1
+  variableTimeAmount: 2
