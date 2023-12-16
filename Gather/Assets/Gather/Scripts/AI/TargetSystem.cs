@@ -26,6 +26,7 @@ public class TargetSystem
                         }
                     }
                 }
+                else break;
             }
         }
         return targets;

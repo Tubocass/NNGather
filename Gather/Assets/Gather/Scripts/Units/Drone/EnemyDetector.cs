@@ -6,12 +6,11 @@ namespace gather
 {
     public class EnemyDetector
     {
-        [SerializeField] SearchConfig config;
+        SearchConfig config;
         Unit unitController;
         List<Unit> enemies = new List<Unit>();
         UnitType[] enemyTypes = new UnitType[1];
         int team;
-        //Predicate<Unit> enemyCheck = unit => unit.isActiveAndEnabled;
 
         public EnemyDetector(Unit unitController, SearchConfig config)
         {
@@ -23,11 +22,6 @@ namespace gather
         {
             this.team = team;
         }
-
-        //public void SetEnemyType(Predicate<Unit> unitType)
-        //{
-        //    enemyCheck = unitType;
-        //}
 
         public void SetEnemyTypes(UnitType[] enemyTypes)
         {
