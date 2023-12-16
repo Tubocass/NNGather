@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class TargetSystem
 {
-    public static List<T> FindTargetsByCount<T>(int amount, string tag, Vector3 location, float distance, LayerMask mask, Predicate<T> boo) where T:Component
+    public static List<T> FindTargetsByCount<T>(int amount, string tag, Vector3 location, float distance, LayerMask mask, Predicate<T> boo, out List<T> targets) where T:Component
     {
-        List<T> targets = new List<T>();
+        targets = new List<T>();
 
-        Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask, -1, 1);
         if (cols.Length > 0)
         {
             for (int f = 0; f < cols.Length; f++)
@@ -21,7 +21,6 @@ public class TargetSystem
                         var comp = cols[f].GetComponent<T>();
                         if (comp && boo.Invoke(comp))
                         {
-                            //Debug.DrawLine(location, comp.transform.position, Color.red, 3f);
                             targets.Add(comp);
                             amount--;
                         }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 namespace gather
 {
@@ -45,10 +44,23 @@ namespace gather
             this.config = config;
         }
 
+        bool ContainsUnitType(UnitType type)
+        {
+            for(int t = 0; t< enemyTypes.Length; t++)
+            {
+                if (type == enemyTypes[t])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool Detect()
         {
-            enemies = TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, config.searchTag, unitController.Location(), config.searchDist, config.searchLayer, f => enemyTypes.Contains(f.GetUnitType()) && f.GetTeam() != team);
+            TargetSystem.FindTargetsByCount<Unit>(
+                config.searchAmount, config.searchTag, unitController.Location(), config.searchDist, config.searchLayer, f => ContainsUnitType(f.GetUnitType()) && f.CanTarget(team), out enemies
+                );
             return enemies.Count > 0;
         }
     }

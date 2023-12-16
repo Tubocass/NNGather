@@ -29,6 +29,7 @@ namespace Gather.AI
         {
             if (targetFood && !targetFood.CanTarget(team))
             {
+                //targetFood.UnTargeted(drone);
                 targetFood = null;
             }
             if (!targetFood)
@@ -58,12 +59,13 @@ namespace Gather.AI
 
         void Search()
         {
-            foodPellets = TargetSystem.FindTargetsByCount<FoodPellet>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team)) ;
+            TargetSystem.FindTargetsByCount<FoodPellet>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foodPellets) ;
 
             if (foodPellets.Count > 0)
             {
                 targetFood = TargetSystem.TargetNearest<FoodPellet>(drone.Location(), foodPellets);
                 drone.SetDestination(targetFood.Location());
+                //targetFood.Targeted(drone);
             }
             else if (!drone.IsMoving)
             {

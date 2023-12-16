@@ -18,6 +18,7 @@ namespace gather
         [SerializeField] float updateTime = 0.125f;
         float timer;
         protected bool isMoving;
+        bool isEnemyDetected;
         // Animator
 
         public bool IsMoving { get { return isMoving; } }
@@ -36,6 +37,7 @@ namespace gather
             if (timer >= updateTime)
             {
                 timer = 0;
+                DetectEnemeies();
                 fsmController.Update();
             }
         }
@@ -94,9 +96,14 @@ namespace gather
             isMoving = !reached;
         }
 
+        public void DetectEnemeies()
+        {
+            isEnemyDetected =  enemyDetector.Detect();
+        }
+
         public bool GetEnemyDetected()
         {
-            return enemyDetector.Detect();
+            return isEnemyDetected;
         }
 
         public UnitType GetUnitType()

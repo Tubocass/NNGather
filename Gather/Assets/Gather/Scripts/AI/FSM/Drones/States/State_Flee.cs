@@ -57,16 +57,17 @@ namespace Gather.AI
             }
         }
 
-        void DebugDrawVector(Vector2 direction)
-        {
-            Debug.DrawRay(drone.Location(), drone.Location() - direction);
-        }
+        //void DebugDrawVector(Vector2 direction)
+        //{
+        //    Debug.DrawRay(drone.Location(), drone.Location() - direction);
+        //}
 
-        private List<Unit> DetectEnemies()
-        {
-            return TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.GetType() == typeof(FighterDrone) && f.GetTeam() != drone.GetTeam());
-        }
+        //private List<Unit> DetectEnemies()
+        //{
+        //    return TargetSystem.FindTargetsByCount<Unit>(
+        //        config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.GetType() == typeof(FighterDrone) && f.GetTeam() != drone.GetTeam());
+        //}
+
         private Vector2 DangerZone(List<Unit> enemies)
         {
             Vector2 dangerZone = enemies[0].Location();
@@ -82,8 +83,6 @@ namespace Gather.AI
         {
             while (enemies.Count > 0 && Vector3.Distance(drone.Location(), DangerZone(enemies)) < config.searchDist)
             {
-                //enemies = DetectEnemies();
-
                 drone.SetDestination(drone.Location() + drone.Location() - DangerZone(enemies));
                 yield return new WaitForSeconds(0.25f);
             }
