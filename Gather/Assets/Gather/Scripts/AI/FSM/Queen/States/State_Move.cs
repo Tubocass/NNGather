@@ -38,8 +38,8 @@ namespace Gather.AI
         void MoveToFoodCenter()
         {
             targetDestination = queen.Location();
-            int size = foods.Count;
-            for (int np = size; np > 0; np--)
+            int size = foods.Count + 1;
+            for (int np = foods.Count; np > 0; np--)
             {
                 targetDestination += foods.Dequeue();
             }
