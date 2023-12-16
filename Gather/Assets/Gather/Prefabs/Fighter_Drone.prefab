@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4234203510197336994}
   - component: {fileID: 3354598882517064424}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Red_Layer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 7247116380405307519}
   - component: {fileID: 6798773739541287178}
   - component: {fileID: 1911748694194938962}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fighter_Drone
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1
-  debugPath: 1
+  debugPath: 0
 --- !u!114 &1911748694194938962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +326,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamConfig: {fileID: 0}
   enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
+  unitType: 0
+  updateTime: 0.125

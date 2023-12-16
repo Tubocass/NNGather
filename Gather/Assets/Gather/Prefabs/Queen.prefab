@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6439568929991540249}
   - component: {fileID: 6439568929991540248}
   - component: {fileID: 6439568929991540253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Queen
   m_TagString: Queen
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1
-  debugPath: 1
+  debugPath: 0
 --- !u!50 &6439568929991540253
 Rigidbody2D:
   serializedVersion: 4

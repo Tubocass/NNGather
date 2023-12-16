@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3665969326797815692}
   - component: {fileID: 2787490590426586822}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Green_Layer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 7831803690162707537}
   - component: {fileID: 6230961757298890020}
   - component: {fileID: 9076539122546198594}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Farmer_Drone
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1
-  debugPath: 1
+  debugPath: 0
 --- !u!114 &9076539122546198594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamConfig: {fileID: 0}
-  unitType: 1
-  foodSearchConfig: {fileID: 11400000, guid: 14f6046b21a82724e868d461ec204785, type: 2}
   enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
+  unitType: 1
+  updateTime: 0.125
+  foodSearchConfig: {fileID: 11400000, guid: 14f6046b21a82724e868d461ec204785, type: 2}
