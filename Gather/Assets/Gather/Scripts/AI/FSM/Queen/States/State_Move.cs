@@ -6,7 +6,6 @@ namespace Gather.AI
 {
     public class State_Move : FSM_State
     {
-        public GameEvent QueenMove;
         Queen queen;
         Blackboard context;
         Queue<Vector2> foods;
@@ -23,7 +22,7 @@ namespace Gather.AI
         {
             if(targetDestination != Vector2.zero)
             {
-                queen.SetDestination(targetDestination, DestinationReached);
+                queen.SetDestination(targetDestination);
             }else
             {
                 MoveToFoodCenter();
@@ -44,7 +43,7 @@ namespace Gather.AI
                 targetDestination += foods.Dequeue();
             }
             targetDestination /= size;
-            queen.SetDestination(targetDestination, DestinationReached);
+            queen.SetDestination(targetDestination);
         }
 
         public override void Update()
@@ -60,11 +59,6 @@ namespace Gather.AI
         public override string GetStateName()
         {
             return States.move;
-        }
-
-        void DestinationReached(bool reached)
-        {
-            QueenMove?.Invoke();
         }
     }
 }

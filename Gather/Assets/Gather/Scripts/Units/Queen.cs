@@ -24,7 +24,6 @@ namespace gather
             foodLocations = new Queue<Vector2>(foodQueueSize);
             droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
 
-
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.FoodLocations, foodLocations);
             context.SetValue(Configs.SpawnConfig, spawnConfig);
