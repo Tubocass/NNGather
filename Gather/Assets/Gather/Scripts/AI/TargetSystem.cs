@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TargetSystem
 {
-    public static List<T> FindTargetsByCount<T>(int amount, string tag, Vector3 location, float distance, LayerMask mask, Predicate<T> boo, out List<T> targets) where T:Component
+    public static List<T> FindTargetsByCount<T>(int amount, string tag, Vector2 location, float distance, LayerMask mask, Predicate<T> boo, out List<T> targets) where T:Component
     {
         targets = new List<T>();
 

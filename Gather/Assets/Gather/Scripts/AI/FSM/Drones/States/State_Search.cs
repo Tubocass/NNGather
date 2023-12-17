@@ -11,6 +11,7 @@ namespace Gather.AI
         FoodPellet targetFood;
         SearchConfig config;
         int team;
+        bool avoidDogPile;
         
         public State_Search(FarmerDrone drone, Blackboard context)
         {
@@ -31,6 +32,7 @@ namespace Gather.AI
             {
                 //targetFood.UnTargeted(drone);
                 targetFood = null;
+                avoidDogPile = true;
             }
             if (!targetFood)
             {
@@ -67,10 +69,10 @@ namespace Gather.AI
                 drone.SetDestination(targetFood.Location());
                 //targetFood.Targeted(drone);
             }
-            else if (!drone.IsMoving)
+            else if (!drone.IsMoving || avoidDogPile)
             {
-                
-                    drone.MoveRandomly();
+                avoidDogPile = false;
+                drone.MoveRandomly();
             }
         }
     }
