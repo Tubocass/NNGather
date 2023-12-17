@@ -10,7 +10,6 @@ namespace gather
         public LocationEvent greenFlag;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
-        Blackboard context = new Blackboard();
         [SerializeField] int foodQueueSize = 10;
         [SerializeField] int foodReserve = 5;
         [SerializeField] int startingFood = 5;
@@ -22,20 +21,24 @@ namespace gather
             base.Awake();
             foodCounter = ScriptableObject.CreateInstance<Counter>();
             foodCounter.SetAmount(startingFood);
+            foodLocations = new Queue<Vector2>(foodQueueSize);
+            droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
+
+
+            context.SetValue(Configs.FoodCounter, foodCounter);
+            context.SetValue(Configs.FoodLocations, foodLocations);
+            context.SetValue(Configs.SpawnConfig, spawnConfig);
         }
 
         protected void Start()
         {
-            foodLocations = new Queue<Vector2>(foodQueueSize);
-            droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
-            SetTeamColor();
-            teamConfig.SetUnitCount(UnitType.Queen, 1);
-            context.SetValue(Configs.FoodCounter, foodCounter);
-            context.SetValue(Configs.SpawnConfig, spawnConfig);
-            context.SetValue(Configs.TeamConfig, teamConfig);
-            context.SetValue(Configs.FoodLocations, foodLocations);
             fsmController = new QueenFSM_Controller(this, context);
-            fsmController.Enable();
+        }
+
+        public override void SetTeam(TeamConfig config)
+        {
+            base.SetTeam(config);
+            context.SetValue(Configs.TeamConfig, teamConfig);
         }
 
         public void SpawnFarmer()
@@ -46,7 +49,6 @@ namespace gather
                 farmer.SetQueen(this);
                 farmer.SetTeam(teamConfig);
 
-                teamConfig.SetUnitCount(UnitType.Farmer, 1);
                 foodCounter.AddAmount(-spawnConfig.farmerCost);
             }
         }
@@ -59,7 +61,6 @@ namespace gather
                 fighter.SetTeam(teamConfig);
                 fighter.SetQueen(this);
 
-                teamConfig.SetUnitCount(UnitType.Fighter, 1);
                 foodCounter.AddAmount(-spawnConfig.fighterCost);
             }
         }
@@ -98,11 +99,6 @@ namespace gather
         public bool IsFoodFull()
         {
             return foodCounter.amount >= 20;
-        }
-
-        public Blackboard GetBlackboard()
-        {
-            return context;
         }
     }
 }

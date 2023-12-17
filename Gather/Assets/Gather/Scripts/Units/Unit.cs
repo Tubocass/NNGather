@@ -13,8 +13,10 @@ namespace gather
         protected PolyNavAgent navAgent;
         protected FSM_Controller fsmController;
         protected EnemyDetector enemyDetector;
+        protected Blackboard context = new Blackboard();
         [SerializeField] protected SearchConfig enemySearchConfig;
         [SerializeField] protected UnitType unitType;
+        [SerializeField] protected UnitType[] enemyTypes;
         [SerializeField] float updateTime = 0.125f;
         float timer;
         protected bool isMoving;
@@ -50,14 +52,9 @@ namespace gather
         public virtual void SetTeam(TeamConfig config)
         {
             this.teamConfig = config;
-            enemyDetector.SetTeam(GetTeam());
-            SetTeamColor();
-        }
-
-        public void SetTeamColor()
-        {
+            teamConfig.SetUnitCount(unitType, 1);
+            enemyDetector.SetTeam(teamConfig.Team);
             spriteRenderer.color = teamConfig.TeamColor;
-
         }
 
         public int GetTeam()
@@ -73,6 +70,8 @@ namespace gather
         protected virtual void OnDisable()
         {
             teamConfig.SetUnitCount(unitType, -1);
+            fsmController?.Disable();
+            context.Clear();
         }
 
         public bool CanTarget(int team)
@@ -109,6 +108,10 @@ namespace gather
         public UnitType GetUnitType()
         {
             return unitType;
+        }
+        public Blackboard GetBlackboard()
+        {
+            return context;
         }
     }
 }

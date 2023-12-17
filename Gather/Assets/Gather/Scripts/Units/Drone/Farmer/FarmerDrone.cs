@@ -11,32 +11,16 @@ namespace gather
         Vector2 foodLocation = Vector2.zero;
         [SerializeField] SearchConfig foodSearchConfig;
         bool appQuit = false;
-        Blackboard context = new Blackboard();
-        UnitType[] enemyTypes = { UnitType.Fighter };
-
 
         protected override void Awake()
         {
             base.Awake();
-            //enemyDetector.SetEnemyType(unit => unit is FighterDrone);
             enemyDetector.SetEnemyTypes(enemyTypes);
 
             context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
             context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FarmerFSM_Controller(this, context);
-        }
-
-        public override void SetTeam(TeamConfig config)
-        {
-            base.SetTeam(config);
-            Enable();
-        }
-     
-        private void Enable()
-        {
-            enemyDetector.SetTeam(GetTeam());
-            fsmController.Enable();
         }
 
         protected override void OnDisable()

@@ -1144,6 +1144,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709151896}
   m_CullTransparentMesh: 1
+--- !u!114 &727640087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
+  m_PrefabInstance: {fileID: 1753765915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41fa50e457e8a94d97a8caf5b49f2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &783397237 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2377285056081005018, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
@@ -2120,6 +2131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerQueen: {fileID: 1748276810}
+  otherQueens: []
   uiController: {fileID: 0}
   numTeams: 0
   teams: []
@@ -2413,7 +2425,7 @@ PrefabInstance:
     - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: teamConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: teamColor.b
       value: 0.9867615
@@ -3628,7 +3640,7 @@ PrefabInstance:
     - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: teamConfig
       value: 
-      objectReference: {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540252, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -4756,10 +4768,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerQueen: {fileID: 1311063524}
+  otherQueens:
+  - {fileID: 1748276810}
+  - {fileID: 727640087}
   uiController: {fileID: 783397237}
   numTeams: 3
   teams:
   - {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
+  - {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
+  - {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
 --- !u!1001 &6439568929910031408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4782,7 +4799,7 @@ PrefabInstance:
     - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: teamConfig
       value: 
-      objectReference: {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: foodQueueSize
       value: 5

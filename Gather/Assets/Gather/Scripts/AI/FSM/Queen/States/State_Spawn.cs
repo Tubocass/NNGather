@@ -19,13 +19,13 @@ namespace Gather.AI
             this.queen = queen;
             this.context = context;
             spawnConfig = context.GetValue<SpawnConfig>(Configs.SpawnConfig);
-            teamConfig = context.GetValue<TeamConfig>(Configs.TeamConfig);
-            farmerCounter = teamConfig.GetUnitCounter(UnitType.Farmer);
-            fighterCounter = teamConfig.GetUnitCounter(UnitType.Fighter);
         }
 
         public override void EnterState()
         {
+            teamConfig = context.GetValue<TeamConfig>(Configs.TeamConfig);
+            farmerCounter = teamConfig.GetUnitCounter(UnitType.Farmer);
+            fighterCounter = teamConfig.GetUnitCounter(UnitType.Fighter);
             queen.StartCoroutine(SpawnDrones());
         }
 

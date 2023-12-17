@@ -4,6 +4,7 @@
     {
         private FSM_State activeState;
         protected FSM_State initialState;
+        bool enabled;
 
         public FSM_State ActiveState
         {
@@ -22,10 +23,15 @@
         public virtual void Enable()
         {
             ActiveState = initialState;
+            enabled = true;
         }
 
         public void Update()
         {
+            if(!enabled)
+            {
+                Enable();
+            }
             foreach(FSM_Transistion transistion in ActiveState.transistions)
             {
                 if(transistion.isValid())
@@ -43,6 +49,7 @@
             {
                 ActiveState.ExitState();
             }
+            enabled = false;
         }
     }
 }

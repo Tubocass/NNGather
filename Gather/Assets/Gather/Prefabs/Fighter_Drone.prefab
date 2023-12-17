@@ -327,4 +327,5 @@ MonoBehaviour:
   teamConfig: {fileID: 0}
   enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   unitType: 0
+  enemyTypes: 0000000001000000
   updateTime: 0.125

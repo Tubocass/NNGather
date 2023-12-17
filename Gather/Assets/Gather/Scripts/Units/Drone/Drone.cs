@@ -7,14 +7,9 @@ namespace gather
         protected Queen myQueen;
         protected Transform queensTransform;
 
-        //protected override void Awake()
-        //{
-        //    base.Awake();
-        //}
-
         protected override void OnDisable()
         {
-            fsmController?.Disable();
+            base.OnDisable();
             queensTransform = null;
         }
 

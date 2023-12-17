@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
-using gather;
+﻿using gather;
 
 namespace Gather.AI
 {
-    public class FighterFSM_Controller : FSM_Controller, AIController_Interface
+    public class FighterFSM_Controller : FSM_Controller
     {
         State_Hunt huntState;
         State_Engage engageState;
