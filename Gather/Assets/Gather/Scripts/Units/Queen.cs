@@ -31,6 +31,7 @@ namespace gather
             SetTeamColor();
             teamConfig.SetUnitCount(UnitType.Queen, 1);
             context.SetValue(Configs.FoodCounter, foodCounter);
+            context.SetValue(Configs.SpawnConfig, spawnConfig);
             context.SetValue(Configs.TeamConfig, teamConfig);
             context.SetValue(Configs.FoodLocations, foodLocations);
             fsmController = new QueenFSM_Controller(this, context);

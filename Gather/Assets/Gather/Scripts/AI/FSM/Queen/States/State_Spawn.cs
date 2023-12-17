@@ -9,25 +9,24 @@ namespace Gather.AI
         public GameEvent Finished;
         Queen queen;
         Blackboard context;
-        //TeamConfig teamConfig;
-        //private int farmers, fighters;
-        //QueenStatus queenStatus;
-        SpawnJob job;
+        SpawnConfig spawnConfig;
+        Counter farmerCounter;
+        Counter fighterCounter;
+        TeamConfig teamConfig;
 
         public State_Spawn (Queen queen, Blackboard context)
         {
             this.queen = queen;
             this.context = context;
+            spawnConfig = context.GetValue<SpawnConfig>(Configs.SpawnConfig);
+            teamConfig = context.GetValue<TeamConfig>(Configs.TeamConfig);
+            farmerCounter = teamConfig.GetUnitCounter(UnitType.Farmer);
+            fighterCounter = teamConfig.GetUnitCounter(UnitType.Fighter);
         }
 
         public override void EnterState()
         {
-            // spawn how many of what
-            //farmers = 0;
-            //fighters = 0;
-            //job = context.GetValue<SpawnJob>(Configs.SpawnJob);
             queen.StartCoroutine(SpawnDrones());
-            //Debug.Log("Spawning");
         }
 
         public override void Update()
@@ -52,46 +51,20 @@ namespace Gather.AI
                 float chance = Random.value;
                 if (chance >= 0.66)
                 {
-                    queen.SpawnFighter();
+                    if(fighterCounter.amount < spawnConfig.fighterCap)
+                    {
+                        queen.SpawnFighter();
+                    }
                 }
                 else
                 {
-                    queen.SpawnFarmer();
+                    if (farmerCounter.amount < spawnConfig.farmerCap)
+                    {
+                        queen.SpawnFarmer();
+                    }
                 }
                 yield return new WaitForSeconds(1f);
             }
-            //while (!job.complete)
-            //{
-            //    if(farmers < job.farmers)
-            //    {
-            //        farmers++;
-            //        queen.SpawnFarmer();
-            //    }
-            //    else if(fighters < job.fighters)
-            //    {
-            //        fighters++;
-            //        queen.SpawnFighter();
-            //    }else
-            //    {
-            //        job.complete = true;
-            //    }
-
-            //    yield return new WaitForSeconds(1f);
-            //}
-            //Finished?.Invoke();
-        }
-    }
-    public class SpawnJob
-    {
-        public int farmers;
-        public int fighters;
-        public bool complete;
-
-        public SpawnJob(int farmers, int fighters)
-        {
-            this.farmers = farmers;
-            this.fighters = fighters;
-            complete = false;
         }
     }
 }

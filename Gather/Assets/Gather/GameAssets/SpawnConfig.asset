@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmerCost: 1
   fighterCost: 2
-  farmerCap: 16
-  fighterCap: 8
+  farmerCap: 32
+  fighterCap: 16
