@@ -13,6 +13,7 @@ namespace gather
         [SerializeField] int foodQueueSize = 10;
         [SerializeField] int foodReserve = 5;
         [SerializeField] int startingFood = 5;
+        [SerializeField] int maxFood = 20;
         Queue<Vector2> foodLocations;
         Counter foodCounter;
 
@@ -67,15 +68,19 @@ namespace gather
         public void Gather(Vector2 fromLocation)
         {
             foodCounter.AddAmount(1);
-            if (!foodLocations.Contains(fromLocation) && foodLocations.Count < foodQueueSize)
+            if (!foodLocations.Contains(fromLocation) )
             {
-                foodLocations.Enqueue(fromLocation);
+                if(foodLocations.Count < foodQueueSize)
+                {
+                    foodLocations.Enqueue(fromLocation);
+                }
+                else
+                {
+                    foodLocations.Dequeue();
+                    foodLocations.Enqueue(fromLocation);
+                }
             }
-            else
-            {
-                foodLocations.Dequeue();
-                foodLocations.Enqueue(fromLocation);
-            }
+            
         }
 
         public float AverageDistanceFromFood()
@@ -97,7 +102,7 @@ namespace gather
 
         public bool IsFoodFull()
         {
-            return foodCounter.amount >= 20;
+            return foodCounter.amount >= maxFood;
         }
     }
 }
