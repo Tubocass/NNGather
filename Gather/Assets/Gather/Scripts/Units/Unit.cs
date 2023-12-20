@@ -18,8 +18,8 @@ namespace gather
         [SerializeField] protected UnitType unitType;
         [SerializeField] protected UnitType[] enemyTypes;
         [SerializeField] float updateTime = 0.125f;
-        float timer;
         protected bool isMoving;
+        float timer;
         bool isEnemyDetected;
         // Animator
 
@@ -33,7 +33,7 @@ namespace gather
             enemyDetector = new EnemyDetector(this, enemySearchConfig);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             timer += Time.deltaTime;
             if (timer >= updateTime)

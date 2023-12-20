@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace gather
 {
+    [System.Serializable]
     public class EnemyDetector
     {
         SearchConfig config;

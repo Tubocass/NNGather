@@ -29,7 +29,7 @@ namespace gather
             context.SetValue(Configs.SpawnConfig, spawnConfig);
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
             fsmController = new QueenFSM_Controller(this, context);
         }

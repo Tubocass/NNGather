@@ -9,7 +9,7 @@ namespace gather
     public class GameController : MonoBehaviour
     {
         CameraController cameraController;
-        [SerializeField] Queen playerQueen; //  will eventually be spawned after world setup
+        [SerializeField] PlayerQueen playerQueen; //  will eventually be spawned after world setup
         [SerializeField] Queen[] otherQueens;
         //Blackboard globalContext = new Blackboard();
         [SerializeField] UIController uiController;
