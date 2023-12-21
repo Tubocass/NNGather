@@ -7,9 +7,13 @@ namespace Gather.AI
         State_Move moveState;
         State_Feed feedState;
         State_Spawn spawnState;
+        Queen queen;
 
-        public QueenFSM_Controller (Queen queen, Blackboard context)
+        protected override void Init()
         {
+            queen = GetComponent<Queen>();
+            Blackboard context = queen.GetBlackboard();
+
             moveState = new State_Move(queen, context);
             feedState = new State_Feed(queen, context);
             spawnState = new State_Spawn(queen, context);
@@ -23,6 +27,12 @@ namespace Gather.AI
 
             spawnState.transistions.Add(new ToStateFeed(queen, feedState));
             spawnState.transistions.Add(new ToStateMove(queen, moveState));
+        }
+
+        public override void Tick()
+        {
+            queen.DetectEnemeies();
+            base.Tick();
         }
     }
 }

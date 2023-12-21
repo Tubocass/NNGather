@@ -32,6 +32,7 @@ namespace gather
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
+            fsmController = GetComponent<FSM_Controller>();
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 

@@ -17,7 +17,7 @@ namespace gather
             base.Awake();
 
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
-            fsmController = new FarmerFSM_Controller(this, context);
+            //fsmController = new FarmerFSM_Controller(this, context);
         }
 
         protected override void OnDisable()

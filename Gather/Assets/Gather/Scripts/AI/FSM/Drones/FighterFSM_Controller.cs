@@ -7,8 +7,11 @@ namespace Gather.AI
         State_Hunt huntState;
         State_Engage engageState;
 
-        public FighterFSM_Controller (FighterDrone drone, Blackboard context)
+        protected override void Init()
         {
+            FighterDrone drone = GetComponent<FighterDrone>();
+            Blackboard context = drone.GetBlackboard();
+
             huntState = new State_Hunt(drone, context);
             engageState = new State_Engage(drone, context);
             initialState = huntState;

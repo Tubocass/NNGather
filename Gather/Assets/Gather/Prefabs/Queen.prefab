@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6439568929991540253}
   - component: {fileID: 6439568929991540250}
   - component: {fileID: 5326994583515415323}
+  - component: {fileID: -2512082814871164442}
   m_Layer: 6
   m_Name: Queen
   m_TagString: Queen
@@ -186,3 +187,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   enemyTypes: 00000000
+--- !u!114 &-2512082814871164442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439568929991540247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9120113353c204bbfa4a2bec2cce0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

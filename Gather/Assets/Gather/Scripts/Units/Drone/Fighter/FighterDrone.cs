@@ -10,7 +10,7 @@ namespace gather
         {
             base.Awake();
 
-            fsmController = new FighterFSM_Controller(this, context);
+            //fsmController = new FighterFSM_Controller(this, context);
         }
 
         public override void SetQueen(Queen queenie)

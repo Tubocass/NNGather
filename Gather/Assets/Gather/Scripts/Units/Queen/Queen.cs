@@ -32,7 +32,7 @@ namespace gather
 
         protected virtual void Start()
         {
-            fsmController = new QueenFSM_Controller(this, context);
+            //fsmController = new QueenFSM_Controller(this, context);
         }
 
         public override void SetTeam(TeamConfig config)

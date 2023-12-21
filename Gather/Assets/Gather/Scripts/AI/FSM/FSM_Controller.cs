@@ -1,10 +1,13 @@
-﻿namespace Gather.AI
+﻿using UnityEngine;
+
+namespace Gather.AI
 {
-    public abstract class FSM_Controller
+    public abstract class FSM_Controller : MonoBehaviour
     {
-        private FSM_State activeState;
+        [SerializeField] private FSM_State activeState;
         protected FSM_State initialState;
-        bool enabled;
+        private float timer;
+        [SerializeField] private float updateTime = 0.125f;
 
         public FSM_State ActiveState
         {
@@ -20,18 +23,29 @@
             }
         }
 
-        public virtual void Enable()
+        protected virtual void Init()
         {
+
+        }
+
+        public void Start()
+        {
+            Init();
             ActiveState = initialState;
-            enabled = true;
         }
 
         public void Update()
         {
-            if(!enabled)
+            timer += Time.deltaTime;
+            if (timer >= updateTime)
             {
-                Enable();
+                timer = 0;
+                Tick();
             }
+        }
+
+        public virtual void Tick()
+        { 
             foreach(FSM_Transistion transistion in ActiveState.transistions)
             {
                 if(transistion.isValid())
@@ -40,7 +54,6 @@
                 }
             }
             ActiveState.Update();
-
         }
 
         public virtual void Disable()
@@ -49,7 +62,6 @@
             {
                 ActiveState.ExitState();
             }
-            enabled = false;
         }
     }
 }
