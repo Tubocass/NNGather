@@ -15,7 +15,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return !drone.GetEnemyDetected() && !drone.IsCarryingFood();
+            return !drone.GetEnemyDetected() && !drone.IsCarryingFood() && !drone.hasTarget;
         }
 
         public FSM_State GetNextState()

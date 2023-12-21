@@ -9,64 +9,36 @@ namespace Gather.AI
     {
         List<Unit> enemies;
         Drone drone;
-        SearchConfig config;
         EnemyDetector enemyDetector;
 
         public State_Flee(FarmerDrone drone, Blackboard context)
         {
             this.drone = drone;
             enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
-            config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
         public override void EnterState()
         {
-            //Debug.Log("Fleeing");
-            Flee();
         }
 
         public override void Update()
         {
-            //Flee();
+            enemies = enemyDetector.GetEnemiesList();
+
+            if (enemies.Count > 0)
+            {
+                drone.SetDestination(drone.Location() + (drone.Location() - DangerZone(enemies)));
+            }
         }
 
         public override void ExitState()
         {
-            drone.StopAllCoroutines();
         }
 
         public override string GetStateName()
         {
             return States.flee;
         }
-
-        public void SetEnemiesList(List<Unit> enemies)
-        {
-            this.enemies = enemies;
-        }
-
-        void Flee()
-        {
-            enemies = enemyDetector.GetEnemiesList();
-           
-            if (enemies.Count > 0)
-            {
-                //DebugDrawVector(DangerZone(enemies));
-                drone.SetDestination(drone.Location() + (drone.Location() - DangerZone(enemies)) );
-                drone.StartCoroutine(RunFromTarget());
-            }
-        }
-
-        //void DebugDrawVector(Vector2 direction)
-        //{
-        //    Debug.DrawRay(drone.Location(), drone.Location() - direction);
-        //}
-
-        //private List<Unit> DetectEnemies()
-        //{
-        //    return TargetSystem.FindTargetsByCount<Unit>(
-        //        config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.GetType() == typeof(FighterDrone) && f.GetTeam() != drone.GetTeam());
-        //}
 
         private Vector2 DangerZone(List<Unit> enemies)
         {
@@ -77,15 +49,6 @@ namespace Gather.AI
             }
             dangerZone /= enemies.Count;
             return dangerZone;
-        }
-
-        public IEnumerator RunFromTarget()
-        {
-            while (enemies.Count > 0 && Vector3.Distance(drone.Location(), DangerZone(enemies)) < config.searchDist)
-            {
-                drone.SetDestination(drone.Location() + drone.Location() - DangerZone(enemies));
-                yield return new WaitForSeconds(0.25f);
-            }
         }
     }
 }

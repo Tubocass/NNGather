@@ -63,6 +63,7 @@ namespace gather
             HaltNavigation();
             carriedFood = pellet;
             foodLocation = carriedFood.Location();
+            hasTarget = false;
             fsmController.Update();
         }
 

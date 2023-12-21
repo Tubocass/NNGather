@@ -4,9 +4,9 @@ namespace Gather.AI
 {
     public class ToStateEngage : FSM_Transistion
     {
-        FighterDrone drone;
+        Drone drone;
         FSM_State nextState;
-        public ToStateEngage(FighterDrone drone, FSM_State next)
+        public ToStateEngage(Drone drone, FSM_State next)
         {
             this.drone = drone;
             this.nextState = next;
@@ -14,7 +14,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return false;
+            return drone.hasTarget;
         }
 
         public FSM_State GetNextState()

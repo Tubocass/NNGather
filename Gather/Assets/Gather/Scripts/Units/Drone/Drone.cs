@@ -6,6 +6,7 @@ namespace gather
     {
         protected Queen myQueen;
         protected Transform queensTransform;
+        public bool hasTarget;
 
         protected override void OnDisable()
         {

@@ -10,39 +10,31 @@ namespace Gather.AI
         FarmerDrone drone;
         FoodPellet targetFood;
         SearchConfig config;
+        Blackboard context;
         int team;
         bool avoidDogPile;
         
         public State_Search(FarmerDrone drone, Blackboard context)
         {
+            this.context = context;
             this.drone = drone;
-            this.config = context.GetValue<SearchConfig>(Configs.SearchConfig);
+            config = context.GetValue<SearchConfig>(Configs.SearchConfig);
         }
 
         public override void EnterState()
         {
             team = drone.GetTeam();
-            Search();
-
+            avoidDogPile = true;
         }
 
         public override void Update()
         {
-            if (targetFood && !targetFood.CanTarget(team))
-            {
-                //targetFood.UnTargeted(drone);
-                targetFood = null;
-                avoidDogPile = true;
-            }
-            if (!targetFood)
-            {
-                Search();
-            }
+            Search();
         }
 
         public override void ExitState()
         {
-            Clear();
+            foodPellets.Clear();
         }
 
         public override string GetStateName()
@@ -50,24 +42,15 @@ namespace Gather.AI
             return States.search;
         }
 
-        public void Clear()
-        {
-            foodPellets.Clear();
-            if (targetFood)
-            {
-                targetFood = null;
-            }
-        }
-
         void Search()
         {
-            TargetSystem.FindTargetsByCount<FoodPellet>(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foodPellets) ;
+            TargetSystem.FindTargetsByCount(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foodPellets) ;
 
             if (foodPellets.Count > 0)
             {
-                targetFood = TargetSystem.TargetNearest<FoodPellet>(drone.Location(), foodPellets);
-                drone.SetDestination(targetFood.Location());
-                //targetFood.Targeted(drone);
+                targetFood = TargetSystem.TargetNearest(drone.Location(), foodPellets);
+                context.SetValue<ITarget>(Configs.Target, targetFood);
+                drone.hasTarget = true;
             }
             else if (!drone.IsMoving || avoidDogPile)
             {

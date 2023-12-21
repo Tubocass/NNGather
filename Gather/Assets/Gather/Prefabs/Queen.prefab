@@ -164,8 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41fa50e457e8a94d97a8caf5b49f2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamConfig: {fileID: 0}
-  enemyDetector: {fileID: 0}
   enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   unitType: 2
   updateTime: 0.125

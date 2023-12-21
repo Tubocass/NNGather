@@ -7,63 +7,43 @@ namespace Gather.AI
 {
     public class State_Engage : FSM_State
     {
-        Drone droneController;
-        ITarget target;
-        public event TargetEvent TargetLost;
-        public event TargetEvent TargetReached;
         Blackboard context;
-        SearchConfig searchConfig;
+        Drone drone;
+        ITarget target;
 
-        public State_Engage(Drone droneController, Blackboard bb)
+        public State_Engage(Drone drone, Blackboard bb)
         {
-            this.droneController = droneController;
+            this.drone = drone;
             context = bb;
-            searchConfig = context.GetValue<SearchConfig>(Configs.EnemySearchConfig);
         }
 
         public override void EnterState()
         {
-            //Debug.Log("Engaging");
             target = context.GetValue<ITarget>(Configs.Target);
-            if(target !=null)
-            {
-                droneController.SetDestination(target.Location());
-                droneController.StartCoroutine(MoveToTarget());
-            }
         }
 
         public override void Update()
         {
-            if (!target.CanTarget(droneController.GetTeam())
-                || Vector3.Distance(target.Location(), droneController.Location()) > searchConfig.searchDist)
+            if (target == null || !target.CanTarget(drone.GetTeam()))
             {
-                TargetLost?.Invoke();
+                drone.hasTarget = false;
+                //context.SetValue<ITarget>(Configs.Target, null);
             }
-            else
+            else if(!drone.IsMoving)
             {
-                droneController.SetDestination(target.Location());
+                drone.SetDestination(target.Location());
             }
         }
 
         public override void ExitState()
         {
             target = null;
-            droneController.StopAllCoroutines();
+            drone.hasTarget = false;
         }
 
         public override string GetStateName()
         {
             return States.engage;
-        }
-
-        public IEnumerator MoveToTarget()
-        {
-            while (target != null && Vector3.Distance(target.Location(), droneController.Location()) > 1)
-            {
-                droneController.SetDestination(target.Location());
-                yield return new WaitForSeconds(0.25f);
-            }
-            TargetReached?.Invoke();
         }
     }
 }
