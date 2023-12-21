@@ -32,6 +32,7 @@ namespace gather
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
+            context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
         protected virtual void Update()

@@ -16,9 +16,7 @@ namespace gather
         {
             base.Awake();
 
-            context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);
-            context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FarmerFSM_Controller(this, context);
         }
 

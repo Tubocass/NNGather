@@ -10,8 +10,6 @@ namespace gather
         {
             base.Awake();
 
-            context.SetValue(Configs.EnemyDetector, enemyDetector);
-            context.SetValue(Configs.EnemySearchConfig, enemySearchConfig);
             fsmController = new FighterFSM_Controller(this, context);
         }
 
