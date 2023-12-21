@@ -15,7 +15,6 @@ namespace gather
         protected override void Awake()
         {
             base.Awake();
-            enemyDetector.SetEnemyTypes(enemyTypes);
 
             context.SetValue(Configs.EnemyDetector, enemyDetector);
             context.SetValue(Configs.SearchConfig, foodSearchConfig);

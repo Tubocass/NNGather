@@ -7,20 +7,21 @@ namespace gather
 {
     public abstract class Unit : MonoBehaviour, ITarget
     {
-        public TeamConfig teamConfig;
-        protected Transform myTransform;
-        protected SpriteRenderer spriteRenderer;
-        protected PolyNavAgent navAgent;
-        protected FSM_Controller fsmController;
-        protected EnemyDetector enemyDetector;
         protected Blackboard context = new Blackboard();
+        protected EnemyDetector enemyDetector;
+        protected FSM_Controller fsmController;
+        protected PolyNavAgent navAgent;
+        protected SpriteRenderer spriteRenderer;
+        protected TeamConfig teamConfig;
+        protected Transform myTransform;
+        
         [SerializeField] protected SearchConfig enemySearchConfig;
         [SerializeField] protected UnitType unitType;
-        [SerializeField] protected UnitType[] enemyTypes;
-        [SerializeField] float updateTime = 0.125f;
+        [SerializeField] private float updateTime = 0.125f;
+
         protected bool isMoving;
-        float timer;
-        bool isEnemyDetected;
+        private float timer;
+        private bool isEnemyDetected;
         // Animator
 
         public bool IsMoving { get { return isMoving; } }
@@ -30,7 +31,7 @@ namespace gather
             myTransform = transform; 
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
-            enemyDetector = new EnemyDetector(this, enemySearchConfig);
+            enemyDetector = GetComponent<EnemyDetector>();
         }
 
         protected virtual void Update()

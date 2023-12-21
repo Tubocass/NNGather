@@ -4,19 +4,17 @@ using UnityEngine;
 
 namespace gather
 {
-    [System.Serializable]
-    public class EnemyDetector
+    public class EnemyDetector : MonoBehaviour
     {
-        SearchConfig config;
-        Unit unitController;
+        [SerializeField] SearchConfig config;
+        [SerializeField] UnitType[] enemyTypes;
         List<Unit> enemies = new List<Unit>();
-        UnitType[] enemyTypes = new UnitType[1];
+        Unit unitController;
         int team;
 
-        public EnemyDetector(Unit unitController, SearchConfig config)
+        private void Awake()
         {
-            this.unitController = unitController;
-            this.config = config;
+            unitController = GetComponent<Unit>();
         }
 
         public void SetTeam(int team)
@@ -24,19 +22,9 @@ namespace gather
             this.team = team;
         }
 
-        public void SetEnemyTypes(UnitType[] enemyTypes)
-        {
-            this.enemyTypes = enemyTypes; 
-        }
-
         public List<Unit> GetEnemiesList()
         {
             return enemies;
-        }
-
-        public void SetSearchConfig(SearchConfig config)
-        {
-            this.config = config;
         }
 
         bool ContainsUnitType(UnitType type)

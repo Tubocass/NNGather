@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 7831803690162707537}
   - component: {fileID: 6230961757298890020}
   - component: {fileID: 9076539122546198594}
+  - component: {fileID: -7060340031324956497}
   m_Layer: 6
   m_Name: Farmer_Drone
   m_TagString: Unit
@@ -325,8 +326,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamConfig: {fileID: 0}
+  enemyDetector: {fileID: 0}
   enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   unitType: 1
-  enemyTypes: 00000000
   updateTime: 0.125
   foodSearchConfig: {fileID: 11400000, guid: 14f6046b21a82724e868d461ec204785, type: 2}
+--- !u!114 &-7060340031324956497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829006796857892509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7640a00f4f84e674fa627b2dca0aab44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
+  enemyTypes: 00000000
