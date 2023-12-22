@@ -14,7 +14,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return false;
+            return !drone.hasTarget;
         }
 
         public FSM_State GetNextState()

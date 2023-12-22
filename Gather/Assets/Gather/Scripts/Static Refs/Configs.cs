@@ -2,8 +2,9 @@ public static class Configs
 {
     public static readonly string EnemyDetector = "enemyDetector";
     public static readonly string EnemySearchConfig = "enemySearchConfig";
-    public static readonly string FoodLocations = "foodLocs";
     public static readonly string FoodCounter = "foodCounter";
+    public static readonly string FoodDetector = "foodDetector";
+    public static readonly string FoodLocations = "foodLocs";
     public static readonly string QueenStatus = "queenStatus";
     public static readonly string SearchConfig = "searchConfig";
     public static readonly string SpawnConfig = "spawnConfig";

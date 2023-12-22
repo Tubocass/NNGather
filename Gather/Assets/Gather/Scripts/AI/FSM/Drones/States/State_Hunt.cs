@@ -1,64 +1,43 @@
 using System.Collections.Generic;
 using gather;
-using UnityEngine;
 
 namespace Gather.AI
 {
     public class State_Hunt : FSM_State
     {
         List<Unit> enemies = new List<Unit>();
-        FighterDrone drone;
+        Drone drone;
         Unit target;
         Blackboard context;
         EnemyDetector enemyDetector;
+        bool changePath;
 
-
-        public State_Hunt(FighterDrone fighter, Blackboard bb)
+        public State_Hunt(Drone fighter, Blackboard bb)
         {
             drone = fighter;
             context = bb;
             enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
-
-        public void Clear()
-        {
-            target = null;
-        }
         
         public override void EnterState()
         {
-            Hunt();
+            changePath = true;
         }
 
         public override void Update()
         {
-            if (target && !target.CanTarget(drone.GetTeam()))
-            {
-                target = null;
-            }
-            if(target == null)
-            {
-                Hunt();
-            } 
-            else
-            {
-                drone.SetDestination(target.Location());
-            }
+            Hunt();
         }
 
         public override void ExitState()
         {
-            Clear();
+            target = null;
+            enemies.Clear();
         }
 
         public override string GetStateName()
         {
             return States.hunt;
-        }
-
-        public void SetEnemiesList(List<Unit> enemies)
-        {
-            this.enemies = enemies;
         }
 
         void Hunt()
@@ -68,10 +47,13 @@ namespace Gather.AI
 
             if (enemies.Count > 0)
             {
-                target = TargetSystem.TargetNearest<Unit>(drone.Location(), enemies);
+                target = TargetSystem.TargetNearest(drone.Location(), enemies);
+                context.SetValue<ITarget>(Configs.Target, target);
+                drone.hasTarget = true;
             }
-            else if(!drone.IsMoving)
+            else if(!drone.IsMoving || changePath)
             {
+                changePath = false;
                 drone.MoveRandomly();
             }
         }

@@ -1,30 +1,27 @@
 using System.Collections.Generic;
 using gather;
-using UnityEngine;
 
 namespace Gather.AI
 {
     public class State_Search : FSM_State
     {
         List<FoodPellet> foodPellets = new List<FoodPellet>();
-        FarmerDrone drone;
-        FoodPellet targetFood;
-        SearchConfig config;
+        Drone drone;
+        FoodPellet target;
         Blackboard context;
-        int team;
-        bool avoidDogPile;
+        FoodDetector foodDetector;
+        bool changePath;
         
-        public State_Search(FarmerDrone drone, Blackboard context)
+        public State_Search(Drone drone, Blackboard context)
         {
-            this.context = context;
             this.drone = drone;
-            config = context.GetValue<SearchConfig>(Configs.SearchConfig);
+            this.context = context;
+            foodDetector = context.GetValue<FoodDetector>(Configs.FoodDetector);
         }
 
         public override void EnterState()
         {
-            team = drone.GetTeam();
-            avoidDogPile = true;
+            changePath = true;
         }
 
         public override void Update()
@@ -34,6 +31,7 @@ namespace Gather.AI
 
         public override void ExitState()
         {
+            target = null;
             foodPellets.Clear();
         }
 
@@ -44,17 +42,18 @@ namespace Gather.AI
 
         void Search()
         {
-            TargetSystem.FindTargetsByCount(config.searchAmount, config.searchTag, drone.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foodPellets) ;
+            foodDetector.Detect();
+            foodPellets = foodDetector.GetFoodList();
 
             if (foodPellets.Count > 0)
             {
-                targetFood = TargetSystem.TargetNearest(drone.Location(), foodPellets);
-                context.SetValue<ITarget>(Configs.Target, targetFood);
+                target = TargetSystem.TargetNearest(drone.Location(), foodPellets);
+                context.SetValue<ITarget>(Configs.Target, target);
                 drone.hasTarget = true;
             }
-            else if (!drone.IsMoving || avoidDogPile)
+            else if (!drone.IsMoving || changePath)
             {
-                avoidDogPile = false;
+                changePath = false;
                 drone.MoveRandomly();
             }
         }

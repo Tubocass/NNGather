@@ -19,6 +19,9 @@ namespace Gather.AI
             huntState.transistions.Add(
                 new ToStateEngage(drone, engageState)
                 );
+            engageState.transistions.Add(
+                new ToStateHunt(drone, huntState)
+                );
         }
     }
 }

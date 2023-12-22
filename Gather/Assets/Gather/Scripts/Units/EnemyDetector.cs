@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace gather
 {
-    public class EnemyDetector : MonoBehaviour
+    public class EnemyDetector : MonoBehaviour, IDetector
     {
         [SerializeField] SearchConfig config;
         [SerializeField] UnitType[] enemyTypes;

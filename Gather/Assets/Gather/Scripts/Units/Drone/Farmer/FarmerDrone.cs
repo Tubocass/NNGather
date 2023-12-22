@@ -6,13 +6,13 @@ namespace gather
     {
         FoodPellet carriedFood;
         Vector2 foodLocation = Vector2.zero;
-        [SerializeField] SearchConfig foodSearchConfig;
+        FoodDetector foodDetector;
 
         protected override void Awake()
         {
             base.Awake();
-
-            context.SetValue(Configs.SearchConfig, foodSearchConfig);
+            foodDetector = GetComponent<FoodDetector>();
+            context.SetValue(Configs.FoodDetector, foodDetector);
         }
 
         public override void Death()

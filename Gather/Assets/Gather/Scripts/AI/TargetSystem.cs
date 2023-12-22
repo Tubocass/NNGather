@@ -16,14 +16,11 @@ public class TargetSystem
             {
                 if (amount > 0)
                 {
-                    //if (cols[f].gameObject.CompareTag(tag))
+                    var comp = cols[f].GetComponent<T>();
+                    if (boo.Invoke(comp))
                     {
-                        var comp = cols[f].GetComponent<T>();
-                        if (boo.Invoke(comp))
-                        {
-                            targets.Add(comp);
-                            amount--;
-                        }
+                        targets.Add(comp);
+                        amount--;
                     }
                 }
                 else break;

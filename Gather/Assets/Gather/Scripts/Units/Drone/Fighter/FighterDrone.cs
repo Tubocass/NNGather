@@ -1,4 +1,3 @@
-
 namespace gather
 {
     public class FighterDrone : Drone

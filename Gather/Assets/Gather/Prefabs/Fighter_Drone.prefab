@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
-  maxSpeed: 8.5
+  maxSpeed: 9
   maxForce: 10
   stoppingDistance: 0.1
   slowingDistance: 1
@@ -326,9 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd4249a7b9b407439d93fc4cbec3582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   unitType: 0
-  updateTime: 0.125
   hasTarget: 0
 --- !u!114 &6406449497803425
 MonoBehaviour:
@@ -356,3 +354,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274f6263f03a7b840a8b3a62fc3020f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateTime: 0.125

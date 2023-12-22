@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 6230961757298890020}
   - component: {fileID: 9076539122546198594}
   - component: {fileID: -7060340031324956497}
+  - component: {fileID: 3204129293427662293}
   - component: {fileID: -8413646628851874217}
   m_Layer: 6
   m_Name: Farmer_Drone
@@ -326,11 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825a2b4e500a8f645abd9e9710745325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySearchConfig: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   unitType: 1
-  updateTime: 0.125
   hasTarget: 0
-  foodSearchConfig: {fileID: 11400000, guid: 14f6046b21a82724e868d461ec204785, type: 2}
 --- !u!114 &-7060340031324956497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +343,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   enemyTypes: 00000000
+--- !u!114 &3204129293427662293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829006796857892509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76a4519e405f9b4da2b7558c91a9d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 14f6046b21a82724e868d461ec204785, type: 2}
 --- !u!114 &-8413646628851874217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,3 +368,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1666863b270a42d48b4d2bdfd1d54af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateTime: 0.125

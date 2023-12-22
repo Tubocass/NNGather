@@ -20,7 +20,7 @@ namespace Gather.AI
 
         public override void EnterState()
         {
-            changePath = true;
+            changePath = true; //if moving when entering state
             target = context.GetValue<ITarget>(Configs.Target);
         }
 
@@ -29,8 +29,10 @@ namespace Gather.AI
             if (target == null || !target.CanTarget(drone.GetTeam()))
             {
                 drone.hasTarget = false;
+                return;
             }
-            else if(!drone.IsMoving || changePath)
+            
+            if(!drone.IsMoving || changePath)
             {
                 drone.SetDestination(target.Location());
             }
