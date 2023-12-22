@@ -2426,34 +2426,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Queen_1
       objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540248, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: _map
-      value: 
-      objectReference: {fileID: 1856280356}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: team
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: teamConfig
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: teamColor.b
-      value: 0.9867615
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: teamColor.g
-      value: 0.12549019
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: teamColor.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540252, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3632,14 +3604,6 @@ PrefabInstance:
     - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_Name
       value: Queen_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439568929991540250, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
-      propertyPath: teamConfig
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540252, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_RootOrder

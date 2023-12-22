@@ -7,6 +7,7 @@ namespace gather
 {
     public abstract class Unit : MonoBehaviour, ITarget
     {
+        [SerializeField] protected UnitType unitType;
         protected Blackboard context = new Blackboard();
         protected EnemyDetector enemyDetector;
         protected FSM_Controller fsmController;
@@ -14,13 +15,7 @@ namespace gather
         protected SpriteRenderer spriteRenderer;
         protected TeamConfig teamConfig;
         protected Transform myTransform;
-        
-        [SerializeField] protected SearchConfig enemySearchConfig;
-        [SerializeField] protected UnitType unitType;
-        [SerializeField] private float updateTime = 0.125f;
-
         protected bool isMoving;
-        private float timer;
         private bool isEnemyDetected;
         // Animator
 
@@ -62,7 +57,6 @@ namespace gather
         protected virtual void OnDisable()
         {
             teamConfig.SetUnitCount(unitType, -1);
-            fsmController?.Disable();
             context.Clear();
         }
 

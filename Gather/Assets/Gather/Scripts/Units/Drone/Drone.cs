@@ -8,10 +8,16 @@ namespace gather
         protected Transform queensTransform;
         public bool hasTarget;
 
-        protected override void OnDisable()
+        //protected override void OnDisable()
+        //{
+        //    base.OnDisable();
+        //}
+
+        public override void Death()
         {
-            base.OnDisable();
+            myQueen = null;
             queensTransform = null;
+            base.Death();
         }
 
         public virtual void SetQueen(Queen queenie)

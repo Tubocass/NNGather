@@ -33,6 +33,7 @@ namespace Gather.AI
         {
             Init();
             ActiveState = initialState;
+            Tick();
         }
 
         public void Update()
@@ -62,7 +63,7 @@ namespace Gather.AI
             ActiveState.Update();
         }
 
-        public virtual void Disable()
+        public virtual void OnDisable()
         {
             if (ActiveState != null)
             {
