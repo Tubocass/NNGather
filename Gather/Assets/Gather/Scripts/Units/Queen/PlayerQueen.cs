@@ -6,9 +6,5 @@ namespace gather
         protected override void Start()
         {
         }
-        protected override void Update()
-        {
-        }
-
     }
 }

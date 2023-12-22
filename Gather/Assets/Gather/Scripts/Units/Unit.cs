@@ -36,17 +36,6 @@ namespace gather
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
-        protected virtual void Update()
-        {
-            timer += Time.deltaTime;
-            if (timer >= updateTime)
-            {
-                timer = 0;
-                DetectEnemeies();
-                fsmController.Update();
-            }
-        }
-
         public Vector2 Location()
         {
             return myTransform.position;
