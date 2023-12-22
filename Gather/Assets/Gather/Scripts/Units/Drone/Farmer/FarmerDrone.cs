@@ -22,7 +22,7 @@ namespace gather
                 carriedFood.Detach();
                 carriedFood = null;
             }
-            //    //myQueen.greenFlag -= SetDestination;
+            myQueen.greenFlag -= SetDestination;
 
             base.Death();
         }
@@ -35,7 +35,7 @@ namespace gather
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            //queenie.greenFlag += SetDestination;
+            queenie.greenFlag += SetDestination;
         }
 
         public void PickupFood(FoodPellet pellet)

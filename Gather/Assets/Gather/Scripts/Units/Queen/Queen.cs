@@ -30,11 +30,6 @@ namespace gather
             context.SetValue(Configs.SpawnConfig, spawnConfig);
         }
 
-        protected virtual void Start()
-        {
-            //fsmController = new QueenFSM_Controller(this, context);
-        }
-
         public override void SetTeam(TeamConfig config)
         {
             base.SetTeam(config);

@@ -13,7 +13,6 @@ namespace Gather.AI
         public override void EnterState()
         {
 
-            drone.ReturnToQueen();
         }
 
         public override void Update()
