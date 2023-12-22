@@ -39,7 +39,7 @@ namespace gather
 
         public void MoveRandomly()
         {
-            Vector2 direction = Location() + Random.insideUnitCircle * 20;
+            Vector2 direction = Location() + Random.insideUnitCircle * 40;
             SetDestination(direction);
         }
 

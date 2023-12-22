@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _map: {fileID: 0}
-  maxSpeed: 9
+  maxSpeed: 10
   maxForce: 10
   stoppingDistance: 0.1
   slowingDistance: 1

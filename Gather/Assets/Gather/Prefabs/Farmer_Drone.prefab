@@ -306,7 +306,7 @@ MonoBehaviour:
   slowingDistance: 1
   lookAheadDistance: 1
   avoidRadius: 0
-  avoidanceConsiderStuckedTime: 1.5
+  avoidanceConsiderStuckedTime: 3
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 1
   rotateSpeed: 350
