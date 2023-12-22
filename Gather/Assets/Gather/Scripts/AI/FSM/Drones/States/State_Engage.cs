@@ -10,6 +10,7 @@ namespace Gather.AI
         Blackboard context;
         Drone drone;
         ITarget target;
+        bool changePath;
 
         public State_Engage(Drone drone, Blackboard bb)
         {
@@ -19,6 +20,7 @@ namespace Gather.AI
 
         public override void EnterState()
         {
+            changePath = true;
             target = context.GetValue<ITarget>(Configs.Target);
         }
 
@@ -27,9 +29,8 @@ namespace Gather.AI
             if (target == null || !target.CanTarget(drone.GetTeam()))
             {
                 drone.hasTarget = false;
-                //context.SetValue<ITarget>(Configs.Target, null);
             }
-            else if(!drone.IsMoving)
+            else if(!drone.IsMoving || changePath)
             {
                 drone.SetDestination(target.Location());
             }

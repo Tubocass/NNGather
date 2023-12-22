@@ -29,6 +29,7 @@ namespace gather
 
             for(int q = 0; q<otherQueens.Length; q++)
             {
+                if (otherQueens[q].isActiveAndEnabled)
                 otherQueens[q].SetTeam(teams[q+1]);
             }
         }
