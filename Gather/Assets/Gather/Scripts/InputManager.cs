@@ -13,23 +13,19 @@ namespace gather
 
         void Update()
         {
-            if(Input.GetButtonDown("LeftClick"))
+            if(Input.GetButtonDown(Inputs.LeftClick))
             {
                 Debug.Log("Left");
             }
-            if (Input.GetButtonDown("MiddleClick"))
-            {
-                Debug.Log("Middle");
-            }
-            if (Input.GetButtonDown("RightClick"))
+            if (Input.GetButtonDown(Inputs.RightClick))
             {
                 Debug.Log("Right");
             }
-            if (Input.GetButtonDown("SpawnFarmer"))
+            if (Input.GetButtonDown(Inputs.SpawnFarmer))
             {
                 player.SpawnFarmer();
             }
-            if (Input.GetButtonDown("SpawnFighter"))
+            if (Input.GetButtonDown(Inputs.SpawnFighter))
             {
                 player.SpawnFighter();
             }

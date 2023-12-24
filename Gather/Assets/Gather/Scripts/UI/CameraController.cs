@@ -1,3 +1,4 @@
+using gather;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,9 +24,9 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        float lastInputX = Input.GetAxis("Horizontal");
-        float lastInputY = Input.GetAxis("Vertical");
-        float lastInputScroll = Input.GetAxis("Mouse ScrollWheel");
+        float lastInputX = Input.GetAxis(Inputs.Horizontal);
+        float lastInputY = Input.GetAxis(Inputs.Vertical);
+        float lastInputScroll = Input.GetAxis(Inputs.ScrollWheel);
         if (lastInputX != 0f || lastInputY != 0f)
         {
             //movement = new Vector3(speed * lastInputX, 0, speed * lastInputY);
