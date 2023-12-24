@@ -1,8 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Gather.AI;
 using Gather.UI;
-
 
 namespace gather
 {
@@ -15,10 +12,13 @@ namespace gather
         [SerializeField] UIController uiController;
         [SerializeField] int numTeams;
         [SerializeField] TeamConfig[] teams;
+        InputManager input;
 
         private void Awake()
         {
             cameraController = Camera.main.GetComponent<CameraController>();
+            input = GetComponent<InputManager>();
+            input.SetPlayer(playerQueen);
         }
 
         public void StartGame()

@@ -25,6 +25,13 @@ namespace gather
         //        targetedByTeam.Remove(drone.GetTeam());
         //    }
         //}
+        //public bool CanTarget(Unit drone)
+        //{
+        //    int heldID;
+        //    targetedByTeam.TryGetValue(drone.GetTeam(), out heldID);
+        //    isTargeted = targetedByTeam.ContainsKey(drone.GetTeam()) && !(heldID == drone.GetInstanceID());
+        //    return gameObject.activeSelf && !(isTargeted || isPickedUp);
+        //}
 
         public Vector2 Location()
         {
@@ -41,14 +48,6 @@ namespace gather
         {
             myCollider.enabled = true;
         }
-
-        //public bool CanTarget(Unit drone)
-        //{
-        //    int heldID;
-        //    targetedByTeam.TryGetValue(drone.GetTeam(), out heldID);
-        //    isTargeted = targetedByTeam.ContainsKey(drone.GetTeam()) && !(heldID == drone.GetInstanceID());
-        //    return gameObject.activeSelf && !(isTargeted || isPickedUp);
-        //}
 
         public bool CanTarget(int team)
         {

@@ -2426,6 +2426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Queen_1
       objectReference: {fileID: 0}
+    - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540252, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3604,6 +3608,10 @@ PrefabInstance:
     - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_Name
       value: Queen_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6439568929991540252, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
       propertyPath: m_RootOrder
@@ -4798,3 +4806,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
   - {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
   - {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
+--- !u!114 &6077366049489854707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077366049489854702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd8b53620bf91f43b72bda08a54b4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
