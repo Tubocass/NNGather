@@ -46,10 +46,5 @@ namespace Gather.AI
         public override void ExitState()
         {
         }
-
-        public override string GetStateName()
-        {
-            return States.spawn;
-        }
     }
 }

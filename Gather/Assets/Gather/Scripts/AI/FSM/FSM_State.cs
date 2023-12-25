@@ -9,6 +9,6 @@ namespace Gather.AI
         public virtual void EnterState() { }
         public virtual void Update() { }
         public virtual void ExitState() { }
-        public virtual string GetStateName() { return null; }
+        //public virtual string GetStateName() { return null; }
     }
 }

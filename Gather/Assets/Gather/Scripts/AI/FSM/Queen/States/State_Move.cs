@@ -52,10 +52,5 @@ namespace Gather.AI
         {
             targetDestination = Vector2.zero;
         }
-
-        public override string GetStateName()
-        {
-            return States.move;
-        }
     }
 }

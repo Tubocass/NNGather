@@ -35,11 +35,6 @@ namespace Gather.AI
             foodPellets.Clear();
         }
 
-        public override string GetStateName()
-        {
-            return States.search;
-        }
-
         void Search()
         {
             foodDetector.Detect();

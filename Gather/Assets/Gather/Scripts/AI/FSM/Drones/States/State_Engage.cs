@@ -43,10 +43,5 @@ namespace Gather.AI
             target = null;
             drone.hasTarget = false;
         }
-
-        public override string GetStateName()
-        {
-            return States.engage;
-        }
     }
 }

@@ -35,11 +35,6 @@ namespace Gather.AI
         {
         }
 
-        public override string GetStateName()
-        {
-            return States.flee;
-        }
-
         private Vector2 DangerZone(List<Unit> enemies)
         {
             Vector2 dangerZone = enemies[0].Location();

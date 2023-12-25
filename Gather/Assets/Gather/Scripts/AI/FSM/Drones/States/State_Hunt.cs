@@ -35,11 +35,6 @@ namespace Gather.AI
             enemies.Clear();
         }
 
-        public override string GetStateName()
-        {
-            return States.hunt;
-        }
-
         void Hunt()
         {
             enemyDetector.Detect();

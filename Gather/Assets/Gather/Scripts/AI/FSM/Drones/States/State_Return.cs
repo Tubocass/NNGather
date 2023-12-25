@@ -24,9 +24,5 @@ namespace Gather.AI
         {
 
         }
-        public override string GetStateName()
-        {
-            return States.returnToQueen;
-        }
     }
 }
