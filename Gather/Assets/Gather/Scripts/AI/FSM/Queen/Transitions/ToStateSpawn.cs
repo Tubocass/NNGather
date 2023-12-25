@@ -17,7 +17,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return counter.IsFoodFull() && !queen.IsMoving;
+            return counter.FoodCount > 10 && !queen.IsMoving;
         }
 
         public FSM_State GetNextState()
