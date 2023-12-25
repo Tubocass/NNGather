@@ -54,7 +54,7 @@ namespace Gather.AI
             else if (!drone.IsMoving || changePath)
             {
                 changePath = false;
-                drone.MoveRandomly();
+                drone.MoveRandomly(drone.AnchorPoint());
             }
         }
     }

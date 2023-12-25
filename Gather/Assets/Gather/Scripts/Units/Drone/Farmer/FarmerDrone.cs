@@ -38,6 +38,11 @@ namespace gather
             queenie.greenFlag += SetDestination;
         }
 
+        public override Vector2 AnchorPoint()
+        {
+            return myQueen.FoodAnchor.position;
+        }
+
         public void PickupFood(FoodPellet pellet)
         {
             // called by collider on child transform

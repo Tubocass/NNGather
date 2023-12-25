@@ -329,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   hasTarget: 0
+  orbitRadius: 40
 --- !u!114 &-7060340031324956497
 MonoBehaviour:
   m_ObjectHideFlags: 0

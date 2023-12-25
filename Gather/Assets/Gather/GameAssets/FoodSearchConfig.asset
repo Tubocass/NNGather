@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bda4cbbe9f3404fba8afba936319fc, type: 3}
   m_Name: FoodSearchConfig
   m_EditorClassIdentifier: 
-  searchDist: 50
+  searchDist: 30
   searchAmount: 8
   searchTag: Food
   searchLayer:

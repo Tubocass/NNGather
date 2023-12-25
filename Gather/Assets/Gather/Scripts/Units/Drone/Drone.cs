@@ -7,6 +7,7 @@ namespace gather
         protected Queen myQueen;
         protected Transform queensTransform;
         public bool hasTarget;
+        public float orbitRadius = 40;
 
         public override void Death()
         {
@@ -32,10 +33,15 @@ namespace gather
             isMoving = false;
         }
 
-        public void MoveRandomly()
+        public void MoveRandomly(Vector2 center)
         {
-            Vector2 direction = Location() + Random.insideUnitCircle * 40;
+            Vector2 direction = center + Random.insideUnitCircle * orbitRadius;
             SetDestination(direction);
+        }
+
+        public virtual Vector2 AnchorPoint()
+        {
+            return myQueen.Location();
         }
 
         public virtual void ReturnToQueen()

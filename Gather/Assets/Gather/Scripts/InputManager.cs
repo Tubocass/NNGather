@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace gather
 {
     public class InputManager : MonoBehaviour
     {
         PlayerQueen player;
+        RaycastHit2D hit;
 
         public void SetPlayer(PlayerQueen player)
         {
@@ -15,11 +17,18 @@ namespace gather
         {
             if(Input.GetButtonDown(Inputs.LeftClick))
             {
-                Debug.Log("Left");
+                hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint( Input.mousePosition), Vector2.zero, 100f);
+                
+                if (hit)
+                {
+                    Debug.Log(hit.point);
+                    player.PlaceFightAnchor(hit.point);
+                }
             }
             if (Input.GetButtonDown(Inputs.RightClick))
             {
                 Debug.Log("Right");
+                player.RemoveFightAnchor();
             }
             if (Input.GetButtonDown(Inputs.SpawnFarmer))
             {

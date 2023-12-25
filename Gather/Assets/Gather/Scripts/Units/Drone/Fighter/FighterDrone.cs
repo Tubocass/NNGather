@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace gather
 {
     public class FighterDrone : Drone
@@ -6,6 +8,10 @@ namespace gather
         {
             base.SetQueen(queenie);
             queenie.redFlag += SetDestination;
+        }
+        public override Vector2 AnchorPoint()
+        {
+            return myQueen.FightAnchor.position;
         }
     }
 }

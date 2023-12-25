@@ -9,12 +9,18 @@ namespace gather
         public LocationEvent greenFlag;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
+        // the following can be put into ScriptObj
         [SerializeField] int foodQueueSize = 10;
         [SerializeField] int foodReserve = 5;
         [SerializeField] int startingFood = 5;
         [SerializeField] int maxFood = 20;
         Queue<Vector2> foodLocations;
         Counter foodCounter;
+
+        [SerializeField] Transform foodAnchor, fightAnchor;
+        bool foodAnchorActive, fightAnchorActive;
+        public Transform FoodAnchor { get { return foodAnchorActive? foodAnchor : myTransform;  } }
+        public Transform FightAnchor { get { return fightAnchorActive ? fightAnchor : myTransform; } }
 
         protected override void Awake()
         {
@@ -97,6 +103,34 @@ namespace gather
         public bool IsFoodFull()
         {
             return foodCounter.amount >= maxFood;
+        }
+
+        public void PlaceFoodAnchor(Vector2 location)
+        {
+            foodAnchorActive = true;
+            foodAnchor.gameObject.SetActive(true);
+            foodAnchor.position = location;
+            greenFlag?.Invoke(location);
+        }
+
+        public void RemoveFoodAnchor()
+        {
+            foodAnchorActive = false;
+            foodAnchor.gameObject.SetActive(false);
+        }
+
+        public void PlaceFightAnchor(Vector2 location)
+        {
+            fightAnchorActive = true;
+            fightAnchor.gameObject.SetActive(true);
+            fightAnchor.position = location;
+            redFlag?.Invoke(location);
+        }
+
+        public void RemoveFightAnchor()
+        {
+            fightAnchorActive = false;
+            fightAnchor.gameObject.SetActive(false);
         }
     }
 }
