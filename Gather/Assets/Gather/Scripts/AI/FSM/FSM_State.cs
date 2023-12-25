@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Gather.AI
 {
@@ -9,6 +8,5 @@ namespace Gather.AI
         public virtual void EnterState() { }
         public virtual void Update() { }
         public virtual void ExitState() { }
-        //public virtual string GetStateName() { return null; }
     }
 }

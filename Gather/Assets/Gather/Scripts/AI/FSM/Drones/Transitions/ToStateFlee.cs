@@ -1,21 +1,20 @@
 ﻿using gather;
-using UnityEngine;
 
 namespace Gather.AI
 {
     public class ToStateFlee : FSM_Transistion
     {
-        FarmerDrone drone;
+        Unit unit;
         FSM_State nextState;
-        public ToStateFlee(FarmerDrone drone, FSM_State next)
+        public ToStateFlee(Unit unit, FSM_State next)
         {
-            this.drone = drone;
+            this.unit = unit;
             this.nextState = next;
         }
 
         public bool isValid()
         {
-            return drone.GetEnemyDetected();
+            return unit.GetEnemyDetected();
         }
 
         public FSM_State GetNextState()

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using gather;
@@ -8,12 +7,12 @@ namespace Gather.AI
     public class State_Flee : FSM_State
     {
         List<Unit> enemies;
-        Drone drone;
+        Unit unit;
         EnemyDetector enemyDetector;
 
-        public State_Flee(FarmerDrone drone, Blackboard context)
+        public State_Flee(Unit unit, Blackboard context)
         {
-            this.drone = drone;
+            this.unit = unit;
             enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 
@@ -27,7 +26,7 @@ namespace Gather.AI
 
             if (enemies.Count > 0)
             {
-                drone.SetDestination(drone.Location() + (drone.Location() - DangerZone(enemies)));
+                unit.SetDestination(unit.Location() + (unit.Location() - DangerZone(enemies)));
             }
         }
 
