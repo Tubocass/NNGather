@@ -9,13 +9,7 @@ namespace gather
         public LocationEvent greenFlag;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
-        // the following can be put into ScriptObj
-        [SerializeField] int foodQueueSize = 10;
-        [SerializeField] int foodReserve = 5;
-        [SerializeField] int startingFood = 5;
-        [SerializeField] int maxFood = 20;
-        Queue<Vector2> foodLocations;
-        Counter foodCounter;
+        FoodCounter foodCounter;
 
         [SerializeField] Transform foodAnchor, fightAnchor;
         bool foodAnchorActive, fightAnchorActive;
@@ -25,13 +19,10 @@ namespace gather
         protected override void Awake()
         {
             base.Awake();
-            foodCounter = ScriptableObject.CreateInstance<Counter>();
-            foodCounter.SetAmount(startingFood);
-            foodLocations = new Queue<Vector2>(foodQueueSize);
+            foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
             droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
 
             context.SetValue(Configs.FoodCounter, foodCounter);
-            context.SetValue(Configs.FoodLocations, foodLocations);
             context.SetValue(Configs.SpawnConfig, spawnConfig);
         }
 
@@ -67,42 +58,7 @@ namespace gather
 
         public void Gather(Vector2 fromLocation)
         {
-            foodCounter.AddAmount(1);
-            if (!foodLocations.Contains(fromLocation) )
-            {
-                if(foodLocations.Count < foodQueueSize)
-                {
-                    foodLocations.Enqueue(fromLocation);
-                }
-                else
-                {
-                    foodLocations.Dequeue();
-                    foodLocations.Enqueue(fromLocation);
-                }
-            }
-            
-        }
-
-        public float AverageDistanceFromFood()
-        {
-            Vector2 avgPos = Location();
-            Vector2[] locations = foodLocations.ToArray();
-            int size = foodLocations.Count + 1;
-            for (int ap = 0; ap < locations.Length; ap++)
-            {
-                avgPos += locations[ap];
-            }
-           return Vector2.Distance(Location(), avgPos /= size);
-        }
-
-        public bool IsFoodLow()
-        {
-            return foodCounter.amount <= foodReserve;
-        }
-
-        public bool IsFoodFull()
-        {
-            return foodCounter.amount >= maxFood;
+            foodCounter.Gather(fromLocation);
         }
 
         public void PlaceFoodAnchor(Vector2 location)

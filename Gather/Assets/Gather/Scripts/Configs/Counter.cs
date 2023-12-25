@@ -5,7 +5,7 @@ namespace gather
     [CreateAssetMenu]
     public class Counter : ScriptableObject
     {
-        [SerializeField] int defaultAmount;
+        public int defaultAmount;
         public int amount = 0;
 
         public void SetAmount(int value)
@@ -18,7 +18,7 @@ namespace gather
             amount += value;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             amount = defaultAmount;
         }

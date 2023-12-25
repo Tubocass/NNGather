@@ -6,15 +6,18 @@ namespace Gather.AI
     {
         Queen queen;
         FSM_State nextState;
+        FoodCounter counter;
+
         public ToStateSpawn(Queen queen, FSM_State next)
         {
             this.queen = queen;
             this.nextState = next;
+            counter = queen.GetBlackboard().GetValue<FoodCounter>(Configs.FoodCounter);
         }
 
         public bool isValid()
         {
-            return queen.IsFoodFull() && !queen.IsMoving;
+            return counter.IsFoodFull() && !queen.IsMoving;
         }
 
         public FSM_State GetNextState()

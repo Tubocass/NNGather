@@ -1,4 +1,5 @@
 ﻿using gather;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace Gather.AI
 {
@@ -6,15 +7,18 @@ namespace Gather.AI
     {
         Queen queen;
         FSM_State nextState;
+        FoodCounter counter;
+
         public ToStateFeed(Queen queen, FSM_State next)
         {
             this.queen = queen;
             this.nextState = next;
+            counter = queen.GetBlackboard().GetValue<FoodCounter>(Configs.FoodCounter);
         }
 
         public bool isValid()
         {
-            return queen.IsFoodLow() && !queen.IsMoving;
+            return counter.IsFoodLow() && !queen.IsMoving;
         }
 
         public FSM_State GetNextState()

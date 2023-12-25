@@ -10,12 +10,14 @@ namespace Gather.AI
         Blackboard context;
         Queue<Vector2> foods;
         Vector2 targetDestination = Vector2.zero;
+        FoodCounter foodCounter;
 
         public State_Move(Queen queen, Blackboard context)
         {
             this.queen = queen;
             this.context = context;
-            foods = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
+            foodCounter = context.GetValue<FoodCounter>(Configs.FoodCounter);
+            //foods = context.GetValue<Queue<Vector2>>(Configs.FoodLocations);
         }
 
         public override void EnterState()
@@ -36,13 +38,8 @@ namespace Gather.AI
 
         void MoveToFoodCenter()
         {
-            targetDestination = queen.Location();
-            int size = foods.Count + 1;
-            for (int np = foods.Count; np > 0; np--)
-            {
-                targetDestination += foods.Dequeue();
-            }
-            targetDestination /= size;
+            targetDestination = foodCounter.FoodCenter();
+            
             queen.SetDestination(targetDestination);
         }
 
