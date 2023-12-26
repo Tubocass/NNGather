@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace gather
@@ -10,6 +11,8 @@ namespace gather
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
         FoodCounter foodCounter;
+        Health health;
+        [SerializeField] float hungerTime = 2f;
 
         [SerializeField] Transform foodAnchor, fightAnchor;
         bool foodAnchorActive, fightAnchorActive;
@@ -19,11 +22,23 @@ namespace gather
         protected override void Awake()
         {
             base.Awake();
+            health = GetComponent<Health>();
             foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
             droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
 
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.SpawnConfig, spawnConfig);
+        }
+
+        protected void Start()
+        {
+            StartCoroutine(Hunger());
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            StopCoroutine(Hunger());
         }
 
         public override void SetTeam(TeamConfig config)
@@ -59,6 +74,23 @@ namespace gather
         public void Gather(Vector2 fromLocation)
         {
             foodCounter.Gather(fromLocation);
+        }
+
+        IEnumerator  Hunger()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(hungerTime);
+
+                if (foodCounter.amount > 0)
+                {
+                    foodCounter.AddAmount(-1);
+                    health.Heal(1);
+                } else
+                {
+                    health.TakeDamage(1);
+                }
+            }
         }
 
         public void PlaceFoodAnchor(Vector2 location)

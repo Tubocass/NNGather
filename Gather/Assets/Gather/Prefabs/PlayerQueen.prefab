@@ -332,10 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 2
   spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
-  foodQueueSize: 10
-  foodReserve: 5
-  startingFood: 20
-  maxFood: 20
+  hungerTime: 2
   foodAnchor: {fileID: 498961144}
   fightAnchor: {fileID: 612591618}
 --- !u!114 &-793150786128820189

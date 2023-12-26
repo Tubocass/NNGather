@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6439568929991540250}
   - component: {fileID: 5326994583515415323}
   - component: {fileID: -2512082814871164442}
+  - component: {fileID: -4307232343242536465}
   m_Layer: 6
   m_Name: Queen
   m_TagString: Queen
@@ -169,10 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 2
   spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
-  foodQueueSize: 10
-  foodReserve: 5
-  startingFood: 20
-  maxFood: 20
+  hungerTime: 2
   foodAnchor: {fileID: 2205880949301083151}
   fightAnchor: {fileID: 5013047302308892972}
 --- !u!114 &5326994583515415323
@@ -202,6 +200,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateTime: 0.125
+--- !u!114 &-4307232343242536465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439568929991540247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f6cd1244e01894cb754683b91ce313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHP: 10
 --- !u!1 &6877763434112004738
 GameObject:
   m_ObjectHideFlags: 0
