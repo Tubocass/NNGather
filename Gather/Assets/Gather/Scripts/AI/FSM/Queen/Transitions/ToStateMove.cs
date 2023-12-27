@@ -17,7 +17,7 @@ namespace Gather.AI
 
         public bool isValid()
         {
-            return counter.AverageDistanceFromFood(queen.Location()) > 30;
+            return counter.AverageDistanceFromFood(queen.Location()) > 20;
         }
 
         public FSM_State GetNextState()

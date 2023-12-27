@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace gather
@@ -17,7 +15,7 @@ namespace gather
         protected override void OnEnable()
         {
             foodLocations = new Queue<Vector2>(foodQueueSize);
-            defaultAmount = 10;
+            defaultAmount = 20;
             base.OnEnable();
         }
 

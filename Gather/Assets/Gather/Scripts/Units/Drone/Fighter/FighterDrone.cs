@@ -11,9 +11,16 @@ namespace gather
             fightAnchor = queenie.fightAnchor;
             fightAnchor.PlaceAnchor += SetDestination;
         }
+
+        public override void Death()
+        {
+            fightAnchor.PlaceAnchor -= SetDestination;
+            fightAnchor = null;
+            base.Death();
+        }
         public override Vector2 AnchorPoint()
         {
-            return fightAnchor.GetActive() ? fightAnchor.GetPosition() : Location();
+            return fightAnchor.GetActive() ? fightAnchor.GetPosition() : myQueen.Location();
         }
     }
 }
