@@ -58,7 +58,11 @@ namespace gather
 
         public void Gather(Vector2 fromLocation)
         {
-            AddAmount(1);
+            if(amount < maxFood)
+            {
+                AddAmount(1);
+            }
+
             if (!foodLocations.Contains(fromLocation))
             {
                 if (foodLocations.Count < foodQueueSize)

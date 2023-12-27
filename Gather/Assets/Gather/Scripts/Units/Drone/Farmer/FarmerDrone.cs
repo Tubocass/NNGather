@@ -7,6 +7,7 @@ namespace gather
         FoodPellet carriedFood;
         Vector2 foodLocation = Vector2.zero;
         FoodDetector foodDetector;
+        Anchor foodAnchor;
 
         protected override void Awake()
         {
@@ -22,7 +23,7 @@ namespace gather
                 carriedFood.Detach();
                 carriedFood = null;
             }
-            myQueen.greenFlag -= SetDestination;
+            foodAnchor.PlaceAnchor -= SetDestination;
 
             base.Death();
         }
@@ -35,12 +36,13 @@ namespace gather
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            queenie.greenFlag += SetDestination;
+            foodAnchor = queenie.foodAnchor;
+            foodAnchor.PlaceAnchor += SetDestination;
         }
 
         public override Vector2 AnchorPoint()
         {
-            return myQueen.FoodAnchor.position;
+            return foodAnchor.GetActive()? foodAnchor.GetPosition() : Location();
         }
 
         public void PickupFood(FoodPellet pellet)

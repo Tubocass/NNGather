@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498961144}
   - component: {fileID: 498961145}
+  - component: {fileID: 759915970481691252}
   m_Layer: 0
   m_Name: FoodAnchor
   m_TagString: Untagged
@@ -82,6 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &759915970481691252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498961143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a60bbf99b73ad4dae363dc9ce92304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &612591617
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 612591618}
   - component: {fileID: 612591619}
+  - component: {fileID: 7515489580592242519}
   m_Layer: 0
   m_Name: FightAnchor
   m_TagString: Untagged
@@ -164,6 +178,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7515489580592242519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612591617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a60bbf99b73ad4dae363dc9ce92304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4247676982238605522
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +205,7 @@ GameObject:
   - component: {fileID: 4247676982238605528}
   - component: {fileID: 4247676981309501296}
   - component: {fileID: -793150786128820189}
+  - component: {fileID: 756719191}
   m_Layer: 6
   m_Name: PlayerQueen
   m_TagString: Queen
@@ -332,9 +359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 2
   spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
-  hungerTime: 2
-  foodAnchor: {fileID: 498961144}
-  fightAnchor: {fileID: 612591618}
+  hungerTime: 8
+  foodAnchor: {fileID: 759915970481691252}
+  fightAnchor: {fileID: 7515489580592242519}
 --- !u!114 &-793150786128820189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,3 +376,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   enemyTypes: 00000000
+--- !u!114 &756719191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247676982238605522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f6cd1244e01894cb754683b91ce313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 10

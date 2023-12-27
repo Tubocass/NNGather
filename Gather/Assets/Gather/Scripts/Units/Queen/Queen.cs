@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -6,18 +5,12 @@ namespace gather
 {
     public class Queen : Unit
     {
-        public LocationEvent redFlag;
-        public LocationEvent greenFlag;
+        public Anchor foodAnchor, fightAnchor;
         public SpawnConfig spawnConfig;
         DroneFactory droneFactory;
         FoodCounter foodCounter;
         Health health;
-        [SerializeField] float hungerTime = 2f;
-
-        [SerializeField] Transform foodAnchor, fightAnchor;
-        bool foodAnchorActive, fightAnchorActive;
-        public Transform FoodAnchor { get { return foodAnchorActive? foodAnchor : myTransform;  } }
-        public Transform FightAnchor { get { return fightAnchorActive ? fightAnchor : myTransform; } }
+        [SerializeField] float hungerTime;
 
         protected override void Awake()
         {
@@ -51,7 +44,8 @@ namespace gather
         {
             if (foodCounter.amount >= spawnConfig.farmerCost)
             {
-                FarmerDrone farmer = droneFactory.SpawnDrone<FarmerDrone>(myTransform.position).GetComponent<FarmerDrone>();
+                FarmerDrone farmer = droneFactory.SpawnDrone<FarmerDrone>(myTransform.position)
+                    .GetComponent<FarmerDrone>();
                 farmer.SetQueen(this);
                 farmer.SetTeam(teamConfig);
 
@@ -63,7 +57,8 @@ namespace gather
         {
             if (foodCounter.amount >= spawnConfig.fighterCost)
             {
-                FighterDrone fighter = droneFactory.SpawnDrone<FighterDrone>(myTransform.position).GetComponent<FighterDrone>();
+                FighterDrone fighter = droneFactory.SpawnDrone<FighterDrone>(myTransform.position)
+                    .GetComponent<FighterDrone>();
                 fighter.SetTeam(teamConfig);
                 fighter.SetQueen(this);
 
@@ -76,7 +71,7 @@ namespace gather
             foodCounter.Gather(fromLocation);
         }
 
-        IEnumerator  Hunger()
+        IEnumerator Hunger()
         {
             while (true)
             {
@@ -86,7 +81,7 @@ namespace gather
                 {
                     foodCounter.AddAmount(-1);
                     health.Heal(1);
-                } else
+                }else
                 {
                     health.TakeDamage(1);
                 }
@@ -95,30 +90,26 @@ namespace gather
 
         public void PlaceFoodAnchor(Vector2 location)
         {
-            foodAnchorActive = true;
-            foodAnchor.gameObject.SetActive(true);
-            foodAnchor.position = location;
-            greenFlag?.Invoke(location);
+            foodAnchor.SetActive(true);
+            foodAnchor.SetPosition(location);
+            foodAnchor.PlaceAnchor?.Invoke(location);
         }
 
         public void RemoveFoodAnchor()
         {
-            foodAnchorActive = false;
-            foodAnchor.gameObject.SetActive(false);
+            foodAnchor.SetActive(false);
         }
 
         public void PlaceFightAnchor(Vector2 location)
         {
-            fightAnchorActive = true;
-            fightAnchor.gameObject.SetActive(true);
-            fightAnchor.position = location;
-            redFlag?.Invoke(location);
+            fightAnchor.SetActive(true);
+            fightAnchor.SetPosition(location);
+            fightAnchor.PlaceAnchor?.Invoke(location);
         }
 
         public void RemoveFightAnchor()
         {
-            fightAnchorActive = false;
-            fightAnchor.gameObject.SetActive(false);
+            fightAnchor.SetActive(false);
         }
     }
 }

@@ -1,5 +1,3 @@
-using gather;
-using System;
 using UnityEngine;
 
 namespace gather
@@ -9,6 +7,12 @@ namespace gather
         [SerializeField] int maxHP = 10;
         int hp;
         Unit unit;
+
+        private void Start()
+        {
+            unit = GetComponent<Unit>();
+            hp = maxHP;
+        }
 
         public void TakeDamage(int amount)
         {
@@ -30,12 +34,6 @@ namespace gather
             {
                 hp += amount;
             }
-        }
-
-        private void Start()
-        {
-            unit = GetComponent<Unit>();
-            hp = maxHP;
         }
     }
 }
