@@ -56,7 +56,7 @@ namespace gather
 
         protected virtual void OnDisable()
         {
-            teamConfig.SetUnitCount(unitType, -1);
+            teamConfig?.SetUnitCount(unitType, -1);
             context.Clear();
         }
 
@@ -95,6 +95,7 @@ namespace gather
         {
             return unitType;
         }
+
         public Blackboard GetBlackboard()
         {
             return context;

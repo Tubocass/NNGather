@@ -9,8 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6077366050677379053}
-  - component: {fileID: 6077366050677379052}
   - component: {fileID: 6077366050677379054}
+  - component: {fileID: 7831533745773602319}
+  - component: {fileID: 6077366049489854705}
+  - component: {fileID: 6077366049489854706}
+  - component: {fileID: 6077366049489854707}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: GameController
@@ -32,20 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6077366050677379052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6077366050677378578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddc06de273677bf4d94f4dd5ad2190ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  farmerPrefab: {fileID: 7829006796857892509, guid: 4436aed306886b54284bb67925c51004, type: 3}
-  fighterPrefab: {fileID: 7243180418547161779, guid: 8475438fbf1eb6f4db93444239a15162, type: 3}
 --- !u!114 &6077366050677379054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,4 +47,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d9f40d8d9f1864ea63d91eb554eb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodPrefab: {fileID: 4323918726550116057, guid: baebbc0842e9ae34294ee3095e7168c7, type: 3}
+  prefab: {fileID: 4323918726550116057, guid: baebbc0842e9ae34294ee3095e7168c7, type: 3}
+  pool: []
+--- !u!114 &7831533745773602319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077366050677378578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48812b55c774ee643a0c6fa002fe74e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7829006796857892509, guid: 4436aed306886b54284bb67925c51004, type: 3}
+  pool: []
+--- !u!114 &6077366049489854705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077366050677378578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab30dc8a9ca3e644aa017d7c5d3d236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7243180418547161779, guid: 8475438fbf1eb6f4db93444239a15162, type: 3}
+  pool: []
+--- !u!114 &6077366049489854706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077366050677378578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ac3a5a9892cd14caccbfeabf394437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerQueen: {fileID: 0}
+  otherQueens:
+  - {fileID: 0}
+  - {fileID: 0}
+  uiController: {fileID: 0}
+  numTeams: 3
+  teams:
+  - {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
+  - {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
+  - {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
+--- !u!114 &6077366049489854707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077366050677378578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd8b53620bf91f43b72bda08a54b4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

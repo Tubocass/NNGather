@@ -1,0 +1,4 @@
+public class FoodFactory : PrefabFactory
+{
+    
+}

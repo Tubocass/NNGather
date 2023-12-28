@@ -4538,6 +4538,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4247676981309501296, guid: f472f9f692ed78d4c921b4dcd1a4929c, type: 3}
+      propertyPath: farmerFactory
+      value: 
+      objectReference: {fileID: 11400000, guid: 1904f42bcdac1f045b7a1db00587717e, type: 2}
     - target: {fileID: 4247676982238605522, guid: f472f9f692ed78d4c921b4dcd1a4929c, type: 3}
       propertyPath: m_Name
       value: PlayerQueen

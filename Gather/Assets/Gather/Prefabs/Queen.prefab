@@ -359,10 +359,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 2
-  spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
-  hungerTime: 8
   foodAnchor: {fileID: 7783660706476190090}
   fightAnchor: {fileID: 7819079425914089491}
+  spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
+  farmerFactory: {fileID: 7831533745773602319, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+  hungerTime: 8
 --- !u!114 &5326994583515415323
 MonoBehaviour:
   m_ObjectHideFlags: 0

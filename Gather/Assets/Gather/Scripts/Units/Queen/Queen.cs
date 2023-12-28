@@ -7,7 +7,7 @@ namespace gather
     {
         public Anchor foodAnchor, fightAnchor;
         public SpawnConfig spawnConfig;
-        DroneFactory droneFactory;
+        public PrefabFactory farmerFactory, fighterFactory;
         FoodCounter foodCounter;
         Health health;
         [SerializeField] float hungerTime;
@@ -17,7 +17,10 @@ namespace gather
             base.Awake();
             health = GetComponent<Health>();
             foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
-            droneFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<DroneFactory>();
+            fighterFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
+                .GetComponent<FighterFactory>();
+            farmerFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
+                .GetComponent<FarmerFactory>();
 
             context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.SpawnConfig, spawnConfig);
@@ -44,7 +47,7 @@ namespace gather
         {
             if (foodCounter.amount >= spawnConfig.farmerCost)
             {
-                FarmerDrone farmer = droneFactory.SpawnDrone<FarmerDrone>(myTransform.position)
+                FarmerDrone farmer = farmerFactory.Spawn(myTransform.position)
                     .GetComponent<FarmerDrone>();
                 farmer.SetQueen(this);
                 farmer.SetTeam(teamConfig);
@@ -57,7 +60,7 @@ namespace gather
         {
             if (foodCounter.amount >= spawnConfig.fighterCost)
             {
-                FighterDrone fighter = droneFactory.SpawnDrone<FighterDrone>(myTransform.position)
+                FighterDrone fighter = fighterFactory.Spawn(myTransform.position)
                     .GetComponent<FighterDrone>();
                 fighter.SetTeam(teamConfig);
                 fighter.SetQueen(this);

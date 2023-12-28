@@ -1,0 +1,4 @@
+﻿public class FarmerFactory : PrefabFactory
+{
+
+}

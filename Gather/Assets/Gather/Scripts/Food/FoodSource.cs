@@ -14,7 +14,8 @@ namespace gather
 
         private void Awake()
         {
-            foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<FoodFactory>();
+            foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
+                .GetComponent<FoodFactory>();
             int numPositions = Random.Range(1, 4) + 3;
             spawnPositions = new Vector3[numPositions];
             for (int p = 0; p < spawnPositions.Length; p++)
