@@ -1,28 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using gather;
 
 namespace gather
 {
-    public enum UnitType { Fighter, Farmer, Queen }
-
     [CreateAssetMenu]
     public class TeamConfig : ScriptableObject
     {
-        [SerializeField] int team;
-        [SerializeField] Color teamColor;
+        [SerializeField] public int Team;
+        [SerializeField] public Color TeamColor;
         Dictionary<UnitType, Counter> teamCounter = new Dictionary<UnitType, Counter>();
         //public UnitEvent UnitChange;
 
-        public int Team { get => team; }
-        public Color TeamColor { get => teamColor; }
-
-        public TeamConfig(int team, Color teamColor)
-        {
-            this.team = team;
-            this.teamColor = teamColor;
-        }
+        //public int Team { get => team; }
+        //public Color TeamColor { get => teamColor; }
 
         private void OnEnable()
         {

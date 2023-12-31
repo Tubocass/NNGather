@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using gather;
 using Gather.AI;
@@ -8,20 +8,25 @@ namespace Gather.UI
 {
     public class NewGameScreen : MonoBehaviour
     {
-        GameEventObject createGameEvent;
-        Blackboard context;
-        Dropdown botSelect;
-        Dropdown colorSelect;
+        //GameEventObject createGameEvent;
+        //Blackboard context;
+        [SerializeField] GameObject emptySlotPrefab;
+        [SerializeField] GameObject TeamSlotPrefab;
+     
+        [SerializeField] ColorOption colorOptions;
+
+        //int playerCount = 1;
+        //int botCount;
+        //List<TeamSelect> Teams = new List<TeamSelect>();
+
+        public void AddRow()
+        {
+
+        }
 
         public void Submit()
         {
-            context.SetValue("botTeams", botSelect.value);
-            createGameEvent.Raise();
-        }
-
-        public void SetContext(Blackboard bb)
-        {
-            context = bb;
+            //createGameEvent.Raise();
         }
     }
 }

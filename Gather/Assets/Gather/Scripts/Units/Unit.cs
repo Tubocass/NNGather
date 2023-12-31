@@ -5,6 +5,8 @@ using Gather.AI;
 
 namespace gather
 {
+    public enum UnitType { Fighter, Farmer, Queen }
+
     public abstract class Unit : MonoBehaviour, ITarget
     {
         [SerializeField] protected UnitType unitType;

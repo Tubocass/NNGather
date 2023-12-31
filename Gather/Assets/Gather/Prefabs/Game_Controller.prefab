@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerQueen: {fileID: 0}
-  otherQueens:
+  bots:
   - {fileID: 0}
   - {fileID: 0}
   uiController: {fileID: 0}

@@ -4,10 +4,10 @@ namespace gather
 {
     public class InputManager : MonoBehaviour
     {
-        PlayerQueen player;
+        Queen player;
         RaycastHit2D hit;
 
-        public void SetPlayer(PlayerQueen player)
+        public void SetPlayer(Queen player)
         {
             this.player = player;
         }

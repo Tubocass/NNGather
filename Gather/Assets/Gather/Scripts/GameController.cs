@@ -3,40 +3,93 @@ using Gather.UI;
 
 namespace gather
 {
+    [System.Serializable]
+    struct TeamSelect
+    {
+        public int id;
+        public bool isPlayer;
+        public ColorOption colorOption;
+    }
+
+    [System.Serializable]
+    struct ColorOption
+    {
+        public Color color;
+        public bool isSelected;
+    }
+
     public class GameController : MonoBehaviour
     {
-        CameraController cameraController;
-        [SerializeField] PlayerQueen playerQueen; //  will eventually be spawned after world setup
-        [SerializeField] Queen[] otherQueens;
+       /*
+        *  Take Team Selections (isPlayer, Color)
+        *  for bots, setup prefabs and teams
+        *  for players, setup camera and controls in addition to teams
+        *  
+       */
+        [SerializeField] GameObject queenPrefab;
+        [SerializeField] GameObject playerPrefab;
+        //[SerializeField] Queen playerQueen;
+        //[SerializeField] Queen[] bots;
+        //[SerializeField] TeamConfig[] teams;
         //Blackboard globalContext = new Blackboard();
+        [SerializeField] TeamSelect[] teamSelections;
+        CameraController cameraController;
         [SerializeField] UIController uiController;
-        [SerializeField] int numTeams;
-        [SerializeField] TeamConfig[] teams;
         InputManager input;
+        LevelSetup levelSetup;
 
         private void Awake()
         {
             cameraController = Camera.main.GetComponent<CameraController>();
             input = GetComponent<InputManager>();
-            input.SetPlayer(playerQueen);
+            levelSetup = GetComponent<LevelSetup>();
+        }
+        private void Start()
+        {
+            StartGame();
         }
 
         public void StartGame()
         {
-            cameraController.SetTarget(playerQueen.transform);
-            playerQueen.SetTeam(teams[0]);
-            uiController.Setup(playerQueen, teams[0]);
+            // levelSetup.Generate();
 
-            for(int q = 0; q<otherQueens.Length; q++)
+            for (int t = 0; t < teamSelections.Length; t++)
             {
-                if (otherQueens[q].isActiveAndEnabled)
-                otherQueens[q].SetTeam(teams[q+1]);
+                if (teamSelections[t].isPlayer)
+                {
+                    SetupPlayer(teamSelections[t], levelSetup.GetStartLocation());
+                } else
+                {
+                    SetupBot(teamSelections[t], levelSetup.GetStartLocation());
+                }
             }
+
         }
 
-        private void Start()
+        void SetupPlayer(TeamSelect selection, Vector2 start)
         {
-            StartGame();
+            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
+            teamConfig.Team = selection.id;
+            teamConfig.TeamColor = selection.colorOption.color;
+            
+            PlayerQueen player = Instantiate(playerPrefab, start, Quaternion.identity)
+                .GetComponent<PlayerQueen>();
+            
+            player.SetTeam(teamConfig);
+            input.SetPlayer(player);
+            cameraController.SetTarget(player.transform);
+            uiController.Setup(player, teamConfig);
+
+        }
+
+        void SetupBot(TeamSelect selection, Vector2 start)
+        {
+            Queen bot = Instantiate(queenPrefab, start, Quaternion.identity)
+                .GetComponent<Queen>();
+            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
+            teamConfig.Team = selection.id;
+            teamConfig.TeamColor = selection.colorOption.color;
+            bot.SetTeam(teamConfig);
         }
     }
 }

@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     Transform camTransform;
 
 
-    void Start()
+    void Awake()
     {
         mainCamera = GetComponent<Camera>();
         camTransform = GetComponent<Transform>();
