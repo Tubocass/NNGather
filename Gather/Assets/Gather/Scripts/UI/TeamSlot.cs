@@ -13,5 +13,10 @@ namespace gather
         {
             selection.colorOption.isSelected = true;
         }
+
+        public TeamSelect GetSelection()
+        {
+            return selection;
+        }
     }
 }

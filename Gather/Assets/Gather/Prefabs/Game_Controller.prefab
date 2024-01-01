@@ -89,16 +89,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ac3a5a9892cd14caccbfeabf394437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerQueen: {fileID: 0}
-  bots:
-  - {fileID: 0}
-  - {fileID: 0}
-  uiController: {fileID: 0}
-  numTeams: 3
+  queenPrefab: {fileID: 6439568929991540247, guid: 81c1ede4a2255ad499b65e9bb1549088, type: 3}
+  playerPrefab: {fileID: 4247676982238605522, guid: f472f9f692ed78d4c921b4dcd1a4929c, type: 3}
   teams:
   - {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
   - {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
   - {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
+  teamSelections: []
+  uiController: {fileID: 0}
+  populationBar: {fileID: 0}
 --- !u!114 &6077366049489854707
 MonoBehaviour:
   m_ObjectHideFlags: 0

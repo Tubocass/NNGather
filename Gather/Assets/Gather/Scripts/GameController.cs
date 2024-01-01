@@ -5,7 +5,7 @@ using Gather.UI;
 namespace gather
 {
     [System.Serializable]
-    struct TeamSelect
+    public struct TeamSelect
     {
         public int id;
         public bool isPlayer;
@@ -13,7 +13,7 @@ namespace gather
     }
 
     [System.Serializable]
-    struct ColorOption
+    public struct ColorOption
     {
         public Color color;
         public bool isSelected;
@@ -49,13 +49,13 @@ namespace gather
         private void Start()
         {
             StartGame();
-            populationBar.SetTeams(teams.ToArray());
         }
 
         public void StartGame()
         {
             // levelSetup.Generate();
             teams = new List<TeamConfig>();
+            uiController.gameObject.SetActive(true);
 
             for (int t = 0; t < teamSelections.Length; t++)
             {
@@ -67,6 +67,8 @@ namespace gather
                     SetupBot(teamSelections[t], levelSetup.GetStartLocation());
                 }
             }
+
+            populationBar.SetTeams(teams.ToArray());
         }
 
         TeamConfig NewTeam(TeamSelect selection)
