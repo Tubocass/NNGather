@@ -842,6 +842,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905037213}
   m_CullTransparentMesh: 1
+--- !u!114 &1017518887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2377285055773728399, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
+  m_PrefabInstance: {fileID: 2377285056870761577}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c9f179511035048a1690db5eec49c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1026842671
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,8 +972,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   queenPrefab: {fileID: 0}
   playerPrefab: {fileID: 0}
+  teams: []
   teamSelections: []
   uiController: {fileID: 0}
+  populationBar: {fileID: 0}
 --- !u!224 &1098423635 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4269841455281067712, guid: d2ca9bcc696a96b468bf930153b14851, type: 3}
@@ -2732,6 +2745,10 @@ PrefabInstance:
       propertyPath: uiController
       value: 
       objectReference: {fileID: 783397237}
+    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: populationBar
+      value: 
+      objectReference: {fileID: 1017518887}
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: bots.Array.data[0]
       value: 

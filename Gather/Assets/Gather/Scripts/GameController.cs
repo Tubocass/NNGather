@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using Gather.UI;
 
 namespace gather
@@ -30,11 +31,12 @@ namespace gather
         [SerializeField] GameObject playerPrefab;
         //[SerializeField] Queen playerQueen;
         //[SerializeField] Queen[] bots;
-        //[SerializeField] TeamConfig[] teams;
+        [SerializeField] List<TeamConfig> teams;
         //Blackboard globalContext = new Blackboard();
         [SerializeField] TeamSelect[] teamSelections;
         CameraController cameraController;
         [SerializeField] UIController uiController;
+        [SerializeField] PopulationBar populationBar;
         InputManager input;
         LevelSetup levelSetup;
 
@@ -47,11 +49,13 @@ namespace gather
         private void Start()
         {
             StartGame();
+            populationBar.SetTeams(teams.ToArray());
         }
 
         public void StartGame()
         {
             // levelSetup.Generate();
+            teams = new List<TeamConfig>();
 
             for (int t = 0; t < teamSelections.Length; t++)
             {
@@ -63,14 +67,21 @@ namespace gather
                     SetupBot(teamSelections[t], levelSetup.GetStartLocation());
                 }
             }
-
         }
 
-        void SetupPlayer(TeamSelect selection, Vector2 start)
+        TeamConfig NewTeam(TeamSelect selection)
         {
             TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
             teamConfig.Team = selection.id;
             teamConfig.TeamColor = selection.colorOption.color;
+            teams.Add(teamConfig);
+            
+            return teamConfig;
+        }
+
+        void SetupPlayer(TeamSelect selection, Vector2 start)
+        {
+            TeamConfig teamConfig = NewTeam(selection);
             
             PlayerQueen player = Instantiate(playerPrefab, start, Quaternion.identity)
                 .GetComponent<PlayerQueen>();
@@ -79,16 +90,14 @@ namespace gather
             input.SetPlayer(player);
             cameraController.SetTarget(player.transform);
             uiController.Setup(player, teamConfig);
-
         }
 
         void SetupBot(TeamSelect selection, Vector2 start)
         {
+            TeamConfig teamConfig = NewTeam(selection);
+
             Queen bot = Instantiate(queenPrefab, start, Quaternion.identity)
                 .GetComponent<Queen>();
-            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
-            teamConfig.Team = selection.id;
-            teamConfig.TeamColor = selection.colorOption.color;
             bot.SetTeam(teamConfig);
         }
     }

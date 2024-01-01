@@ -6,18 +6,24 @@ namespace gather
     public class PopulationBar : MonoBehaviour
     {
         [SerializeField] TeamConfig[] teams;
-        Image[] image;
+        Image[] images;
         [SerializeField] GameObject fillBar;
         int total = 0;
 
 
         private void Start()
         {
-            image = new Image[teams.Length];
-            for (int t = 0; t < image.Length; t++)
+            
+        }
+
+        public void SetTeams(TeamConfig[] teams)
+        {
+            this.teams = teams;
+            images = new Image[teams.Length];
+            for (int t = 0; t < images.Length; t++)
             {
-                image[t] = Instantiate(fillBar, transform).GetComponent<Image>();
-                image[t].color = teams[t].TeamColor;
+                images[t] = Instantiate(fillBar, transform).GetComponent<Image>();
+                images[t].color = teams[t].TeamColor;
             }
         }
 
@@ -42,14 +48,14 @@ namespace gather
             {
                 if (t == 0)
                 {
-                    image[t].fillAmount = FillTeam(t);
-                    edge += image[t].rectTransform.rect.width * image[t].fillAmount;
+                    images[t].fillAmount = FillTeam(t);
+                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
                 }
                 else
                 {
-                    image[t].fillAmount = FillTeam(t);
-                    image[t].transform.localPosition = new Vector3(edge, 0, 0);
-                    edge += image[t].rectTransform.rect.width * image[t].fillAmount;
+                    images[t].fillAmount = FillTeam(t);
+                    images[t].transform.localPosition = new Vector3(edge, 0, 0);
+                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
                 }
             }
         }
