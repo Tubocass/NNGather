@@ -1,24 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Gather.UI;
+using UnityEngine.SceneManagement;
 
 namespace gather
 {
-    [System.Serializable]
-    public struct TeamSelect
-    {
-        public int id;
-        public bool isPlayer;
-        public ColorOption colorOption;
-    }
-
-    [System.Serializable]
-    public struct ColorOption
-    {
-        public Color color;
-        public bool isSelected;
-    }
-
     public class GameController : MonoBehaviour
     {
        /*
@@ -33,27 +19,41 @@ namespace gather
         //[SerializeField] Queen[] bots;
         [SerializeField] List<TeamConfig> teams;
         //Blackboard globalContext = new Blackboard();
-        [SerializeField] TeamSelect[] teamSelections;
-        CameraController cameraController;
+        TeamSelect[] teamSelections;
         [SerializeField] UIController uiController;
         [SerializeField] PopulationBar populationBar;
+        [SerializeField] ColorOptions colorOptions;
+        CameraController cameraController;
         InputManager input;
         LevelSetup levelSetup;
 
         private void Awake()
         {
+            //DontDestroyOnLoad(gameObject);
             cameraController = Camera.main.GetComponent<CameraController>();
             input = GetComponent<InputManager>();
             levelSetup = GetComponent<LevelSetup>();
         }
+
         private void Start()
         {
             StartGame();
         }
 
+        public void FindTeamSelections()
+        {
+            int teams = PlayerPrefs.GetInt("teamCount");
+            teamSelections = new TeamSelect[teams];
+            for(int i = 0; i < teams; i++)
+            {
+                teamSelections[i] = JsonUtility.FromJson<TeamSelect>(PlayerPrefs.GetString("team"+i));
+            }
+        }
+
         public void StartGame()
         {
             // levelSetup.Generate();
+            FindTeamSelections();
             teams = new List<TeamConfig>();
             uiController.gameObject.SetActive(true);
 
@@ -75,7 +75,7 @@ namespace gather
         {
             TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
             teamConfig.Team = selection.id;
-            teamConfig.TeamColor = selection.colorOption.color;
+            teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
             teams.Add(teamConfig);
             
             return teamConfig;

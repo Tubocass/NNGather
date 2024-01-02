@@ -1,26 +1,28 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using gather;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 namespace Gather.UI
 {
     public class NewGameScreen : MonoBehaviour
     {
-        //GameEventObject createGameEvent;
-        //Blackboard context;
-        [SerializeField] GameObject emptySlotPrefab;
-        [SerializeField] GameObject TeamSlotPrefab;
-        [SerializeField] ColorOption colorOptions;
-        List<GameObject> teamSlots = new List<GameObject>();
-        List<TeamSelect> Teams = new List<TeamSelect>();
-
+        [SerializeField] GameObject emptySlot;
+        [SerializeField] GameObject teamSlotPrefab;
         [SerializeField] Transform listParent;
+
+        //[SerializeField] ColorOptions colorOptions;
+        List<GameObject> teamSlots = new List<GameObject>();
+        //List<TeamSelect> selections = new List<TeamSelect>();
 
         private void Start()
         {
-            GameObject go = Instantiate(TeamSlotPrefab, listParent);
+            GameObject go = Instantiate(teamSlotPrefab, listParent);
+            //go.transform.SetAsFirstSibling();
             teamSlots.Add(go);
-            Teams.Add(go.GetComponent<TeamSlot>().GetSelection());
+            //selections.Add(go.GetComponent<TeamSlot>().GetSelection());
+            emptySlot.transform.SetAsLastSibling();
         }
 
         public void AddRow()
@@ -32,17 +34,23 @@ namespace Gather.UI
                 go.SetActive(true);
             } else
             {
-                go = Instantiate(TeamSlotPrefab, listParent);
+                go = Instantiate(teamSlotPrefab, listParent);
                 teamSlots.Add(go);
-                Teams.Add(go.GetComponent<TeamSlot>().GetSelection());
+                //selections.Add(go.GetComponent<TeamSlot>().GetSelection());
             }
-            
+            emptySlot.transform.SetAsLastSibling();
+
         }
 
         public void Submit()
         {
+            PlayerPrefs.SetInt("teamCount", teamSlots.Count);
+            for (int i = 0; i < teamSlots.Count; i++) 
+            {
+                PlayerPrefs.SetString("team"+i, JsonUtility.ToJson(teamSlots[i].GetComponent<TeamSlot>().GetSelection()));
 
-            //createGameEvent.Raise();
+            }
+            SceneManager.LoadScene("Gather");
         }
     }
 }
