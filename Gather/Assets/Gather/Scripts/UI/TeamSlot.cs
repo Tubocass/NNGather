@@ -22,6 +22,7 @@ namespace gather
         {
             colorSelect.onValueChanged.AddListener(SetColor);
             botSelect.onValueChanged.AddListener(SetPlayer);
+            selection.id = transform.GetSiblingIndex();
             selection.isPlayer = botSelect.isOn;
             selection.colorOption = colorSelect.value;
         }
