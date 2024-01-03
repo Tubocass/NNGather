@@ -460,6 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botSelect: {fileID: 8576970899841322376}
   colorSelect: {fileID: 4987793889208272311}
+  colorOptions: {fileID: 11400000, guid: 8b019aef20442c849b9e01e23f667d6b, type: 2}
 --- !u!1 &4987793889138551801
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,7 +542,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 4987793890650454926}
+  m_TargetGraphic: {fileID: 5931233051344806409}
   toggleTransition: 1
   graphic: {fileID: 4987793890669973247}
   m_Group: {fileID: 0}
@@ -684,7 +685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110.00006, y: -0.0000076293945}
+  m_AnchoredPosition: {x: -110.00006, y: -0}
   m_SizeDelta: {x: 160, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4987793889208272309
@@ -778,19 +779,7 @@ MonoBehaviour:
     m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4987793888890429670}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &4043633211472610367
 MonoBehaviour:
@@ -806,6 +795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorPicker: {fileID: 4987793889208272311}
   colorOptions: {fileID: 11400000, guid: 8b019aef20442c849b9e01e23f667d6b, type: 2}
+  square: {fileID: 21300000, guid: abc1825804f39714a892ca288d10d930, type: 3}
 --- !u!1 &4987793889696457290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,8 +1493,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1677,7 +1667,7 @@ GameObject:
   - component: {fileID: 3724196903816582897}
   - component: {fileID: 5082101615299039535}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Remove_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1785,10 +1775,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4987793888890429670}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 462754688}
+        m_TargetAssemblyTypeName: gather.TeamSlot, Assembly-CSharp
+        m_MethodName: RemoveRow
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -11,17 +11,13 @@ namespace Gather.UI
         [SerializeField] GameObject emptySlot;
         [SerializeField] GameObject teamSlotPrefab;
         [SerializeField] Transform listParent;
-
-        //[SerializeField] ColorOptions colorOptions;
         List<GameObject> teamSlots = new List<GameObject>();
-        //List<TeamSelect> selections = new List<TeamSelect>();
+        [SerializeField] int maxTeams;
 
         private void Start()
         {
             GameObject go = Instantiate(teamSlotPrefab, listParent);
-            //go.transform.SetAsFirstSibling();
             teamSlots.Add(go);
-            //selections.Add(go.GetComponent<TeamSlot>().GetSelection());
             emptySlot.transform.SetAsLastSibling();
         }
 
@@ -32,14 +28,23 @@ namespace Gather.UI
             if (go)
             {
                 go.SetActive(true);
-            } else
+            } else if (teamSlots.Count < maxTeams)
             {
                 go = Instantiate(teamSlotPrefab, listParent);
                 teamSlots.Add(go);
-                //selections.Add(go.GetComponent<TeamSlot>().GetSelection());
+             
             }
             emptySlot.transform.SetAsLastSibling();
 
+            if (teamSlots.FindAll(ts => ts.activeSelf).Count == maxTeams)
+            {
+                emptySlot.SetActive(false);
+            }
+        }
+
+        public void RestoreEmptySlot()
+        {
+            emptySlot.SetActive(true);
         }
 
         public void Submit()

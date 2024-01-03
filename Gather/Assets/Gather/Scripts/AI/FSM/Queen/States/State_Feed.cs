@@ -4,7 +4,7 @@ namespace Gather.AI
 {
     public class State_Feed : FSM_State
     {
-        int targetFoodCount = 10;
+        //int targetFoodCount = 10;
         FoodCounter foodCounter;
 
         public State_Feed(Queen queen, Blackboard context)
