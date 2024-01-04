@@ -26,7 +26,7 @@ namespace Gather.AI
 
         public override void Update()
         {
-            if(!foodCounter.IsFoodLow() && fighterCounter.amount < spawnConfig.fighterCap)
+            if(!foodCounter.IsFoodLow() && fighterCounter.Amount < spawnConfig.fighterCap)
             {
                 queen.SpawnFighter();
             }

@@ -10,7 +10,7 @@ namespace gather
         public int foodReserve = 5;
         public int maxFood = 20;
         Queue<Vector2> foodLocations;
-        public int FoodCount { get { return amount; } }
+        public int FoodCount { get { return Amount; } }
 
         protected override void OnEnable()
         {
@@ -21,12 +21,12 @@ namespace gather
 
         public bool IsFoodLow()
         {
-            return amount <= foodReserve;
+            return Amount <= foodReserve;
         }
 
         public bool IsFoodFull()
         {
-            return amount >= maxFood;
+            return Amount >= maxFood;
         }
 
         public float AverageDistanceFromFood(Vector2 location)
@@ -56,7 +56,7 @@ namespace gather
 
         public void Gather(Vector2 fromLocation)
         {
-            if(amount < maxFood)
+            if(Amount < maxFood)
             {
                 AddAmount(1);
             }

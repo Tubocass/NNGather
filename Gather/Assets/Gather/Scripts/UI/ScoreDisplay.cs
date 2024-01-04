@@ -7,20 +7,22 @@ namespace Gather.UI
     public class ScoreDisplay : MonoBehaviour
     {
         TMP_Text scoreText;
-        public Counter count;
+        public Counter counter;
         private void Awake()
         {
             scoreText = GetComponentInChildren<TMP_Text>();
         }
-
-        //public void AmountChanged(int amount)
-        //{
-        //    UpdateText();
-        //}
-
-        void Update()
+        
+        public void SetCounter(Counter counter)
         {
-            scoreText.text = count?.amount.ToString();
+            this.counter = counter;
+            counter.counterEvent.AddListener(UpdateText);
+            UpdateText();
+        }
+
+        public void UpdateText() 
+        {
+            scoreText.text = counter?.Amount.ToString();
         }
     }
 }

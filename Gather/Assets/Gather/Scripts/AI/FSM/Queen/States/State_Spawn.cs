@@ -30,13 +30,13 @@ namespace Gather.AI
             float chance = Random.value;
             if (chance >= 0.66)
             {
-                if (fighterCounter.amount < spawnConfig.fighterCap)
+                if (fighterCounter.Amount < spawnConfig.fighterCap)
                 {
                     queen.SpawnFighter();
                 }
             } else
             {
-                if (farmerCounter.amount < spawnConfig.farmerCap)
+                if (farmerCounter.Amount < spawnConfig.farmerCap)
                 {
                     queen.SpawnFarmer();
                 }

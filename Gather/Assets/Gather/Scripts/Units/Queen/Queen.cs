@@ -45,7 +45,7 @@ namespace gather
 
         public void SpawnFarmer()
         {
-            if (foodCounter.amount >= spawnConfig.farmerCost)
+            if (foodCounter.Amount >= spawnConfig.farmerCost)
             {
                 FarmerDrone farmer = farmerFactory.Spawn(myTransform.position)
                     .GetComponent<FarmerDrone>();
@@ -58,7 +58,7 @@ namespace gather
 
         public void SpawnFighter()
         {
-            if (foodCounter.amount >= spawnConfig.fighterCost)
+            if (foodCounter.Amount >= spawnConfig.fighterCost)
             {
                 FighterDrone fighter = fighterFactory.Spawn(myTransform.position)
                     .GetComponent<FighterDrone>();
@@ -80,7 +80,7 @@ namespace gather
             {
                 yield return new WaitForSeconds(hungerTime);
 
-                if (foodCounter.amount > 0)
+                if (foodCounter.Amount > 0)
                 {
                     foodCounter.AddAmount(-1);
                     health.Heal(1);

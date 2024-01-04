@@ -16,12 +16,12 @@ namespace Gather.UI
         {
             if (playerTeam)
             {
-                farmerDisplay.count = playerTeam.GetUnitCounter(UnitType.Farmer);
-                fighterDisplay.count = playerTeam.GetUnitCounter(UnitType.Fighter);
+                farmerDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Farmer));
+                fighterDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Fighter));
             }
             if (playerQueen)
             {
-                foodDisplay.count = playerQueen.GetBlackboard().GetValue<Counter>(Configs.FoodCounter);
+                foodDisplay.SetCounter(playerQueen.GetBlackboard().GetValue<Counter>(Configs.FoodCounter));
                 farmerButton.onClick.AddListener(playerQueen.SpawnFarmer);
                 fighterButton.onClick.AddListener(playerQueen.SpawnFighter);
             }

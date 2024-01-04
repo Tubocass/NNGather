@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using Gather.AI;
 using gather;
 
 namespace Gather.UI

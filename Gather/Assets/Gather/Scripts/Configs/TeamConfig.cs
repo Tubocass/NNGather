@@ -39,7 +39,7 @@ namespace gather
             else
             {
                 Counter count = ScriptableObject.CreateInstance<Counter>();
-                count.SetAmount(value);
+                count.Amount = value;
                 teamCounter.Add(type, count);
             }
             //UnitChange?.Invoke(type);
@@ -50,7 +50,7 @@ namespace gather
             Counter count;
             if (teamCounter.TryGetValue(type, out count))
             {
-                return count.amount;
+                return count.Amount;
             }
             return 0;
         }
@@ -65,7 +65,7 @@ namespace gather
             else
             {
                 count = ScriptableObject.CreateInstance<Counter>();
-                count.SetAmount(0);
+                count.Amount = 0;
                 teamCounter.Add(type, count);
                 return count;
             }
