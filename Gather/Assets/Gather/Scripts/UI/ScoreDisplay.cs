@@ -7,7 +7,7 @@ namespace Gather.UI
     public class ScoreDisplay : MonoBehaviour
     {
         TMP_Text scoreText;
-        public Counter counter;
+        Counter counter;
         private void Awake()
         {
             scoreText = GetComponentInChildren<TMP_Text>();

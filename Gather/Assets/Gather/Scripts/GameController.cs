@@ -10,18 +10,18 @@ namespace gather
         [SerializeField] GameObject playerPrefab;
         [SerializeField] UIController uiController;
         [SerializeField] ColorOptions colorOptions;
+        [SerializeField] LevelSetup levelSetup;
+
         List<TeamConfig> teams;
         TeamSelect[] teamSelections;
         CameraController cameraController;
         InputManager input;
-        LevelSetup levelSetup;
 
         private void Awake()
         {
             //DontDestroyOnLoad(gameObject);
             cameraController = Camera.main.GetComponent<CameraController>();
             input = GetComponent<InputManager>();
-            levelSetup = GetComponent<LevelSetup>();
         }
 
         private void Start()
