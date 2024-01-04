@@ -7,10 +7,10 @@ namespace Gather.AI
         //int targetFoodCount = 10;
         FoodCounter foodCounter;
 
-        public State_Feed(Queen queen, Blackboard context)
+        public State_Feed(Queen queen)
         {
-       
-            foodCounter = context.GetValue<FoodCounter>(Configs.FoodCounter);
+
+            foodCounter = queen.GetFoodCounter();
         }
 
         public override void EnterState()

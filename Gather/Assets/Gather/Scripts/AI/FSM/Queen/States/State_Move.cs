@@ -14,7 +14,7 @@ namespace Gather.AI
         {
             this.queen = queen;
             //this.context = context;
-            foodCounter = context.GetValue<FoodCounter>(Configs.FoodCounter);
+            foodCounter = queen.GetFoodCounter();
         }
 
         public override void EnterState()

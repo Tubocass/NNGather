@@ -16,7 +16,7 @@ namespace Gather.AI
             Blackboard context = queen.GetBlackboard();
 
             moveState = new State_Move(queen, context);
-            feedState = new State_Feed(queen, context);
+            feedState = new State_Feed(queen);
             spawnState = new State_Spawn(queen, context);
             emergencyState = new State_Emergency(queen, context);
 

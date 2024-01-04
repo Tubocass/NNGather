@@ -21,7 +21,7 @@ namespace Gather.UI
             }
             if (playerQueen)
             {
-                foodDisplay.SetCounter(playerQueen.GetBlackboard().GetValue<Counter>(Configs.FoodCounter));
+                foodDisplay.SetCounter(playerQueen.GetFoodCounter());
                 farmerButton.onClick.AddListener(playerQueen.SpawnFarmer);
                 fighterButton.onClick.AddListener(playerQueen.SpawnFighter);
             }

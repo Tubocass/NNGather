@@ -22,7 +22,7 @@ namespace gather
             farmerFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
                 .GetComponent<FarmerFactory>();
 
-            context.SetValue(Configs.FoodCounter, foodCounter);
+            //context.SetValue(Configs.FoodCounter, foodCounter);
             context.SetValue(Configs.SpawnConfig, spawnConfig);
         }
 
@@ -113,6 +113,11 @@ namespace gather
         public void RemoveFightAnchor()
         {
             fightAnchor.SetActive(false);
+        }
+
+        public FoodCounter GetFoodCounter() 
+        { 
+            return foodCounter; 
         }
     }
 }

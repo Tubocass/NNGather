@@ -12,7 +12,7 @@ namespace Gather.AI
         {
             this.queen = queen;
             this.nextState = next;
-            counter = queen.GetBlackboard().GetValue<FoodCounter>(Configs.FoodCounter);
+            counter = queen.GetFoodCounter();
         }
 
         public bool isValid()
