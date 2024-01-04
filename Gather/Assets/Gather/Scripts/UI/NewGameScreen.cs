@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using gather;
-using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 
 namespace Gather.UI

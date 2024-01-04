@@ -91,7 +91,7 @@ namespace gather
             player.SetTeam(teamConfig);
             input.SetPlayer(player);
             cameraController.SetTarget(player.transform);
-            uiController.Setup(player, teamConfig);
+            uiController.SetupPlayerUI(player, teamConfig);
         }
 
         void SetupBot(TeamSelect selection, Vector2 start)

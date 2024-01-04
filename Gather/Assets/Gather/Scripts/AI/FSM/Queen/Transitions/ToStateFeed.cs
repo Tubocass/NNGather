@@ -1,5 +1,4 @@
 ﻿using gather;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace Gather.AI
 {

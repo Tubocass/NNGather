@@ -14,8 +14,11 @@ namespace gather
 
         public override void Death()
         {
-            fightAnchor.PlaceAnchor -= SetDestination;
-            fightAnchor = null;
+            if (fightAnchor != null )
+            {
+                fightAnchor.PlaceAnchor -= SetDestination;
+                fightAnchor = null;
+            }
             base.Death();
         }
         public override Vector2 AnchorPoint()

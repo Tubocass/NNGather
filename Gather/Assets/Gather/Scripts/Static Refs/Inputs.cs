@@ -9,5 +9,6 @@
         public static readonly string ScrollWheel = "Mouse ScrollWheel";
         public static readonly string LeftClick = "LeftClick";
         public static readonly string RightClick = "RightClick";
+        public static readonly string Escape = "Escape";
     }
 }

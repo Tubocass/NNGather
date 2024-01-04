@@ -12,9 +12,10 @@ namespace Gather.UI
         [SerializeField] ScoreDisplay fighterDisplay;
         [SerializeField] Button farmerButton;
         [SerializeField] Button fighterButton;
-        Blackboard globalContext;
+        [SerializeField] PauseMenu pauseMenu;
+        //Blackboard globalContext;
 
-        public void Setup(Queen playerQueen, TeamConfig playerTeam)
+        public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
             if (playerTeam)
             {
@@ -31,22 +32,10 @@ namespace Gather.UI
 
         private void Update()
         {
-            
-        }
-
-        void ToggleMainMenu()
-        {
-            // state = !state
-            // if(state) { Pause(); display(menu); }
-
-        }
-
-        public void NewGameMenu()
-        {
-            /*  Select numTeams
-             *  Select colors (use defaults)
-             *  Submit and Start
-            */
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseMenu.TogglePauseMenu();
+            }
         }
     }
 }

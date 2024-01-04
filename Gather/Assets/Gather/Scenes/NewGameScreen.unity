@@ -414,6 +414,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: New_Game_Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 4671045724451340217, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671045724451340217, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -473.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8404913156851541435, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -444,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8404913156851541435, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1000
+      value: 946.4
       objectReference: {fileID: 0}
     - target: {fileID: 8404913156851541435, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -480,7 +488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8404913156851541435, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -238.5
+      value: -209
       objectReference: {fileID: 0}
     - target: {fileID: 8404913156851541435, guid: a71d511401457b04e87d2db97e9017e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
