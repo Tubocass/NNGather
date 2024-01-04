@@ -794,10 +794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c9f179511035048a1690db5eec49c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teams:
-  - {fileID: 11400000, guid: 56404e6cc60c6214e8a2d1bdf263f345, type: 2}
-  - {fileID: 11400000, guid: 6052e8e3046e5c746ab6e8d88bbadda9, type: 2}
-  - {fileID: 11400000, guid: e790363a67285ff4d9fcd87c743abd52, type: 2}
   fillBar: {fileID: 6516201662705038989, guid: d3ebe9671e15cca47b10a51fb7867bba, type: 3}
 --- !u!114 &2377285055773728397
 MonoBehaviour:
@@ -915,6 +911,7 @@ GameObject:
   - component: {fileID: 2377285056081005019}
   - component: {fileID: 2377285056081005016}
   - component: {fileID: 2377285056081005018}
+  - component: {fileID: 8700141643713820397}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -996,12 +993,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7daf7a0126501d7418c7d4e5178f8f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  statsDisplay: {fileID: 8700141643713820397}
+  populationBar: {fileID: 2377285055773728399}
+--- !u!114 &8700141643713820397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377285056081004998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24d4b3688ccfce4592f6bf16faeabf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   foodDisplay: {fileID: 2377285057122891994}
   farmerDisplay: {fileID: 2377285055100253926}
   fighterDisplay: {fileID: 2377285055931634629}
   farmerButton: {fileID: 2377285056613290210}
   fighterButton: {fileID: 2377285055137748142}
-  pauseMenu: {fileID: 0}
 --- !u!1 &2377285056181276752
 GameObject:
   m_ObjectHideFlags: 0

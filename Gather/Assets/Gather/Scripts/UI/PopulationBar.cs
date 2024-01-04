@@ -5,16 +5,10 @@ namespace gather
 {
     public class PopulationBar : MonoBehaviour
     {
-        [SerializeField] TeamConfig[] teams;
+        TeamConfig[] teams;
         Image[] images;
         [SerializeField] GameObject fillBar;
         int total = 0;
-
-
-        private void Start()
-        {
-            
-        }
 
         public void SetTeams(TeamConfig[] teams)
         {

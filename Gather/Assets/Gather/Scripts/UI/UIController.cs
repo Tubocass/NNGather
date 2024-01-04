@@ -7,27 +7,21 @@ namespace Gather.UI
 {
     public class UIController : MonoBehaviour
     {
-        [SerializeField] ScoreDisplay foodDisplay;
-        [SerializeField] ScoreDisplay farmerDisplay;
-        [SerializeField] ScoreDisplay fighterDisplay;
-        [SerializeField] Button farmerButton;
-        [SerializeField] Button fighterButton;
         [SerializeField] PauseMenu pauseMenu;
+        [SerializeField] StatsDisplay statsDisplay;
+        [SerializeField] PopulationBar populationBar;
         //Blackboard globalContext;
 
         public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
-            if (playerTeam)
-            {
-                farmerDisplay.count = playerTeam.GetUnitCounter(UnitType.Farmer);
-                fighterDisplay.count = playerTeam.GetUnitCounter(UnitType.Fighter);
-            }
-            if (playerQueen)
-            {
-                foodDisplay.count = playerQueen.GetBlackboard().GetValue<Counter>(Configs.FoodCounter);
-                farmerButton.onClick.AddListener(playerQueen.SpawnFarmer);
-                fighterButton.onClick.AddListener(playerQueen.SpawnFighter);
-            }
+           statsDisplay.SetupPlayerUI(playerQueen, playerTeam);
+        }
+
+        public void SetupPopulationBar(TeamConfig[] teams) 
+        {
+            //populationBar.gameObject.SetActive(true);
+            populationBar.SetTeams(teams);
+
         }
 
         private void Update()

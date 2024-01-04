@@ -1,28 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Gather.UI;
-using UnityEngine.SceneManagement;
 
 namespace gather
 {
     public class GameController : MonoBehaviour
     {
-       /*
-        *  Take Team Selections (isPlayer, Color)
-        *  for bots, setup prefabs and teams
-        *  for players, setup camera and controls in addition to teams
-        *  
-       */
         [SerializeField] GameObject queenPrefab;
         [SerializeField] GameObject playerPrefab;
-        //[SerializeField] Queen playerQueen;
-        //[SerializeField] Queen[] bots;
-        [SerializeField] List<TeamConfig> teams;
-        //Blackboard globalContext = new Blackboard();
-        TeamSelect[] teamSelections;
         [SerializeField] UIController uiController;
-        [SerializeField] PopulationBar populationBar;
         [SerializeField] ColorOptions colorOptions;
+        List<TeamConfig> teams;
+        TeamSelect[] teamSelections;
         CameraController cameraController;
         InputManager input;
         LevelSetup levelSetup;
@@ -68,7 +57,7 @@ namespace gather
                 }
             }
 
-            populationBar.SetTeams(teams.ToArray());
+            uiController.SetupPopulationBar(teams.ToArray());
         }
 
         TeamConfig NewTeam(TeamSelect selection)
