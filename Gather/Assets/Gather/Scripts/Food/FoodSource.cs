@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using UnityEngine;
 
 namespace gather
@@ -7,39 +8,56 @@ namespace gather
     {
         Vector3[] spawnPositions;
         FoodFactory foodFactory;
-        [SerializeField] int range = 4;
+        [SerializeField] int spawnRangeDist = 4;
         [SerializeField] float timer = 5f;
-        [SerializeField] bool variableTime;
+        [SerializeField] bool isTimeVariable;
         [SerializeField] float variableTimeAmount = 1f;
+        [SerializeField] int baseFood, variableFood;
+
+        /*
+         *  Would like to see these random variables under a Normal curve
+         */
 
         private void Awake()
         {
-            foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
-                .GetComponent<FoodFactory>();
-            int numPositions = Random.Range(1, 4) + 3;
+            foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<FoodFactory>();
+            int numPositions = UnityEngine.Random.Range(1, variableFood) + baseFood;
             spawnPositions = new Vector3[numPositions];
+
             for (int p = 0; p < spawnPositions.Length; p++)
             {
-                int x = (int)Mathf.Round(Random.Range(-range, range));
-                int y = (int)Mathf.Round(Random.Range(-range, range));
-                spawnPositions[p] = new Vector3(x,y,0);
+                Vector2 pos = UnityEngine.Random.insideUnitCircle * spawnRangeDist;
+                spawnPositions[p] = pos;
             }
-            if(variableTime)
+            if(isTimeVariable)
             {
-                float varTime = Random.Range(-variableTimeAmount, variableTimeAmount);
+                float varTime = UnityEngine.Random.Range(-variableTimeAmount, variableTimeAmount);
                 timer += varTime;
             }
-            InvokeRepeating("Respawn", 0f, timer);
+            SpawnAllAtOnce();
+            StartCoroutine(Respawn());
         }
-        void Respawn()
+
+        IEnumerator Respawn()
         {
             for (int p = 0; p < spawnPositions.Length; p++)
             {
-                if(!Physics2D.OverlapPoint(transform.position + spawnPositions[p], MaskLayers.food))
+                yield return new WaitForSeconds(timer);
+
+                if (!Physics2D.OverlapPoint(transform.position + spawnPositions[p], MaskLayers.food))
                 {
                     foodFactory.Spawn(transform.position + spawnPositions[p])
                         .transform.SetParent(this.transform);
                 }
+            }
+        }
+
+        void SpawnAllAtOnce()
+        {
+            for (int p = 0; p < spawnPositions.Length; p++)
+            {
+                foodFactory.Spawn(transform.position + spawnPositions[p])
+                       .transform.SetParent(this.transform);
             }
         }
     }
