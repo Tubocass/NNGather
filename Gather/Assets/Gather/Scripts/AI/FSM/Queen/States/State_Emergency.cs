@@ -16,7 +16,7 @@ namespace Gather.AI
             spawnConfig = context.GetValue<SpawnConfig>(Configs.SpawnConfig);
             fighterCounter = context.GetValue<TeamConfig>(Configs.TeamConfig)
                 .GetUnitCounter(UnitType.Fighter);
-            foodCounter = context.GetValue<FoodCounter>(Configs.FoodCounter);
+            foodCounter = queen.GetFoodCounter();
         }
 
         public override void EnterState()
