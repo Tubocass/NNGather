@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System;
 using UnityEngine;
 
 namespace gather
@@ -8,13 +7,16 @@ namespace gather
     {
         Vector2[] spawnPositions;
         FoodFactory foodFactory;
-        [SerializeField] int spawnRangeDist = 4;
-        [SerializeField] float timer = 5f;
         [SerializeField] bool isTimeVariable;
-        [SerializeField] float variableTimeAmount = 1f;
-        [SerializeField] float minimumDistance = 2f;
-        [SerializeField] int baseFood, variableFood;
-        Vector2 center { get => (Vector2)transform.position;  }
+        [SerializeField] float timer;
+        [SerializeField] float variableTimeAmount;
+        [Space]
+        [SerializeField] int spawnRangeDist;
+        [SerializeField] float minimumDistance;
+        [Space]
+        [SerializeField] int baseFood;
+        [SerializeField] int variableFood;
+        Vector2 center { get => (Vector2)transform.position; }
 
         /*
          *  Would like to see these random variables under a Normal curve
@@ -23,7 +25,7 @@ namespace gather
         private void Awake()
         {
             foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<FoodFactory>();
-            int numPositions = UnityEngine.Random.Range(1, variableFood) + baseFood;
+            int numPositions = Random.Range(1, variableFood) + baseFood;
             spawnPositions = new Vector2[numPositions];
             Vector2 pos = Vector2.zero;
 
@@ -31,7 +33,7 @@ namespace gather
             {
                 do
                 {
-                    pos = UnityEngine.Random.insideUnitCircle * spawnRangeDist;
+                    pos = Random.insideUnitCircle * spawnRangeDist;
                 } while (!MinimumDistanceCheck(pos, p));
                 
                 spawnPositions[p] = pos;
@@ -39,10 +41,10 @@ namespace gather
 
             if (isTimeVariable)
             {
-                float varTime = UnityEngine.Random.Range(-variableTimeAmount, variableTimeAmount);
+                float varTime = Random.Range(-variableTimeAmount, variableTimeAmount);
                 timer += varTime;
             }
-            transform.Rotate(Vector3.forward, UnityEngine.Random.value * 360);
+            transform.Rotate(Vector3.forward, Random.value * 360);
             SpawnAllAtOnce();
             StartCoroutine(Respawn());
         }
@@ -73,13 +75,13 @@ namespace gather
             }
         }
 
-        bool MinimumDistanceCheck(Vector2 point, int length)
+        bool MinimumDistanceCheck(Vector2 point, int previousAmount)
         {
-            if (length == 0)
+            if (previousAmount == 0)
             {
                 return true;
             }
-            for (int p = 0; p < length; p++)
+            for (int p = 0; p < previousAmount; p++)
             {
                 if (Vector2.Distance(point, spawnPositions[p]) < minimumDistance)
                 {

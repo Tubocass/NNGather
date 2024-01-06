@@ -7,13 +7,13 @@ namespace Gather.AI
     {
         Counter fighterCounter;
         FoodCounter foodCounter;
-        SpawnConfig spawnConfig;
+        DroneSpawnConfig spawnConfig;
         Queen queen;
 
         public State_Emergency(Unit unit, Blackboard context): base(unit, context)
         {
             queen = unit.GetComponent<Queen>();
-            spawnConfig = context.GetValue<SpawnConfig>(Configs.SpawnConfig);
+            spawnConfig = context.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
             fighterCounter = context.GetValue<TeamConfig>(Configs.TeamConfig)
                 .GetUnitCounter(UnitType.Fighter);
             foodCounter = queen.GetFoodCounter();

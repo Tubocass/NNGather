@@ -6,7 +6,7 @@ namespace gather
     public class Queen : Unit
     {
         public Anchor foodAnchor, fightAnchor;
-        public SpawnConfig spawnConfig;
+        public DroneSpawnConfig spawnConfig;
         public PrefabFactory farmerFactory, fighterFactory;
         FoodCounter foodCounter;
         Health health;
@@ -76,7 +76,7 @@ namespace gather
 
         IEnumerator Hunger()
         {
-            while (true)
+            while (Application.isPlaying)
             {
                 yield return new WaitForSeconds(hungerTime);
 

@@ -6,7 +6,7 @@ namespace Gather.AI
     public class State_Spawn : FSM_State
     {
         Queen queen;
-        SpawnConfig spawnConfig;
+        DroneSpawnConfig spawnConfig;
         Counter farmerCounter;
         Counter fighterCounter;
         TeamConfig teamConfig;
@@ -14,7 +14,7 @@ namespace Gather.AI
         public State_Spawn (Queen queen, Blackboard context)
         {
             this.queen = queen;
-            spawnConfig = context.GetValue<SpawnConfig>(Configs.SpawnConfig);
+            spawnConfig = context.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
             teamConfig = context.GetValue<TeamConfig>(Configs.TeamConfig);
             farmerCounter = teamConfig.GetUnitCounter(UnitType.Farmer);
             fighterCounter = teamConfig.GetUnitCounter(UnitType.Fighter);

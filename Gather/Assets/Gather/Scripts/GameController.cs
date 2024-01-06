@@ -41,7 +41,7 @@ namespace gather
 
         public void StartGame()
         {
-            // levelSetup.Generate();
+            levelSetup.Generate();
             FindTeamSelections();
             teams = new List<TeamConfig>();
             uiController.gameObject.SetActive(true);
