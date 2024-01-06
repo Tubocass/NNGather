@@ -26,6 +26,7 @@ namespace gather
             int numPositions = UnityEngine.Random.Range(1, variableFood) + baseFood;
             spawnPositions = new Vector2[numPositions];
             Vector2 pos = Vector2.zero;
+
             for (int p = 0; p < spawnPositions.Length; p++)
             {
                 do
@@ -41,20 +42,24 @@ namespace gather
                 float varTime = UnityEngine.Random.Range(-variableTimeAmount, variableTimeAmount);
                 timer += varTime;
             }
+            transform.Rotate(Vector3.forward, UnityEngine.Random.value * 360);
             SpawnAllAtOnce();
             StartCoroutine(Respawn());
         }
 
         IEnumerator Respawn()
         {
-            for (int p = 0; p < spawnPositions.Length; p++)
+            while (Application.isPlaying)
             {
-                yield return new WaitForSeconds(timer);
-
-                if (!Physics2D.OverlapPoint(center + spawnPositions[p], MaskLayers.food))
+                for (int p = 0; p < spawnPositions.Length; p++)
                 {
-                    foodFactory.Spawn(center + spawnPositions[p])
-                        .transform.SetParent(this.transform);
+                    yield return new WaitForSeconds(timer);
+
+                    if (!Physics2D.OverlapPoint(center + spawnPositions[p], MaskLayers.food))
+                    {
+                        foodFactory.Spawn(center + spawnPositions[p])
+                            .transform.SetParent(this.transform);
+                    }
                 }
             }
         }

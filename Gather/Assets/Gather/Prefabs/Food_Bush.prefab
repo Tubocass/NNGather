@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRangeDist: 8
-  timer: 2
+  timer: 4
   isTimeVariable: 1
-  variableTimeAmount: 2
+  variableTimeAmount: 1
+  minimumDistance: 2
   baseFood: 5
   variableFood: 6
