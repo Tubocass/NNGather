@@ -201,6 +201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_2
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -336,6 +340,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_15
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -473,6 +481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_10
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -538,6 +550,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_14
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -654,6 +670,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -850,6 +870,7 @@ GameObject:
   m_Component:
   - component: {fileID: 830893894}
   - component: {fileID: 830893895}
+  - component: {fileID: 830893896}
   m_Layer: 0
   m_Name: Start_Locations
   m_TagString: Untagged
@@ -892,10 +913,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f84ebc1519213489873e2564d06285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationPrefab: {fileID: 6394900837605836088, guid: af023648b467a7b4b96fa649897f7349, type: 3}
+  FoodBushPrefab: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+  numFoodBushes: 20
+  foodBushMinimumDist: 50
+  foodParent: {fileID: 671880451}
   numSpawnPoints: 8
-  range: 225
-  startLocationMinimumDist: 100
+  spawnPointMinimumDist: 75
+--- !u!61 &830893896
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830893893}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20.48, y: 20.48}
+    newSize: {x: 20.48, y: 20.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 500, y: 500}
+  m_EdgeRadius: 0
 --- !u!1 &834770868
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,17 +1033,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1017518887 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2377285055773728399, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
-  m_PrefabInstance: {fileID: 2377285056870761577}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7c9f179511035048a1690db5eec49c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1098423635 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4269841455281067712, guid: d2ca9bcc696a96b468bf930153b14851, type: 3}
@@ -1165,6 +1223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_17
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -1230,6 +1292,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_16
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -1297,6 +1363,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_7
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1363,6 +1433,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_11
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -1428,6 +1502,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_12
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -1565,6 +1643,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_3
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1630,6 +1712,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_13
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -1766,6 +1852,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -1955,6 +2045,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_6
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -2009,84 +2103,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
   m_PrefabInstance: {fileID: 1759343710}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1789890786
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1789890788}
-  - component: {fileID: 1789890787}
-  m_Layer: 0
-  m_Name: BG_Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!61 &1789890787
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789890786}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.48, y: 20.48}
-    newSize: {x: 20.48, y: 20.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 2
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 500, y: 500}
-  m_EdgeRadius: 0
---- !u!4 &1789890788
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789890786}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1856280354
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,13 +2134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f01b895e078212419b3a7c52085d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeType: 0
+  shapeType: 1
   obstaclesMask:
     serializedVersion: 2
     m_Bits: 4294967295
   autoRegenerateInterval: 60
   radiusOffset: 0.1
-  invertMasterPolygon: 1
+  invertMasterPolygon: 0
 --- !u!212 &1856280357
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2194,8 +2210,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &1856280359
-PolygonCollider2D:
+--- !u!61 &1856280359
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2238,13 +2254,8 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.5, y: 0.5}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5, y: 0.5}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &1922184458 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7648497222598221234, guid: d2ca9bcc696a96b468bf930153b14851, type: 3}
@@ -2267,6 +2278,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_18
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -2365,6 +2380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_8
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2430,6 +2449,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -2497,6 +2520,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Source_5
       objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2562,6 +2589,10 @@ PrefabInstance:
     - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_Name
       value: Food_Source
+      objectReference: {fileID: 0}
+    - target: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 485167984978687257, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
       propertyPath: m_RootOrder
@@ -3002,14 +3033,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3185050388816015166, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
-      propertyPath: parent
-      value: 
-      objectReference: {fileID: 830893894}
-    - target: {fileID: 3185050388816015166, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
-      propertyPath: startLocations.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: levelSetup
       value: 
@@ -3018,14 +3041,6 @@ PrefabInstance:
       propertyPath: uiController
       value: 
       objectReference: {fileID: 783397237}
-    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
-      propertyPath: populationBar
-      value: 
-      objectReference: {fileID: 1017518887}
-    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
-      propertyPath: teams.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6077366050677378578, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: m_Name
       value: Game_Controller
@@ -3085,7 +3100,6 @@ SceneRoots:
   - {fileID: 5534226071603469180}
   - {fileID: 6077366049489854701}
   - {fileID: 671880451}
-  - {fileID: 1789890788}
   - {fileID: 830893894}
   - {fileID: 714018317}
   - {fileID: 2002676516}
