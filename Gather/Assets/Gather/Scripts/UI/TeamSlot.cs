@@ -20,15 +20,19 @@ namespace gather
         public TMP_Dropdown colorSelect;
         public ColorOptions colorOptions;
         NewGameScreen newGameScreen;
+        TMP_Text playerText;
+
 
         private void Awake()
         {
+            playerText = botSelect.GetComponentInChildren<TMP_Text>();
             newGameScreen = GetComponentInParent<NewGameScreen>();
             botSelect.onValueChanged.AddListener(SetPlayer);
             colorSelect.onValueChanged.AddListener(SetColor);
 
             selection.id = transform.GetSiblingIndex();
             selection.isPlayer = botSelect.isOn;
+            playerText.text = botSelect.isOn ? "Player" : "Bot";
         }
 
         private void Start()
@@ -60,7 +64,9 @@ namespace gather
 
         public void SetPlayer(bool choice) 
         {
+            botSelect.isOn = choice;
             selection.isPlayer = choice;
+            playerText.text = choice ? "Player" : "Bot";
         }
 
         public TeamSelect GetSelection()

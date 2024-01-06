@@ -16,6 +16,7 @@ namespace Gather.UI
         private void Start()
         {
             GameObject go = Instantiate(teamSlotPrefab, listParent);
+            go.GetComponent<TeamSlot>().SetPlayer(true);
             teamSlots.Add(go);
             emptySlot.transform.SetAsLastSibling();
         }
@@ -33,6 +34,7 @@ namespace Gather.UI
                 teamSlots.Add(go);
              
             }
+            go.GetComponent<TeamSlot>().SetPlayer(false);
             emptySlot.transform.SetAsLastSibling();
 
             if (teamSlots.FindAll(ts => ts.activeSelf).Count == maxTeams)
