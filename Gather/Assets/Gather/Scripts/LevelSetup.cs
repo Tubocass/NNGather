@@ -41,9 +41,7 @@ namespace gather
             {
                 do
                 {
-                    float x = Random.Range(-xRange, xRange);
-                    float y = Random.Range(-yRange, yRange);
-                    pos = new Vector2(x, y);
+                    pos = RandomPoint();
                 } while (FailsMinimumDistanceCheck(pos, startLocations, spawnPointMinimumDist, i));
 
                 startLocations[i] = pos;
@@ -58,9 +56,7 @@ namespace gather
             {
                 do
                 {
-                    float x = Random.Range(-xRange, xRange);
-                    float y = Random.Range(-yRange, yRange);
-                    pos = new Vector2(x, y);
+                    pos = RandomPoint();
                 } while (FailsMinimumDistanceCheck(pos, foodLocations, foodBushMinimumDist, i));
 
                 foodLocations[i] = pos;
@@ -86,6 +82,11 @@ namespace gather
                 }
             }
             return false;
+        }
+
+        Vector2 RandomPoint()
+        {
+            return new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange));
         }
 
     }
