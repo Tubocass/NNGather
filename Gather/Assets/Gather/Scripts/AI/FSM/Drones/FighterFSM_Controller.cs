@@ -4,24 +4,20 @@ namespace Gather.AI
 {
     public class FighterFSM_Controller : FSM_Controller
     {
-        State_Hunt huntState;
-        State_Engage engageState;
-
         protected override void Init()
         {
             FighterDrone drone = GetComponent<FighterDrone>();
             Blackboard context = drone.GetBlackboard();
 
-            huntState = new State_Hunt(drone, context);
-            engageState = new State_Engage(drone, context);
+            State_Hunt huntState = new State_Hunt(drone, context);
+            State_Engage engageState = new State_Engage(drone, context);
             initialState = huntState;
 
-            huntState.transistions.Add(
-                new ToStateEngage(drone, engageState)
-                );
-            engageState.transistions.Add(
-                new ToStateHunt(drone, huntState)
-                );
+            ToStateEngage toEngage = new ToStateEngage(drone, engageState);
+            ToStateHunt toHunt = new ToStateHunt(drone, huntState);
+
+            huntState.AddTransitions(toEngage);
+            engageState.AddTransitions(toHunt);
         }
     }
 }
