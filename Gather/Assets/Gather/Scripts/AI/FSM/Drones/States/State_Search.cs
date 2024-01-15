@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using gather;
 
 namespace Gather.AI
 {
     public class State_Search : FSM_State
     {
-        List<FoodPellet> foodPellets = new List<FoodPellet>();
         Drone drone;
         FoodPellet target;
         Blackboard context;
@@ -32,7 +30,6 @@ namespace Gather.AI
         public override void ExitState()
         {
             target = null;
-            foodPellets.Clear();
         }
 
         void Search()
