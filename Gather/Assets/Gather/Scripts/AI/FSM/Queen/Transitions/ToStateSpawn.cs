@@ -4,30 +4,23 @@ namespace Gather.AI
 {
     public class ToStateSpawn : FSM_Transistion
     {
-        Queen queen;
-        FSM_State nextState;
-        FoodCounter counter;
+        private readonly Queen queen;
+        private readonly FoodCounter counter;
 
-        public ToStateSpawn(Queen queen, FSM_State next)
+        public ToStateSpawn(Queen queen, FSM_State next): base(queen, next)
         {
             this.queen = queen;
-            this.nextState = next;
             counter = queen.GetFoodCounter();
         }
 
-        public bool isValid()
+        public override bool IsValid()
         {
             return !queen.GetEnemyDetected() 
                 && !counter.IsFoodLow()
                 && !queen.IsMoving;
         }
 
-        public FSM_State GetNextState()
-        {
-            return nextState;
-        }
-
-        public void OnTransition()
+        public override void OnTransition()
         {
         }
     }

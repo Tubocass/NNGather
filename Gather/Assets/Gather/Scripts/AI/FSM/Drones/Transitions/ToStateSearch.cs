@@ -1,30 +1,22 @@
 ﻿using gather;
-using UnityEngine;
 
 namespace Gather.AI
 {
     public class ToStateSearch : FSM_Transistion
     {
-        FarmerDrone drone;
-        FSM_State nextState;
-        public ToStateSearch(FarmerDrone drone, FSM_State next)
+        private readonly FarmerDrone drone;
+
+        public ToStateSearch(FarmerDrone drone, FSM_State nextState): base(drone, nextState)
         {
             this.drone = drone;
-            this.nextState = next;
         }
 
-        public bool isValid()
+        public override bool IsValid()
         {
             return !drone.GetEnemyDetected() && !drone.IsCarryingFood() && !drone.hasTarget;
         }
 
-        public FSM_State GetNextState()
-        {
-            OnTransition();
-            return nextState;
-        }
-
-        public void OnTransition()
+        public override void OnTransition()
         {
             //Debug.Log("Start search");
         }

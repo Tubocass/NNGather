@@ -1,9 +1,24 @@
-﻿namespace Gather.AI
+﻿using gather;
+
+namespace Gather.AI
 {
-    public interface FSM_Transistion
+    public abstract class FSM_Transistion
     {
-        public bool isValid();
-        public void OnTransition();
-        public FSM_State GetNextState();
+        protected FSM_State nextState;
+        protected Unit unit;
+
+        public FSM_Transistion(Unit unit, FSM_State nextState)
+        {
+            this.unit = unit;
+            this.nextState = nextState;
+        }
+
+        public virtual bool IsValid() { return false; }
+        public virtual void OnTransition() { }
+        public FSM_State GetNextState() 
+        {  
+            OnTransition();
+            return nextState; 
+        }
     }
 }

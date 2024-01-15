@@ -37,12 +37,9 @@ namespace Gather.AI
 
         void Search()
         {
-            foodDetector.Detect();
-            foodPellets = foodDetector.GetFoodList();
-
-            if (foodPellets.Count > 0)
+            if (foodDetector.Detect())
             {
-                target = TargetSystem.TargetNearest(drone.Location(), foodPellets);
+                target = TargetSystem.TargetNearest(drone.Location(), foodDetector.GetFoodList());
                 context.SetValue<ITarget>(Configs.Target, target);
                 drone.hasTarget = true;
             }

@@ -8,11 +8,6 @@ namespace gather
         Transform myTransform;
         bool isPickedUp = false;
 
-        public Vector2 Location()
-        {
-            return myTransform.position;
-        }
-
         private void Awake()
         {
             myCollider = GetComponent<Collider2D>();
@@ -22,6 +17,11 @@ namespace gather
         private void OnEnable()
         {
             myCollider.enabled = true;
+        }
+
+        public Vector2 Location()
+        {
+            return myTransform.position;
         }
 
         public bool CanTarget(int team)

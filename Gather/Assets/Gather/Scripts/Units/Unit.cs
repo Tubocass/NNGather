@@ -21,8 +21,6 @@ namespace gather
         private bool isEnemyDetected;
         // Animator
 
-        public bool IsMoving { get { return isMoving; } }
-
         protected virtual void Awake()
         {
             myTransform = transform; 
@@ -33,6 +31,8 @@ namespace gather
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
+        public bool IsMoving { get => isMoving; }
+
         public Vector2 Location()
         {
             return myTransform.position;
@@ -41,7 +41,7 @@ namespace gather
         public virtual void SetTeam(TeamConfig config)
         {
             this.teamConfig = config;
-            teamConfig.SetUnitCount(unitType, 1);
+            teamConfig.UpdateUnitCount(unitType, 1);
             enemyDetector.SetTeam(teamConfig.Team);
             spriteRenderer.color = teamConfig.TeamColor;
         }
@@ -58,7 +58,7 @@ namespace gather
 
         protected virtual void OnDisable()
         {
-            teamConfig?.SetUnitCount(unitType, -1);
+            teamConfig?.UpdateUnitCount(unitType, -1);
             context.Clear();
         }
 
@@ -85,7 +85,7 @@ namespace gather
 
         public void DetectEnemeies()
         {
-            isEnemyDetected =  enemyDetector.Detect();
+            isEnemyDetected = enemyDetector.Detect();
         }
 
         public bool GetEnemyDetected()

@@ -55,7 +55,7 @@ namespace Gather.AI
         { 
             foreach(FSM_Transistion transistion in ActiveState.transistions)
             {
-                if(transistion.isValid())
+                if(transistion.IsValid())
                 {
                     ActiveState = transistion.GetNextState();
                 }

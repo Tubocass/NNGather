@@ -10,7 +10,6 @@ namespace gather
         [SerializeField] public int Team;
         [SerializeField] public Color TeamColor;
         Dictionary<UnitType, Counter> teamCounter = new Dictionary<UnitType, Counter>();
-        //public UnitEvent UnitChange;
 
         //public int Team { get => team; }
         //public Color TeamColor { get => teamColor; }
@@ -30,7 +29,7 @@ namespace gather
             Reset();
         }
 
-        public void SetUnitCount(UnitType type, int value)
+        public void UpdateUnitCount(UnitType type, int value)
         {
             if (teamCounter.ContainsKey(type))
             {
@@ -42,7 +41,6 @@ namespace gather
                 count.Amount = value;
                 teamCounter.Add(type, count);
             }
-            //UnitChange?.Invoke(type);
         }
 
         public int GetUnitCount(UnitType type)

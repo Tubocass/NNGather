@@ -5,24 +5,18 @@ namespace Gather.AI
     public class ToStateEngage : FSM_Transistion
     {
         Drone drone;
-        FSM_State nextState;
-        public ToStateEngage(Drone drone, FSM_State next)
+
+        public ToStateEngage(Drone drone, FSM_State next): base(drone, next)
         {
             this.drone = drone;
-            this.nextState = next;
         }
 
-        public bool isValid()
+        public override bool IsValid()
         {
             return drone.hasTarget;
         }
 
-        public FSM_State GetNextState()
-        {
-            return nextState;
-        }
-
-        public void OnTransition()
+        public override void OnTransition()
         {
         }
     }
