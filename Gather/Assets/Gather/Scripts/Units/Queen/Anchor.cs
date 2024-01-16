@@ -22,14 +22,14 @@ namespace gather
             }
         }
 
+        public bool IsActive()
+        {
+            return active;
+        }
+
         public bool IsReadyToPlace()
         {
             return placing;
-        }
-
-        public bool GetActive()
-        {
-            return active;
         }
 
         public void SetReadyToPlace()

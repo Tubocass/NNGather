@@ -23,7 +23,7 @@ namespace gather
         }
         public override Vector2 AnchorPoint()
         {
-            return fightAnchor.GetActive() ? fightAnchor.GetLocation() : myQueen.Location();
+            return fightAnchor.IsActive() ? fightAnchor.GetLocation() : myQueen.Location();
         }
     }
 }
