@@ -7,30 +7,55 @@ namespace gather
         public LocationEvent PlaceAnchor;
         Transform myTransform;
         bool active;
+        bool placing;
 
         private void Awake()
         {
             myTransform = transform;
         }
+
+        private void Update()
+        {
+            if (placing) 
+            {
+                myTransform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+        }
+
+        public bool IsReadyToPlace()
+        {
+            return placing;
+        }
+
         public bool GetActive()
         {
             return active;
         }
 
-        public void SetActive(bool value)
+        public void SetReadyToPlace()
         {
-            active = value;
-            gameObject.SetActive(value);
+            active = false;
+            placing = true;
+            gameObject.SetActive(true);
         }
 
-        public Vector2 GetPosition()
+        public void Deactivate() 
+        {
+            active = false;
+            gameObject.SetActive(false);
+        }
+
+        public Vector2 GetLocation()
         {
             return myTransform.position;
         }
 
-        public void SetPosition(Vector2 value)
+        public void SetAnchorPoint(Vector2 location)
         {
-            myTransform.position = value;
+            placing = false;
+            active = true;
+            myTransform.position = location;
+            PlaceAnchor?.Invoke(location);
         }
     }
 }

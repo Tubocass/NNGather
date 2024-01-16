@@ -42,7 +42,7 @@ namespace gather
 
         public override Vector2 AnchorPoint()
         {
-            return foodAnchor.GetActive()? foodAnchor.GetPosition() : Location();
+            return foodAnchor.GetActive()? foodAnchor.GetLocation() : Location();
         }
 
         public void PickupFood(FoodPellet pellet)

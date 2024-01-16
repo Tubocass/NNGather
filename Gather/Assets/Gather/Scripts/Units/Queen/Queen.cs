@@ -7,9 +7,10 @@ namespace gather
     {
         public Anchor foodAnchor, fightAnchor;
         public DroneSpawnConfig spawnConfig;
-        public PrefabFactory farmerFactory, fighterFactory;
+        PrefabFactory farmerFactory, fighterFactory;
         FoodCounter foodCounter;
         Health health;
+        InputManager inputManager;
         [SerializeField] float hungerTime;
 
         protected override void Awake()
@@ -35,6 +36,11 @@ namespace gather
         {
             base.OnDisable();
             StopCoroutine(Hunger());
+        }
+
+        public void SetInputManager(InputManager input)
+        {
+            inputManager = input;
         }
 
         public override void SetTeam(TeamConfig config)
@@ -91,28 +97,16 @@ namespace gather
             }
         }
 
-        public void PlaceFoodAnchor(Vector2 location)
+        public void PlaceFoodAnchor()
         {
-            foodAnchor.SetActive(true);
-            foodAnchor.SetPosition(location);
-            foodAnchor.PlaceAnchor?.Invoke(location);
+            inputManager.SetActiveAnchor(foodAnchor);
+            foodAnchor.SetReadyToPlace();
         }
 
-        public void RemoveFoodAnchor()
+        public void PlaceFightAnchor()
         {
-            foodAnchor.SetActive(false);
-        }
-
-        public void PlaceFightAnchor(Vector2 location)
-        {
-            fightAnchor.SetActive(true);
-            fightAnchor.SetPosition(location);
-            fightAnchor.PlaceAnchor?.Invoke(location);
-        }
-
-        public void RemoveFightAnchor()
-        {
-            fightAnchor.SetActive(false);
+            inputManager.SetActiveAnchor(fightAnchor);
+            fightAnchor.SetReadyToPlace();
         }
 
         public FoodCounter GetFoodCounter() 

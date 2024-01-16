@@ -17,7 +17,7 @@ public class TargetSystem
                 if (amount > 0)
                 {
                     var comp = cols[f].GetComponent<T>();
-                    if (boo.Invoke(comp))
+                    if (comp && boo.Invoke(comp))
                     {
                         targets.Add(comp);
                         amount--;

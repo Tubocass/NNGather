@@ -12,7 +12,7 @@ namespace Gather.UI
 
         public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
-           statsDisplay.SetupPlayerUI(playerQueen, playerTeam);
+            statsDisplay.SetupPlayerUI(playerQueen, playerTeam);
         }
 
         public void SetupPopulationBar(TeamConfig[] teams) 
