@@ -2,16 +2,19 @@ using UnityEngine;
 
 namespace gather
 {
+    [RequireComponent(typeof(PooledObject))]
     public class FoodPellet : MonoBehaviour, ITarget
     {
         Collider2D myCollider;
         Transform myTransform;
         bool isPickedUp = false;
+        PooledObject po;
 
         private void Awake()
         {
             myCollider = GetComponent<Collider2D>();
             myTransform = this.transform;
+            po = GetComponent<PooledObject>();
         }
     
         private void OnEnable()
@@ -46,6 +49,7 @@ namespace gather
         {
             Detach();
             gameObject.SetActive(false);
+            po.ReleaseToPool();
         }
     }
 }

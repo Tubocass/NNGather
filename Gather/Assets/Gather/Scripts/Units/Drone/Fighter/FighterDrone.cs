@@ -1,7 +1,9 @@
+using Gather.AI;
 using UnityEngine;
 
 namespace gather
 {
+    [RequireComponent(typeof(FighterFSM_Controller))]
     public class FighterDrone : Drone
     {
         Anchor fightAnchor;

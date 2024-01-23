@@ -2,10 +2,14 @@ using UnityEngine;
 using PolyNav;
 using Gather.AI;
 
-
 namespace gather
 {
     public enum UnitType { Fighter, Farmer, Queen }
+
+    [RequireComponent(typeof(EnemyDetector))]
+    [RequireComponent(typeof(PolyNavAgent))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Rigidbody2D))]
 
     public abstract class Unit : MonoBehaviour, ITarget
     {

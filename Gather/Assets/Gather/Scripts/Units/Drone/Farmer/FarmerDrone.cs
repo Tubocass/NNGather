@@ -1,7 +1,9 @@
+using Gather.AI;
 using UnityEngine;
 
 namespace gather
 {
+    [RequireComponent(typeof(FarmerFSM_Controller))]
     public class FarmerDrone : Drone
     {
         FoodPellet carriedFood;

@@ -2,17 +2,26 @@ using UnityEngine;
 
 namespace gather
 {
+    [RequireComponent(typeof(PooledObject))]
     public abstract class Drone : Unit
     {
         protected Queen myQueen;
         protected Transform queensTransform;
         public bool hasTarget;
         public float orbitRadius = 40;
+        PooledObject po;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            po = GetComponent<PooledObject>();
+        }
 
         public override void Death()
         {
             myQueen = null;
             queensTransform = null;
+            po.ReleaseToPool();
             base.Death();
         }
 
