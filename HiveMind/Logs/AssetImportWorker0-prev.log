@@ -1,0 +1,375 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.48f1 (b805b124c6b7) revision 12060081'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'en' Physical Memory: 32693 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+D:\Programs\Unity\Editor\2020.3.48f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/Projects/Unity/OldGather/HiveMind
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+60897
+Successfully changed project path to: D:/Projects/Unity/OldGather/HiveMind
+D:/Projects/Unity/OldGather/HiveMind
+Using Asset Import Pipeline V2.
+Player connection [26756] Host "[IP] 192.168.0.2 [Port] 2953007520 [Flags] 2 [Guid] 945953864 [EditorId] 945953864 [Version] 1048832 [Id] WindowsEditor(7,Tubocass-PC) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [26756] Host "[IP] 192.168.0.2 [Port] 2953007520 [Flags] 2 [Guid] 945953864 [EditorId] 945953864 [Version] 1048832 [Id] WindowsEditor(7,Tubocass-PC) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 35.93 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.48f1 (b805b124c6b7)
+[Subsystems] Discovering subsystems at path D:/Programs/Unity/Editor/2020.3.48f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Projects/Unity/OldGather/HiveMind/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: AMD Radeon RX 6600 XT (ID=0x73ff)
+    Vendor:   
+    VRAM:     8147 MB
+    Driver:   31.0.23013.1023
+Initialize mono
+Mono path[0] = 'D:/Programs/Unity/Editor/2020.3.48f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Programs/Unity/Editor/2020.3.48f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/Programs/Unity/Editor/2020.3.48f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56744
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Programs/Unity/Editor/2020.3.48f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.000739 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 30.24 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.377 seconds
+Domain Reload Profiling:
+	ReloadAssembly (377ms)
+		BeginReloadAssembly (42ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (290ms)
+			LoadAssemblies (41ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (89ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (18ms)
+			SetupLoadedEditorAssemblies (119ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (30ms)
+				BeforeProcessingInitializeOnLoad (11ms)
+				ProcessInitializeOnLoadAttributes (57ms)
+				ProcessInitializeOnLoadMethodAttributes (18ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.003861 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.582 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1582ms)
+		BeginReloadAssembly (94ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (15ms)
+		EndReloadAssembly (1452ms)
+			LoadAssemblies (69ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (180ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (29ms)
+			SetupLoadedEditorAssemblies (1132ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (62ms)
+				ProcessInitializeOnLoadAttributes (1018ms)
+				ProcessInitializeOnLoadMethodAttributes (46ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (1ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.66 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2361 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 96.8 MB.
+System memory in use after: 97.0 MB.
+
+Unloading 57 unused Assets to reduce memory usage. Loaded Objects now: 2802.
+Total: 5.058900 ms (FindLiveObjects: 0.160400 ms CreateObjectMapping: 0.066900 ms MarkObjects: 4.744200 ms  DeleteObjects: 0.086900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/ProGenPit.prefab
+  artifactKey: Guid(27264c9c997886c459a57856f7ef3212) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/ProGenPit.prefab using Guid(27264c9c997886c459a57856f7ef3212) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23d600f1e39b06cf77943238d5aed642') in 0.088773 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.221703 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Farmer_Bunshin.prefab
+  artifactKey: Guid(38874f94a5036b149bb132d1e32efe26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Farmer_Bunshin.prefab using Guid(38874f94a5036b149bb132d1e32efe26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63b9ece37084c68a3294da424d9809a1') in 0.010152 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.814077 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Fighter.prefab
+  artifactKey: Guid(f81dcbfdbd90bdc44a9183efb0744711) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Fighter.prefab using Guid(f81dcbfdbd90bdc44a9183efb0744711) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8ce3f962c70ca1153781182e5b8edb6') in 0.050555 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.498567 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Farmer.prefab
+  artifactKey: Guid(a24b8488c325cd244afc2524b0a3f30c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Farmer.prefab using Guid(a24b8488c325cd244afc2524b0a3f30c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3e6b1329a883df676cddd340daa4d55') in 0.008222 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.432962 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/pbCone.prefab
+  artifactKey: Guid(6a5dfd1aa69a53c48bbfbdaacb9fab4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/pbCone.prefab using Guid(6a5dfd1aa69a53c48bbfbdaacb9fab4c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e638a29c243c236e5c7b96b4b5e94f92') in 0.008094 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.035511 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/pbTorus.prefab
+  artifactKey: Guid(c908613d27a092b44a3e8d59b6198910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/pbTorus.prefab using Guid(c908613d27a092b44a3e8d59b6198910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f3f902a5f847c85e2305b1df14001d56') in 0.008488 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.357154 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Sarlac.prefab
+  artifactKey: Guid(b9a86b5f165d1a44181b8d14c8cf2fb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Sarlac.prefab using Guid(b9a86b5f165d1a44181b8d14c8cf2fb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2ce19b141ea9bc8b32469cbce5dc137') in 0.098299 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.742741 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/SpriteBased_Farmer.prefab
+  artifactKey: Guid(3436c8acdecfa5344a267ddd175855f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/SpriteBased_Farmer.prefab using Guid(3436c8acdecfa5344a267ddd175855f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f9f6f9071156ff8077d11d243e8943f') in 0.153990 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.040077 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Orange Food.prefab
+  artifactKey: Guid(fe5df7c55ba25f64b9a88ccf2eb092ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Orange Food.prefab using Guid(fe5df7c55ba25f64b9a88ccf2eb092ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '573fad7db8c34feb0a3d6759608bce63') in 0.042146 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.040640 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Obstacle.prefab
+  artifactKey: Guid(9dd2fa9eb7919e44786f4db6b87208ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Obstacle.prefab using Guid(9dd2fa9eb7919e44786f4db6b87208ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bddd1fd7081963b957eccf8bade0b619') in 0.009946 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.999655 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Night Plant.prefab
+  artifactKey: Guid(533dbfd9c336b454884f11fabcc91f03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Night Plant.prefab using Guid(533dbfd9c336b454884f11fabcc91f03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64feead739693e2c86f806b89ad72bf0') in 0.031722 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.128690 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Night Light.prefab
+  artifactKey: Guid(673ceef2accf46247bad2483dc3db096) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Night Light.prefab using Guid(673ceef2accf46247bad2483dc3db096) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e50d88e200f278741ec27c922fcdd873') in 0.007412 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.999097 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Ground.prefab
+  artifactKey: Guid(21dca7ad4c848ad4484740f86b153e2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Ground.prefab using Guid(21dca7ad4c848ad4484740f86b153e2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77367a14445114506b80f2e6e0d3b306') in 0.037626 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.692741 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/glowRock.prefab
+  artifactKey: Guid(72cb1434b17aff9438b8b1d57c9be8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/glowRock.prefab using Guid(72cb1434b17aff9438b8b1d57c9be8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee54f88f0db3a7f1125fb1c0fa5332ba') in 0.022000 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.314829 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Sarlac_Pit.prefab
+  artifactKey: Guid(567334ae69aef4f47967ccc7026c82d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Sarlac_Pit.prefab using Guid(567334ae69aef4f47967ccc7026c82d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b6148de0b0daa59519534cc79d20a70') in 0.017120 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.650502 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Environment/Scar.prefab
+  artifactKey: Guid(6e469645c74ff8c43b92aaa5ce9b8fa4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Environment/Scar.prefab using Guid(6e469645c74ff8c43b92aaa5ce9b8fa4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c27d1c64e099c54003fdc42059cb68b8') in 0.010043 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.307301 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Sprite_Farmer.prefab
+  artifactKey: Guid(37ff6f6b0847eb544987553944dc782e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Sprite_Farmer.prefab using Guid(37ff6f6b0847eb544987553944dc782e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57ccb8cda10d4ee6f0f11a35e7664083') in 0.009324 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.955654 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Team Panel.prefab
+  artifactKey: Guid(7a0937bf273e7c545be74a750cae2f79) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Team Panel.prefab using Guid(7a0937bf273e7c545be74a750cae2f79) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee4604e50ed48401060e24d08620c32b') in 0.022193 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.044074 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Sprite_Fighter.prefab
+  artifactKey: Guid(b6defba3350747746914eee9590a4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Sprite_Fighter.prefab using Guid(b6defba3350747746914eee9590a4776) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '47080bc92a4dbfba00a40fa6b5c83fa5') in 0.009938 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 26.795785 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Player/FarmFlag.prefab
+  artifactKey: Guid(140d08adc75776448b53eefb95caf11a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Player/FarmFlag.prefab using Guid(140d08adc75776448b53eefb95caf11a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a6cf15b1b89f91872fcd88d7f3cf0c6') in 0.009268 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.942710 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Farmer Button.png
+  artifactKey: Guid(5c3d2120ca2b60d43a06e4ea08380684) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Farmer Button.png using Guid(5c3d2120ca2b60d43a06e4ea08380684) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a904433ee4e58c91444c533753501f78') in 0.021950 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.695592 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Farm Flag.png
+  artifactKey: Guid(957b9d1263a864041b8bdffd2178123e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Farm Flag.png using Guid(957b9d1263a864041b8bdffd2178123e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4c48dae707b89ed54fd2acefb1f8c454') in 0.009607 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.280821 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Fighter_Sprite 1.png
+  artifactKey: Guid(31013ef01c733ec42a894c480e9423c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Fighter_Sprite 1.png using Guid(31013ef01c733ec42a894c480e9423c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3bd79e6ef990f479601953d57f5acd8b') in 0.009558 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.585004 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Trii.png
+  artifactKey: Guid(da3f5d8ac04852c4c94ea903d02b59c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Trii.png using Guid(da3f5d8ac04852c4c94ea903d02b59c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd9c78845b32ad694157b0ab490d62d3') in 0.009823 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.743510 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Tri.png
+  artifactKey: Guid(6fa0bd7fd63a21c45b5873daa3c035f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Tri.png using Guid(6fa0bd7fd63a21c45b5873daa3c035f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc99ea8ef5237d8f95028a0f1348cba8') in 0.009973 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.474681 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites
+  artifactKey: Guid(72f50a3b922fb6642b5375381d16ceb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites using Guid(72f50a3b922fb6642b5375381d16ceb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdfb1399481295b96c6c3aa4c509a2a5') in 0.006445 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.615712 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/GreyHead.png
+  artifactKey: Guid(6b46cf1cd2155eb48be47bf5edb8f7ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/GreyHead.png using Guid(6b46cf1cd2155eb48be47bf5edb8f7ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6715c80c1ec4ec2c600637c6d0349883') in 0.009579 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.981946 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Squiggle.png
+  artifactKey: Guid(5c9521d2f4cfd2b458aa77b9f57ba0df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Squiggle.png using Guid(5c9521d2f4cfd2b458aa77b9f57ba0df) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b4cc71f874ccae4b46a41c5a2d9da32') in 0.036417 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.290598 seconds.
+  path: Assets/HiveMind(aka Gather)/Sprites/Square.png
+  artifactKey: Guid(00187d98bc47469459081edd597d2d2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/Sprites/Square.png using Guid(00187d98bc47469459081edd597d2d2a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0d15bcfc82eb6db55a4313e07aeed44') in 0.009483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 22.502574 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/PitController.cs
+  artifactKey: Guid(3696994dd8cc44c45851245340b77eb2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/PitController.cs using Guid(3696994dd8cc44c45851245340b77eb2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae3b5dc241dc81f6ac0abf6918aca995') in 0.011053 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.267796 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/SarlacController.cs
+  artifactKey: Guid(9cacfc5655353384cbfd123b7e5eaee9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/SarlacController.cs using Guid(9cacfc5655353384cbfd123b7e5eaee9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f228cd149fabfd83303990d2a14b957') in 0.006596 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.612420 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/SyncListVector3.cs
+  artifactKey: Guid(12e3d34fa568e334286f61c9a81774d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/SyncListVector3.cs using Guid(12e3d34fa568e334286f61c9a81774d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6da77495478f3d5d2780ac9aaeafb9b5') in 0.006625 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.440215 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/Unit_Base.cs
+  artifactKey: Guid(41676ba9c6ddf6546aaacde03634a168) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/Unit_Base.cs using Guid(41676ba9c6ddf6546aaacde03634a168) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b981994b0708152870cb58e160398c92') in 0.006511 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.281073 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/ClickToMove.cs
+  artifactKey: Guid(a5d95aa074701c64e84ab0aac54e0071) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/ClickToMove.cs using Guid(a5d95aa074701c64e84ab0aac54e0071) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '144adfe626945e02b55c6218ebd68e24') in 0.006387 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.064727 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/CameraFollow.cs
+  artifactKey: Guid(91f66fb8d73e8ce4b8f594831fb5a4bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/CameraFollow.cs using Guid(91f66fb8d73e8ce4b8f594831fb5a4bb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a83307afaa1818a4337ffb9cd5d9938') in 0.006329 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.548634 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/IAttachable.cs
+  artifactKey: Guid(f2b84accd18a2bc428d92dc5981a51eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/IAttachable.cs using Guid(f2b84accd18a2bc428d92dc5981a51eb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd9ade4a3d4b015abe0c5b41a4d26658') in 0.006504 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.176776 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts
+  artifactKey: Guid(8c3928bd75a475f4c8d2ba5d021a7f8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts using Guid(8c3928bd75a475f4c8d2ba5d021a7f8f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a340ad946a66df4b4e2337b46b4bef51') in 0.006441 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.692815 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts/DumbFuckingScript.cs
+  artifactKey: Guid(65bce44c003982748a9711c81e06a6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts/DumbFuckingScript.cs using Guid(65bce44c003982748a9711c81e06a6fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e6e25b8399d4e4d91cd5a919bf4254d') in 0.006447 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.808883 seconds.
+  path: Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts/Interact.cs
+  artifactKey: Guid(0815826710ad2e94494d3b643b62a82a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Scripts/NetworkTestScripts/Interact.cs using Guid(0815826710ad2e94494d3b643b62a82a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66e36594efc549337ea750eac54dc180') in 0.006462 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.299745 seconds.
+  path: Assets/HiveMind(aka Gather)/_Prefabs/Units/Player/FightFlag.prefab
+  artifactKey: Guid(d1ed7c0ad912f5d4f9d7975363d5b150) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/HiveMind(aka Gather)/_Prefabs/Units/Player/FightFlag.prefab using Guid(d1ed7c0ad912f5d4f9d7975363d5b150) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c54515bd520417be44aad6dc1b2838df') in 0.009031 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
