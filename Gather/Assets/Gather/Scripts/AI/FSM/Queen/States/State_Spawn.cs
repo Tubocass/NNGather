@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using gather;
+using System.Collections;
 
 namespace Gather.AI
 {
@@ -10,6 +11,7 @@ namespace Gather.AI
         Counter farmerCounter;
         Counter fighterCounter;
         TeamConfig teamConfig;
+        float refractoryTime = 1f;
 
         public State_Spawn (Queen queen, Blackboard context)
         {
@@ -22,29 +24,40 @@ namespace Gather.AI
 
         public override void EnterState()
         {
-            
+            queen.StartCoroutine(Spawn());
         }
 
         public override void Update()
         {
-            float chance = Random.value;
-            if (chance >= 0.66)
+          
+        }
+
+        IEnumerator Spawn()
+        {
+            while (queen.isActiveAndEnabled)
             {
-                if (fighterCounter.Amount < spawnConfig.fighterCap)
+                float chance = Random.value;
+                if (chance >= 0.66)
                 {
-                    queen.SpawnFighter();
-                }
-            } else
-            {
-                if (farmerCounter.Amount < spawnConfig.farmerCap)
+                    if (fighterCounter.Amount < spawnConfig.fighterCap)
+                    {
+                        queen.SpawnFighter();
+                    }
+                } else
                 {
-                    queen.SpawnFarmer();
+                    if (farmerCounter.Amount < spawnConfig.farmerCap)
+                    {
+                        queen.SpawnFarmer();
+                    }
                 }
+                yield return new WaitForSeconds(refractoryTime);
             }
+
         }
 
         public override void ExitState()
         {
+            queen.StopCoroutine(Spawn());
         }
     }
 }

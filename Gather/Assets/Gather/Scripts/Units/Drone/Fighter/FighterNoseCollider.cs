@@ -15,10 +15,10 @@ namespace gather
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag(Tags.units)) {
-                Drone enemy = collision.GetComponent<Drone>();
+                Unit enemy = collision.GetComponent<Unit>();
                 if(enemy.GetTeam() != parentDrone.GetTeam())
                 {
-                    enemy.Death();
+                    parentDrone.Attack(enemy);
                 }
             }
         }
