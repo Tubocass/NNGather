@@ -1,22 +1,34 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace gather
 {
-    [CreateAssetMenu]
-    public class FoodCounter : Counter
+    public class FoodManager : MonoBehaviour
     {
         public int foodQueueSize = 10;
         public int foodReserve = 5;
         public int maxFood = 20;
+        public int startAmount = 10;
         Queue<Vector2> foodLocations;
-        public int FoodCount { get { return Amount; } }
+        Counter foodCounter;
 
-        protected override void OnEnable()
+        public int Amount { get { return foodCounter.Amount; } }
+
+        protected void OnEnable()
         {
+            foodCounter = ScriptableObject.CreateInstance<Counter>();
+            foodCounter.Amount = startAmount;
             foodLocations = new Queue<Vector2>(foodQueueSize);
-            defaultAmount = 20;
-            base.OnEnable();
+        }
+
+        public void AddAmount(int amount)
+        {
+            foodCounter.AddAmount(amount);
+        }
+
+        public bool CanAfford(int amount)
+        {
+            return Amount >= amount;
         }
 
         public bool IsFoodLow()
@@ -29,12 +41,17 @@ namespace gather
             return Amount >= maxFood;
         }
 
+        public Counter GetCounter()
+        {
+            return foodCounter;
+        }
+
         public float AverageDistanceFromFood(Vector2 location)
         {
-            if (foodLocations.Count == 0) 
-            { 
-                return 0f; 
-            }else return Vector2.Distance(location, FoodCenter());
+            if (foodLocations.Count == 0)
+            {
+                return 0f;
+            } else return Vector2.Distance(location, FoodCenter());
         }
 
         public Vector2 FoodCenter()
@@ -56,9 +73,9 @@ namespace gather
 
         public void Gather(Vector2 fromLocation)
         {
-            if(Amount < maxFood)
+            if (Amount < maxFood)
             {
-                AddAmount(1);
+                foodCounter.AddAmount(1);
             }
 
             if (!foodLocations.Contains(fromLocation))

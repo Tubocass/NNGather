@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 6439568929991540250}
   - component: {fileID: -2512082814871164442}
   - component: {fileID: -4307232343242536465}
+  - component: {fileID: 5257950058885918053}
   m_Layer: 6
   m_Name: Queen
   m_TagString: Queen
@@ -278,6 +279,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
+--- !u!114 &5257950058885918053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6439568929991540247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f527fc311db2b847aa539d873470dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodQueueSize: 10
+  foodReserve: 5
+  maxFood: 20
+  <FoodCount>k__BackingField: 0
 --- !u!1001 &1229950134457079345
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,12 +5,12 @@ namespace Gather.AI
     public class State_Feed : FSM_State
     {
         //int targetFoodCount = 10;
-        FoodCounter foodCounter;
+        FoodManager foodCounter;
 
         public State_Feed(Queen queen)
         {
 
-            foodCounter = queen.GetFoodCounter();
+            foodCounter = queen.GetComponent<FoodManager>();
         }
 
         public override void EnterState()

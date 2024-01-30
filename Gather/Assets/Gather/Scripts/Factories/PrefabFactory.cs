@@ -12,7 +12,6 @@ public abstract class PrefabFactory : MonoBehaviour
     {
         PooledObject po = PooledObject.Instantiate(prefab, location, Quaternion.identity);
         po.name = prefab.name + "_" + instanceId++;
-        Debug.Log(po.name);
         po.factoryPool = this;
         return po;
     }
@@ -37,6 +36,5 @@ public abstract class PrefabFactory : MonoBehaviour
     {
         //po.gameObject.SetActive(false);
         pool.Push(po);
-        Debug.Log(prefab.name + " pool: size " + pool.Count);
     }
 }

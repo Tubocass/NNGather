@@ -5,17 +5,17 @@ namespace Gather.AI
     public class ToStateMove : FSM_Transistion
     {
         private readonly Queen queen;
-        private readonly FoodCounter counter;
+        private readonly FoodManager foodCounter;
 
         public ToStateMove(Queen queen, FSM_State next) : base(queen, next)
         {
             this.queen = queen;
-            counter = queen.GetFoodCounter();
+            foodCounter = queen.GetComponent<FoodManager>();
         }
 
         public override bool IsValid()
         {
-            return counter.AverageDistanceFromFood(queen.Location()) > 20;
+            return foodCounter.AverageDistanceFromFood(queen.Location()) > 20;
         }
 
         public override void OnTransition()

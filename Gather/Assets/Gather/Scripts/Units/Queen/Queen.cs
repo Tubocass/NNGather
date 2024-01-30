@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace gather
 {
+    [RequireComponent(typeof(FoodManager))]
     public class Queen : Unit
     {
         public Anchor foodAnchor, fightAnchor;
         public DroneSpawnConfig spawnConfig;
         PrefabFactory farmerFactory, fighterFactory;
-        FoodCounter foodCounter;
+        //FoodCounter foodCounter;
+        FoodManager foodManager;
         Health health;
         InputManager inputManager;
         [SerializeField] float hungerTime;
@@ -17,7 +19,9 @@ namespace gather
         {
             base.Awake();
             health = GetComponent<Health>();
-            foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
+            foodManager = GetComponent<FoodManager>();
+
+            //foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
             fighterFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
                 .GetComponent<FighterFactory>();
             farmerFactory = GameObject.FindGameObjectWithTag(Tags.gameController)
@@ -51,33 +55,33 @@ namespace gather
 
         public void SpawnFarmer()
         {
-            if (foodCounter.Amount >= spawnConfig.farmerCost)
+            if (foodManager.Amount >= spawnConfig.farmerCost)
             {
                 FarmerDrone farmer = farmerFactory.Spawn(myTransform.position)
                     .GetComponent<FarmerDrone>();
                 farmer.SetQueen(this);
                 farmer.SetTeam(teamConfig);
 
-                foodCounter.AddAmount(-spawnConfig.farmerCost);
+                foodManager.AddAmount(-spawnConfig.farmerCost);
             }
         }
 
         public void SpawnFighter()
         {
-            if (foodCounter.Amount >= spawnConfig.fighterCost)
+            if (foodManager.Amount >= spawnConfig.fighterCost)
             {
                 FighterDrone fighter = fighterFactory.Spawn(myTransform.position)
                     .GetComponent<FighterDrone>();
                 fighter.SetTeam(teamConfig);
                 fighter.SetQueen(this);
 
-                foodCounter.AddAmount(-spawnConfig.fighterCost);
+                foodManager.AddAmount(-spawnConfig.fighterCost);
             }
         }
 
         public void Gather(Vector2 fromLocation)
         {
-            foodCounter.Gather(fromLocation);
+            foodManager.Gather(fromLocation);
         }
 
         IEnumerator Hunger()
@@ -86,9 +90,9 @@ namespace gather
             {
                 yield return new WaitForSeconds(hungerTime);
 
-                if (foodCounter.Amount > 0)
+                if (foodManager.Amount > 0)
                 {
-                    foodCounter.AddAmount(-1);
+                    foodManager.AddAmount(-1);
                     health.Heal(1);
                 }else
                 {
@@ -109,9 +113,9 @@ namespace gather
             fightAnchor.SetReadyToPlace();
         }
 
-        public FoodCounter GetFoodCounter() 
-        { 
-            return foodCounter; 
+        public Counter GetFoodCounter() 
+        {
+            return foodManager.GetCounter();
         }
     }
 }

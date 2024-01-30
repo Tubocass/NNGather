@@ -8,13 +8,13 @@ namespace Gather.AI
     {
         Queen queen;
         //Blackboard context;
-        FoodCounter foodCounter;
+        FoodManager foodCounter;
 
         public State_Move(Queen queen, Blackboard context)
         {
             this.queen = queen;
             //this.context = context;
-            foodCounter = queen.GetFoodCounter();
+            foodCounter = queen.GetComponent<FoodManager>();
         }
 
         public override void EnterState()
