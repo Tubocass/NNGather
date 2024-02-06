@@ -4,7 +4,7 @@ using Gather.AI;
 
 namespace gather
 {
-    public enum UnitType { Fighter, Farmer, Queen }
+    public enum UnitType { Fighter, Farmer, Queen, Sarlac }
 
     [RequireComponent(typeof(EnemyDetector))]
     [RequireComponent(typeof(PolyNavAgent))]
