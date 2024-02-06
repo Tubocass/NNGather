@@ -16,27 +16,19 @@ namespace gather
         TeamSelect[] teamSelections;
         CameraController cameraController;
         InputManager input;
+        TimeManager timeManager;
 
         private void Awake()
         {
             //DontDestroyOnLoad(gameObject);
             cameraController = Camera.main.GetComponent<CameraController>();
             input = GetComponent<InputManager>();
+            timeManager = GetComponent<TimeManager>();
         }
 
         private void Start()
         {
             StartGame();
-        }
-
-        public void FindTeamSelections()
-        {
-            int teams = PlayerPrefs.GetInt("teamCount");
-            teamSelections = new TeamSelect[teams];
-            for(int i = 0; i < teams; i++)
-            {
-                teamSelections[i] = JsonUtility.FromJson<TeamSelect>(PlayerPrefs.GetString("team"+i));
-            }
         }
 
         public void StartGame()
@@ -60,14 +52,14 @@ namespace gather
             uiController.SetupPopulationBar(teams.ToArray());
         }
 
-        TeamConfig NewTeam(TeamSelect selection)
+        public void FindTeamSelections()
         {
-            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
-            teamConfig.Team = selection.id;
-            teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
-            teams.Add(teamConfig);
-            
-            return teamConfig;
+            int teams = PlayerPrefs.GetInt("teamCount");
+            teamSelections = new TeamSelect[teams];
+            for (int i = 0; i < teams; i++)
+            {
+                teamSelections[i] = JsonUtility.FromJson<TeamSelect>(PlayerPrefs.GetString("team" + i));
+            }
         }
 
         void SetupPlayer(TeamSelect selection, Vector2 start)
@@ -90,6 +82,16 @@ namespace gather
             Queen bot = Instantiate(queenPrefab, start, Quaternion.identity)
                 .GetComponent<Queen>();
             bot.SetTeam(teamConfig);
+        }
+
+        TeamConfig NewTeam(TeamSelect selection)
+        {
+            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
+            teamConfig.Team = selection.id;
+            teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
+            teams.Add(teamConfig);
+
+            return teamConfig;
         }
     }
 }

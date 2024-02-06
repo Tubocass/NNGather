@@ -12,14 +12,14 @@ namespace gather
         [SerializeField] float timeOfDawn;
         [SerializeField] float timeOfDusk;
 
-        public UnityEvent Dawn;
-        public UnityEvent Dusk;
+        public UnityEvent OnDawn;
+        public UnityEvent OnDusk;
 
         private void Start()
         {
             lightTransform = sun.transform;
-            Dawn.AddListener(OnDawn);
-            Dusk.AddListener(OnDusk);
+            OnDawn.AddListener(AtDawn);
+            OnDusk.AddListener(AtDusk);
         }
 
         private void FixedUpdate()
@@ -31,21 +31,21 @@ namespace gather
                 timeOfDay = 0f;
             }else if (Mathf.Approximately(timeOfDay, timeOfDawn))
             {
-                Dawn?.Invoke();
+                OnDawn?.Invoke();
             }else if(Mathf.Approximately(timeOfDay, timeOfDusk))
             { 
-                Dusk?.Invoke(); 
+                OnDusk?.Invoke(); 
             }
         }
 
-        public void OnDusk()
-        {
-            Debug.Log("Dusk");
-        }
-        public void OnDawn()
+        public void AtDawn()
         {
             Debug.Log("Dawn");
         }
 
+        public void AtDusk()
+        {
+            Debug.Log("Dusk");
+        }
     }
 }

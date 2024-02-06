@@ -10,7 +10,7 @@ namespace gather
     //public delegate void UnitEvent(TeamConfig.UnitType unitType);
     //public delegate void TargetEvent(Unit target);
 
-    public static class Events
+    public static class EventTypes
     {
     }
 }
