@@ -230,10 +230,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 249785224}
-  lengthOfDay: 0
+  lengthOfDay: 2000
   timeOfDay: 0
   timeOfDawn: 0
-  timeOfDusk: 0
+  timeOfDusk: 1000
   OnDawn:
     m_PersistentCalls:
       m_Calls: []
@@ -829,6 +829,14 @@ PrefabInstance:
     - target: {fileID: 5992026407151584055, guid: 20714d4f58d496c479bb130f8593a43a, type: 3}
       propertyPath: m_Name
       value: Level_Setup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168314054567318845, guid: 20714d4f58d496c479bb130f8593a43a, type: 3}
+      propertyPath: foodBushMinDist
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168314054567318845, guid: 20714d4f58d496c479bb130f8593a43a, type: 3}
+      propertyPath: startLocationMinDist
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

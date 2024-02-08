@@ -224,7 +224,7 @@ MonoBehaviour:
   isAwake: 0
   isNight: 0
   hasTarget: 0
-  orbitRadius: 40
+  orbitRadius: 200
 --- !u!114 &-3966285217305872965
 MonoBehaviour:
   m_ObjectHideFlags: 0

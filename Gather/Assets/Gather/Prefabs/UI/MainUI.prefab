@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7daf7a0126501d7418c7d4e5178f8f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 0}
+  pauseMenu: {fileID: 7648497222598221234, guid: d2ca9bcc696a96b468bf930153b14851, type: 3}
   statsDisplay: {fileID: 8700141643713820397}
   populationBar: {fileID: 2377285055773728399}
 --- !u!114 &8700141643713820397
