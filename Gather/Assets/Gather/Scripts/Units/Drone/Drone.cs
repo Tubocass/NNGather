@@ -8,7 +8,7 @@ namespace gather
         protected Queen myQueen;
         protected Transform queensTransform;
         public bool hasTarget;
-        public float orbitRadius = 40;
+        [SerializeField] float orbitRadius = 40;
         PooledObject po;
 
         protected override void Awake()

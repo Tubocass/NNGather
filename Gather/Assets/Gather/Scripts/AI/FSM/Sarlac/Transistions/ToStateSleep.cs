@@ -13,7 +13,7 @@ namespace Gather.AI
 
         public override bool IsValid()
         {
-            return false;
+            return !sarlac.isNight && sarlac.IsAtHome();
         }
 
         public override void OnTransition()

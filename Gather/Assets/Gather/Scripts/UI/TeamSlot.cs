@@ -11,6 +11,12 @@ namespace gather
         public int id;
         public bool isPlayer;
         public int colorOption;
+        public TeamSelect(int id, bool isPlayer, int colorOption)
+        {
+            this.id = id;
+            this.isPlayer = isPlayer;
+            this.colorOption = colorOption;
+        }
     }
 
     public class TeamSlot : MonoBehaviour

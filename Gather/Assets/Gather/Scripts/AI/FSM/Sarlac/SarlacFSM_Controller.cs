@@ -12,13 +12,16 @@ namespace Gather.AI
             Blackboard bb = sarlac.GetBlackboard();
 
             State_Sleep sleepState = new State_Sleep();
-            State_Awake awakeState = new State_Awake();
+            State_Return returnHome = new State_Return(sarlac, sarlac.GetHome());
+            State_Awake awakeState = new State_Awake(sarlac, bb);
+            initialState = sleepState;
 
+            ToStateReturnHome toStateReturn = new ToStateReturnHome(sarlac, returnHome);
             ToStateAwake toStateAwake = new ToStateAwake(sarlac, awakeState);
             ToStateSleep toStateSleep = new ToStateSleep(sarlac, sleepState);
 
             sleepState.AddTransitions(toStateAwake);
-            awakeState.AddTransitions(toStateSleep);
+            awakeState.AddTransitions(toStateReturn, toStateSleep);
         }
     }
 }

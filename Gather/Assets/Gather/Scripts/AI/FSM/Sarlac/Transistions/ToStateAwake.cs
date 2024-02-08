@@ -12,7 +12,7 @@ namespace Gather.AI
 
         public override bool IsValid()
         {
-            return false;
+            return sarlac.isNight;
         }
 
         public override void OnTransition()

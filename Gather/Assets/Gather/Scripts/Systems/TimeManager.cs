@@ -29,7 +29,8 @@ namespace gather
             if (timeOfDay > lengthOfDay)
             {
                 timeOfDay = 0f;
-            }else if (Mathf.Approximately(timeOfDay, timeOfDawn))
+            } 
+            if (Mathf.Approximately(timeOfDay, timeOfDawn))
             {
                 Dawn?.Invoke();
             }else if(Mathf.Approximately(timeOfDay, timeOfDusk))

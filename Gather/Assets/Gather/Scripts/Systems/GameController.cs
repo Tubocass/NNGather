@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Gather.UI;
+using UnityEditor;
 
 namespace gather
 {
@@ -8,6 +9,7 @@ namespace gather
     {
         [SerializeField] GameObject queenPrefab;
         [SerializeField] GameObject playerPrefab;
+        [SerializeField] GameObject sarlacPrefab;
         [SerializeField] UIController uiController;
         [SerializeField] ColorOptions colorOptions;
         [SerializeField] LevelSetup levelSetup;
@@ -29,22 +31,14 @@ namespace gather
             StartGame();
         }
 
-        public void FindTeamSelections()
-        {
-            int teams = PlayerPrefs.GetInt("teamCount");
-            teamSelections = new TeamSelect[teams];
-            for(int i = 0; i < teams; i++)
-            {
-                teamSelections[i] = JsonUtility.FromJson<TeamSelect>(PlayerPrefs.GetString("team"+i));
-            }
-        }
-
         public void StartGame()
         {
             levelSetup.Generate();
             FindTeamSelections();
             teams = new List<TeamConfig>();
             uiController.gameObject.SetActive(true);
+
+            SetupSarlac();
 
             for (int t = 0; t < teamSelections.Length; t++)
             {
@@ -60,14 +54,28 @@ namespace gather
             uiController.SetupPopulationBar(teams.ToArray());
         }
 
-        TeamConfig NewTeam(TeamSelect selection)
+        public void FindTeamSelections()
         {
-            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
-            teamConfig.Team = selection.id;
-            teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
-            teams.Add(teamConfig);
+            int teams = PlayerPrefs.GetInt("teamCount");
+            teamSelections = new TeamSelect[teams];
+            for (int i = 0; i < teams; i++)
+            {
+                teamSelections[i] = JsonUtility.FromJson<TeamSelect>(PlayerPrefs.GetString("team" + i));
+            }
+        }
+
+        void SetupSarlac()
+        {
+            TeamSelect envTeam = new TeamSelect(-1, false, 0);
+            TeamConfig teamConfig = NewTeam(envTeam);
+            teams.Remove(teamConfig);
             
-            return teamConfig;
+            FoodSource[] bushes = FindObjectsByType<FoodSource>(FindObjectsSortMode.InstanceID);
+            int index = Random.Range(0, bushes.Length);
+
+            Sarlac sarlac = Instantiate(sarlacPrefab, bushes[index].transform.position, Quaternion.identity).GetComponent<Sarlac>();
+            sarlac.SetTeam(teamConfig);
+            sarlac.SetHome(bushes[index].transform);
         }
 
         void SetupPlayer(TeamSelect selection, Vector2 start)
@@ -90,6 +98,16 @@ namespace gather
             Queen bot = Instantiate(queenPrefab, start, Quaternion.identity)
                 .GetComponent<Queen>();
             bot.SetTeam(teamConfig);
+        }
+
+        TeamConfig NewTeam(TeamSelect selection)
+        {
+            TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
+            teamConfig.Team = selection.id;
+            teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
+            teams.Add(teamConfig);
+
+            return teamConfig;
         }
     }
 }

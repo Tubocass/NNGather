@@ -1,13 +1,17 @@
 using gather;
+using UnityEngine;
 
 namespace Gather.AI
 {
     public class State_Return : FSM_State
     {
-        Drone drone;
-        public State_Return(FarmerDrone drone, Blackboard context)
+        Unit unit;
+        Transform home;
+
+        public State_Return(Unit unit, Transform home)
         {
-            this.drone = drone;
+            this.unit = unit;
+            this.home = home;
         }
 
         public override void EnterState()
@@ -17,7 +21,7 @@ namespace Gather.AI
 
         public override void Update()
         {
-            drone.ReturnToQueen();
+            unit.SetDestination(home.position);
         }
 
         public override void ExitState()

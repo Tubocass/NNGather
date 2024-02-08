@@ -14,7 +14,7 @@ namespace Gather.AI
             State_Search searchState = new State_Search(drone, context);
             State_Engage engageState = new State_Engage(drone, context);
             State_Flee fleeState     = new State_Flee(drone, context);
-            State_Return returnState = new State_Return(drone, context);
+            State_Return returnState = new State_Return(drone, drone.GetMyQueen().transform);
             initialState = searchState;
 
             ToStateSearch toSearch = new(drone, searchState);

@@ -18,8 +18,8 @@ namespace Gather.UI
         {
             farmerDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Farmer));
             fighterDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Fighter));
-         
             foodDisplay.SetCounter(playerQueen.GetFoodCounter());
+
             spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);
             spawnFighter.onClick.AddListener(playerQueen.SpawnFighter);
             farmerAnchor.onClick.AddListener(playerQueen.PlaceFoodAnchor);
