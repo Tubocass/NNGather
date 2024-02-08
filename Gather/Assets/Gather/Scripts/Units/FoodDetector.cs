@@ -28,7 +28,7 @@ namespace gather
         public bool Detect()
         {
             TargetSystem.FindTargetsByCount<FoodPellet>(
-                config.searchAmount, config.searchTag, unitController.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foods
+                config.searchAmount, config.searchTag, unitController.CurrentLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foods
                 );
             return foods.Count > 0;
         }

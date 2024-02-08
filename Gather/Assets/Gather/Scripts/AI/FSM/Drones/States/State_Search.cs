@@ -36,9 +36,9 @@ namespace Gather.AI
         {
             if (foodDetector.Detect())
             {
-                target = TargetSystem.TargetNearest(drone.Location(), foodDetector.GetFoodList());
-                context.SetValue<ITarget>(Configs.Target, target);
-                drone.hasTarget = true;
+                target = TargetSystem.TargetNearest(drone.CurrentLocation(), foodDetector.GetFoodList());
+                context.SetValue<ITargetable>(Configs.Target, target);
+                drone.SetHasTarget(true);
             }
             else if (!drone.IsMoving || changePath)
             {

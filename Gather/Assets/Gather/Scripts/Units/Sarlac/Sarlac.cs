@@ -1,15 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 namespace gather
 {
     public class Sarlac : Unit
     {
-        public bool isAwake = false;
+        bool isAwake = false;
         public bool isNight = false;
-        public bool hasTarget;
         [SerializeField] float orbitRadius = 40;
+        [SerializeField] float refractoryTime = 1f;
         Transform homePit;
-        
+        bool canFire = true;
+
         void Start()
         {
             TimeManager timeManager = FindFirstObjectByType<TimeManager>();
@@ -17,21 +19,9 @@ namespace gather
             timeManager.OnDawn.AddListener(SunUp);
         }
 
-        void Update()
-        {
-        
-        }
-
-        public override void SetTeam(TeamConfig config)
-        {
-            this.teamConfig = config;
-            teamConfig.UpdateUnitCount(unitType, 1);
-            enemyDetector.SetTeam(teamConfig.Team);
-        }
-
         public bool IsAtHome()
         {
-            return Vector2.Distance(Location(), homePit.position) < float.Epsilon;
+            return Vector2.Distance(CurrentLocation(), homePit.position) < float.Epsilon;
         }
 
         public Transform GetHome()
@@ -61,6 +51,13 @@ namespace gather
             */
         }
 
+        public override void SetTeam(TeamConfig config)
+        {
+            this.teamConfig = config;
+            teamConfig.UpdateUnitCount(unitType, 1);
+            enemyDetector.SetTeam(teamConfig.Team);
+        }
+
         public void MoveRandomly(Vector2 center)
         {
             Vector2 direction = center + Random.insideUnitCircle * orbitRadius;
@@ -72,9 +69,23 @@ namespace gather
             return homePit.position;
         }
 
-        public virtual void ReturnToQueen()
+        public void Attack(Unit other)
         {
-            SetDestination(homePit.position);
+            if (!canFire)
+                return;
+
+            other.Death(); // Change to TakeDamage(value)
+            canFire = false;
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(RefractoryPeriod());
+            }
+        }
+
+        IEnumerator RefractoryPeriod()
+        {
+            yield return new WaitForSeconds(refractoryTime);
+            canFire = true;
         }
     }
 }

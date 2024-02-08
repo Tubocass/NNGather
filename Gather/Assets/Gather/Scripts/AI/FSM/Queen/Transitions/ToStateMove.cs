@@ -15,7 +15,7 @@ namespace Gather.AI
 
         public override bool IsValid()
         {
-            return foodCounter.AverageDistanceFromFood(queen.Location()) > 20;
+            return foodCounter.AverageDistanceFromFood(queen.CurrentLocation()) > 20;
         }
 
         public override void OnTransition()

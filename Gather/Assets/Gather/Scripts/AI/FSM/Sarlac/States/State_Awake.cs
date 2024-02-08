@@ -42,9 +42,9 @@ namespace Gather.AI
 
             if (enemies.Count > 0)
             {
-                target = TargetSystem.TargetNearest(sarlac.Location(), enemies);
-                context.SetValue<ITarget>(Configs.Target, target);
-                sarlac.hasTarget = true;
+                target = TargetSystem.TargetNearest(sarlac.CurrentLocation(), enemies);
+                context.SetValue<ITargetable>(Configs.Target, target);
+                sarlac.SetHasTarget(true);
             } else if (!sarlac.IsMoving || changePath)
             {
                 changePath = false;

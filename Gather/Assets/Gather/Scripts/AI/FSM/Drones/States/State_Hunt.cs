@@ -42,9 +42,9 @@ namespace Gather.AI
 
             if (enemies.Count > 0)
             {
-                target = TargetSystem.TargetNearest(drone.Location(), enemies);
-                context.SetValue<ITarget>(Configs.Target, target);
-                drone.hasTarget = true;
+                target = TargetSystem.TargetNearest(drone.CurrentLocation(), enemies);
+                context.SetValue<ITargetable>(Configs.Target, target);
+                drone.SetHasTarget(true);
             }
             else if(!drone.IsMoving || changePath)
             {

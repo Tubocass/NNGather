@@ -8,40 +8,40 @@ namespace Gather.AI
     public class State_Engage : FSM_State
     {
         Blackboard context;
-        Drone drone;
-        ITarget target;
+        Unit unit;
+        ITargetable target;
         bool changePath;
 
-        public State_Engage(Drone drone, Blackboard bb)
+        public State_Engage(Unit drone, Blackboard bb)
         {
-            this.drone = drone;
+            this.unit = drone;
             context = bb;
         }
 
         public override void EnterState()
         {
             changePath = true; //if moving when entering state
-            target = context.GetValue<ITarget>(Configs.Target);
+            target = context.GetValue<ITargetable>(Configs.Target);
         }
 
         public override void Update()
         {
-            if (target == null || !target.CanTarget(drone.GetTeam()))
+            if (target == null || !target.CanTarget(unit.GetTeam()))
             {
-                drone.hasTarget = false;
+                unit.SetHasTarget(false);
                 return;
             }
             
-            if(!drone.IsMoving || changePath)
+            if(!unit.IsMoving || changePath)
             {
-                drone.SetDestination(target.Location());
+                unit.SetDestination(target.CurrentLocation());
             }
         }
 
         public override void ExitState()
         {
             target = null;
-            drone.hasTarget = false;
+            unit.SetHasTarget(false);
         }
     }
 }

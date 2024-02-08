@@ -11,7 +11,7 @@ namespace gather
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
 
-    public abstract class Unit : MonoBehaviour, ITarget
+    public abstract class Unit : MonoBehaviour, ITargetable, ITargeter
     {
         [SerializeField] protected UnitType unitType;
         protected Blackboard context = new Blackboard();
@@ -23,6 +23,7 @@ namespace gather
         protected Transform myTransform;
         protected bool isMoving;
         private bool isEnemyDetected;
+        private bool hasTarget;
         // Animator
 
         protected virtual void Awake()
@@ -37,7 +38,7 @@ namespace gather
 
         public bool IsMoving { get => isMoving; }
 
-        public Vector2 Location()
+        public Vector2 CurrentLocation()
         {
             return myTransform.position;
         }
@@ -77,11 +78,6 @@ namespace gather
             navAgent.SetDestination(location, DestinationReached);
         }
 
-        public void SetDestination(Vector2 location, System.Action<bool> callback)
-        {
-            navAgent.SetDestination(location, callback);
-        }
-
         void DestinationReached(bool reached)
         {
             isMoving = !reached;
@@ -105,6 +101,16 @@ namespace gather
         public Blackboard GetBlackboard()
         {
             return context;
+        }
+
+        public bool HasTarget()
+        {
+            return hasTarget;
+        }
+
+        public void SetHasTarget(bool value)
+        {
+            hasTarget = value;
         }
     }
 }

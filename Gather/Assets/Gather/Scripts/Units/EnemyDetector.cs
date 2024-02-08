@@ -42,7 +42,7 @@ namespace gather
         public bool Detect()
         {
             TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, config.searchTag, unitController.Location(), config.searchDist, config.searchLayer, f => f.CanTarget(team) && ContainsUnitType(f.GetUnitType()), out enemies
+                config.searchAmount, config.searchTag, unitController.CurrentLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team) && ContainsUnitType(f.GetUnitType()), out enemies
                 );
             return enemies.Count > 0;
         }
