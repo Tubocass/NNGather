@@ -230,14 +230,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 249785224}
-  lengthOfDay: 100
+  lengthOfDay: 0
   timeOfDay: 0
-  timeOfDawn: 5
-  timeOfDusk: 10
-  Dawn:
+  timeOfDawn: 0
+  timeOfDusk: 0
+  OnDawn:
     m_PersistentCalls:
       m_Calls: []
-  Dusk:
+  OnDusk:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &714018315
