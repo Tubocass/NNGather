@@ -7,46 +7,46 @@ namespace gather
     {
         [SerializeField] Light sun;
         Transform lightTransform;
-        [SerializeField] float lengthOfDay;
-        [SerializeField] float timeOfDay;
-        [SerializeField] float timeOfDawn;
-        [SerializeField] float timeOfDusk;
+        [SerializeField] int lengthOfDay;
+        [SerializeField] int timeOfDay;
+        [SerializeField] int timeOfDawn;
+        [SerializeField] int timeOfDusk;
 
-        public UnityEvent Dawn;
-        public UnityEvent Dusk;
+        public UnityEvent OnDawn;
+        public UnityEvent OnDusk;
 
         private void Start()
         {
             lightTransform = sun.transform;
-            Dawn.AddListener(OnDawn);
-            Dusk.AddListener(OnDusk);
+            OnDawn.AddListener(AtDawn);
+            OnDusk.AddListener(AtDusk);
         }
 
         private void FixedUpdate()
         {
             lightTransform.Rotate(Vector3.right, 0.1f);
-            timeOfDay += Time.fixedDeltaTime;
+            timeOfDay++;
             if (timeOfDay > lengthOfDay)
             {
-                timeOfDay = 0f;
+                timeOfDay = 0;
             } 
-            if (Mathf.Approximately(timeOfDay, timeOfDawn))
+            if (timeOfDay == timeOfDawn)
             {
-                Dawn?.Invoke();
-            }else if(Mathf.Approximately(timeOfDay, timeOfDusk))
+                OnDawn?.Invoke();
+            }else if(timeOfDay == timeOfDusk)
             { 
-                Dusk?.Invoke(); 
+                OnDusk?.Invoke(); 
             }
         }
 
-        public void OnDusk()
-        {
-            Debug.Log("Dusk");
-        }
-        public void OnDawn()
+        public void AtDawn()
         {
             Debug.Log("Dawn");
         }
 
+        public void AtDusk()
+        {
+            Debug.Log("Dusk");
+        }
     }
 }

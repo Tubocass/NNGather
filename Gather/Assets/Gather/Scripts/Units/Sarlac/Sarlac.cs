@@ -13,8 +13,8 @@ namespace gather
         void Start()
         {
             TimeManager timeManager = FindFirstObjectByType<TimeManager>();
-            timeManager.Dusk.AddListener(SunDown);
-            timeManager.Dawn.AddListener(SunUp);
+            timeManager.OnDusk.AddListener(SunDown);
+            timeManager.OnDawn.AddListener(SunUp);
         }
 
         void Update()

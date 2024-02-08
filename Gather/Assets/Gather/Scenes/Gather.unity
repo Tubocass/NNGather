@@ -230,14 +230,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sun: {fileID: 249785224}
-  lengthOfDay: 100
+  lengthOfDay: 0
   timeOfDay: 0
   timeOfDawn: 0
-  timeOfDusk: 50
-  Dawn:
+  timeOfDusk: 0
+  OnDawn:
     m_PersistentCalls:
       m_Calls: []
-  Dusk:
+  OnDusk:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &714018315
@@ -1027,8 +1027,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2377285055100253947, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
