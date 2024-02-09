@@ -7,7 +7,7 @@ namespace Gather.AI
         protected override void Init()
         {
             FighterDrone drone = GetComponent<FighterDrone>();
-            Blackboard context = drone.GetBlackboard();
+            Blackboard context = drone.Blackboard;
 
             State_Hunt huntState = new State_Hunt(drone, context);
             State_Engage engageState = new State_Engage(drone, context);

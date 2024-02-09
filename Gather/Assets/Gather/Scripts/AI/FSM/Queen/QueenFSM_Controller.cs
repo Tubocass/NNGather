@@ -5,11 +5,13 @@ namespace Gather.AI
     public class QueenFSM_Controller : FSM_Controller
     {
         Queen queen;
+        EnemyDetector enemyDetector;
 
         protected override void Init()
         {
             queen = GetComponent<Queen>();
-            Blackboard context = queen.GetBlackboard();
+            enemyDetector = GetComponent<EnemyDetector>();
+            Blackboard context = queen.Blackboard;
 
             State_Move moveState = new State_Move(queen, context);
             State_Feed feedState = new State_Feed(queen);
@@ -30,7 +32,7 @@ namespace Gather.AI
 
         public override void Tick()
         {
-            queen.DetectEnemeies();
+            enemyDetector.Detect();
             base.Tick();
         }
     }

@@ -46,7 +46,7 @@ namespace gather
 
         public virtual Vector2 AnchorPoint()
         {
-            return myQueen.CurrentLocation();
+            return myQueen.GetLocation();
         }
     }
 }

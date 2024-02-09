@@ -1,16 +1,17 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace gather
 {
-    public class EnemyDetector : MonoBehaviour, IDetector
+    public class EnemyDetector : MonoBehaviour
     {
         [SerializeField] SearchConfig config;
         [SerializeField] UnitType[] enemyTypes;
         List<Unit> enemies = new List<Unit>();
         Unit unitController;
         int team;
+        bool detectedThing = false;
+        public bool DetectedThing => detectedThing;
 
         private void Awake()
         {
@@ -22,14 +23,17 @@ namespace gather
             this.team = team;
         }
 
-        public List<Unit> GetEnemiesList()
+        public void Detect()
         {
-            return enemies;
+            TargetSystem.FindTargetsByCount<Unit>(
+                config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team) && ContainsUnitType(f.UnitType), out enemies
+                );
+            detectedThing = enemies.Count > 0;
         }
 
         bool ContainsUnitType(UnitType type)
         {
-            for(int t = 0; t< enemyTypes.Length; t++)
+            for (int t = 0; t < enemyTypes.Length; t++)
             {
                 if (type == enemyTypes[t])
                 {
@@ -39,12 +43,9 @@ namespace gather
             return false;
         }
 
-        public bool Detect()
+        public List<Unit> GetEnemiesList()
         {
-            TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, config.searchTag, unitController.CurrentLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team) && ContainsUnitType(f.GetUnitType()), out enemies
-                );
-            return enemies.Count > 0;
+            return enemies;
         }
     }
 }

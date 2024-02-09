@@ -36,7 +36,7 @@ namespace gather
         }
         public override Vector2 AnchorPoint()
         {
-            return fightAnchor.IsActive() ? fightAnchor.GetLocation() : myQueen.CurrentLocation();
+            return fightAnchor.IsActive() ? fightAnchor.GetLocation() : myQueen.GetLocation();
         }
 
         public void Attack(Unit other)

@@ -34,7 +34,7 @@ namespace Gather.AI
             
             if(!unit.IsMoving || changePath)
             {
-                unit.SetDestination(target.CurrentLocation());
+                unit.SetDestination(target.GetLocation());
             }
         }
 

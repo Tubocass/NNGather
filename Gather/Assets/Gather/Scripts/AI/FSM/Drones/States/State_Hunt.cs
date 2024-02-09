@@ -38,11 +38,10 @@ namespace Gather.AI
         void Hunt()
         {
             enemyDetector.Detect();
-            enemies = enemyDetector.GetEnemiesList();
 
-            if (enemies.Count > 0)
+            if (enemyDetector.DetectedThing)
             {
-                target = TargetSystem.TargetNearest(drone.CurrentLocation(), enemies);
+                target = TargetSystem.TargetNearest(drone.GetLocation(), enemyDetector.GetEnemiesList());
                 context.SetValue<ITargetable>(Configs.Target, target);
                 drone.SetHasTarget(true);
             }

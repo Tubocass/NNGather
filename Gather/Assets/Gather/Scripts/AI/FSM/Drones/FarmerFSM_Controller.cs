@@ -5,11 +5,13 @@ namespace Gather.AI
     public class FarmerFSM_Controller : FSM_Controller
     {
         FarmerDrone drone;
+        EnemyDetector enemyDetector;
 
         protected override void Init()
         {
             drone = GetComponent<FarmerDrone>();
-            Blackboard context = drone.GetBlackboard();
+            enemyDetector = GetComponent<EnemyDetector>();
+            Blackboard context = drone.Blackboard;
 
             State_Search searchState = new State_Search(drone, context);
             State_Engage engageState = new State_Engage(drone, context);
@@ -30,7 +32,7 @@ namespace Gather.AI
 
         public override void Tick()
         {
-            drone.DetectEnemeies();
+            enemyDetector.Detect();
             base.Tick();
         }
     }

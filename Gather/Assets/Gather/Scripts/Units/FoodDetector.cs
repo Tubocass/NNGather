@@ -3,12 +3,14 @@ using UnityEngine;
 
 namespace gather
 {
-    public class FoodDetector : MonoBehaviour, IDetector
+    public class FoodDetector : MonoBehaviour
     {
         [SerializeField] SearchConfig config;
         List<FoodPellet> foods = new List<FoodPellet>();
         Unit unitController;
         int team;
+        bool detectedSomething = false;
+        public bool DetectedSomething => detectedSomething;
 
         private void Awake()
         {
@@ -25,12 +27,12 @@ namespace gather
             return foods;
         }
 
-        public bool Detect()
+        public void Detect()
         {
             TargetSystem.FindTargetsByCount<FoodPellet>(
-                config.searchAmount, config.searchTag, unitController.CurrentLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foods
+                config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foods
                 );
-            return foods.Count > 0;
+            detectedSomething =  foods.Count > 0;
         }
     }
 }

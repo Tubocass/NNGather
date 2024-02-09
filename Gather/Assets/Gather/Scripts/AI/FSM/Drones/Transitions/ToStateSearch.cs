@@ -13,7 +13,7 @@ namespace Gather.AI
 
         public override bool IsValid()
         {
-            return !drone.GetEnemyDetected() && !drone.IsCarryingFood() && !drone.HasTarget();
+            return !drone.GetEnemyDetected() && !drone.IsCarryingFood() && !drone.HasTarget;
         }
 
         public override void OnTransition()

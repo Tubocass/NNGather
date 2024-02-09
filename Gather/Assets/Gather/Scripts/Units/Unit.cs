@@ -11,7 +11,7 @@ namespace gather
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
 
-    public abstract class Unit : MonoBehaviour, ITargetable, ITargeter
+    public abstract class Unit : MonoBehaviour, ITargetable
     {
         [SerializeField] protected UnitType unitType;
         protected Blackboard context = new Blackboard();
@@ -22,9 +22,13 @@ namespace gather
         protected TeamConfig teamConfig;
         protected Transform myTransform;
         protected bool isMoving;
-        private bool isEnemyDetected;
         private bool hasTarget;
         // Animator
+
+        public bool IsMoving { get => isMoving; }
+        public UnitType UnitType => unitType;
+        public bool HasTarget => hasTarget;
+        public Blackboard Blackboard => context;
 
         protected virtual void Awake()
         {
@@ -36,9 +40,7 @@ namespace gather
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
-        public bool IsMoving { get => isMoving; }
-
-        public Vector2 CurrentLocation()
+        public Vector2 GetLocation()
         {
             return myTransform.position;
         }
@@ -75,37 +77,12 @@ namespace gather
         public void SetDestination(Vector2 location)
         {
             isMoving = true;
-            navAgent.SetDestination(location, DestinationReached);
-        }
-
-        void DestinationReached(bool reached)
-        {
-            isMoving = !reached;
-        }
-
-        public void DetectEnemeies()
-        {
-            isEnemyDetected = enemyDetector.Detect();
+            navAgent.SetDestination(location, (reached) => isMoving = !reached);
         }
 
         public bool GetEnemyDetected()
         {
-            return isEnemyDetected;
-        }
-
-        public UnitType GetUnitType()
-        {
-            return unitType;
-        }
-
-        public Blackboard GetBlackboard()
-        {
-            return context;
-        }
-
-        public bool HasTarget()
-        {
-            return hasTarget;
+            return enemyDetector.DetectedThing;
         }
 
         public void SetHasTarget(bool value)

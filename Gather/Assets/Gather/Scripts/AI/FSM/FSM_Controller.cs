@@ -4,11 +4,9 @@ namespace Gather.AI
 {
     public abstract class FSM_Controller : MonoBehaviour
     {
-        private FSM_State activeState;
         protected FSM_State initialState;
-        [SerializeField] private float updateTime = 0.125f;
-        private float timer;
-        private bool isEnabled;
+        private FSM_State activeState;
+        private bool isEnabled = false;
 
         public FSM_State ActiveState
         {
@@ -24,31 +22,22 @@ namespace Gather.AI
             }
         }
 
-        protected virtual void Init()
-        {
-
-        }
-
-        public void Enable()
-        {
-            Init();
-            ActiveState = initialState;
-            Tick();
-        }
-
         public void Update()
         {
             if(!isEnabled)
             {
-                Enable();
+                Init();
+                ActiveState = initialState;
                 isEnabled = true;
             }
-            timer += Time.deltaTime;
-            if (timer >= updateTime)
-            {
-                timer = 0;
-                Tick();
-            }
+            
+            Tick();
+            
+        }
+
+        protected virtual void Init()
+        {
+
         }
 
         public virtual void Tick()

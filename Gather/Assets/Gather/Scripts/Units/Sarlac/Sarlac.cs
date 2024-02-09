@@ -21,7 +21,7 @@ namespace gather
 
         public bool IsAtHome()
         {
-            return Vector2.Distance(CurrentLocation(), homePit.position) < float.Epsilon;
+            return Vector2.Distance(GetLocation(), homePit.position) < float.Epsilon;
         }
 
         public Transform GetHome()

@@ -9,7 +9,7 @@ namespace Gather.AI
         protected override void Init()
         {
             sarlac = GetComponent<Sarlac>();
-            Blackboard bb = sarlac.GetBlackboard();
+            Blackboard bb = sarlac.Blackboard;
 
             State_Sleep sleepState = new State_Sleep();
             State_Return returnHome = new State_Return(sarlac, sarlac.GetHome());

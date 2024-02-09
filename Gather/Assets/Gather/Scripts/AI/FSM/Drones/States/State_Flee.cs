@@ -26,7 +26,7 @@ namespace Gather.AI
 
             if (enemies.Count > 0)
             {
-                unit.SetDestination(unit.CurrentLocation() + (unit.CurrentLocation() - DangerZone(enemies)));
+                unit.SetDestination(unit.GetLocation() + (unit.GetLocation() - DangerZone(enemies)));
             }
         }
 
@@ -36,10 +36,10 @@ namespace Gather.AI
 
         private Vector2 DangerZone(List<Unit> enemies)
         {
-            Vector2 dangerZone = enemies[0].CurrentLocation();
+            Vector2 dangerZone = enemies[0].GetLocation();
             for (int e = 1; e < enemies.Count; e++)
             {
-                dangerZone += enemies[e].CurrentLocation();
+                dangerZone += enemies[e].GetLocation();
             }
             dangerZone /= enemies.Count;
             return dangerZone;

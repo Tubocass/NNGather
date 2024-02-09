@@ -44,7 +44,7 @@ namespace gather
 
         public override Vector2 AnchorPoint()
         {
-            return foodAnchor.IsActive()? foodAnchor.GetLocation() : CurrentLocation();
+            return foodAnchor.IsActive()? foodAnchor.GetLocation() : GetLocation();
         }
 
         public void PickupFood(FoodPellet pellet)
@@ -52,7 +52,7 @@ namespace gather
             // called by collider on child transform
             HaltNavigation();
             carriedFood = pellet;
-            foodLocation = carriedFood.CurrentLocation();
+            foodLocation = carriedFood.GetLocation();
             SetHasTarget(false);
             fsmController.Tick();
         }

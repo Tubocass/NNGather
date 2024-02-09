@@ -22,7 +22,7 @@ namespace gather
             myCollider.enabled = true;
         }
 
-        public Vector2 CurrentLocation()
+        public Vector2 GetLocation()
         {
             return myTransform.position;
         }

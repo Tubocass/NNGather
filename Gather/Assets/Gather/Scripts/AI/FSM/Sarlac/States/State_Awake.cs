@@ -5,7 +5,6 @@ namespace Gather.AI
 {
     public class State_Awake : FSM_State
     {
-        List<Unit> enemies = new List<Unit>();
         Sarlac sarlac;
         Unit target;
         Blackboard context;
@@ -32,17 +31,15 @@ namespace Gather.AI
         public override void ExitState()
         {
             target = null;
-            enemies.Clear();
         }
 
         void Hunt()
         {
             enemyDetector.Detect();
-            enemies = enemyDetector.GetEnemiesList();
 
-            if (enemies.Count > 0)
+            if (enemyDetector.DetectedThing)
             {
-                target = TargetSystem.TargetNearest(sarlac.CurrentLocation(), enemies);
+                target = TargetSystem.TargetNearest(sarlac.GetLocation(), enemyDetector.GetEnemiesList());
                 context.SetValue<ITargetable>(Configs.Target, target);
                 sarlac.SetHasTarget(true);
             } else if (!sarlac.IsMoving || changePath)
