@@ -1,4 +1,4 @@
-using Gather.AI;
+using Gather.AI.FSM.Controllers;
 using System.Collections;
 using UnityEngine;
 

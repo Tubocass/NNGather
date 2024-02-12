@@ -1,6 +1,7 @@
 using UnityEngine;
 using PolyNav;
 using Gather.AI;
+using Gather.AI.FSM.Controllers;
 
 namespace gather
 {
