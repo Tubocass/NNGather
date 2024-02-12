@@ -3,12 +3,12 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateFeed : FSM_Transistion
+    public class ToStateMove : FSM_Transition
     {
         private readonly Queen queen;
         private readonly FoodManager foodCounter;
 
-        public ToStateFeed(Queen queen, FSM_State next) : base(queen, next)
+        public ToStateMove(Queen queen, FSM_State next) : base(queen, next)
         {
             this.queen = queen;
             foodCounter = queen.GetComponent<FoodManager>();
@@ -16,9 +16,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !queen.GetEnemyDetected() 
-                && foodCounter.IsFoodLow() 
-                && !queen.IsMoving;
+            return foodCounter.AverageDistanceFromFood(queen.GetLocation()) > 20;
         }
 
         public override void OnTransition()

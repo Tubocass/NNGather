@@ -1,25 +1,25 @@
-using gather;
+﻿using gather;
 using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-
-    public class ToStateReturn : FSM_Transistion
+    public class ToStateSearch : FSM_Transition
     {
         private readonly FarmerDrone drone;
 
-        public ToStateReturn(FarmerDrone drone, FSM_State next): base(drone, next)
+        public ToStateSearch(FarmerDrone drone, FSM_State nextState): base(drone, nextState)
         {
             this.drone = drone;
         }
 
         public override bool IsValid()
         {
-            return drone.IsCarryingFood() && !drone.GetEnemyDetected();
+            return !drone.GetEnemyDetected() && !drone.IsCarryingFood() && !drone.HasTarget;
         }
 
         public override void OnTransition()
         {
+            //Debug.Log("Start search");
         }
     }
 }

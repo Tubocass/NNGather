@@ -3,18 +3,18 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateHunt : FSM_Transistion
+    public class ToStateEngage : FSM_Transition
     {
-        private readonly FighterDrone drone;
+        Unit drone;
 
-        public ToStateHunt(FighterDrone drone, FSM_State next): base(drone, next)
+        public ToStateEngage(Unit unit, FSM_State next): base(unit, next)
         {
-            this.drone = drone;
+            this.drone = unit;
         }
 
         public override bool IsValid()
         {
-            return !drone.HasTarget;
+            return drone.HasTarget;
         }
 
         public override void OnTransition()

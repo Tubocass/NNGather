@@ -44,7 +44,7 @@ namespace Gather.AI.FSM.Controllers
 
         public virtual void Tick()
         {
-            foreach (FSM_Transistion transistion in ActiveState.transistions)
+            foreach (FSM_Transition transistion in ActiveState.transistions)
             {
                 if (transistion.IsValid())
                 {

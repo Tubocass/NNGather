@@ -3,12 +3,12 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public abstract class FSM_Transistion
+    public abstract class FSM_Transition
     {
         protected FSM_State nextState;
         protected Unit unit;
 
-        public FSM_Transistion(Unit unit, FSM_State nextState)
+        public FSM_Transition(Unit unit, FSM_State nextState)
         {
             this.unit = unit;
             this.nextState = nextState;
