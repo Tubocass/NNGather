@@ -9,16 +9,13 @@ namespace gather
         public Anchor foodAnchor, fightAnchor;
         public DroneSpawnConfig spawnConfig;
         PrefabFactory farmerFactory, fighterFactory;
-        //FoodCounter foodCounter;
         FoodManager foodManager;
-        Health health;
         InputManager inputManager;
         [SerializeField] float hungerTime;
 
         protected override void Awake()
         {
             base.Awake();
-            health = GetComponent<Health>();
             foodManager = GetComponent<FoodManager>();
 
             //foodCounter = ScriptableObject.CreateInstance<FoodCounter>();

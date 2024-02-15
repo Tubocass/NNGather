@@ -81,6 +81,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf10686fdccebe4e8933489e44ef014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  refractoryTime: 1
+  damage: 1
 --- !u!1 &7243180418547161779
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +99,8 @@ GameObject:
   - component: {fileID: 1911748694194938962}
   - component: {fileID: 6406449497803425}
   - component: {fileID: -2744418671351714179}
+  - component: {fileID: 7177346482616597789}
+  - component: {fileID: 5207346990499799535}
   m_Layer: 6
   m_Name: Fighter_Drone
   m_TagString: Unit
@@ -279,7 +283,7 @@ MonoBehaviour:
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 1
   rotateSpeed: 350
-  centerOffset: {x: 0, y: 0}
+  centerOffset: {x: 0, y: 0.8}
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1
@@ -297,7 +301,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 0
-  hasTarget: 0
   orbitRadius: 40
 --- !u!114 &6406449497803425
 MonoBehaviour:
@@ -325,4 +328,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274f6263f03a7b840a8b3a62fc3020f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateTime: 0.125
+--- !u!114 &7177346482616597789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243180418547161779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe1ee22d57126244b615a96292b9339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factoryPool: {fileID: 0}
+--- !u!114 &5207346990499799535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243180418547161779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f6cd1244e01894cb754683b91ce313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 2

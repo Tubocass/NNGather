@@ -13,7 +13,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return sarlac.isNight;
+            return sarlac.isNight && !sarlac.HasTarget;
         }
 
         public override void OnTransition()

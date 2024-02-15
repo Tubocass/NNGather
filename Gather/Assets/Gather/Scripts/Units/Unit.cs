@@ -11,6 +11,7 @@ namespace gather
     [RequireComponent(typeof(PolyNavAgent))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Health))]
 
     public abstract class Unit : MonoBehaviour, ITargetable
     {
@@ -22,6 +23,7 @@ namespace gather
         protected SpriteRenderer spriteRenderer;
         protected TeamConfig teamConfig;
         protected Transform myTransform;
+        protected Health health;
         protected bool isMoving;
         private bool hasTarget;
         // Animator
@@ -38,6 +40,7 @@ namespace gather
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
             fsmController = GetComponent<FSM_Controller>();
+            health = GetComponent<Health>();
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
@@ -89,6 +92,11 @@ namespace gather
         public void SetHasTarget(bool value)
         {
             hasTarget = value;
+        }
+
+        public void TakeDamage(int amount)
+        {
+            health.TakeDamage(amount);
         }
     }
 }

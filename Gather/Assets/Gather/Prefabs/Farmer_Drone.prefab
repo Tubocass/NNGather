@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: -7060340031324956497}
   - component: {fileID: 3204129293427662293}
   - component: {fileID: -8413646628851874217}
+  - component: {fileID: 1021885007699315690}
+  - component: {fileID: 7613276771942063400}
   m_Layer: 6
   m_Name: Farmer_Drone
   m_TagString: Unit
@@ -385,7 +387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 1
-  hasTarget: 0
   orbitRadius: 40
 --- !u!114 &-7060340031324956497
 MonoBehaviour:
@@ -426,4 +427,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1666863b270a42d48b4d2bdfd1d54af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateTime: 0.125
+--- !u!114 &1021885007699315690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829006796857892509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe1ee22d57126244b615a96292b9339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factoryPool: {fileID: 0}
+--- !u!114 &7613276771942063400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829006796857892509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f6cd1244e01894cb754683b91ce313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 1

@@ -8,9 +8,7 @@ namespace gather
         bool isAwake = false;
         public bool isNight = false;
         [SerializeField] float orbitRadius = 40;
-        [SerializeField] float refractoryTime = 1f;
         Transform homePit;
-        bool canFire = true;
 
         void Start()
         {
@@ -21,7 +19,7 @@ namespace gather
 
         public bool IsAtHome()
         {
-            return Vector2.Distance(GetLocation(), homePit.position) < float.Epsilon;
+            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
         }
 
         public Transform GetHome()
@@ -67,25 +65,6 @@ namespace gather
         public virtual Vector2 AnchorPoint()
         {
             return homePit.position;
-        }
-
-        public void Attack(Unit other)
-        {
-            if (!canFire)
-                return;
-
-            other.Death(); // Change to TakeDamage(value)
-            canFire = false;
-            if (gameObject.activeSelf)
-            {
-                StartCoroutine(RefractoryPeriod());
-            }
-        }
-
-        IEnumerator RefractoryPeriod()
-        {
-            yield return new WaitForSeconds(refractoryTime);
-            canFire = true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using gather;
+﻿using Assets.Gather.Scripts.AI.FSM.Transitions;
+using gather;
 using Gather.AI.FSM.States;
 using Gather.AI.FSM.Transitions;
 
@@ -14,7 +15,7 @@ namespace Gather.AI.FSM.Controllers
             Blackboard bb = sarlac.Blackboard;
 
             State_Sleep sleepState = new State_Sleep();
-            State_Return returnHome = new State_Return(sarlac, sarlac.GetHome());
+            State_Return_Sarlac returnHome = new State_Return_Sarlac(sarlac, sarlac.GetHome());
             State_Awake awakeState = new State_Awake(sarlac, bb);
             State_Engage engageState = new State_Engage(sarlac, bb);
             initialState = sleepState;
@@ -22,10 +23,12 @@ namespace Gather.AI.FSM.Controllers
             ToStateReturnHome toStateReturn = new ToStateReturnHome(sarlac, returnHome);
             ToStateAwake toStateAwake = new ToStateAwake(sarlac, awakeState);
             ToStateSleep toStateSleep = new ToStateSleep(sarlac, sleepState);
-            ToStateEngage toStateEngage = new ToStateEngage(sarlac, engageState);
+            ToStateEngage_Sarlac toStateEngage = new ToStateEngage_Sarlac(sarlac, engageState);
 
             sleepState.AddTransitions(toStateAwake);
             awakeState.AddTransitions(toStateReturn, toStateSleep, toStateEngage);
+            engageState.AddTransitions(toStateReturn, toStateAwake);
+            returnHome.AddTransitions(toStateSleep, toStateAwake);
         }
     }
 }

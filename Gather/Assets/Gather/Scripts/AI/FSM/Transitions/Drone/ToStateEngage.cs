@@ -5,7 +5,7 @@ namespace Gather.AI.FSM.Transitions
 {
     public class ToStateEngage : FSM_Transition
     {
-        Unit drone;
+        protected Unit drone;
 
         public ToStateEngage(Unit unit, FSM_State next): base(unit, next)
         {

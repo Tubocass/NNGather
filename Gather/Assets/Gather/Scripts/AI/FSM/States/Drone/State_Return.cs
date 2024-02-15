@@ -16,7 +16,6 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-
         }
 
         public override void Update()
@@ -26,7 +25,6 @@ namespace Gather.AI.FSM.States
 
         public override void ExitState()
         {
-
         }
     }
 }
