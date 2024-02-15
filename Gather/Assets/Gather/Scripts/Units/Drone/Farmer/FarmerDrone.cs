@@ -1,4 +1,4 @@
-using Gather.AI;
+using Gather.AI.FSM.Controllers;
 using UnityEngine;
 
 namespace gather
@@ -44,7 +44,7 @@ namespace gather
 
         public override Vector2 AnchorPoint()
         {
-            return foodAnchor.IsActive()? foodAnchor.GetLocation() : Location();
+            return foodAnchor.IsActive()? foodAnchor.GetLocation() : GetLocation();
         }
 
         public void PickupFood(FoodPellet pellet)
@@ -52,8 +52,8 @@ namespace gather
             // called by collider on child transform
             HaltNavigation();
             carriedFood = pellet;
-            foodLocation = carriedFood.Location();
-            hasTarget = false;
+            foodLocation = carriedFood.GetLocation();
+            SetHasTarget(false);
             fsmController.Tick();
         }
 

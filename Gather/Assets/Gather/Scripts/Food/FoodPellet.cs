@@ -3,7 +3,7 @@ using UnityEngine;
 namespace gather
 {
     [RequireComponent(typeof(PooledObject))]
-    public class FoodPellet : MonoBehaviour, ITarget
+    public class FoodPellet : MonoBehaviour, ITargetable
     {
         Collider2D myCollider;
         Transform myTransform;
@@ -22,7 +22,7 @@ namespace gather
             myCollider.enabled = true;
         }
 
-        public Vector2 Location()
+        public Vector2 GetLocation()
         {
             return myTransform.position;
         }

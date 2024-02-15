@@ -6,11 +6,11 @@ namespace gather
     {
         [SerializeField] GameObject FoodBushPrefab;
         [SerializeField] int numFoodBushes = 20;
-        [SerializeField] float foodBushMinimumDist;
+        [SerializeField] float foodBushMinDist;
         [SerializeField] Transform foodParent;
-        [Space]
-        [SerializeField] int numSpawnPoints = 8;
-        [SerializeField] float spawnPointMinimumDist;
+        [Space(5)]
+        [SerializeField] int numStartLocations = 8;
+        [SerializeField] float startLocationMinDist;
         Vector2[] startLocations;
         int startIndex;
         float xRange, yRange;
@@ -29,38 +29,13 @@ namespace gather
 
         public void Generate()
         {
-            GenerateSpawnPoints();
+            startLocations =  GenerateSpawnPoints(numStartLocations, startLocationMinDist);
             GenerateFood();
-        }
-
-        void GenerateSpawnPoints()
-        {
-            startLocations = new Vector2[numSpawnPoints];
-            Vector2 pos = Vector2.zero;
-            for (int i = 0; i < numSpawnPoints; i++)
-            {
-                do
-                {
-                    pos = RandomPoint();
-                } while (FailsMinimumDistanceCheck(pos, startLocations, spawnPointMinimumDist, i));
-
-                startLocations[i] = pos;
-            }
         }
 
         void GenerateFood()
         {
-            Vector2[] foodLocations = new Vector2[numFoodBushes];
-            Vector2 pos = Vector2.zero;
-            for (int i = 0; i < numFoodBushes; i++)
-            {
-                do
-                {
-                    pos = RandomPoint();
-                } while (FailsMinimumDistanceCheck(pos, foodLocations, foodBushMinimumDist, i));
-
-                foodLocations[i] = pos;
-            }
+            Vector2[] foodLocations = GenerateSpawnPoints(numFoodBushes, foodBushMinDist);
 
             for (int i = 0; i < numFoodBushes; i++)
             {
@@ -68,26 +43,36 @@ namespace gather
             }
         }
 
-        bool FailsMinimumDistanceCheck(Vector2 point, Vector2[] positions, float distance, int previousAmount)
+        Vector2[] GenerateSpawnPoints(int size, float minDist)
         {
-            if (previousAmount == 0)
+            Vector2[] sapwnPoints = new Vector2[size];
+            Vector2 pos;
+            for (int i = 0; i < size; i++)
+            {
+                do
+                {
+                    pos = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange));
+                } while (FailsMinimumDistanceCheck(pos, sapwnPoints, minDist));
+
+                sapwnPoints[i] = pos;
+            }
+            return sapwnPoints;
+        }
+
+        bool FailsMinimumDistanceCheck(Vector2 point, Vector2[] positions, float distance)
+        {
+            if (positions.Length == 0)
             {
                 return false;
             }
-            for (int p = 0; p < previousAmount; p++)
+            for (int p = 0; p < positions.Length; p++)
             {
-                if (Vector2.Distance(point, positions[p]) < distance)
+                if (Vector2.Distance(point, positions[p]) <= distance)
                 {
                     return true;
                 }
             }
             return false;
         }
-
-        Vector2 RandomPoint()
-        {
-            return new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange));
-        }
-
     }
 }

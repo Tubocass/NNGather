@@ -1,6 +1,7 @@
 using UnityEngine;
 using PolyNav;
 using Gather.AI;
+using Gather.AI.FSM.Controllers;
 
 namespace gather
 {
@@ -10,8 +11,9 @@ namespace gather
     [RequireComponent(typeof(PolyNavAgent))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Health))]
 
-    public abstract class Unit : MonoBehaviour, ITarget
+    public abstract class Unit : MonoBehaviour, ITargetable
     {
         [SerializeField] protected UnitType unitType;
         protected Blackboard context = new Blackboard();
@@ -21,9 +23,15 @@ namespace gather
         protected SpriteRenderer spriteRenderer;
         protected TeamConfig teamConfig;
         protected Transform myTransform;
+        protected Health health;
         protected bool isMoving;
-        private bool isEnemyDetected;
+        private bool hasTarget;
         // Animator
+
+        public bool IsMoving { get => isMoving; }
+        public UnitType UnitType => unitType;
+        public bool HasTarget => hasTarget;
+        public Blackboard Blackboard => context;
 
         protected virtual void Awake()
         {
@@ -32,12 +40,11 @@ namespace gather
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
             fsmController = GetComponent<FSM_Controller>();
+            health = GetComponent<Health>();
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
 
-        public bool IsMoving { get => isMoving; }
-
-        public Vector2 Location()
+        public Vector2 GetLocation()
         {
             return myTransform.position;
         }
@@ -74,37 +81,22 @@ namespace gather
         public void SetDestination(Vector2 location)
         {
             isMoving = true;
-            navAgent.SetDestination(location, DestinationReached);
-        }
-
-        public void SetDestination(Vector2 location, System.Action<bool> callback)
-        {
-            navAgent.SetDestination(location, callback);
-        }
-
-        void DestinationReached(bool reached)
-        {
-            isMoving = !reached;
-        }
-
-        public void DetectEnemeies()
-        {
-            isEnemyDetected = enemyDetector.Detect();
+            navAgent.SetDestination(location, (reached) => isMoving = !reached);
         }
 
         public bool GetEnemyDetected()
         {
-            return isEnemyDetected;
+            return enemyDetector.DetectedThing;
         }
 
-        public UnitType GetUnitType()
+        public void SetHasTarget(bool value)
         {
-            return unitType;
+            hasTarget = value;
         }
 
-        public Blackboard GetBlackboard()
+        public void TakeDamage(int amount)
         {
-            return context;
+            health.TakeDamage(amount);
         }
     }
 }

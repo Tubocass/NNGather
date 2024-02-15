@@ -79,10 +79,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodBushPrefab: {fileID: 485167984978687255, guid: e57cd9f6b9446cc408abc50f897416a2, type: 3}
   numFoodBushes: 20
-  foodBushMinimumDist: 50
+  foodBushMinDist: 50
   foodParent: {fileID: 3919581236296941915}
-  numSpawnPoints: 8
-  spawnPointMinimumDist: 75
+  numStartLocations: 8
+  startLocationMinDist: 100
 --- !u!61 &715601073375911782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ BoxCollider2D:
     oldSize: {x: 20.48, y: 20.48}
     newSize: {x: 20.48, y: 20.48}
     adaptiveTilingThreshold: 0.5
-    drawMode: 2
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 500, y: 500}
