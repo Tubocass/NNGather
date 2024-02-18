@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 485167984978687257}
   - component: {fileID: 485167984978687256}
   - component: {fileID: 485167984978687254}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Food_Bush
-  m_TagString: Queen
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1bc5d3e6d0068014b987f21c2ade3c3b, type: 3}
   m_Color: {r: 0.6981132, g: 0.20745817, b: 0.60898566, a: 1}
   m_FlipX: 0

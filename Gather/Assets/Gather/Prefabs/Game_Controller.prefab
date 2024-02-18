@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6077366049489854705}
   - component: {fileID: 6077366049489854706}
   - component: {fileID: 6077366049489854707}
-  - component: {fileID: 2221961920586092472}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: GameController
@@ -106,26 +105,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd8b53620bf91f43b72bda08a54b4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2221961920586092472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6077366050677378578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5fa1822ee4dd874f8cc1f6a40450a9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sun: {fileID: 0}
-  lengthOfDay: 2000
-  timeOfDay: 0
-  timeOfDawn: 0
-  timeOfDusk: 1000
-  OnDawn:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDusk:
-    m_PersistentCalls:
-      m_Calls: []

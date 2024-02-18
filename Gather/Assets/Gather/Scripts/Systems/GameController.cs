@@ -18,14 +18,12 @@ namespace gather
         TeamSelect[] teamSelections;
         CameraController cameraController;
         InputManager input;
-        TimeManager timeManager;
 
         private void Awake()
         {
             //DontDestroyOnLoad(gameObject);
             cameraController = Camera.main.GetComponent<CameraController>();
             input = GetComponent<InputManager>();
-            timeManager = GetComponent<TimeManager>();
         }
 
         private void Start()

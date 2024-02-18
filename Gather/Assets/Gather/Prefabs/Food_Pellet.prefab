@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8162709580829679346}
   - component: {fileID: 5357464015070101982}
   - component: {fileID: 3787910503481074854}
+  - component: {fileID: 7042199126414595761}
   m_Layer: 3
   m_Name: Food_Pellet
   m_TagString: Food
@@ -56,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 0.8962264, g: 0.74642044, b: 0.08877714, a: 1}
   m_FlipX: 0
@@ -136,3 +137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b931b635afea048a45d49c27665f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7042199126414595761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4323918726550116057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe1ee22d57126244b615a96292b9339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factoryPool: {fileID: 0}

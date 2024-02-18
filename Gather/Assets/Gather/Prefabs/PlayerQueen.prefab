@@ -63,7 +63,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   foodQueueSize: 10
   foodReserve: 5
   maxFood: 20
-  <FoodCount>k__BackingField: 0
+  startAmount: 10
 --- !u!1001 &4157595422945233066
 PrefabInstance:
   m_ObjectHideFlags: 0
