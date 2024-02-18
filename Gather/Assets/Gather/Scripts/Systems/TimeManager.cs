@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 namespace gather
 {
     public class TimeManager : MonoBehaviour
     {
-        [SerializeField] Light sun;
+        [SerializeField] Light2D sun;
         Transform lightTransform;
         [SerializeField] int lengthOfDay;
         [SerializeField] int timeOfDay;
