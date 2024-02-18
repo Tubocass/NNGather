@@ -6,38 +6,67 @@ namespace gather
 {
     public class TimeManager : MonoBehaviour
     {
+        [SerializeField] Transform lightTransform;
         [SerializeField] Light2D sun;
-        Transform lightTransform;
+        [SerializeField] Light2D moon;
+        [SerializeField] Light2D ambient;
+
+        [SerializeField] Gradient sunGradient;
+        [SerializeField] Gradient moonGradient;
+        [SerializeField] Gradient ambientGradient;
+
         [SerializeField] int lengthOfDay;
-        [SerializeField] int timeOfDay;
-        [SerializeField] int timeOfDawn;
-        [SerializeField] int timeOfDusk;
+        [SerializeField] float timeOfDay;
+        [SerializeField] float timeOfDawn;
+        [SerializeField] float timeOfDusk;
+
+        public float dayRatio => timeOfDay / lengthOfDay;
 
         public UnityEvent OnDawn;
         public UnityEvent OnDusk;
 
         private void Start()
         {
-            lightTransform = sun.transform;
+            lightTransform = transform;
             OnDawn.AddListener(AtDawn);
             OnDusk.AddListener(AtDusk);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            lightTransform.Rotate(Vector3.right, 0.1f);
-            timeOfDay++;
+            UpdateLight();
+            float previousRatio = dayRatio;
+            timeOfDay += Time.deltaTime;
             if (timeOfDay > lengthOfDay)
             {
-                timeOfDay = 0;
-            } 
-            if (timeOfDay == timeOfDawn)
+                timeOfDay -= lengthOfDay;
+            }
+
+            bool prev = IsInRange(previousRatio);
+            bool current = IsInRange(dayRatio);
+
+            if(prev && !current)
+            {
+                OnDusk?.Invoke();
+            }else if(!prev && current)
             {
                 OnDawn?.Invoke();
-            }else if(timeOfDay == timeOfDusk)
-            { 
-                OnDusk?.Invoke(); 
             }
+        }
+
+        bool IsInRange(float t)
+        {
+            return t>= timeOfDawn/lengthOfDay && t<= timeOfDusk/lengthOfDay;
+        }
+
+        private void UpdateLight()
+        {
+            float ratio = timeOfDay / lengthOfDay;
+            sun.color = sunGradient.Evaluate(ratio);
+            moon.color = moonGradient.Evaluate(ratio);
+            ambient.color = ambientGradient.Evaluate(ratio);
+
+            lightTransform.rotation = Quaternion.Euler(0, 0, 360.0f * ratio);
         }
 
         public void AtDawn()
