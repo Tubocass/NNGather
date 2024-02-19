@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace gather
 {
-    [RequireComponent(typeof(FoodManager))]
+    [RequireComponent(typeof(QueenFoodManager))]
     public class Queen : Unit
     {
         public Anchor foodAnchor, fightAnchor;
         public DroneSpawnConfig spawnConfig;
         PrefabFactory farmerFactory, fighterFactory;
-        FoodManager foodManager;
+        QueenFoodManager foodManager;
         InputManager inputManager;
         [SerializeField] float hungerTime;
 
         protected override void Awake()
         {
             base.Awake();
-            foodManager = GetComponent<FoodManager>();
+            foodManager = GetComponent<QueenFoodManager>();
 
             //foodCounter = ScriptableObject.CreateInstance<FoodCounter>();
             fighterFactory = GameObject.FindGameObjectWithTag(Tags.gameController)

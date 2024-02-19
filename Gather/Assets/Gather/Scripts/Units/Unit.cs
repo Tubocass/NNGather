@@ -50,7 +50,7 @@ namespace gather
         public virtual void SetTeam(TeamConfig config)
         {
             this.teamConfig = config;
-            teamConfig.UpdateUnitCount(unitType, 1);
+            teamConfig.UnitManager.UpdateUnitCount(unitType, 1);
             enemyDetector.SetTeam(teamConfig.Team);
             spriteRenderer.color = teamConfig.TeamColor;
         }
@@ -67,7 +67,7 @@ namespace gather
 
         protected virtual void OnDisable()
         {
-            teamConfig?.UpdateUnitCount(unitType, -1);
+            teamConfig?.UnitManager.UpdateUnitCount(unitType, -1);
             context.Clear();
         }
 

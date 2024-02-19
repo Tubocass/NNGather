@@ -6,7 +6,7 @@ namespace Gather.AI.FSM.States
     public class Queen_State_Emergency : DroneState_Flee
     {
         Counter fighterCounter;
-        FoodManager foodCounter;
+        QueenFoodManager foodCounter;
         DroneSpawnConfig spawnConfig;
         Queen queen;
 
@@ -15,8 +15,8 @@ namespace Gather.AI.FSM.States
             this.queen = queen;
             spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
             fighterCounter = queen.Blackboard.GetValue<TeamConfig>(Configs.TeamConfig)
-                .GetUnitCounter(UnitType.Fighter);
-            foodCounter = queen.GetComponent<FoodManager>();
+                .UnitManager.GetUnitCounter(UnitType.Fighter);
+            foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 
         public override void EnterState()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace gather
 {
-    public class FoodManager : MonoBehaviour
+    public class QueenFoodManager : MonoBehaviour
     {
         public int foodQueueSize = 10;
         public int foodReserve = 5;

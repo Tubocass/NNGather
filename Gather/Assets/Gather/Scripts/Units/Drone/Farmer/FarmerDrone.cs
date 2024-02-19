@@ -52,17 +52,17 @@ namespace gather
 
         public bool CanTargetFood(FoodPellet food)
         {
-            return teamConfig.CanTargetFood(GetInstanceID(), food.GetInstanceID());
+            return teamConfig.FoodManager.CanTargetFood(GetInstanceID(), food.GetInstanceID());
         }
 
         public void TargetFood(FoodPellet food)
         {
-            teamConfig.TargetFood(GetInstanceID(), food.GetInstanceID());
+            teamConfig.FoodManager.TargetFood(GetInstanceID(), food.GetInstanceID());
         }
 
         public void UntargetFood(FoodPellet food)
         {
-            teamConfig.UntargetFood(food.GetInstanceID());
+            teamConfig.FoodManager.UntargetFood(food.GetInstanceID());
         }
 
         public void PickupFood(FoodPellet pellet)

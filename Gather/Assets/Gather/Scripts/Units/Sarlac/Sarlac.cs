@@ -46,7 +46,7 @@ namespace gather
         public override void SetTeam(TeamConfig config)
         {
             this.teamConfig = config;
-            teamConfig.UpdateUnitCount(unitType, 1);
+            teamConfig.UnitManager.UpdateUnitCount(unitType, 1);
             enemyDetector.SetTeam(teamConfig.Team);
         }
 

@@ -16,8 +16,8 @@ namespace Gather.UI
 
         public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
-            farmerDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Farmer));
-            fighterDisplay.SetCounter(playerTeam.GetUnitCounter(UnitType.Fighter));
+            farmerDisplay.SetCounter(playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
+            fighterDisplay.SetCounter(playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
             foodDisplay.SetCounter(playerQueen.GetFoodCounter());
 
             spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);

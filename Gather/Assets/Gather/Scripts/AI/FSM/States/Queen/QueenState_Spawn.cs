@@ -18,8 +18,8 @@ namespace Gather.AI.FSM.States
             this.queen = queen;
             spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
             teamConfig = queen.Blackboard.GetValue<TeamConfig>(Configs.TeamConfig);
-            farmerCounter = teamConfig.GetUnitCounter(UnitType.Farmer);
-            fighterCounter = teamConfig.GetUnitCounter(UnitType.Fighter);
+            farmerCounter = teamConfig.UnitManager.GetUnitCounter(UnitType.Farmer);
+            fighterCounter = teamConfig.UnitManager.GetUnitCounter(UnitType.Fighter);
         }
 
         public override void EnterState()

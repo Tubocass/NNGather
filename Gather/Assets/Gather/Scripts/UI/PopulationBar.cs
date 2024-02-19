@@ -26,12 +26,12 @@ namespace gather
             total = 0;
             for (int t = 0; t < teams.Length; t++)
             {
-                total += teams[t].GetTeamCount();
+                total += teams[t].UnitManager.GetTeamCount();
             }
         }
         float FillTeam(int team)
         {
-            return Mathf.Clamp01(Mathf.InverseLerp(0, total, teams[team].GetTeamCount()));
+            return Mathf.Clamp01(Mathf.InverseLerp(0, total, teams[team].UnitManager.GetTeamCount()));
         }
 
         private void Update()
