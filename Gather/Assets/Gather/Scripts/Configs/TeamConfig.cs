@@ -5,7 +5,7 @@ namespace gather
     [CreateAssetMenu]
     public class TeamConfig : ScriptableObject
     {
-        [SerializeField] public int Team;
+        [SerializeField] public int TeamID;
         [SerializeField] public Color TeamColor;
         UnitManager unitManager;
         FoodManager foodManager;

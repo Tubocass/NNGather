@@ -83,7 +83,7 @@ namespace gather
 
         IEnumerator Hunger()
         {
-            while (Application.isPlaying)
+            while (isActiveAndEnabled)
             {
                 yield return new WaitForSeconds(hungerTime);
 

@@ -14,8 +14,7 @@ namespace Gather.AI.FSM.States
         {
             this.queen = queen;
             spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
-            fighterCounter = queen.Blackboard.GetValue<TeamConfig>(Configs.TeamConfig)
-                .UnitManager.GetUnitCounter(UnitType.Fighter);
+            fighterCounter = queen.TeamConfig.UnitManager.GetUnitCounter(UnitType.Fighter);
             foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 

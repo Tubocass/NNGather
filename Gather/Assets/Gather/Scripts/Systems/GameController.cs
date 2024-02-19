@@ -103,7 +103,7 @@ namespace gather
         TeamConfig NewTeam(TeamSelect selection)
         {
             TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
-            teamConfig.Team = selection.id;
+            teamConfig.TeamID = selection.id;
             teamConfig.TeamColor = colorOptions.colors[selection.colorOption];
             teams.Add(teamConfig);
 

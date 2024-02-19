@@ -20,7 +20,7 @@ namespace gather
         {
             if (collision.CompareTag(Tags.units)) {
                 Unit enemy = collision.GetComponent<Unit>();
-                if(enemy.CanBeTargeted(parentDrone.GetTeam()))
+                if(enemy.CanBeTargeted(parentDrone.GetTeamID()))
                 {
                     Attack(enemy.Health);
                 }
@@ -34,7 +34,7 @@ namespace gather
 
             other.TakeDamage(damage);
             canFire = false;
-            if (gameObject.activeSelf)
+            if (parentDrone.isActiveAndEnabled)
             {
                 StartCoroutine(RefractoryPeriod());
             }

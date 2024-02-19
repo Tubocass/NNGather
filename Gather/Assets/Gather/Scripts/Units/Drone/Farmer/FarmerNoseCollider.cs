@@ -25,7 +25,7 @@ namespace gather
             {
 
                 FoodPellet pellet = collision.gameObject.GetComponent<FoodPellet>();
-                if (pellet.CanBeTargeted(parentDrone.GetTeam()))
+                if (pellet.CanBeTargeted(parentDrone.GetTeamID()))
                 {
                     pellet.Attach(this.transform);
                     pellet.transform.localPosition = relativePosition;

@@ -5,12 +5,12 @@ namespace Gather.AI.FSM.States
     public class QueenState_Move : FSM_State
     {
         Queen queen;
-        QueenFoodManager foodCounter;
+        FoodManager foodCounter;
 
         public QueenState_Move(Queen queen)
         {
             this.queen = queen;
-            foodCounter = queen.GetComponent<QueenFoodManager>();
+            foodCounter = queen.TeamConfig.FoodManager;
         }
 
         public override void EnterState()
@@ -20,7 +20,7 @@ namespace Gather.AI.FSM.States
 
         void MoveToFoodCenter()
         {
-            queen.SetDestination(foodCounter.FoodCenter());
+            //queen.SetDestination(foodCounter.FoodCenter());
         }
 
         public override void Update()

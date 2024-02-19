@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace gather
 {
     public class FoodManager
     {
         Dictionary<int, int> foodTargets = new Dictionary<int, int>();
+        List<FoodSource> knownFoodSources = new List<FoodSource>();
 
         public void TargetFood(int droneID, int foodID)
         {
@@ -29,6 +31,19 @@ namespace gather
             {
                 foodTargets.Remove(foodID);
             }
+        }
+
+        public void AddFoodSource(FoodSource foodSource)
+        {
+            knownFoodSources.Add(foodSource);
+        }
+
+        public Vector2 NearsestFoodSourceLocation(Vector2 location)
+        {
+            if(knownFoodSources.Count > 0)
+            {
+                return TargetSystem.TargetNearest(location, knownFoodSources).transform.position;
+            }else return Vector2.zero;
         }
     }
 }

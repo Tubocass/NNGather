@@ -31,6 +31,7 @@ namespace gather
         public bool HasTarget => hasTarget;
         public Blackboard Blackboard => context;
         public Health Health => health;
+        public TeamConfig TeamConfig => teamConfig;
 
         protected virtual void Awake()
         {
@@ -51,13 +52,13 @@ namespace gather
         {
             this.teamConfig = config;
             teamConfig.UnitManager.UpdateUnitCount(unitType, 1);
-            enemyDetector.SetTeam(teamConfig.Team);
+            enemyDetector.SetTeam(teamConfig.TeamID);
             spriteRenderer.color = teamConfig.TeamColor;
         }
 
-        public int GetTeam()
+        public int GetTeamID()
         {
-            return teamConfig.Team;
+            return teamConfig.TeamID;
         }
 
         public virtual void Death()
@@ -73,7 +74,7 @@ namespace gather
 
         public bool CanBeTargeted(int team)
         {
-            return teamConfig.Team != team && gameObject.activeSelf;
+            return teamConfig.TeamID != team && gameObject.activeSelf;
         }
 
         public void SetDestination(Vector2 location)

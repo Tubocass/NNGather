@@ -1,4 +1,5 @@
 using gather;
+using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
@@ -7,6 +8,7 @@ namespace Gather.AI.FSM.States
         FarmerDrone drone;
         FoodPellet target;
         FoodDetector foodDetector;
+        FoodManager foodManager;
         bool changePath;
         
         public DroneState_Search(FarmerDrone drone)
@@ -18,6 +20,7 @@ namespace Gather.AI.FSM.States
         public override void EnterState()
         {
             changePath = true;
+            foodManager = drone.TeamConfig.FoodManager;
         }
 
         public override void Update()
@@ -38,14 +41,24 @@ namespace Gather.AI.FSM.States
             {
                 target = TargetSystem.TargetNearest(drone.GetLocation(), foodDetector.GetFoodList());
                 drone.TargetFood(target);
-                drone.Blackboard.SetValue<ITargetable>(Configs.Target, target);
-                drone.SetHasTarget(true);
             }
-            else if (!drone.IsMoving || changePath)
+            else
             {
-                changePath = false;
-                drone.MoveRandomly(drone.AnchorPoint());
+                Vector2 nearestFoodSource = drone.TeamConfig.FoodManager
+                    .NearsestFoodSourceLocation(drone.GetLocation());
+
+                if (nearestFoodSource != Vector2.zero 
+                    && Vector2.Distance(nearestFoodSource, drone.GetLocation()) >= foodDetector.config.searchDist)
+                {
+                    drone.SetDestination(nearestFoodSource);
+                } 
+                else if (!drone.IsMoving || changePath)
+                {
+                    changePath = false;
+                    drone.MoveRandomly(drone.AnchorPoint());
+                }
             }
+            
         }
     }
 }

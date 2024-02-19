@@ -1,5 +1,6 @@
 using Gather.AI.FSM.Controllers;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace gather
 {
@@ -58,6 +59,8 @@ namespace gather
         public void TargetFood(FoodPellet food)
         {
             teamConfig.FoodManager.TargetFood(GetInstanceID(), food.GetInstanceID());
+            context.SetValue<ITargetable>(Configs.Target, food);
+            SetHasTarget(true);
         }
 
         public void UntargetFood(FoodPellet food)
@@ -77,7 +80,7 @@ namespace gather
 
         public void DropoffFood(Queen queenie)
         {
-            if (IsCarryingFood() && queenie.GetTeam() == GetTeam())
+            if (IsCarryingFood() && queenie.GetTeamID() == GetTeamID())
             {
                 //HaltNavigation();
                 carriedFood.Consume();

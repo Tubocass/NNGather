@@ -5,7 +5,7 @@ namespace gather
 {
     public class FoodDetector : MonoBehaviour
     {
-        [SerializeField] SearchConfig config;
+        public SearchConfig config;
         List<FoodPellet> foods = new List<FoodPellet>();
         FarmerDrone unitController;
         int team;
