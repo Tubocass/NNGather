@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Gather.AI.FSM.States
 {
 
-    public class State_Sleep : FSM_State
+    public class SarlacState_Sleep : FSM_State
     {
         public override void EnterState()
         {

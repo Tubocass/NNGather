@@ -2,14 +2,14 @@ using gather;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Search : FSM_State
+    public class DroneState_Search : FSM_State
     {
         Drone drone;
         FoodPellet target;
         FoodDetector foodDetector;
         bool changePath;
         
-        public State_Search(Drone drone)
+        public DroneState_Search(Drone drone)
         {
             this.drone = drone;
             foodDetector = drone.Blackboard.GetValue<FoodDetector>(Configs.FoodDetector);

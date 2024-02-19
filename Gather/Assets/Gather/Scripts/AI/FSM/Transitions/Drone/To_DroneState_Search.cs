@@ -3,11 +3,11 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateSearch : FSM_Transition
+    public class To_DroneState_Search : FSM_Transition
     {
         private readonly FarmerDrone drone;
 
-        public ToStateSearch(FarmerDrone drone, FSM_State nextState): base(drone, nextState)
+        public To_DroneState_Search(FarmerDrone drone, FSM_State nextState): base(drone, nextState)
         {
             this.drone = drone;
         }

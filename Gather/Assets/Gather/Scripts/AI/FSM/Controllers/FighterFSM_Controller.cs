@@ -10,12 +10,12 @@ namespace Gather.AI.FSM.Controllers
         {
             FighterDrone drone = GetComponent<FighterDrone>();
 
-            State_Hunt huntState = new State_Hunt(drone);
-            State_Engage engageState = new State_Engage(drone);
+            DroneState_Hunt huntState = new DroneState_Hunt(drone);
+            DroneState_Engage engageState = new DroneState_Engage(drone);
             initialState = huntState;
 
-            ToStateEngage toEngage = new ToStateEngage(drone, engageState);
-            ToStateHunt toHunt = new ToStateHunt(drone, huntState);
+            To_DroneState_Engage toEngage = new To_DroneState_Engage(drone, engageState);
+            To_DroneState_Hunt toHunt = new To_DroneState_Hunt(drone, huntState);
 
             huntState.AddTransitions(toEngage);
             engageState.AddTransitions(toHunt);

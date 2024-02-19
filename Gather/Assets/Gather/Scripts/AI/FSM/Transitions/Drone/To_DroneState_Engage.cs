@@ -3,11 +3,11 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateEngage : FSM_Transition
+    public class To_DroneState_Engage : FSM_Transition
     {
         protected Unit drone;
 
-        public ToStateEngage(Unit unit, FSM_State next): base(unit, next)
+        public To_DroneState_Engage(Unit unit, FSM_State next): base(unit, next)
         {
             this.drone = unit;
         }

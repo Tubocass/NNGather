@@ -3,14 +3,14 @@ using gather;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Emergency : State_Flee
+    public class Queen_State_Emergency : DroneState_Flee
     {
         Counter fighterCounter;
         FoodManager foodCounter;
         DroneSpawnConfig spawnConfig;
         Queen queen;
 
-        public State_Emergency(Queen queen): base(queen)
+        public Queen_State_Emergency(Queen queen): base(queen)
         {
             this.queen = queen;
             spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
@@ -21,7 +21,7 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            Debug.Log("Emergency!!!");
+            //Debug.Log("Emergency!!!");
         }
 
         public override void Update()
@@ -35,7 +35,7 @@ namespace Gather.AI.FSM.States
 
         public override void ExitState()
         {
-            Debug.Log("Emergency Over");
+            //Debug.Log("Emergency Over");
         }
     }
 }

@@ -3,9 +3,9 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateFlee : FSM_Transition
+    public class To_DroneState_Flee : FSM_Transition
     {
-        public ToStateFlee(Unit unit, FSM_State next): base(unit, next)
+        public To_DroneState_Flee(Unit unit, FSM_State next): base(unit, next)
         {
             this.unit = unit;
         }

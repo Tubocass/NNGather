@@ -3,17 +3,18 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateAwake : FSM_Transition
+
+    public class To_SarlacState_Sleep : FSM_Transition
     {
         private readonly Sarlac sarlac;
-        public ToStateAwake(Sarlac sarlac, FSM_State nextState) : base(sarlac, nextState)
+        public To_SarlacState_Sleep(Sarlac sarlac, FSM_State nextState) : base(sarlac, nextState)
         {
             this.sarlac = sarlac;
         }
 
         public override bool IsValid()
         {
-            return sarlac.isNight && !sarlac.HasTarget;
+            return !sarlac.isNight && sarlac.IsAtHome();
         }
 
         public override void OnTransition()

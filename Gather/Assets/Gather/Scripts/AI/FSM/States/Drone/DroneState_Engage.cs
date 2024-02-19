@@ -2,13 +2,13 @@ using gather;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Engage : FSM_State
+    public class DroneState_Engage : FSM_State
     {
         Unit unit;
         ITargetable target;
         bool changePath;
 
-        public State_Engage(Unit drone)
+        public DroneState_Engage(Unit drone)
         {
             this.unit = drone;
         }

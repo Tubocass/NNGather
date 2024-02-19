@@ -13,16 +13,16 @@ namespace Gather.AI.FSM.Controllers
         {
             sarlac = GetComponent<Sarlac>();
 
-            State_Sleep sleepState = new State_Sleep();
-            State_Return_Sarlac returnHome = new State_Return_Sarlac(sarlac);
-            State_Awake awakeState = new State_Awake(sarlac);
-            State_Engage engageState = new State_Engage(sarlac);
+            SarlacState_Sleep sleepState = new SarlacState_Sleep();
+            SarlacState_Return returnHome = new SarlacState_Return(sarlac);
+            SarlacState_Awake awakeState = new SarlacState_Awake(sarlac);
+            DroneState_Engage engageState = new DroneState_Engage(sarlac);
             initialState = sleepState;
 
-            ToStateReturnHome toStateReturn = new ToStateReturnHome(sarlac, returnHome);
-            ToStateAwake toStateAwake = new ToStateAwake(sarlac, awakeState);
-            ToStateSleep toStateSleep = new ToStateSleep(sarlac, sleepState);
-            ToStateEngage_Sarlac toStateEngage = new ToStateEngage_Sarlac(sarlac, engageState);
+            To_SarlacState_Return toStateReturn = new To_SarlacState_Return(sarlac, returnHome);
+            To_SarlacState_Awake toStateAwake = new To_SarlacState_Awake(sarlac, awakeState);
+            To_SarlacState_Sleep toStateSleep = new To_SarlacState_Sleep(sarlac, sleepState);
+            To_SarlacState_Engage toStateEngage = new To_SarlacState_Engage(sarlac, engageState);
 
             sleepState.AddTransitions(toStateAwake);
             awakeState.AddTransitions(toStateReturn, toStateSleep, toStateEngage);

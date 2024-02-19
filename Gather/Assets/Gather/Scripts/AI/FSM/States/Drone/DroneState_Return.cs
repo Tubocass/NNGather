@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Return : FSM_State
+    public class DroneState_Return : FSM_State
     {
         Drone drone;
 
-        public State_Return(Drone drone)
+        public DroneState_Return(Drone drone)
         {
             this.drone = drone;
         }

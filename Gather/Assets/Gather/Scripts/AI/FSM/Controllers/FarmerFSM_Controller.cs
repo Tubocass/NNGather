@@ -14,16 +14,16 @@ namespace Gather.AI.FSM.Controllers
             drone = GetComponent<FarmerDrone>();
             enemyDetector = GetComponent<EnemyDetector>();
 
-            State_Search searchState = new State_Search(drone);
-            State_Engage engageState = new State_Engage(drone);
-            State_Flee fleeState = new State_Flee(drone);
-            State_Return returnState = new State_Return(drone);
+            DroneState_Search searchState = new DroneState_Search(drone);
+            DroneState_Engage engageState = new DroneState_Engage(drone);
+            DroneState_Flee fleeState = new DroneState_Flee(drone);
+            DroneState_Return returnState = new DroneState_Return(drone);
             initialState = searchState;
 
-            ToStateSearch toSearch = new(drone, searchState);
-            ToStateEngage toEngage = new(drone, engageState);
-            ToStateFlee toFlee = new(drone, fleeState);
-            ToStateReturn toReturn = new(drone, returnState);
+            To_DroneState_Search toSearch = new(drone, searchState);
+            To_DroneState_Engage toEngage = new(drone, engageState);
+            To_DroneState_Flee toFlee = new(drone, fleeState);
+            To_DroneState_Return toReturn = new(drone, returnState);
 
             searchState.AddTransitions(toFlee, toEngage, toReturn);
             engageState.AddTransitions(toFlee, toReturn, toSearch);

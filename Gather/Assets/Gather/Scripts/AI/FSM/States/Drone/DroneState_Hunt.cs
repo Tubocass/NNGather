@@ -3,7 +3,7 @@ using gather;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Hunt : FSM_State
+    public class DroneState_Hunt : FSM_State
     {
         List<Unit> enemies = new List<Unit>();
         Drone drone;
@@ -11,7 +11,7 @@ namespace Gather.AI.FSM.States
         EnemyDetector enemyDetector;
         bool changePath;
 
-        public State_Hunt(Drone fighter)
+        public DroneState_Hunt(Drone fighter)
         {
             drone = fighter;
             enemyDetector = drone.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);

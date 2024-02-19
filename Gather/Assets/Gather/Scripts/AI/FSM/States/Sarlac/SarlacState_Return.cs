@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Return_Sarlac : FSM_State
+    public class SarlacState_Return : FSM_State
     {
         Sarlac sarlac;
 
-        public State_Return_Sarlac(Sarlac sarlac)
+        public SarlacState_Return(Sarlac sarlac)
         {
             this.sarlac = sarlac;
         }

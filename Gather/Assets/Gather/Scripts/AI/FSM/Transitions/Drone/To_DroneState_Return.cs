@@ -4,11 +4,11 @@ using Gather.AI.FSM.States;
 namespace Gather.AI.FSM.Transitions
 {
 
-    public class ToStateReturn : FSM_Transition
+    public class To_DroneState_Return : FSM_Transition
     {
         private readonly FarmerDrone drone;
 
-        public ToStateReturn(FarmerDrone drone, FSM_State next): base(drone, next)
+        public To_DroneState_Return(FarmerDrone drone, FSM_State next): base(drone, next)
         {
             this.drone = drone;
         }

@@ -4,13 +4,13 @@ using gather;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Flee : FSM_State
+    public class DroneState_Flee : FSM_State
     {
         List<Unit> enemies;
         Unit unit;
         EnemyDetector enemyDetector;
 
-        public State_Flee(Unit unit)
+        public DroneState_Flee(Unit unit)
         {
             this.unit = unit;
             enemyDetector = unit.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);

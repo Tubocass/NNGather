@@ -2,12 +2,12 @@
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Feed : FSM_State
+    public class QueenState_Feed : FSM_State
     {
         //int targetFoodCount = 10;
         FoodManager foodCounter;
 
-        public State_Feed(Queen queen)
+        public QueenState_Feed(Queen queen)
         {
 
             foodCounter = queen.GetComponent<FoodManager>();

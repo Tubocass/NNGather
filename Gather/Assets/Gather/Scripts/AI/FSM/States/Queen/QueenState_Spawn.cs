@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Spawn : FSM_State
+    public class QueenState_Spawn : FSM_State
     {
         Queen queen;
         DroneSpawnConfig spawnConfig;
@@ -13,7 +13,7 @@ namespace Gather.AI.FSM.States
         TeamConfig teamConfig;
         float refractoryTime = 1f;
 
-        public State_Spawn (Queen queen)
+        public QueenState_Spawn (Queen queen)
         {
             this.queen = queen;
             spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);

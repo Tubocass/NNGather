@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
-    public class State_Awake : FSM_State
+    public class SarlacState_Awake : FSM_State
     {
         Sarlac sarlac;
         Unit target;
         EnemyDetector enemyDetector;
         bool changePath;
 
-        public State_Awake(Sarlac sarlac)
+        public SarlacState_Awake(Sarlac sarlac)
         {
             this.sarlac = sarlac;
             enemyDetector = sarlac.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);

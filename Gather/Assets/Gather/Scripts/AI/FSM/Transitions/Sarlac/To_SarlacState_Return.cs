@@ -3,10 +3,10 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class ToStateReturnHome : FSM_Transition
+    public class To_SarlacState_Return : FSM_Transition
     {
         Sarlac sarlac;
-        public ToStateReturnHome(Unit unit, FSM_State nextState) : base(unit, nextState)
+        public To_SarlacState_Return(Unit unit, FSM_State nextState) : base(unit, nextState)
         {
             sarlac = unit.GetComponent<Sarlac>();
         }

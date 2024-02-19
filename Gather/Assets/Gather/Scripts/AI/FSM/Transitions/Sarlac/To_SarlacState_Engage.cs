@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Assets.Gather.Scripts.AI.FSM.Transitions
 {
-    public class ToStateEngage_Sarlac : ToStateEngage
+    public class To_SarlacState_Engage : To_DroneState_Engage
     {
         Sarlac sarlac;
-        public ToStateEngage_Sarlac(Unit unit, FSM_State next) : base(unit, next)
+        public To_SarlacState_Engage(Unit unit, FSM_State next) : base(unit, next)
         {
             sarlac = unit.GetComponent<Sarlac>();
         }
