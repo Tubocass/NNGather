@@ -17,36 +17,30 @@ namespace gather
             timeManager.OnDawn.AddListener(SunUp);
         }
 
-        public bool IsAtHome()
-        {
-            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
-        }
-
-        public Transform GetHome()
-        {
-            return homePit;
-        }
-
         public void SetHome(Transform home)
         {
             this.homePit = home;
         }
 
+        public bool IsAtHome()
+        {
+            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
+        }
+
+        public void ReturnToHome()
+        {
+            SetDestination(homePit.position);
+        }
+
         void SunUp()
         {
             isNight = false;
-            /*
-             * if at home then sleep, else move to home
-            */
         }
 
         void SunDown()
         {
             isNight = true;
             isAwake = true;
-            /*
-             * play sound and animation, start hunting
-            */
         }
 
         public override void SetTeam(TeamConfig config)

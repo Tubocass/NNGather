@@ -4,21 +4,19 @@ namespace Gather.AI.FSM.States
 {
     public class State_Engage : FSM_State
     {
-        Blackboard context;
         Unit unit;
         ITargetable target;
         bool changePath;
 
-        public State_Engage(Unit drone, Blackboard bb)
+        public State_Engage(Unit drone)
         {
             this.unit = drone;
-            context = bb;
         }
 
         public override void EnterState()
         {
             changePath = true; //if moving when entering state
-            target = context.GetValue<ITargetable>(Configs.Target);
+            target = unit.Blackboard.GetValue<ITargetable>(Configs.Target);
         }
 
         public override void Update()

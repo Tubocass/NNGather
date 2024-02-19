@@ -5,13 +5,11 @@ namespace Gather.AI.FSM.States
     public class State_Move : FSM_State
     {
         Queen queen;
-        //Blackboard context;
         FoodManager foodCounter;
 
-        public State_Move(Queen queen, Blackboard context)
+        public State_Move(Queen queen)
         {
             this.queen = queen;
-            //this.context = context;
             foodCounter = queen.GetComponent<FoodManager>();
         }
 

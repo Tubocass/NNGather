@@ -10,10 +10,10 @@ namespace Gather.AI.FSM.States
         Unit unit;
         EnemyDetector enemyDetector;
 
-        public State_Flee(Unit unit, Blackboard context)
+        public State_Flee(Unit unit)
         {
             this.unit = unit;
-            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            enemyDetector = unit.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 
         public override void EnterState()

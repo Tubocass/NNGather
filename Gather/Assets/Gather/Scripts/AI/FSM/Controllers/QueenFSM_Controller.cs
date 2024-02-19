@@ -13,12 +13,11 @@ namespace Gather.AI.FSM.Controllers
         {
             queen = GetComponent<Queen>();
             enemyDetector = GetComponent<EnemyDetector>();
-            Blackboard context = queen.Blackboard;
 
-            State_Move moveState = new State_Move(queen, context);
+            State_Move moveState = new State_Move(queen);
             State_Feed feedState = new State_Feed(queen);
-            State_Spawn spawnState = new State_Spawn(queen, context);
-            State_Emergency emergencyState = new State_Emergency(queen, context);
+            State_Spawn spawnState = new State_Spawn(queen);
+            State_Emergency emergencyState = new State_Emergency(queen);
             initialState = spawnState;
 
             ToStateFeed toFeed = new ToStateFeed(queen, feedState);

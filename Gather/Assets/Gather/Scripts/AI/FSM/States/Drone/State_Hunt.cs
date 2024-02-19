@@ -8,15 +8,13 @@ namespace Gather.AI.FSM.States
         List<Unit> enemies = new List<Unit>();
         Drone drone;
         Unit target;
-        Blackboard context;
         EnemyDetector enemyDetector;
         bool changePath;
 
-        public State_Hunt(Drone fighter, Blackboard bb)
+        public State_Hunt(Drone fighter)
         {
             drone = fighter;
-            context = bb;
-            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            enemyDetector = drone.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
         
         public override void EnterState()
@@ -42,7 +40,7 @@ namespace Gather.AI.FSM.States
             if (enemyDetector.DetectedThing)
             {
                 target = TargetSystem.TargetNearest(drone.GetLocation(), enemyDetector.GetEnemiesList());
-                context.SetValue<ITargetable>(Configs.Target, target);
+                drone.Blackboard.SetValue<ITargetable>(Configs.Target, target);
                 drone.SetHasTarget(true);
             }
             else if(!drone.IsMoving || changePath)

@@ -5,13 +5,11 @@ namespace Gather.AI.FSM.States
 {
     public class State_Return : FSM_State
     {
-        Unit unit;
-        Transform home;
+        Drone drone;
 
-        public State_Return(Unit unit, Transform home)
+        public State_Return(Drone drone)
         {
-            this.unit = unit;
-            this.home = home;
+            this.drone = drone;
         }
 
         public override void EnterState()
@@ -20,7 +18,7 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            unit.SetDestination(home.position);
+            drone.ReturnToQueen();   
         }
 
         public override void ExitState()

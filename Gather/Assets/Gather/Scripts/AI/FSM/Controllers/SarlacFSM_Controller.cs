@@ -12,12 +12,11 @@ namespace Gather.AI.FSM.Controllers
         protected override void Init()
         {
             sarlac = GetComponent<Sarlac>();
-            Blackboard bb = sarlac.Blackboard;
 
             State_Sleep sleepState = new State_Sleep();
-            State_Return_Sarlac returnHome = new State_Return_Sarlac(sarlac, sarlac.GetHome());
-            State_Awake awakeState = new State_Awake(sarlac, bb);
-            State_Engage engageState = new State_Engage(sarlac, bb);
+            State_Return_Sarlac returnHome = new State_Return_Sarlac(sarlac);
+            State_Awake awakeState = new State_Awake(sarlac);
+            State_Engage engageState = new State_Engage(sarlac);
             initialState = sleepState;
 
             ToStateReturnHome toStateReturn = new ToStateReturnHome(sarlac, returnHome);

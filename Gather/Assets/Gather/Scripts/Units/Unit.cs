@@ -18,7 +18,6 @@ namespace gather
         [SerializeField] protected UnitType unitType;
         protected Blackboard context = new Blackboard();
         protected EnemyDetector enemyDetector;
-        protected FSM_Controller fsmController;
         protected PolyNavAgent navAgent;
         protected SpriteRenderer spriteRenderer;
         protected TeamConfig teamConfig;
@@ -32,6 +31,7 @@ namespace gather
         public UnitType UnitType => unitType;
         public bool HasTarget => hasTarget;
         public Blackboard Blackboard => context;
+        public Health Health => health;
 
         protected virtual void Awake()
         {
@@ -39,7 +39,6 @@ namespace gather
             spriteRenderer = GetComponent<SpriteRenderer>();
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
-            fsmController = GetComponent<FSM_Controller>();
             health = GetComponent<Health>();
             context.SetValue(Configs.EnemyDetector, enemyDetector);
         }
@@ -92,11 +91,6 @@ namespace gather
         public void SetHasTarget(bool value)
         {
             hasTarget = value;
-        }
-
-        public void TakeDamage(int amount)
-        {
-            health.TakeDamage(amount);
         }
     }
 }

@@ -22,12 +22,12 @@ namespace gather
                 Unit enemy = collision.GetComponent<Unit>();
                 if(enemy.CanTarget(parentDrone.GetTeam()))
                 {
-                    Attack(enemy);
+                    Attack(enemy.Health);
                 }
             }
         }
 
-        public void Attack(Unit other)
+        public void Attack(Health other)
         {
             if (!canFire)
                 return;

@@ -13,12 +13,11 @@ namespace Gather.AI.FSM.Controllers
         {
             drone = GetComponent<FarmerDrone>();
             enemyDetector = GetComponent<EnemyDetector>();
-            Blackboard context = drone.Blackboard;
 
-            State_Search searchState = new State_Search(drone, context);
-            State_Engage engageState = new State_Engage(drone, context);
-            State_Flee fleeState = new State_Flee(drone, context);
-            State_Return returnState = new State_Return(drone, drone.GetMyQueen().transform);
+            State_Search searchState = new State_Search(drone);
+            State_Engage engageState = new State_Engage(drone);
+            State_Flee fleeState = new State_Flee(drone);
+            State_Return returnState = new State_Return(drone);
             initialState = searchState;
 
             ToStateSearch toSearch = new(drone, searchState);

@@ -48,5 +48,10 @@ namespace gather
         {
             return myQueen.GetLocation();
         }
+
+        public void ReturnToQueen()
+        {
+            SetDestination(myQueen.GetLocation());
+        }
     }
 }

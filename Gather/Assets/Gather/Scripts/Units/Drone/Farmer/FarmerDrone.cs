@@ -54,7 +54,6 @@ namespace gather
             carriedFood = pellet;
             foodLocation = carriedFood.GetLocation();
             SetHasTarget(false);
-            fsmController.Tick();
         }
 
         public void DropoffFood(Queen queenie)
@@ -65,7 +64,6 @@ namespace gather
                 carriedFood.Consume();
                 carriedFood = null;
                 queenie.Gather(foodLocation);
-                fsmController.Tick();
             }
         }
     }
