@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4247676982238605528}
   - component: {fileID: 175615141050751210}
   - component: {fileID: 4247676982238605533}
+  - component: {fileID: 4074135312808617936}
   - component: {fileID: -793150786128820189}
-  - component: {fileID: 4247676981309501296}
   - component: {fileID: 756719191}
   - component: {fileID: 7104895462335366718}
   m_Layer: 6
@@ -235,6 +235,23 @@ MonoBehaviour:
   restrict: 0
   closerPointOnInvalid: 1
   debugPath: 0
+--- !u!114 &4074135312808617936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247676982238605522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41fa50e457e8a94d97a8caf5b49f2b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 2
+  foodAnchor: {fileID: 7581587690221880041}
+  fightAnchor: {fileID: 1378212620804100677}
+  spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
+  hungerTime: 8
 --- !u!114 &-793150786128820189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,23 +266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
   enemyTypes: 00000000
---- !u!114 &4247676981309501296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4247676982238605522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7f6cca4e553644199126c54fb51ff5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 2
-  foodAnchor: {fileID: 7581587690221880041}
-  fightAnchor: {fileID: 1378212620804100677}
-  spawnConfig: {fileID: 11400000, guid: ae50f966623de2f41a065db4aaa64475, type: 2}
-  hungerTime: 8
 --- !u!114 &756719191
 MonoBehaviour:
   m_ObjectHideFlags: 0

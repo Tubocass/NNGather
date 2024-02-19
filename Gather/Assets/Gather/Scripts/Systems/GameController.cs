@@ -82,8 +82,8 @@ namespace gather
         {
             TeamConfig teamConfig = NewTeam(selection);
             
-            PlayerQueen player = Instantiate(playerPrefab, start, Quaternion.identity)
-                .GetComponent<PlayerQueen>();
+            Queen player = Instantiate(playerPrefab, start, Quaternion.identity)
+                .GetComponent<Queen>();
             
             player.SetTeam(teamConfig);
             input.SetPlayer(player);
