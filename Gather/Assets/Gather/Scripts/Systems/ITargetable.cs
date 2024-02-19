@@ -4,7 +4,7 @@ namespace gather
 {
     public interface ITargetable 
     {
-        bool CanTarget(int team);
+        bool CanBeTargeted(int team);
         public Vector2 GetLocation();
     }
 }

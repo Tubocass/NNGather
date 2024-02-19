@@ -1,7 +1,6 @@
 using UnityEngine;
 using PolyNav;
 using Gather.AI;
-using Gather.AI.FSM.Controllers;
 
 namespace gather
 {
@@ -72,7 +71,7 @@ namespace gather
             context.Clear();
         }
 
-        public bool CanTarget(int team)
+        public bool CanBeTargeted(int team)
         {
             return teamConfig.Team != team && gameObject.activeSelf;
         }

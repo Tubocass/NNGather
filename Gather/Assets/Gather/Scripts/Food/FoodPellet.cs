@@ -27,7 +27,7 @@ namespace gather
             return myTransform.position;
         }
 
-        public bool CanTarget(int team)
+        public bool CanBeTargeted(int team)
         {
             return gameObject.activeSelf && !(isPickedUp);
         }

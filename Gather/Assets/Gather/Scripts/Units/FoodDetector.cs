@@ -7,14 +7,14 @@ namespace gather
     {
         [SerializeField] SearchConfig config;
         List<FoodPellet> foods = new List<FoodPellet>();
-        Unit unitController;
+        FarmerDrone unitController;
         int team;
         bool detectedSomething = false;
         public bool DetectedSomething => detectedSomething;
 
         private void Awake()
         {
-            unitController = GetComponent<Unit>();
+            unitController = GetComponent<FarmerDrone>();
         }
 
         public void SetTeam(int team)
@@ -30,7 +30,7 @@ namespace gather
         public void Detect()
         {
             TargetSystem.FindTargetsByCount<FoodPellet>(
-                config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanTarget(team), out foods
+                config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && unitController.CanTargetFood(f), out foods
                 );
             detectedSomething =  foods.Count > 0;
         }

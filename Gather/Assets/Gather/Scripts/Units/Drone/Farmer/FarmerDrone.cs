@@ -26,13 +26,12 @@ namespace gather
                 carriedFood = null;
             }
             foodAnchor.PlaceAnchor -= SetDestination;
-
+            if (HasTarget)
+            {
+                ITargetable target = context.GetValue<ITargetable>(Configs.Target);
+                UntargetFood((FoodPellet)target);
+            }
             base.Death();
-        }
-
-        public bool IsCarryingFood()
-        {
-            return carriedFood != null;
         }
 
         public override void SetQueen(Queen queenie)
@@ -46,6 +45,25 @@ namespace gather
         {
             return foodAnchor.IsActive()? foodAnchor.GetLocation() : GetLocation();
         }
+        public bool IsCarryingFood()
+        {
+            return carriedFood != null;
+        }
+
+        public bool CanTargetFood(FoodPellet food)
+        {
+            return teamConfig.CanTargetFood(GetInstanceID(), food.GetInstanceID());
+        }
+
+        public void TargetFood(FoodPellet food)
+        {
+            teamConfig.TargetFood(GetInstanceID(), food.GetInstanceID());
+        }
+
+        public void UntargetFood(FoodPellet food)
+        {
+            teamConfig.UntargetFood(food.GetInstanceID());
+        }
 
         public void PickupFood(FoodPellet pellet)
         {
@@ -54,6 +72,7 @@ namespace gather
             carriedFood = pellet;
             foodLocation = carriedFood.GetLocation();
             SetHasTarget(false);
+            UntargetFood(pellet);
         }
 
         public void DropoffFood(Queen queenie)

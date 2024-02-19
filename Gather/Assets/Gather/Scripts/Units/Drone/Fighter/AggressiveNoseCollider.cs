@@ -20,7 +20,7 @@ namespace gather
         {
             if (collision.CompareTag(Tags.units)) {
                 Unit enemy = collision.GetComponent<Unit>();
-                if(enemy.CanTarget(parentDrone.GetTeam()))
+                if(enemy.CanBeTargeted(parentDrone.GetTeam()))
                 {
                     Attack(enemy.Health);
                 }

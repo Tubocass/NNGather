@@ -4,12 +4,12 @@ namespace Gather.AI.FSM.States
 {
     public class DroneState_Search : FSM_State
     {
-        Drone drone;
+        FarmerDrone drone;
         FoodPellet target;
         FoodDetector foodDetector;
         bool changePath;
         
-        public DroneState_Search(Drone drone)
+        public DroneState_Search(FarmerDrone drone)
         {
             this.drone = drone;
             foodDetector = drone.Blackboard.GetValue<FoodDetector>(Configs.FoodDetector);
@@ -37,6 +37,7 @@ namespace Gather.AI.FSM.States
             if (foodDetector.DetectedSomething)
             {
                 target = TargetSystem.TargetNearest(drone.GetLocation(), foodDetector.GetFoodList());
+                drone.TargetFood(target);
                 drone.Blackboard.SetValue<ITargetable>(Configs.Target, target);
                 drone.SetHasTarget(true);
             }

@@ -21,7 +21,7 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            if (target == null || !target.CanTarget(unit.GetTeam()))
+            if (target == null || !target.CanBeTargeted(unit.GetTeam()))
             {
                 unit.SetHasTarget(false);
                 return;
