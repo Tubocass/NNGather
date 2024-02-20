@@ -7,7 +7,7 @@ namespace gather
     [RequireComponent(typeof(FarmerFSM_Controller))]
     public class FarmerDrone : Drone
     {
-        FoodPellet carriedFood;
+        FoodBerry carriedFood;
         Vector2 foodLocation = Vector2.zero;
         FoodDetector foodDetector;
         Anchor foodAnchor;
@@ -30,7 +30,7 @@ namespace gather
             if (HasTarget)
             {
                 ITargetable target = context.GetValue<ITargetable>(Configs.Target);
-                UntargetFood((FoodPellet)target);
+                UntargetFood((FoodBerry)target);
             }
             base.Death();
         }
@@ -51,29 +51,29 @@ namespace gather
             return carriedFood != null;
         }
 
-        public bool CanTargetFood(FoodPellet food)
+        public bool CanTargetFood(FoodBerry food)
         {
             return teamConfig.FoodManager.CanTargetFood(GetInstanceID(), food.GetInstanceID());
         }
 
-        public void TargetFood(FoodPellet food)
+        public void TargetFood(FoodBerry food)
         {
             teamConfig.FoodManager.TargetFood(GetInstanceID(), food.GetInstanceID());
             context.SetValue<ITargetable>(Configs.Target, food);
             SetHasTarget(true);
         }
 
-        public void UntargetFood(FoodPellet food)
+        public void UntargetFood(FoodBerry food)
         {
             teamConfig.FoodManager.UntargetFood(food.GetInstanceID());
         }
 
-        public void PickupFood(FoodPellet pellet)
+        public void PickupFood(FoodBerry pellet)
         {
             // called by collider on child transform
             HaltNavigation();
             carriedFood = pellet;
-            foodLocation = carriedFood.GetLocation();
+            foodLocation = carriedFood.ParentBush.GetLocation();
             SetHasTarget(false);
             UntargetFood(pellet);
         }

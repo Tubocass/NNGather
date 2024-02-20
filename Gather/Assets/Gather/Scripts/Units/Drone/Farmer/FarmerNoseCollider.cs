@@ -24,7 +24,7 @@ namespace gather
             else if (collision.gameObject.CompareTag(Tags.food))
             {
 
-                FoodPellet pellet = collision.gameObject.GetComponent<FoodPellet>();
+                FoodBerry pellet = collision.gameObject.GetComponent<FoodBerry>();
                 if (pellet.CanBeTargeted(parentDrone.GetTeamID()))
                 {
                     pellet.Attach(this.transform);

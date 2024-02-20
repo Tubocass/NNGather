@@ -79,6 +79,7 @@ namespace gather
         public void Gather(Vector2 fromLocation)
         {
             foodManager.Gather(fromLocation);
+            teamConfig.FoodManager.AddFoodSource(fromLocation);
         }
 
         IEnumerator Hunger()

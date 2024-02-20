@@ -3,18 +3,25 @@ using UnityEngine;
 namespace gather
 {
     [RequireComponent(typeof(PooledObject))]
-    public class FoodPellet : MonoBehaviour, ITargetable
+    public class FoodBerry : MonoBehaviour, ITargetable
     {
         Collider2D myCollider;
         Transform myTransform;
         bool isPickedUp = false;
         PooledObject po;
+        FoodBush parentBush;
+        public FoodBush ParentBush => parentBush;
 
         private void Awake()
         {
             myCollider = GetComponent<Collider2D>();
             myTransform = this.transform;
             po = GetComponent<PooledObject>();
+        }
+
+        public void SetParentBush(FoodBush bush)
+        {
+            parentBush = bush;
         }
     
         private void OnEnable()
@@ -42,6 +49,7 @@ namespace gather
         public void Detach()
         {
             myTransform.SetParent(null);
+            myCollider.enabled = true;
             isPickedUp = false;
         }
 

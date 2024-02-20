@@ -58,4 +58,32 @@ public class TargetSystem
 
         return nearestTarget;
     }
+
+    public static Vector2 TargetNearest(Vector2 position, List<Vector2> targets)
+    {
+        float nearestDist, newDist;
+        int targetIndex = 0;
+
+        if (targets.Count <= 0)
+        {
+            return Vector2.zero;
+        } else
+        {
+            nearestDist = (targets[0] - position).sqrMagnitude; //compare the squared distances
+            for (int f = 0; f < targets.Count; f++)
+            {
+                if (targets[f] != Vector2.zero)
+                {
+                    newDist = (targets[f] - position).sqrMagnitude;//compare the squared distances
+                    if (newDist <= nearestDist)
+                    {
+                        nearestDist = newDist;
+                        targetIndex = f;
+                    }
+                }
+            }
+        }
+
+        return targets[targetIndex];
+    }
 }

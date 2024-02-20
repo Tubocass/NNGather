@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace gather
 {
-    public class FoodSource : MonoBehaviour
+    public class FoodBush : MonoBehaviour, ITargetable
     {
         Vector2[] spawnPositions;
         FoodFactory foodFactory;
@@ -16,7 +16,7 @@ namespace gather
         [Space]
         [SerializeField] int baseFood;
         [SerializeField] int variableFood;
-        Vector2 center { get => (Vector2)transform.position; }
+        Transform myTransform;
 
         /*
          *  Would like to see these random variables under a Normal curve
@@ -24,45 +24,29 @@ namespace gather
 
         private void Awake()
         {
+            myTransform = transform;
             foodFactory = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<FoodFactory>();
+
+            SetupSpawnPoints();
+            transform.Rotate(Vector3.forward, Random.value * 360);
+            SpawnAllAtOnce();
+            StartCoroutine(Respawn());
+        }
+
+        void SetupSpawnPoints()
+        {
             int numPositions = Random.Range(1, variableFood) + baseFood;
             spawnPositions = new Vector2[numPositions];
-            Vector2 pos = Vector2.zero;
+            Vector2 pos;
 
             for (int p = 0; p < spawnPositions.Length; p++)
             {
                 do
                 {
                     pos = Random.insideUnitCircle * spawnRangeDist;
-                } while (!MinimumDistanceCheck(pos, p));
-                
+                } while (!MinimumDistanceCheck(pos));
+
                 spawnPositions[p] = pos;
-            }
-
-            if (isTimeVariable)
-            {
-                float varTime = Random.Range(-variableTimeAmount, variableTimeAmount);
-                timer += varTime;
-            }
-            transform.Rotate(Vector3.forward, Random.value * 360);
-            SpawnAllAtOnce();
-            StartCoroutine(Respawn());
-        }
-
-        IEnumerator Respawn()
-        {
-            while (Application.isPlaying)
-            {
-                for (int p = 0; p < spawnPositions.Length; p++)
-                {
-                    yield return new WaitForSeconds(timer);
-
-                    if (!Physics2D.OverlapPoint(center + spawnPositions[p], MaskLayers.food))
-                    {
-                        foodFactory.Spawn(center + spawnPositions[p])
-                            .transform.SetParent(this.transform);
-                    }
-                }
             }
         }
 
@@ -70,18 +54,47 @@ namespace gather
         {
             for (int p = 0; p < spawnPositions.Length; p++)
             {
-                foodFactory.Spawn(center + spawnPositions[p])
-                       .transform.SetParent(this.transform);
+                SpawnBerry(spawnPositions[p]);
             }
         }
 
-        bool MinimumDistanceCheck(Vector2 point, int previousAmount)
+        void SpawnBerry(Vector2 spawnPoint)
         {
-            if (previousAmount == 0)
+            var berry = foodFactory.Spawn(GetLocation() + spawnPoint).GetComponent<FoodBerry>();
+            berry.SetParentBush(this);
+            berry.transform.SetParent(myTransform);
+        }
+
+        IEnumerator Respawn()
+        {
+            if (isTimeVariable)
+            {
+                float varTime1 = Random.Range(-variableTimeAmount, variableTimeAmount);
+                float varTime2 = Random.Range(-variableTimeAmount, variableTimeAmount);
+                timer += (varTime1 + varTime2)/2;
+            }
+
+            while (Application.isPlaying)
+            {
+                for (int p = 0; p < spawnPositions.Length; p++)
+                {
+                    yield return new WaitForSeconds(timer);
+
+                    if (!Physics2D.OverlapPoint(GetLocation() + spawnPositions[p], MaskLayers.food))
+                    {
+                        SpawnBerry(spawnPositions[p]);
+                    }
+                }
+            }
+        }
+
+        bool MinimumDistanceCheck(Vector2 point)
+        {
+            if (spawnPositions.Length == 0)
             {
                 return true;
             }
-            for (int p = 0; p < previousAmount; p++)
+            for (int p = 0; p < spawnPositions.Length; p++)
             {
                 if (Vector2.Distance(point, spawnPositions[p]) < minimumDistance)
                 {
@@ -89,6 +102,16 @@ namespace gather
                 }
             }
             return true;
+        }
+
+        public bool CanBeTargeted(int team)
+        {
+            return true;
+        }
+
+        public Vector2 GetLocation()
+        {
+            return myTransform.position;
         }
     }
 }

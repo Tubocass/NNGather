@@ -70,7 +70,7 @@ namespace gather
             TeamConfig teamConfig = NewTeam(envTeam);
             teams.Remove(teamConfig);
             
-            FoodSource[] bushes = FindObjectsByType<FoodSource>(FindObjectsSortMode.InstanceID);
+            FoodBush[] bushes = FindObjectsByType<FoodBush>(FindObjectsSortMode.InstanceID);
             int index = Random.Range(0, bushes.Length);
 
             Sarlac sarlac = Instantiate(sarlacPrefab, bushes[index].transform.position, Quaternion.identity).GetComponent<Sarlac>();

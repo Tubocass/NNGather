@@ -6,9 +6,8 @@ namespace Gather.AI.FSM.States
     public class DroneState_Search : FSM_State
     {
         FarmerDrone drone;
-        FoodPellet target;
+        FoodBerry target;
         FoodDetector foodDetector;
-        FoodManager foodManager;
         bool changePath;
         
         public DroneState_Search(FarmerDrone drone)
@@ -20,7 +19,6 @@ namespace Gather.AI.FSM.States
         public override void EnterState()
         {
             changePath = true;
-            foodManager = drone.TeamConfig.FoodManager;
         }
 
         public override void Update()

@@ -283,8 +283,8 @@ MonoBehaviour:
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 1
   rotateSpeed: 350
-  centerOffset: {x: 0, y: 0.8}
-  repath: 1
+  centerOffset: {x: 0, y: 0.1}
+  repath: 0
   restrict: 0
   closerPointOnInvalid: 1
   debugPath: 0

@@ -16,7 +16,7 @@ public abstract class PrefabFactory : MonoBehaviour
         return po;
     }
 
-    public PooledObject Spawn(Vector3 location)
+    public PooledObject Spawn(Vector2 location)
     {
         PooledObject po;
         if (pool.Count > 0)

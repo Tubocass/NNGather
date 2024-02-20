@@ -27,6 +27,18 @@ namespace gather
             }
         }
 
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (collision.CompareTag(Tags.units))
+            {
+                Unit enemy = collision.GetComponent<Unit>();
+                if (enemy.CanBeTargeted(parentDrone.GetTeamID()))
+                {
+                    Attack(enemy.Health);
+                }
+            }
+        }
+
         public void Attack(Health other)
         {
             if (!canFire)

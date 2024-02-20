@@ -6,7 +6,7 @@ namespace gather
     public class FoodDetector : MonoBehaviour
     {
         public SearchConfig config;
-        List<FoodPellet> foods = new List<FoodPellet>();
+        List<FoodBerry> foods = new List<FoodBerry>();
         FarmerDrone unitController;
         int team;
         bool detectedSomething = false;
@@ -22,14 +22,14 @@ namespace gather
             this.team = team;
         }
 
-        public List<FoodPellet> GetFoodList()
+        public List<FoodBerry> GetFoodList()
         {
             return foods;
         }
 
         public void Detect()
         {
-            TargetSystem.FindTargetsByCount<FoodPellet>(
+            TargetSystem.FindTargetsByCount<FoodBerry>(
                 config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && unitController.CanTargetFood(f), out foods
                 );
             detectedSomething =  foods.Count > 0;
