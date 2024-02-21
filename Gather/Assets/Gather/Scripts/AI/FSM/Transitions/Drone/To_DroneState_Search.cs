@@ -7,14 +7,14 @@ namespace Gather.AI.FSM.Transitions
     {
         private readonly FarmerDrone drone;
 
-        public To_DroneState_Search(FarmerDrone drone, FSM_State nextState): base(drone, nextState)
+        public To_DroneState_Search(FarmerDrone drone, FSM_State nextState) : base(drone, nextState)
         {
             this.drone = drone;
         }
 
         public override bool IsValid()
         {
-            return !drone.GetEnemyDetected() && !drone.IsMoving && !drone.IsCarryingFood() && !drone.HasTarget;
+            return (drone.IsVisitingKnownSources && drone.arrivedAtSource) || (!drone.IsMoving && drone.IsSearchingForFood);
         }
 
         public override void OnTransition()

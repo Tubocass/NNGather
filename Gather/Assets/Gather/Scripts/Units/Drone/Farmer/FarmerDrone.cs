@@ -11,7 +11,14 @@ namespace gather
         Vector2 foodLocation = Vector2.zero;
         FoodDetector foodDetector;
         Anchor foodAnchor;
+
         public Queue<Vector2> sourcesToVist = new Queue<Vector2>();
+        public bool arrivedAtSource = false;
+        public bool isExploring = false;
+
+        public bool IsSearchingForFood { get { return !GetEnemyDetected() && !IsCarryingFood() && !HasTarget; } }
+        public bool IsVisitingKnownSources { get { return sourcesToVist.Count > 0; } }
+        public bool CanCheckForSources { get { return !isExploring && sourcesToVist.Count == 0 && TeamConfig.FoodManager.GetFoodSources().Count > 0; } }
 
         protected override void Awake()
         {
@@ -88,6 +95,7 @@ namespace gather
                 carriedFood.Consume();
                 carriedFood = null;
                 queenie.Gather(foodLocation);
+                isExploring = false;
                 sourcesToVist.Clear();
             }
         }

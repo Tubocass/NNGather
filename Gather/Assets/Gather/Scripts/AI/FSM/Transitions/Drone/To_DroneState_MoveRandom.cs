@@ -14,7 +14,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !drone.GetEnemyDetected() && !drone.IsMoving && drone.sourcesToVist.Count == 0 && !drone.HasTarget && !drone.IsCarryingFood();
+            return !drone.IsMoving && drone.IsSearchingForFood && !drone.IsVisitingKnownSources && !drone.CanCheckForSources;
         }
     }
 }

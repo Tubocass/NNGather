@@ -21,6 +21,7 @@ namespace Gather.AI.FSM.States
             {
                 sources.Sort(CompareDistanceToDrone);
                 sources.ForEach(source => drone.sourcesToVist.Enqueue(source));
+                drone.isExploring = false;
             }
         }
 
