@@ -4,8 +4,8 @@ namespace gather
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] int maxHP = 10;
-        int hp;
+        [SerializeField] int maxHP = 2;
+        [SerializeField] int hp;
         Unit unit;
 
         private void Start()

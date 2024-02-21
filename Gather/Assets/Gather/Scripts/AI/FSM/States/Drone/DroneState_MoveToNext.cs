@@ -17,9 +17,13 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            drone.arrivedAtSource = false;
             Debug.Log("MoveToNext");
-            nextSource = drone.sourcesToVist.Dequeue();
+
+            if (nextSource == Vector2.zero || drone.arrivedAtSource)
+            {
+                drone.arrivedAtSource = false;
+                nextSource = drone.sourcesToVist.Dequeue();
+            }
 
             drone.SetDestination(nextSource);
         }
