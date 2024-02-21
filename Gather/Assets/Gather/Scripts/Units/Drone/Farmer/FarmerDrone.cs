@@ -1,6 +1,6 @@
 using Gather.AI.FSM.Controllers;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace gather
 {
@@ -11,6 +11,7 @@ namespace gather
         Vector2 foodLocation = Vector2.zero;
         FoodDetector foodDetector;
         Anchor foodAnchor;
+        public Queue<Vector2> sourcesToVist = new Queue<Vector2>();
 
         protected override void Awake()
         {
@@ -46,6 +47,7 @@ namespace gather
         {
             return foodAnchor.IsActive()? foodAnchor.GetLocation() : GetLocation();
         }
+
         public bool IsCarryingFood()
         {
             return carriedFood != null;

@@ -39,6 +39,8 @@ namespace gather
                 knownFoodSources.Add(foodSource);
         }
 
+        public List<Vector2> GetFoodSources() {  return knownFoodSources; }
+
         public Vector2 NearsestFoodSourceLocation(Vector2 location)
         {
             return TargetSystem.TargetNearest(location, knownFoodSources);
