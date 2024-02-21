@@ -1,4 +1,5 @@
 using gather;
+using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
@@ -15,6 +16,7 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
+            Debug.Log("Engage");
             changePath = true; //if moving when entering state
             target = unit.Blackboard.GetValue<ITargetable>(Configs.Target);
         }

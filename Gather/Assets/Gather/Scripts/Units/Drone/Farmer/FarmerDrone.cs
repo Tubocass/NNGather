@@ -84,10 +84,11 @@ namespace gather
         {
             if (IsCarryingFood() && queenie.GetTeamID() == GetTeamID())
             {
-                //HaltNavigation();
+                HaltNavigation();
                 carriedFood.Consume();
                 carriedFood = null;
                 queenie.Gather(foodLocation);
+                sourcesToVist.Clear();
             }
         }
     }

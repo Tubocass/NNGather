@@ -10,7 +10,6 @@ namespace Gather.AI.FSM.States
         FoodBerry target;
         FoodDetector foodDetector;
         Queue<Vector2> recentlyVisitedSpots = new Queue<Vector2>();
-        float recentTimer = 30f;
         bool changePath;
         
         public DroneState_Search(FarmerDrone drone)
@@ -21,19 +20,14 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
+            Debug.Log("Search");
             changePath = true;
+            Search();
+
         }
 
         public override void Update()
         {
-            recentTimer -= Time.deltaTime;
-            if (recentTimer <= 0f) 
-            {
-                recentTimer = 30f;
-                recentlyVisitedSpots.Clear();
-            }
-         
-            Search();
         }
 
         public override void ExitState()
@@ -50,32 +44,11 @@ namespace Gather.AI.FSM.States
                 target = TargetSystem.TargetNearest(drone.GetLocation(), foodDetector.GetFoodList());
                 drone.TargetFood(target);
             } 
-            else if (!drone.IsMoving || changePath)
-            {
-                changePath = false;
-                drone.MoveRandomly(drone.AnchorPoint());
-            }
-            //else
+            //else if (!drone.IsMoving || changePath)
             //{
-            //    List<Vector2> sources = drone.TeamConfig.FoodManager.GetFoodSources();
-            //    sources.ForEach(s =>
-            //    {
-            //        if (recentlyVisitedSpots.Contains(s))
-            //        {
-            //            sources.Remove(s);
-            //        }
-            //    });
-
-            //    Vector2 nearestFoodSource = TargetSystem.TargetNearest(drone.GetLocation(), sources);
-
-            //    if (nearestFoodSource != Vector2.zero 
-            //        && Vector2.Distance(nearestFoodSource, drone.GetLocation()) >= foodDetector.config.searchDist)
-            //    {
-            //        drone.SetDestination(nearestFoodSource);
-            //    } 
-
+            //    changePath = false;
+            //    drone.MoveRandomly(drone.AnchorPoint());
             //}
-
         }
     }
 }

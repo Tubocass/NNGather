@@ -1,7 +1,5 @@
 ﻿using gather;
 using Gather.AI.FSM.States;
-using System.Collections;
-using UnityEngine;
 
 namespace Gather.AI.FSM.Transitions
 {
@@ -16,7 +14,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return drone.sourcesToVist.Count > 0;
+            return !drone.GetEnemyDetected() && drone.sourcesToVist.Count > 0 && !drone.HasTarget;
         }
     }
 }
