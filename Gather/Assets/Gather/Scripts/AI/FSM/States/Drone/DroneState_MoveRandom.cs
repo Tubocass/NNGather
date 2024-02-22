@@ -14,7 +14,6 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            Debug.Log("MoveRandom");
             drone.MoveRandomly(drone.AnchorPoint());
         }
 

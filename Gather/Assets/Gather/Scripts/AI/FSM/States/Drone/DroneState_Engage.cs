@@ -16,7 +16,6 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            Debug.Log("Engage");
             changePath = true; 
             target = context.GetValue<ITargetable>(Configs.Target);
         }

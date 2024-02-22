@@ -17,7 +17,6 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            Debug.Log("Search");
             Search();
         }
 
