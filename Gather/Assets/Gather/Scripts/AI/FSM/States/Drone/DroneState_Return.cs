@@ -7,9 +7,9 @@ namespace Gather.AI.FSM.States
     {
         Drone drone;
 
-        public DroneState_Return(Drone drone)
+        public DroneState_Return(Blackboard context) : base(context)
         {
-            this.drone = drone;
+            this.drone = context.GetValue<Drone>(Configs.Unit);
         }
 
         public override void EnterState()

@@ -11,9 +11,9 @@ namespace Gather.AI.FSM.States
         EnemyDetector enemyDetector;
         bool changePath;
 
-        public DroneState_Hunt(Drone fighter)
+        public DroneState_Hunt(Blackboard context) : base(context)
         {
-            drone = fighter;
+            this.drone = context.GetValue<Drone>(Configs.Unit);
             enemyDetector = drone.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
         

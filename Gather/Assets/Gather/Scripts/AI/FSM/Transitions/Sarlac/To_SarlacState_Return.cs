@@ -6,7 +6,7 @@ namespace Gather.AI.FSM.Transitions
     public class To_SarlacState_Return : FSM_Transition
     {
         Sarlac sarlac;
-        public To_SarlacState_Return(Unit unit, FSM_State nextState) : base(unit, nextState)
+        public To_SarlacState_Return(Blackboard context, FSM_State nextState) : base(context, nextState)
         {
             sarlac = unit.GetComponent<Sarlac>();
         }

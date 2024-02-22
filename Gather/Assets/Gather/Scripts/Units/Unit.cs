@@ -23,12 +23,10 @@ namespace gather
         protected Transform myTransform;
         protected Health health;
         protected bool isMoving;
-        private bool hasTarget;
         // Animator
 
         public bool IsMoving { get => isMoving; }
         public UnitType UnitType => unitType;
-        public bool HasTarget => hasTarget;
         public Blackboard Blackboard => context;
         public Health Health => health;
         public TeamConfig TeamConfig => teamConfig;
@@ -41,6 +39,7 @@ namespace gather
             enemyDetector = GetComponent<EnemyDetector>();
             health = GetComponent<Health>();
             context.SetValue(Configs.EnemyDetector, enemyDetector);
+            context.SetValue(Configs.Unit, this);
         }
 
         public Vector2 GetLocation()
@@ -90,7 +89,7 @@ namespace gather
 
         public void SetHasTarget(bool value)
         {
-            hasTarget = value;
+            context.SetValue(Configs.HasTarget, value);
         }
     }
 }

@@ -13,17 +13,18 @@ namespace Gather.AI.FSM.Controllers
         {
             queen = GetComponent<Queen>();
             enemyDetector = GetComponent<EnemyDetector>();
+            Blackboard bb = queen.Blackboard;
 
-            QueenState_Move moveState = new QueenState_Move(queen);
-            QueenState_Feed feedState = new QueenState_Feed(queen);
-            QueenState_Spawn spawnState = new QueenState_Spawn(queen);
-            Queen_State_Emergency emergencyState = new Queen_State_Emergency(queen);
+            QueenState_Move moveState = new QueenState_Move(bb);
+            QueenState_Feed feedState = new QueenState_Feed(bb);
+            QueenState_Spawn spawnState = new QueenState_Spawn(bb);
+            Queen_State_Emergency emergencyState = new Queen_State_Emergency(bb);
             initialState = spawnState;
 
-            To_QueenState_Feed toFeed = new To_QueenState_Feed(queen, feedState);
-            To_QueenState_Spawn toSpawn = new To_QueenState_Spawn(queen, spawnState);
-            To_DroneState_Flee toFlee = new To_DroneState_Flee(queen, emergencyState);
-            To_QueenState_Move toMove = new To_QueenState_Move(queen, moveState);
+            To_QueenState_Feed toFeed = new To_QueenState_Feed(bb, feedState);
+            To_QueenState_Spawn toSpawn = new To_QueenState_Spawn(bb, spawnState);
+            To_DroneState_Flee toFlee = new To_DroneState_Flee(bb, emergencyState);
+            To_QueenState_Move toMove = new To_QueenState_Move(bb, moveState);
 
             moveState.AddTransitions(toFlee, toFeed, toSpawn);
             feedState.AddTransitions(toFlee, toMove, toSpawn);

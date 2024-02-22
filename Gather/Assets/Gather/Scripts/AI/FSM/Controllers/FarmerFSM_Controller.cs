@@ -13,6 +13,7 @@ namespace Gather.AI.FSM.Controllers
         {
             drone = GetComponent<FarmerDrone>();
             enemyDetector = GetComponent<EnemyDetector>();
+            Blackboard bb = drone.Blackboard;
 
             /*
              * initial = CheckKnownSources
@@ -22,22 +23,23 @@ namespace Gather.AI.FSM.Controllers
              *  if food, engage
              *  else continue
             */
-            DroneState_CheckForKnownFood stateCheckKnownFood = new DroneState_CheckForKnownFood(drone);
-            DroneState_MoveRandom moveRandom = new DroneState_MoveRandom(drone);
-            DroneState_MoveToNext moveToNext = new DroneState_MoveToNext(drone);
-            DroneState_Search searchState = new DroneState_Search(drone);
-            DroneState_Engage engageState = new DroneState_Engage(drone);
-            DroneState_Flee fleeState = new DroneState_Flee(drone);
-            DroneState_Return returnState = new DroneState_Return(drone);
+            DroneState_LookForFood superStateLookForFood = new DroneState_LookForFood(bb);
+            DroneState_CheckForKnownFood stateCheckKnownFood = new DroneState_CheckForKnownFood(bb);
+            DroneState_MoveRandom moveRandom = new DroneState_MoveRandom(bb);
+            DroneState_MoveToNext moveToNext = new DroneState_MoveToNext(bb);
+            DroneState_Search searchState = new DroneState_Search(bb);
+            DroneState_Engage engageState = new DroneState_Engage(bb);
+            DroneState_Flee fleeState = new DroneState_Flee(bb);
+            DroneState_Return returnState = new DroneState_Return(bb);
             initialState = searchState;
 
-            To_DroneState_MoveToNext toMoveNext = new To_DroneState_MoveToNext(drone, moveToNext);
-            To_DroneState_MoveRandom toMoveRandom = new To_DroneState_MoveRandom(drone, moveRandom);
-            To_DroneState_CheckForKnownFood toCheckKnownFood = new To_DroneState_CheckForKnownFood(drone, stateCheckKnownFood);
-            To_DroneState_Search toSearch = new(drone, searchState);
-            To_DroneState_Engage toEngage = new(drone, engageState);
-            To_DroneState_Flee toFlee = new(drone, fleeState);
-            To_DroneState_Return toReturn = new(drone, returnState);
+            To_DroneState_MoveToNext toMoveNext = new To_DroneState_MoveToNext(bb, moveToNext);
+            To_DroneState_MoveRandom toMoveRandom = new To_DroneState_MoveRandom(bb, moveRandom);
+            To_DroneState_CheckForKnownFood toCheckKnownFood = new To_DroneState_CheckForKnownFood(bb, stateCheckKnownFood);
+            To_DroneState_Search toSearch = new(bb, searchState);
+            To_DroneState_Engage toEngage = new(bb, engageState);
+            To_DroneState_Flee toFlee = new(bb, fleeState);
+            To_DroneState_Return toReturn = new(bb, returnState);
 
             stateCheckKnownFood.AddTransitions(toMoveNext, toMoveRandom, toFlee);
             moveRandom.AddTransitions(toFlee, toSearch, toReturn);

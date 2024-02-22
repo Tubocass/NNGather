@@ -9,15 +9,15 @@ namespace Gather.AI.FSM.States
         ITargetable target;
         bool changePath;
 
-        public DroneState_Engage(Unit drone)
+        public DroneState_Engage(Blackboard context) : base(context) 
         {
-            this.unit = drone;
+            this.unit = context.GetValue<Unit>(Configs.Unit);
         }
 
         public override void EnterState()
         {
             Debug.Log("Engage");
-            changePath = true; //if moving when entering state
+            changePath = true; 
             target = unit.Blackboard.GetValue<ITargetable>(Configs.Target);
         }
 

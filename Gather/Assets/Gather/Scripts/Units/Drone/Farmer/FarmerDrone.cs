@@ -13,10 +13,9 @@ namespace gather
         Anchor foodAnchor;
 
         public Queue<Vector2> sourcesToVist = new Queue<Vector2>();
-        public bool arrivedAtSource = false;
         public bool isExploring = false;
 
-        public bool IsSearchingForFood { get { return !GetEnemyDetected() && !IsCarryingFood() && !HasTarget; } }
+        public bool IsSearchingForFood { get { return !GetEnemyDetected() && !IsCarryingFood() && !context.GetValue<bool>(Configs.HasTarget); } }
         public bool IsVisitingKnownSources { get { return sourcesToVist.Count > 0; } }
         public bool CanCheckForSources { get { return !isExploring && sourcesToVist.Count == 0 && TeamConfig.FoodManager.GetFoodSources().Count > 0; } }
 
@@ -35,7 +34,7 @@ namespace gather
                 carriedFood = null;
             }
             foodAnchor.PlaceAnchor -= SetDestination;
-            if (HasTarget)
+            if (context.GetValue<bool>(Configs.HasTarget))
             {
                 ITargetable target = context.GetValue<ITargetable>(Configs.Target);
                 UntargetFood((FoodBerry)target);
@@ -74,6 +73,7 @@ namespace gather
 
         public void UntargetFood(FoodBerry food)
         {
+            context.SetValue<ITargetable>(Configs.Target, null);
             teamConfig.FoodManager.UntargetFood(food.GetInstanceID());
         }
 

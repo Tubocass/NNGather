@@ -10,9 +10,9 @@ namespace Gather.AI.FSM.States
         Unit unit;
         EnemyDetector enemyDetector;
 
-        public DroneState_Flee(Unit unit)
+        public DroneState_Flee(Blackboard context) : base(context)
         {
-            this.unit = unit;
+            this.unit = context.GetValue<Unit>(Configs.Unit);
             enemyDetector = unit.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 

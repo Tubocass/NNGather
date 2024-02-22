@@ -5,9 +5,8 @@ namespace Gather.AI.FSM.Transitions
 {
     public class To_DroneState_Flee : FSM_Transition
     {
-        public To_DroneState_Flee(Unit unit, FSM_State next): base(unit, next)
+        public To_DroneState_Flee(Blackboard context, FSM_State next) : base(context, next)
         {
-            this.unit = unit;
         }
 
         public override bool IsValid()

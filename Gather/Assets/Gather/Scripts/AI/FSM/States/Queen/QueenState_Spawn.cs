@@ -12,10 +12,10 @@ namespace Gather.AI.FSM.States
         Counter fighterCounter;
         float refractoryTime = 1f;
 
-        public QueenState_Spawn (Queen queen)
+        public QueenState_Spawn(Blackboard context) : base(context)
         {
-            this.queen = queen;
-            spawnConfig = queen.Blackboard.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
+            this.queen = context.GetValue<Queen>(Configs.Unit);
+            spawnConfig = context.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
             farmerCounter = queen.TeamConfig.UnitManager.GetUnitCounter(UnitType.Farmer);
             fighterCounter = queen.TeamConfig.UnitManager.GetUnitCounter(UnitType.Fighter);
         }

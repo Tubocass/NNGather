@@ -7,9 +7,10 @@ namespace Gather.AI.FSM.Transitions
     public class To_SarlacState_Sleep : FSM_Transition
     {
         private readonly Sarlac sarlac;
-        public To_SarlacState_Sleep(Sarlac sarlac, FSM_State nextState) : base(sarlac, nextState)
+
+        public To_SarlacState_Sleep(Blackboard context, FSM_State nextState) : base(context, nextState)
         {
-            this.sarlac = sarlac;
+            sarlac = unit.GetComponent<Sarlac>();
         }
 
         public override bool IsValid()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Gather.AI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace gather
@@ -6,6 +7,12 @@ namespace gather
     public class UnitManager 
     {
         Dictionary<UnitType, Counter> unitCounter = new Dictionary<UnitType, Counter>();
+        private Blackboard teamContext;
+
+        public UnitManager(Blackboard teamContext)
+        {
+            this.teamContext = teamContext;
+        }
 
         public void UpdateUnitCount(UnitType type, int value)
         {

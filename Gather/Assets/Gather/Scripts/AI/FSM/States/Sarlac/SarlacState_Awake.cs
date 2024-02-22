@@ -10,10 +10,10 @@ namespace Gather.AI.FSM.States
         EnemyDetector enemyDetector;
         bool changePath;
 
-        public SarlacState_Awake(Sarlac sarlac)
+        public SarlacState_Awake(Blackboard context) : base(context)
         {
-            this.sarlac = sarlac;
-            enemyDetector = sarlac.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            this.sarlac = context.GetValue<Sarlac>(Configs.Unit);
+            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 
         public override void EnterState()

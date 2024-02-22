@@ -8,9 +8,9 @@ namespace Gather.AI.FSM.Transitions
     {
         private readonly FarmerDrone drone;
 
-        public To_DroneState_Return(FarmerDrone drone, FSM_State next): base(drone, next)
+        public To_DroneState_Return(Blackboard context, FSM_State next): base(context, next)
         {
-            this.drone = drone;
+            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
         }
 
         public override bool IsValid()

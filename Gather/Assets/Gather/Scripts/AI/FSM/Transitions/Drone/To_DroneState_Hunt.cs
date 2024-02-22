@@ -5,16 +5,14 @@ namespace Gather.AI.FSM.Transitions
 {
     public class To_DroneState_Hunt : FSM_Transition
     {
-        private readonly FighterDrone drone;
 
-        public To_DroneState_Hunt(FighterDrone drone, FSM_State next): base(drone, next)
+        public To_DroneState_Hunt(Blackboard context, FSM_State next) : base(context, next)
         {
-            this.drone = drone;
         }
 
         public override bool IsValid()
         {
-            return !drone.HasTarget;
+            return !context.GetValue<bool>(Configs.HasTarget); ;
         }
 
         public override void OnTransition()

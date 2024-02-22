@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Gather.AI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace gather
@@ -7,6 +8,13 @@ namespace gather
     {
         Dictionary<int, int> foodTargets = new Dictionary<int, int>();
         List<Vector2> knownFoodSources = new List<Vector2>();
+        private Blackboard teamContext;
+
+        public FoodManager(Blackboard teamContext)
+        {
+            this.teamContext = teamContext;
+            teamContext.SetValue(Configs.KnownFoodSources, knownFoodSources);
+        }
 
         public void TargetFood(int droneID, int foodID)
         {

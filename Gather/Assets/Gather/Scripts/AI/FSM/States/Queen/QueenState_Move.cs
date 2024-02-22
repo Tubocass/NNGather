@@ -7,9 +7,9 @@ namespace Gather.AI.FSM.States
         Queen queen;
         FoodManager foodCounter;
 
-        public QueenState_Move(Queen queen)
+        public QueenState_Move(Blackboard context) : base(context)
         {
-            this.queen = queen;
+            this.queen = context.GetValue<Queen>(Configs.Unit);
             foodCounter = queen.TeamConfig.FoodManager;
         }
 

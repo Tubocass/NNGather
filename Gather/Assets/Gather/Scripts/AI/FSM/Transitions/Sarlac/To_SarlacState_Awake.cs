@@ -6,14 +6,15 @@ namespace Gather.AI.FSM.Transitions
     public class To_SarlacState_Awake : FSM_Transition
     {
         private readonly Sarlac sarlac;
-        public To_SarlacState_Awake(Sarlac sarlac, FSM_State nextState) : base(sarlac, nextState)
+
+        public To_SarlacState_Awake(Blackboard context, FSM_State nextState) : base(context, nextState)
         {
-            this.sarlac = sarlac;
+            sarlac = unit.GetComponent<Sarlac>();
         }
 
         public override bool IsValid()
         {
-            return sarlac.isNight && !sarlac.HasTarget;
+            return sarlac.isNight && !context.GetValue<bool>(Configs.HasTarget);
         }
 
         public override void OnTransition()

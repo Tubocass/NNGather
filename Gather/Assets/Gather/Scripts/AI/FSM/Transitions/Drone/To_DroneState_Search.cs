@@ -6,15 +6,17 @@ namespace Gather.AI.FSM.Transitions
     public class To_DroneState_Search : FSM_Transition
     {
         private readonly FarmerDrone drone;
+        bool arrivedAtSource;
 
-        public To_DroneState_Search(FarmerDrone drone, FSM_State nextState) : base(drone, nextState)
+        public To_DroneState_Search(Blackboard context, FSM_State nextState) : base(context, nextState)
         {
-            this.drone = drone;
+            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
         }
 
         public override bool IsValid()
         {
-            return (drone.IsVisitingKnownSources && drone.arrivedAtSource) || (!drone.IsMoving && drone.IsSearchingForFood);
+            arrivedAtSource = context.GetValue<bool>("arrivedAtSource");
+            return (drone.IsVisitingKnownSources && arrivedAtSource) || (!drone.IsMoving && drone.IsSearchingForFood);
         }
 
         public override void OnTransition()

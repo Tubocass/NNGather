@@ -34,7 +34,6 @@ namespace Gather.AI.FSM.Controllers
             }
 
             Tick();
-
         }
 
         protected virtual void Init()

@@ -8,20 +8,19 @@ namespace Gather.AI.FSM.States
     {
         FarmerDrone drone;
         Vector2 nextSource;
+        bool arrivedAtSource;
 
-
-        public DroneState_MoveToNext (FarmerDrone drone)
+        public DroneState_MoveToNext(Blackboard context) : base(context)
         {
-            this.drone = drone;
+            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
         }
 
         public override void EnterState()
         {
             Debug.Log("MoveToNext");
-
-            if (nextSource == Vector2.zero || drone.arrivedAtSource)
+            if (nextSource == Vector2.zero || arrivedAtSource)
             {
-                drone.arrivedAtSource = false;
+                context.SetValue("arrivedAtSource", false);
                 nextSource = drone.sourcesToVist.Dequeue();
             }
 
@@ -30,8 +29,10 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            drone.arrivedAtSource = Vector2.Distance(drone.GetLocation(), nextSource) <= 1;
-            if (drone.arrivedAtSource && !drone.IsVisitingKnownSources)
+            arrivedAtSource = Vector2.Distance(drone.GetLocation(), nextSource) <= 1;
+            context.SetValue("arrivedAtSource", arrivedAtSource);
+
+            if (arrivedAtSource && !drone.IsVisitingKnownSources)
             {
                 drone.isExploring = true;
             }

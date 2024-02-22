@@ -7,10 +7,12 @@ namespace Gather.AI.FSM.Transitions
     {
         protected FSM_State nextState;
         protected Unit unit;
+        protected Blackboard context;
 
-        public FSM_Transition(Unit unit, FSM_State nextState)
+        public FSM_Transition(Blackboard context, FSM_State nextState)
         {
-            this.unit = unit;
+            this.context = context;
+            this.unit = context.GetValue<Unit>(Configs.Unit);
             this.nextState = nextState;
         }
 

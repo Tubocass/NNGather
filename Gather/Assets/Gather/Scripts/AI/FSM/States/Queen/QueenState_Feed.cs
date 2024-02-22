@@ -7,9 +7,9 @@ namespace Gather.AI.FSM.States
         //int targetFoodCount = 10;
         QueenFoodManager foodCounter;
 
-        public QueenState_Feed(Queen queen)
+        public QueenState_Feed(Blackboard context) : base(context)
         {
-
+            Queen queen = context.GetValue<Queen>(Configs.Unit);
             foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 

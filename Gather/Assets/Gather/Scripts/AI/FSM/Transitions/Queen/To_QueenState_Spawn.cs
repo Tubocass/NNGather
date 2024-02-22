@@ -8,9 +8,9 @@ namespace Gather.AI.FSM.Transitions
         private readonly Queen queen;
         private readonly QueenFoodManager foodCounter;
 
-        public To_QueenState_Spawn(Queen queen, FSM_State next): base(queen, next)
+        public To_QueenState_Spawn(Blackboard context, FSM_State next): base(context, next)
         {
-            this.queen = queen;
+            this.queen = context.GetValue<Queen>(Configs.Unit);
             foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 

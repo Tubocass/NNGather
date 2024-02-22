@@ -7,9 +7,9 @@ namespace Gather.AI.FSM.States
     {
         Sarlac sarlac;
 
-        public SarlacState_Return(Sarlac sarlac)
+        public SarlacState_Return(Blackboard context) : base(context)
         {
-            this.sarlac = sarlac;
+            this.sarlac = context.GetValue<Sarlac>(Configs.Unit);
         }
 
         public override void Update()

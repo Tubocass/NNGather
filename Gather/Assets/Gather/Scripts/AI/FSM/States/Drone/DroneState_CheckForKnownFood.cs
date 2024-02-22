@@ -8,9 +8,9 @@ namespace Gather.AI.FSM.States
     {
         FarmerDrone drone;
 
-        public DroneState_CheckForKnownFood(FarmerDrone drone) 
+        public DroneState_CheckForKnownFood(Blackboard context):base(context)
         {
-            this.drone = drone;
+            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
         }
 
         public override void EnterState()
@@ -36,11 +36,5 @@ namespace Gather.AI.FSM.States
                 return 1;
             } else return 0;
         }
-
-        public override void ExitState()
-        {
-            Debug.Log("source count :" + drone.sourcesToVist.Count);
-        }
-
     }
 }

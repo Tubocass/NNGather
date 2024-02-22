@@ -1,5 +1,4 @@
 using gather;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gather.AI.FSM.States
@@ -9,25 +8,17 @@ namespace Gather.AI.FSM.States
         FarmerDrone drone;
         FoodBerry target;
         FoodDetector foodDetector;
-        Queue<Vector2> recentlyVisitedSpots = new Queue<Vector2>();
-        bool changePath;
-        
-        public DroneState_Search(FarmerDrone drone)
+
+        public DroneState_Search(Blackboard context) : base(context)
         {
-            this.drone = drone;
-            foodDetector = drone.Blackboard.GetValue<FoodDetector>(Configs.FoodDetector);
+            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
+            foodDetector = context.GetValue<FoodDetector>(Configs.FoodDetector);
         }
 
         public override void EnterState()
         {
             Debug.Log("Search");
-            changePath = true;
             Search();
-
-        }
-
-        public override void Update()
-        {
         }
 
         public override void ExitState()
@@ -44,11 +35,6 @@ namespace Gather.AI.FSM.States
                 target = TargetSystem.TargetNearest(drone.GetLocation(), foodDetector.GetFoodList());
                 drone.TargetFood(target);
             } 
-            //else if (!drone.IsMoving || changePath)
-            //{
-            //    changePath = false;
-            //    drone.MoveRandomly(drone.AnchorPoint());
-            //}
         }
     }
 }
