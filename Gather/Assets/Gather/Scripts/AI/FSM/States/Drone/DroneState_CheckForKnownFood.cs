@@ -15,7 +15,6 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            Debug.Log("CheckForKnownFood");
             List<Vector2> sources = drone.TeamConfig.FoodManager.GetFoodSources();
             if (sources.Count > 0)
             {
