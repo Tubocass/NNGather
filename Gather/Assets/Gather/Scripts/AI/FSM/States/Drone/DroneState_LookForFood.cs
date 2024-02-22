@@ -1,6 +1,4 @@
-﻿using Gather.AI.FSM.Transitions;
-
-namespace Gather.AI.FSM.States
+﻿namespace Gather.AI.FSM.States
 {
     public class DroneState_LookForFood : FSM_SuperState
     {
@@ -10,24 +8,14 @@ namespace Gather.AI.FSM.States
 
         public override void Init()
         {
-            DroneState_CheckForKnownFood stateCheckKnownFood = new DroneState_CheckForKnownFood(context);
-            DroneState_MoveRandom moveRandom = new DroneState_MoveRandom(context);
-            DroneState_MoveToNext moveToNext = new DroneState_MoveToNext(context);
-            DroneState_Search searchState = new DroneState_Search(context);
-            DroneState_Engage engageState = new DroneState_Engage(context);
-            initialState = stateCheckKnownFood;
+            DroneStateFactory factory = new DroneStateFactory(context);
+            factory.DroneState_CheckKnownFood.AddTransitions(factory.ToMoveNext, factory.ToMoveRandom);
+            factory.DroneState_MoveToNext.AddTransitions(factory.ToSearch);
+            factory.DroneState_MoveRandom.AddTransitions(factory.ToSearch);
+            factory.DroneState_Search.AddTransitions(factory.ToEngage, factory.ToCheckKnownFood, factory.ToMoveNext, factory.ToMoveRandom);
+            factory.DroneState_Engage.AddTransitions(factory.ToSearch);
 
-            To_DroneState_MoveToNext toMoveNext = new To_DroneState_MoveToNext(context, moveToNext);
-            To_DroneState_MoveRandom toMoveRandom = new To_DroneState_MoveRandom(context, moveRandom);
-            To_DroneState_CheckForKnownFood toCheckKnownFood = new To_DroneState_CheckForKnownFood(context, stateCheckKnownFood);
-            To_DroneState_Search toSearch = new(context, searchState);
-            To_DroneState_Engage toEngage = new(context, engageState);
-
-            stateCheckKnownFood.AddTransitions(toMoveNext, toMoveRandom);
-            moveRandom.AddTransitions(toSearch);
-            moveToNext.AddTransitions(toSearch);
-            searchState.AddTransitions(toEngage, toCheckKnownFood, toMoveRandom, toMoveNext);
-            engageState.AddTransitions(toSearch);
+            initialState = factory.DroneState_Search;
         }
     }
 }

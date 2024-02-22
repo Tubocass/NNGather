@@ -14,7 +14,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !drone.IsMoving && drone.IsVisitingKnownSources;
+            return !drone.IsMoving && drone.IsSearchingForFood && drone.IsVisitingKnownSources;
         }
     }
 }

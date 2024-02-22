@@ -1,6 +1,5 @@
 ﻿using gather;
 using Gather.AI.FSM.States;
-using Gather.AI.FSM.Transitions;
 
 namespace Gather.AI.FSM.Controllers
 {
@@ -15,18 +14,12 @@ namespace Gather.AI.FSM.Controllers
             enemyDetector = GetComponent<EnemyDetector>();
             Blackboard bb = drone.Blackboard;
 
-            DroneState_LookForFood superStateLookForFood = new DroneState_LookForFood(bb);
-            DroneState_Flee fleeState = new DroneState_Flee(bb);
-            DroneState_Return returnState = new DroneState_Return(bb);
-            initialState = superStateLookForFood;
-
-            To_DroneState_LookForFood toLookForFood = new To_DroneState_LookForFood(bb, superStateLookForFood);
-            To_DroneState_Flee toFlee = new(bb, fleeState);
-            To_DroneState_Return toReturn = new(bb, returnState);
-
-            superStateLookForFood.AddTransitions(toFlee, toReturn);
-            fleeState.AddTransitions(toLookForFood, toReturn);
-            returnState.AddTransitions(toFlee, toLookForFood);
+            DroneStateFactory factory = new DroneStateFactory(bb);
+            factory.DroneState_LookForFood.AddTransitions(factory.ToFlee, factory.ToReturn);
+            factory.DroneState_Flee.AddTransitions(factory.ToLookForFood, factory.ToReturn);
+            factory.DroneState_Return.AddTransitions(factory.ToLookForFood);
+            
+            initialState = factory.DroneState_LookForFood;
         }
 
         public override void Tick()
