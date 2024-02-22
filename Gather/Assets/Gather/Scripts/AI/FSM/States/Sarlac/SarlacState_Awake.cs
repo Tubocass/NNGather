@@ -39,7 +39,7 @@ namespace Gather.AI.FSM.States
             if (enemyDetector.DetectedThing)
             {
                 target = TargetSystem.TargetNearest(sarlac.GetLocation(), enemyDetector.GetEnemiesList());
-                sarlac.Blackboard.SetValue<ITargetable>(Configs.Target, target);
+                context.SetValue<ITargetable>(Configs.Target, target);
                 sarlac.SetHasTarget(true);
             } else if (!sarlac.IsMoving || changePath)
             {

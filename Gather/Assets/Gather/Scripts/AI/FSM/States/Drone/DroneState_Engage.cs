@@ -18,7 +18,7 @@ namespace Gather.AI.FSM.States
         {
             Debug.Log("Engage");
             changePath = true; 
-            target = unit.Blackboard.GetValue<ITargetable>(Configs.Target);
+            target = context.GetValue<ITargetable>(Configs.Target);
         }
 
         public override void Update()

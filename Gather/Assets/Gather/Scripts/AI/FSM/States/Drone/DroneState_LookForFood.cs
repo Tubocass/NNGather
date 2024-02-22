@@ -1,6 +1,4 @@
-﻿using gather;
-using Gather.AI.FSM.Transitions;
-using UnityEngine;
+﻿using Gather.AI.FSM.Transitions;
 
 namespace Gather.AI.FSM.States
 {

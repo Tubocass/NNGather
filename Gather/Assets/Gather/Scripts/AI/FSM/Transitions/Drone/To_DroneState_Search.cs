@@ -16,7 +16,7 @@ namespace Gather.AI.FSM.Transitions
         public override bool IsValid()
         {
             arrivedAtSource = context.GetValue<bool>("arrivedAtSource");
-            return (drone.IsVisitingKnownSources && arrivedAtSource) || (!drone.IsMoving && drone.IsSearchingForFood);
+            return (drone.IsVisitingKnownSources && arrivedAtSource) || (!drone.IsMoving);
         }
 
         public override void OnTransition()

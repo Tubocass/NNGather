@@ -50,7 +50,7 @@ namespace Gather.AI.FSM.States
             {
                 if (transistion.IsValid())
                 {
-                    lastState = transistion.GetNextState();
+                    LastState = transistion.GetNextState();
                 }
             }
             LastState.Update();

@@ -13,7 +13,7 @@ namespace Gather.AI.FSM.States
         public DroneState_Flee(Blackboard context) : base(context)
         {
             this.unit = context.GetValue<Unit>(Configs.Unit);
-            enemyDetector = unit.Blackboard.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
 
         public override void EnterState()
