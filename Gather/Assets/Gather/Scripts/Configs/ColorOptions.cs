@@ -36,7 +36,6 @@ namespace gather
             {
                 if(!Contains(i))
                 {
-                    Debug.Log(i);
                     return i;
                 }
             }

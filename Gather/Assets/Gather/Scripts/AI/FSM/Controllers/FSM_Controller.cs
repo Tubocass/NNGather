@@ -1,13 +1,11 @@
 ﻿using Gather.AI.FSM.States;
 using Gather.AI.FSM.Transitions;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gather.AI.FSM.Controllers
 {
     public abstract class FSM_Controller : MonoBehaviour
     {
-        protected List<FSM_State> states = new List<FSM_State>();
         protected FSM_State initialState;
         private FSM_State activeState;
         private bool isEnabled = false;
