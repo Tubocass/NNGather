@@ -16,11 +16,6 @@ namespace gather
 
         public void TakeDamage(int amount)
         {
-            if(hp <= 0)
-            {
-                return;
-            }
-
             hp -= amount;
             if (hp <= 0)
             {

@@ -29,9 +29,8 @@ namespace gather
 
         public void Detect()
         {
-            TargetSystem.FindTargetsByCount<FoodBerry>(
-                config.searchAmount, config.searchTag, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && unitController.CanTargetFood(f), out foods
-                );
+            foods = TargetSystem.FindTargetsByCount<FoodBerry>(
+                config.searchAmount, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && unitController.CanTargetFood(f));
             detectedSomething =  foods.Count > 0;
         }
     }

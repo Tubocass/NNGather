@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetSystem
 {
-    public static List<T> FindTargetsByCount<T>(int amount, string tag, Vector2 location, float distance, LayerMask mask, Predicate<T> boo, out List<T> targets) where T:Component
+    public static List<T> FindTargetsByCount<T>(int amount, Vector2 location, float distance, LayerMask mask, Predicate<T> boo) where T:Component
     {
-        targets = new List<T>();
+        List<T> targets = new List<T>();
 
         Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask, -1, 1);
         if (cols.Length > 0)
