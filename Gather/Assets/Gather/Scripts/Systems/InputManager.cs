@@ -7,6 +7,7 @@ namespace gather
         Queen player;
         Anchor activeAnchor;
         RaycastHit2D hit;
+        [SerializeField] LayerMask anchorMask;
 
         void Update()
         {
@@ -58,7 +59,7 @@ namespace gather
 
         void RemoveAnchor()
         {
-            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, 1 << LayerMask.NameToLayer("Resources"));
+            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100f, anchorMask);
             if(hit)
             {
                 Debug.Log(hit.transform);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3475229686214532414}
   - component: {fileID: 8124289913855996774}
   - component: {fileID: 610024837512567826}
-  m_Layer: 3
+  m_Layer: 5
   m_Name: Fight_Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

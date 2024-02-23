@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3919581236296941915}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1197862516029580405}
   - component: {fileID: 8168314054567318845}
   - component: {fileID: 715601073375911782}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Level_Setup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3320846849637915367}
   - component: {fileID: 5567145355421654753}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}

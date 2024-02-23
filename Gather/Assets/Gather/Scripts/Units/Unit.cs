@@ -87,7 +87,7 @@ namespace gather
             return enemyDetector.DetectedThing;
         }
 
-        public void SetHasTarget(bool value)
+        public virtual void SetHasTarget(bool value)
         {
             context.SetValue(Configs.HasTarget, value);
         }
