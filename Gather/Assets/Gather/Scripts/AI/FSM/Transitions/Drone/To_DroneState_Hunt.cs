@@ -1,5 +1,4 @@
-﻿using gather;
-using Gather.AI.FSM.States;
+﻿using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
@@ -12,11 +11,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !context.GetValue<bool>(Configs.HasTarget); ;
-        }
-
-        public override void OnTransition()
-        {
+            return !unit.IsMoving && !context.GetValue<bool>(Configs.HasTarget); ;
         }
     }
 }

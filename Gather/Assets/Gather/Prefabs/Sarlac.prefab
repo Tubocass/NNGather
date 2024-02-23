@@ -286,7 +286,7 @@ MonoBehaviour:
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 1
   rotateSpeed: 350
-  centerOffset: {x: 0, y: 1}
+  centerOffset: {x: 0, y: 1.2}
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1
@@ -345,3 +345,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
+  hp: 0

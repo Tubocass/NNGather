@@ -12,7 +12,6 @@ namespace Gather.AI.FSM.States
         public override void EnterState()
         {
             base.EnterState();
-            Debug.Log("Asleep");
         }
 
     }

@@ -24,9 +24,10 @@ namespace Gather.AI.FSM.States
         To_DroneState_LookForFood toLookForFood;
         To_DroneState_CheckForKnownFood toCheckKnownFood;
         To_DroneState_MoveToNext toMoveNext;
-        To_DroneState_MoveRandom toMoveRandom;
+        To_UnitState_MoveRandom toMoveRandom;
+        To_FarmerState_MoveRandom toFarmerMoveRandom;
         To_DroneState_Search toSearch;
-        To_DroneState_Engage toEngage;
+        To_UnitState_Engage toEngage;
         To_DroneState_Flee toFlee;
         To_DroneState_Return toReturn;
         To_DroneState_Hunt toHunt;
@@ -44,9 +45,11 @@ namespace Gather.AI.FSM.States
         public To_DroneState_LookForFood ToLookForFood => toLookForFood ??= new To_DroneState_LookForFood(context, DroneState_LookForFood);
         public To_DroneState_CheckForKnownFood ToCheckKnownFood => toCheckKnownFood ??= new To_DroneState_CheckForKnownFood(context, DroneState_CheckKnownFood);
         public To_DroneState_MoveToNext ToMoveNext => toMoveNext ??= new To_DroneState_MoveToNext(context, DroneState_MoveToNext);
-        public To_DroneState_MoveRandom ToMoveRandom => toMoveRandom ??= new To_DroneState_MoveRandom(context, DroneState_MoveRandom);
+        public To_FarmerState_MoveRandom ToFarmerMoveRandom => toFarmerMoveRandom ??= new To_FarmerState_MoveRandom(context, DroneState_MoveRandom);
+        public To_UnitState_MoveRandom ToMoveRandom => toMoveRandom ??= new To_UnitState_MoveRandom(context, DroneState_MoveRandom);
+
         public To_DroneState_Search ToSearch => toSearch ??= new To_DroneState_Search(context, DroneState_Search);
-        public To_DroneState_Engage ToEngage => toEngage ??= new To_DroneState_Engage(context, DroneState_Engage);
+        public To_UnitState_Engage ToEngage => toEngage ??= new To_UnitState_Engage(context, DroneState_Engage);
         public To_DroneState_Flee ToFlee => toFlee ??= new To_DroneState_Flee(context, DroneState_Flee);
         public To_DroneState_Return ToReturn => toReturn ??= new To_DroneState_Return(context, DroneState_Return);
         public To_DroneState_Hunt To_Hunt => toHunt ??= new To_DroneState_Hunt(context, DroneState_Hunt);

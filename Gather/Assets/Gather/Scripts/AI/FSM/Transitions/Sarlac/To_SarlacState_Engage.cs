@@ -3,7 +3,7 @@ using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Transitions
 {
-    public class To_SarlacState_Engage : To_DroneState_Engage
+    public class To_SarlacState_Engage : To_UnitState_Engage
     {
         Sarlac sarlac;
         public To_SarlacState_Engage(Blackboard context, FSM_State nextState) : base(context, nextState)

@@ -11,6 +11,8 @@ namespace gather
         [Space(5)]
         [SerializeField] int numStartLocations = 8;
         [SerializeField] float startLocationMinDist;
+        [Space(5)]
+        [SerializeField] float distFromEdge = 15f;
         Vector2[] startLocations;
         int startIndex;
         float xRange, yRange;
@@ -18,8 +20,8 @@ namespace gather
         private void Awake()
         {
             Collider2D bgCollider = GetComponent<Collider2D>();
-            xRange = bgCollider.bounds.extents.x;
-            yRange = bgCollider.bounds.extents.y;
+            xRange = bgCollider.bounds.extents.x - distFromEdge;
+            yRange = bgCollider.bounds.extents.y - distFromEdge;
         }
 
         public Vector2 GetStartLocation()

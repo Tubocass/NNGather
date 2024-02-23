@@ -1,5 +1,4 @@
 using gather;
-using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {

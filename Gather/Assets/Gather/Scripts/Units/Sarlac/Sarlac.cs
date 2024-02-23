@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
 namespace gather
 {
-    public class Sarlac : Unit
+    public class Sarlac : Unit, IRoamer
     {
         bool isAwake = false;
         public bool isNight = false;
@@ -15,21 +14,6 @@ namespace gather
             TimeManager timeManager = FindFirstObjectByType<TimeManager>();
             timeManager.OnDusk.AddListener(SunDown);
             timeManager.OnDawn.AddListener(SunUp);
-        }
-
-        public void SetHome(Transform home)
-        {
-            this.homePit = home;
-        }
-
-        public bool IsAtHome()
-        {
-            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
-        }
-
-        public void ReturnToHome()
-        {
-            SetDestination(homePit.position);
         }
 
         void SunUp()
@@ -48,6 +32,21 @@ namespace gather
             this.teamConfig = config;
             teamConfig.UnitManager.UpdateUnitCount(unitType, 1);
             enemyDetector.SetTeam(teamConfig.TeamID);
+        }
+
+        public void SetHome(Transform home)
+        {
+            this.homePit = home;
+        }
+
+        public bool IsAtHome()
+        {
+            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
+        }
+
+        public void ReturnHome()
+        {
+            SetDestination(homePit.position);
         }
 
         public void MoveRandomly(Vector2 center)

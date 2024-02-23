@@ -1,5 +1,4 @@
 using gather;
-using UnityEngine;
 
 namespace Gather.AI.FSM.States
 {
@@ -19,7 +18,6 @@ namespace Gather.AI.FSM.States
         public override void EnterState()
         {
             changePath = true;
-            Debug.Log("Awake");
         }
 
         public override void Update()

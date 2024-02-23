@@ -3,7 +3,7 @@ using UnityEngine;
 namespace gather
 {
     [RequireComponent(typeof(PooledObject))]
-    public abstract class Drone : Unit
+    public abstract class Drone : Unit, IRoamer
     {
         protected Queen myQueen;
         [SerializeField] float orbitRadius = 40;
@@ -49,7 +49,7 @@ namespace gather
             return myQueen.GetLocation();
         }
 
-        public void ReturnToQueen()
+        public void ReturnHome()
         {
             SetDestination(myQueen.GetLocation());
         }

@@ -13,7 +13,8 @@ namespace Gather.AI.FSM.Controllers
             Blackboard bb = drone.Blackboard;
             factory = new DroneStateFactory(bb);
 
-            factory.DroneState_Hunt.AddTransitions(factory.ToEngage);
+            factory.DroneState_MoveRandom.AddTransitions(factory.To_Hunt);
+            factory.DroneState_Hunt.AddTransitions(factory.ToEngage, factory.ToMoveRandom);
             factory.DroneState_Engage.AddTransitions(factory.To_Hunt);
 
             initialState = factory.DroneState_Hunt;
