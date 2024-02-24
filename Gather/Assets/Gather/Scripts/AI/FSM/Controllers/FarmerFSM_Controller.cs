@@ -7,18 +7,18 @@ namespace Gather.AI.FSM.Controllers
     {
         FarmerDrone drone;
         EnemyDetector enemyDetector;
-        DroneStateFactory factory;
+        FarmerStateFactory factory;
 
         protected override void Init()
         {
             drone = GetComponent<FarmerDrone>();
             enemyDetector = GetComponent<EnemyDetector>();
             Blackboard bb = drone.Blackboard;
-            factory = new DroneStateFactory(bb);
+            factory = new FarmerStateFactory(bb);
 
             factory.DroneState_LookForFood.AddTransitions(factory.ToFlee, factory.ToReturn);
-            factory.DroneState_Flee.AddTransitions(factory.ToLookForFood, factory.ToReturn);
-            factory.DroneState_Return.AddTransitions(factory.ToLookForFood);
+            factory.UnitState_Flee.AddTransitions(factory.ToLookForFood, factory.ToReturn);
+            factory.UnitState_Return.AddTransitions(factory.ToLookForFood);
             
             initialState = factory.DroneState_LookForFood;
         }

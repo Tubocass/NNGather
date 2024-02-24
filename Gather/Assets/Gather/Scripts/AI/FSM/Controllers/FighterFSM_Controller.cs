@@ -5,19 +5,19 @@ namespace Gather.AI.FSM.Controllers
 {
     public class FighterFSM_Controller : FSM_Controller
     {
-        DroneStateFactory factory;
+        UnitStateFactory factory;
 
         protected override void Init()
         {
             FighterDrone drone = GetComponent<FighterDrone>();
             Blackboard bb = drone.Blackboard;
-            factory = new DroneStateFactory(bb);
+            factory = new UnitStateFactory(bb);
 
-            factory.DroneState_MoveRandom.AddTransitions(factory.To_Hunt);
-            factory.DroneState_Hunt.AddTransitions(factory.ToEngage, factory.ToMoveRandom);
-            factory.DroneState_Engage.AddTransitions(factory.To_Hunt);
+            factory.UnitState_MoveRandom.AddTransitions(factory.To_Hunt);
+            factory.UnitState_Hunt.AddTransitions(factory.ToEngage, factory.ToMoveRandom);
+            factory.UnitState_Engage.AddTransitions(factory.To_Hunt);
 
-            initialState = factory.DroneState_Hunt;
+            initialState = factory.UnitState_Hunt;
         }
     }
 }

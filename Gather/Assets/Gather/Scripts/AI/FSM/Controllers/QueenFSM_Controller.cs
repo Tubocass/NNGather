@@ -1,6 +1,5 @@
 ﻿using gather;
 using Gather.AI.FSM.States;
-using Gather.AI.FSM.Transitions;
 
 namespace Gather.AI.FSM.Controllers
 {
@@ -14,22 +13,14 @@ namespace Gather.AI.FSM.Controllers
             queen = GetComponent<Queen>();
             enemyDetector = GetComponent<EnemyDetector>();
             Blackboard bb = queen.Blackboard;
+            QueenStateFactory factory = new QueenStateFactory(bb);
 
-            QueenState_Move moveState = new QueenState_Move(bb);
-            QueenState_Feed feedState = new QueenState_Feed(bb);
-            QueenState_Spawn spawnState = new QueenState_Spawn(bb);
-            Queen_State_Emergency emergencyState = new Queen_State_Emergency(bb);
-            initialState = spawnState;
+            factory.QueenState_Feed.AddTransitions(factory.ToFlee, factory.ToMove, factory.ToSpawn);
+            factory.QueenState_Move.AddTransitions(factory.ToFlee, factory.ToFeed, factory.ToSpawn);
+            factory.QueenState_Spawn.AddTransitions(factory.ToFlee, factory.ToFeed, factory.ToMove);
+            factory.Queen_State_Emergency.AddTransitions(factory.ToFeed, factory.ToSpawn);
 
-            To_QueenState_Feed toFeed = new To_QueenState_Feed(bb, feedState);
-            To_QueenState_Spawn toSpawn = new To_QueenState_Spawn(bb, spawnState);
-            To_DroneState_Flee toFlee = new To_DroneState_Flee(bb, emergencyState);
-            To_QueenState_Move toMove = new To_QueenState_Move(bb, moveState);
-
-            moveState.AddTransitions(toFlee, toFeed, toSpawn);
-            feedState.AddTransitions(toFlee, toMove, toSpawn);
-            spawnState.AddTransitions(toFlee, toFeed, toMove);
-            emergencyState.AddTransitions(toFeed, toSpawn);
+            initialState = factory.QueenState_Spawn;
         }
 
         public override void Tick()
