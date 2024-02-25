@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TargetSystem
 {
-    public static List<T> FindTargetsByCount<T>(int amount, Vector2 location, float distance, LayerMask mask, Predicate<T> boo) where T:Component
+    public static void FindTargetsByCount<T>(List<T> targets, Vector2 location, SearchConfig config, Predicate<T> boo) where T:Component
     {
-        List<T> targets = new List<T>();
-
-        Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask);
+        targets.Clear();
+        Collider2D[] cols = Physics2D.OverlapCircleAll(location, config.searchDist, config.searchLayer);
+        int amount = config.searchAmount;
         if (cols.Length > 0)
         {
             for (int f = 0; f < cols.Length; f++)
@@ -25,7 +25,6 @@ public class TargetSystem
                 else break;
             }
         }
-        return targets;
     }
     
     public static T TargetNearest<T>(Vector3 position, List<T> targets) where T : Component

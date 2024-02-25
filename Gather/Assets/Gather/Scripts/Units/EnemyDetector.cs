@@ -25,8 +25,8 @@ namespace gather
 
         public void Detect()
         {
-            enemies = TargetSystem.FindTargetsByCount<Unit>(
-                config.searchAmount, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && ContainsUnitType(f.UnitType));
+            TargetSystem.FindTargetsByCount<Unit>(
+                enemies, unitController.GetLocation(), config, f => f.CanBeTargeted(team) && ContainsUnitType(f.UnitType));
             detectedThing = enemies != null && enemies.Count > 0;
         }
 
