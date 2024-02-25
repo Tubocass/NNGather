@@ -13,7 +13,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !sarlac.isNight && !sarlac.IsAtHome();
+            return !context.GetValue<bool>(Configs.IsNight);
         }
     }
 }

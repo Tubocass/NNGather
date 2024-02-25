@@ -13,13 +13,9 @@ namespace Gather.AI.FSM.Controllers
             Blackboard bb = sarlac.Blackboard;
             SarlacStateFactory factory = new SarlacStateFactory(bb);
 
-            factory.SarlacState_Sleep.AddTransitions(factory.To_Hunt);
-            factory.UnitState_Hunt.AddTransitions(
-                factory.To_Engage, factory.To_Return, factory.ToMoveRandom, factory.To_Sleep
-                );
-            factory.UnitState_MoveRandom.AddTransitions(factory.To_Hunt, factory.To_Return);
-            factory.UnitState_Engage.AddTransitions(factory.To_Hunt, factory.To_Hunt, factory.To_Return);
-            factory.UnitState_Return.AddTransitions(factory.To_Sleep, factory.To_Hunt);
+            factory.SarlacState_Sleep.AddTransitions(factory.To_Awake);
+            factory.SarlacState_Awake.AddTransitions(factory.To_Return);
+            factory.UnitState_Return.AddTransitions(factory.To_Sleep, factory.To_Awake);
 
             initialState = factory.SarlacState_Sleep;
         }

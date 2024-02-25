@@ -1,17 +1,20 @@
-using UnityEngine;
+
+using gather;
 
 namespace Gather.AI.FSM.States
 {
 
     public class SarlacState_Sleep : FSM_State
     {
+        Sarlac sarlac;
         public SarlacState_Sleep(Blackboard context) : base(context)
         {
+            sarlac = context.GetValue<Sarlac>(Configs.Unit);
         }
 
         public override void EnterState()
         {
-            base.EnterState();
+            sarlac.Sleep();
         }
 
     }

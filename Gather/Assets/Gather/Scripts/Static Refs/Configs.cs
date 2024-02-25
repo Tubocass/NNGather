@@ -13,5 +13,5 @@ public static class Configs
     public static readonly string Unit = "unit";
     public static readonly string KnownFoodSources = "knownFoodSources";
     public static readonly string ArrivedAtSource = "arrivedAtSource";
-
+    public static readonly string IsNight = "isNight";
 }

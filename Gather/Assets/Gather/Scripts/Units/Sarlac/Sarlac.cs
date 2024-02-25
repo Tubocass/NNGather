@@ -4,27 +4,46 @@ namespace gather
 {
     public class Sarlac : Unit, IRoamer
     {
-        bool isAwake = false;
         public bool isNight = false;
         [SerializeField] float orbitRadius = 40;
         Transform homePit;
+        Collider2D[] myColliders;
 
-        void Start()
+        protected override void Awake()
         {
+            base.Awake();
             TimeManager timeManager = FindFirstObjectByType<TimeManager>();
             timeManager.OnDusk.AddListener(SunDown);
             timeManager.OnDawn.AddListener(SunUp);
+            myColliders = GetComponentsInChildren<Collider2D>();
         }
 
         void SunUp()
         {
-            isNight = false;
+            context.SetValue(Configs.IsNight, false);
         }
 
         void SunDown()
         {
-            isNight = true;
-            isAwake = true;
+            context.SetValue(Configs.IsNight, true);
+        }
+
+        public void Sleep()
+        {
+            spriteRenderer.enabled = false;
+            for (int i = 0; i < myColliders.Length; i++)
+            {
+                myColliders[i].enabled = false;
+            }
+        }
+
+        public void WakeUp()
+        {
+            spriteRenderer.enabled = true;
+            for (int i = 0; i < myColliders.Length; i++)
+            {
+                myColliders[i].enabled = true;
+            }
         }
 
         public override void SetTeam(TeamConfig config)
@@ -41,7 +60,7 @@ namespace gather
 
         public bool IsAtHome()
         {
-            return Vector2.Distance(GetLocation(), homePit.position) < 1f;
+            return Vector2.Distance(GetLocation() + navAgent.centerOffset, homePit.position) < 1f;
         }
 
         public void ReturnHome()
