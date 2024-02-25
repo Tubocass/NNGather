@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
-  enemyTypes: 00000000
+  enemyTypes: 0000000003000000
 --- !u!114 &6439568929991540250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
+  hp: 0
 --- !u!114 &5257950058885918053
 MonoBehaviour:
   m_ObjectHideFlags: 0

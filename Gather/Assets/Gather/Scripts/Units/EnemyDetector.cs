@@ -27,7 +27,7 @@ namespace gather
         {
             enemies = TargetSystem.FindTargetsByCount<Unit>(
                 config.searchAmount, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && ContainsUnitType(f.UnitType));
-            detectedThing = enemies.Count > 0;
+            detectedThing = enemies != null && enemies.Count > 0;
         }
 
         bool ContainsUnitType(UnitType type)

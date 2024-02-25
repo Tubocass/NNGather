@@ -8,7 +8,7 @@ public class TargetSystem
     {
         List<T> targets = new List<T>();
 
-        Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask, -1, 1);
+        Collider2D[] cols = Physics2D.OverlapCircleAll(location, distance, mask);
         if (cols.Length > 0)
         {
             for (int f = 0; f < cols.Length; f++)

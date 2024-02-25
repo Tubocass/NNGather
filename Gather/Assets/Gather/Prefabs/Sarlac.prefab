@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8183535843611685321}
-  - component: {fileID: 714317422012837044}
   - component: {fileID: 3172767017518587558}
+  - component: {fileID: 4238269106683984940}
   m_Layer: 0
   m_Name: Nose
   m_TagString: Untagged
@@ -33,8 +33,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5637534801667011731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &714317422012837044
-CircleCollider2D:
+--- !u!114 &3172767017518587558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615933052598878516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf10686fdccebe4e8933489e44ef014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  refractoryTime: 1
+  damage: 1
+--- !u!70 &4238269106683984940
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -67,22 +81,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.4
---- !u!114 &3172767017518587558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615933052598878516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccf10686fdccebe4e8933489e44ef014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  refractoryTime: 1
-  damage: 1
+  m_Offset: {x: 0, y: -0.2}
+  m_Size: {x: 1.4, y: 0.59}
+  m_Direction: 1
 --- !u!1 &6749269113008260806
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
   avoidanceConsiderReachedDistance: 1
   rotateTransform: 1
   rotateSpeed: 350
-  centerOffset: {x: 0, y: 1.2}
+  centerOffset: {x: 0, y: 1.6}
   repath: 1
   restrict: 0
   closerPointOnInvalid: 1

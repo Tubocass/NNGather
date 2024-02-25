@@ -73,7 +73,7 @@ namespace gather
 
         public bool CanBeTargeted(int team)
         {
-            return teamConfig.TeamID != team && gameObject.activeSelf;
+            return teamConfig.TeamID != team && isActiveAndEnabled;
         }
 
         public void SetDestination(Vector2 location)

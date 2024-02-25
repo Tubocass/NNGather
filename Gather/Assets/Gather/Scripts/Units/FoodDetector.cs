@@ -31,7 +31,7 @@ namespace gather
         {
             foods = TargetSystem.FindTargetsByCount<FoodBerry>(
                 config.searchAmount, unitController.GetLocation(), config.searchDist, config.searchLayer, f => f.CanBeTargeted(team) && unitController.CanTargetFood(f));
-            detectedSomething =  foods.Count > 0;
+            detectedSomething = foods != null && foods.Count > 0;
         }
     }
 }

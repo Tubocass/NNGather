@@ -24,7 +24,7 @@ namespace Gather.AI.FSM.Controllers
             }
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (!isEnabled)
             {
