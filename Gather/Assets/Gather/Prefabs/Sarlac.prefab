@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -3966285217305872965}
   - component: {fileID: 2414159921843209950}
   - component: {fileID: 6218567657721601470}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sarlac
   m_TagString: Unit
   m_Icon: {fileID: 0}

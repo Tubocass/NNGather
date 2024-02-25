@@ -388,6 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   orbitRadius: 40
+  isExploring: 0
 --- !u!114 &-7060340031324956497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
-  enemyTypes: 00000000
+  enemyTypes: 0000000003000000
 --- !u!114 &3204129293427662293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,3 +454,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1
+  hp: 0
