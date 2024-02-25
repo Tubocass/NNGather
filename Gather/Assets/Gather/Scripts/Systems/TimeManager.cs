@@ -59,6 +59,11 @@ namespace gather
             return t>= timeOfDawn/lengthOfDay && t<= timeOfDusk/lengthOfDay;
         }
 
+        public bool IsDaylight()
+        {
+            return IsInRange(dayRatio);
+        }
+
         private void UpdateLight()
         {
             float ratio = timeOfDay / lengthOfDay;

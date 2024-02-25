@@ -77,6 +77,19 @@ namespace gather
             teamConfig.FoodManager.UntargetFood(food.GetInstanceID());
         }
 
+        public override void SetHasTarget(bool hasTarget)
+        {
+            base.SetHasTarget(hasTarget);
+            if (!hasTarget)
+            {
+                FoodBerry food = (FoodBerry)context.GetValue<ITargetable>(Configs.Target);
+                if(food != null)
+                {
+                    UntargetFood(food);
+                }
+            }
+        }
+
         public void PickupFood(FoodBerry pellet)
         {
             // called by collider on child transform

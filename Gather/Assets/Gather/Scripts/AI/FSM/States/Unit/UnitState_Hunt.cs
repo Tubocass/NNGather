@@ -14,10 +14,9 @@ namespace Gather.AI.FSM.States
             enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
         }
         
-        public override void EnterState()
+        public override void Update()
         {
             Hunt();
-
         }
 
         public override void ExitState()

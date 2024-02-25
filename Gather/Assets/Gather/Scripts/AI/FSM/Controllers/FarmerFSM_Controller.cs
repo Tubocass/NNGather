@@ -18,7 +18,7 @@ namespace Gather.AI.FSM.Controllers
 
             factory.DroneState_LookForFood.AddTransitions(factory.ToFlee, factory.ToReturn);
             factory.UnitState_Flee.AddTransitions(factory.ToLookForFood, factory.ToReturn);
-            factory.UnitState_Return.AddTransitions(factory.ToLookForFood);
+            factory.UnitState_Return.AddTransitions(factory.ToFlee, factory.ToLookForFood);
             
             initialState = factory.DroneState_LookForFood;
         }

@@ -4,7 +4,6 @@ namespace gather
 {
     public class Sarlac : Unit, IRoamer
     {
-        public bool isNight = false;
         [SerializeField] float orbitRadius = 40;
         Transform homePit;
         Collider2D[] myColliders;
@@ -16,6 +15,9 @@ namespace gather
             timeManager.OnDusk.AddListener(SunDown);
             timeManager.OnDawn.AddListener(SunUp);
             myColliders = GetComponentsInChildren<Collider2D>();
+
+            context.SetValue(Configs.IsNight, !timeManager.IsDaylight());
+            SetHasTarget(false);
         }
 
         void SunUp()

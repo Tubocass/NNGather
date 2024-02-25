@@ -15,6 +15,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override void OnTransition()
         {
+            unit.SetHasTarget(false);
         }
     }
 }

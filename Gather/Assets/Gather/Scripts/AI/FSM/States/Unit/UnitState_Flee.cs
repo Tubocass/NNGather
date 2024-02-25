@@ -6,7 +6,6 @@ namespace Gather.AI.FSM.States
 {
     public class UnitState_Flee : FSM_State
     {
-        List<Unit> enemies;
         Unit unit;
         EnemyDetector enemyDetector;
 
@@ -22,16 +21,10 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            enemies = enemyDetector.GetEnemiesList();
-
-            if (enemies.Count > 0)
+            if (enemyDetector.DetectedThing)
             {
-                unit.SetDestination(unit.GetLocation() + (unit.GetLocation() - DangerZone(enemies)));
+                unit.SetDestination(unit.GetLocation() + (unit.GetLocation() - DangerZone(enemyDetector.GetEnemiesList())));
             }
-        }
-
-        public override void ExitState()
-        {
         }
 
         private Vector2 DangerZone(List<Unit> enemies)
