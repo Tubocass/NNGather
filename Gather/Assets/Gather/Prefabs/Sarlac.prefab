@@ -305,7 +305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 3
-  isNight: 0
   orbitRadius: 200
 --- !u!114 &-3966285217305872965
 MonoBehaviour:
@@ -331,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7640a00f4f84e674fa627b2dca0aab44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: ad31d1bc97a7bdd499ffc8d4032cfe77, type: 2}
+  config: {fileID: 11400000, guid: adafe51fcdaa31f4aabf40d5f46ff7af, type: 2}
   enemyTypes: 0000000001000000
 --- !u!114 &6218567657721601470
 MonoBehaviour:

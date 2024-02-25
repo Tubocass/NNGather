@@ -26,7 +26,7 @@ namespace Gather.AI.FSM.States
 
         void Hunt()
         {
-            enemyDetector.Detect();
+            //enemyDetector.Detect();
 
             if (enemyDetector.DetectedThing)
             {

@@ -428,7 +428,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   lengthOfDay: 100
-  timeOfDay: 20
+  timeOfDay: 50
   timeOfDawn: 25
   timeOfDusk: 75
   OnDawn:
