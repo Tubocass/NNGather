@@ -14,7 +14,11 @@ namespace Gather.AI.FSM.Transitions
         public override bool IsValid()
         {
             bool hasTarget = context.GetValue<bool>(Configs.HasTarget);
-            bool targetIsNearestTarget = TargetSystem.TargetNearest(unit.GetLocation(), enemyDetector.GetEnemiesList()) == (Unit)context.GetValue<ITargetable>(Configs.Target);
+            bool targetIsNearestTarget = true;
+            if (hasTarget)
+            {
+                targetIsNearestTarget = TargetSystem.TargetNearest(unit.GetLocation(), enemyDetector.GetEnemiesList()) == (Unit)context.GetValue<ITargetable>(Configs.Target);
+            }
             return !hasTarget || (hasTarget && !targetIsNearestTarget);
         }
     }
