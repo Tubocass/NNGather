@@ -13,6 +13,10 @@ namespace gather
         private void Awake()
         {
             parentDrone = GetComponentInParent<Unit>();
+        }
+
+        private void OnEnable()
+        {
             canFire = true;
         }
 
