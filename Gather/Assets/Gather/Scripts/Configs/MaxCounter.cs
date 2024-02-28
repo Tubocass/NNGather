@@ -2,6 +2,7 @@
 
 namespace Gather
 {
+    [System.Serializable]
     public class MaxCounter : Counter
     {
         private int max;
@@ -12,14 +13,7 @@ namespace Gather
 
         public override void SetAmount(int value)
         {
-            base.SetAmount(value > max? max: value);
+            base.SetAmount(Mathf.Clamp(value, 0, max));
         }
-
-        public override void AddAmount(int value)
-        {
-            base.AddAmount(value);
-            Mathf.Clamp(amount, 0, max);
-        }
-
     }
 }

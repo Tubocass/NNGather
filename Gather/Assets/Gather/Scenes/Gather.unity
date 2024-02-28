@@ -1089,10 +1089,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2377285055140870613, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2377285056081004998, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
       propertyPath: m_Name
       value: MainUI
@@ -1181,10 +1177,6 @@ PrefabInstance:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1922184458}
-    - target: {fileID: 2377285056181276752, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2377285056613290211, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1428,10 +1420,6 @@ PrefabInstance:
       propertyPath: levelSetup
       value: 
       objectReference: {fileID: 830893895}
-    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 4247676982238605522, guid: f472f9f692ed78d4c921b4dcd1a4929c, type: 3}
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: uiController
       value: 

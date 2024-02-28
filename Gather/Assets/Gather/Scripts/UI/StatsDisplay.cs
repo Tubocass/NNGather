@@ -8,6 +8,7 @@ namespace Gather.UI
         [SerializeField] ScoreDisplay foodDisplay;
         [SerializeField] ScoreDisplay farmerDisplay;
         [SerializeField] ScoreDisplay fighterDisplay;
+        [SerializeField] HealthBar healthBar;
         [SerializeField] Button spawnFarmer;
         [SerializeField] Button spawnFighter;
         [SerializeField] Button farmerAnchor;
@@ -15,9 +16,10 @@ namespace Gather.UI
 
         public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
+            foodDisplay.SetCounter(playerQueen.GetFoodCounter());
             farmerDisplay.SetCounter(playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
             fighterDisplay.SetCounter(playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
-            foodDisplay.SetCounter(playerQueen.GetFoodCounter());
+            healthBar.SetCounter(playerQueen.Health.GetCounter());
 
             spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);
             spawnFighter.onClick.AddListener(playerQueen.SpawnFighter);

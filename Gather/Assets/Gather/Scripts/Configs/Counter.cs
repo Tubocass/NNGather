@@ -4,6 +4,7 @@ using UnityEngine.Events;
 namespace Gather
 {
     [CreateAssetMenu]
+    [System.Serializable]
     public class Counter : ScriptableObject
     {
         public UnityEvent counterEvent = new UnityEvent();
@@ -22,8 +23,7 @@ namespace Gather
 
         public virtual void AddAmount(int value)
         {
-            amount += value;
-            counterEvent?.Invoke();
+            SetAmount(amount += value);
         }
     }
 }

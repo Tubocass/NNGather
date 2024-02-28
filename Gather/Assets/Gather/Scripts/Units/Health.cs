@@ -4,20 +4,27 @@ namespace Gather
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] int maxHP = 2;
-        [SerializeField] int hp;
+        [SerializeField] int maxHP;
+        MaxCounter hp;
         Unit unit;
 
-        private void Start()
+        private void Awake()
         {
             unit = GetComponent<Unit>();
-            hp = maxHP;
+            hp = ScriptableObject.CreateInstance<MaxCounter>();
+            hp.SetMax(maxHP);
+            hp.SetAmount(maxHP);
+        }
+
+        public MaxCounter GetCounter()
+        {
+            return hp;
         }
 
         public void TakeDamage(int amount)
         {
-            hp -= amount;
-            if (hp <= 0)
+            hp.AddAmount(-amount);
+            if (hp.GetAmount() <= 0)
             {
                 unit.Death();
             }
@@ -25,10 +32,7 @@ namespace Gather
 
         public void Heal(int amount)
         {
-            if(hp < maxHP)
-            {
-                hp += amount;
-            }
+            hp.AddAmount(amount);
         }
     }
 }
