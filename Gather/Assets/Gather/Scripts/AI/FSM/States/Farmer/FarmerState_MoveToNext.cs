@@ -17,10 +17,10 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            if (nextSource == Vector2.zero || arrivedAtSource)
+            if (nextSource == Vector2.zero || (drone.IsVisitingKnownSources && arrivedAtSource))
             {
                 context.SetValue(Configs.ArrivedAtSource, false);
-                nextSource = drone.sourcesToVist.Dequeue();
+                nextSource = drone.waypoints.Dequeue();
             }
 
             drone.SetDestination(nextSource);
@@ -28,7 +28,7 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            arrivedAtSource = Vector2.Distance(drone.GetLocation(), nextSource) <= 1;
+            arrivedAtSource = Vector2.Distance(drone.GetLocation(), nextSource) <= 20;
             context.SetValue(Configs.ArrivedAtSource, arrivedAtSource);
 
             if (arrivedAtSource && !drone.IsVisitingKnownSources)

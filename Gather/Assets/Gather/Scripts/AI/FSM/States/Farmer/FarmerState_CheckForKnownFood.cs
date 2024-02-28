@@ -1,4 +1,5 @@
 ﻿using gather;
+using Mono.Cecil;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +16,24 @@ namespace Gather.AI.FSM.States
 
         public override void EnterState()
         {
-            List<Vector2> sources = drone.TeamConfig.FoodManager.GetFoodSources();
-            if (sources.Count > 0)
+            List<Vector2> sources = new List<Vector2>(drone.TeamConfig.FoodManager.GetFoodSources());
+
+            
+            if (sources.Count > 0) 
             {
-                sources.Sort(CompareDistanceToDrone);
-                sources.ForEach(source => drone.sourcesToVist.Enqueue(source));
                 drone.isExploring = false;
+                //sources.Sort(CompareDistanceToDrone);
+                //sources.ForEach(source => drone.waypoints.Enqueue(source));
+                
+                //  Daisy Chain
+                Vector2 next = drone.GetLocation();
+
+                for (int i = 0; i < sources.Count; ++i)
+                {
+                    next = TargetSystem.TargetNearest(next, sources);
+                    sources.Remove(next);
+                    drone.waypoints.Enqueue(next);
+                }
             }
         }
 
