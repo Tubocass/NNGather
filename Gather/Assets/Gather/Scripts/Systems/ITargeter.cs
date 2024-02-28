@@ -1,4 +1,4 @@
-﻿namespace gather
+﻿namespace Gather
 {
     public interface ITargeter
     {

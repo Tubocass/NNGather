@@ -2,7 +2,7 @@ using Gather.AI.FSM.Controllers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     [RequireComponent(typeof(FarmerFSM_Controller))]
     public class FarmerDrone : Drone

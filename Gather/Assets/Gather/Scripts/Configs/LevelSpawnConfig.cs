@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     [CreateAssetMenu]
     public class LevelSpawnConfig : ScriptableObject

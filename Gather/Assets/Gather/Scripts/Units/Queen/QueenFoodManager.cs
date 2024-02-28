@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     public class QueenFoodManager : MonoBehaviour
     {
@@ -12,12 +12,12 @@ namespace gather
         Queue<Vector2> foodLocations;
         Counter foodCounter;
 
-        public int Amount { get { return foodCounter.Amount; } }
+        public int Amount { get { return foodCounter.GetAmount(); } }
 
         protected void OnEnable()
         {
             foodCounter = ScriptableObject.CreateInstance<Counter>();
-            foodCounter.Amount = startAmount;
+            foodCounter.SetAmount(startAmount);
             foodLocations = new Queue<Vector2>(foodQueueSize);
         }
 

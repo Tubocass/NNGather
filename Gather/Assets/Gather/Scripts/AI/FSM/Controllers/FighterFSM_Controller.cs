@@ -1,4 +1,4 @@
-﻿using gather;
+﻿using Gather;
 using Gather.AI.FSM.States;
 
 namespace Gather.AI.FSM.Controllers

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     public class InputManager : MonoBehaviour
     {

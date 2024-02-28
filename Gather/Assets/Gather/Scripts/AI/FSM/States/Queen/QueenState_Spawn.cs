@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using gather;
+using Gather;
 using System.Collections;
 
 namespace Gather.AI.FSM.States
@@ -37,13 +37,13 @@ namespace Gather.AI.FSM.States
                 float chance = Random.value;
                 if (chance >= 0.66)
                 {
-                    if (fighterCounter.Amount < spawnConfig.fighterCap)
+                    if (fighterCounter.GetAmount() < spawnConfig.fighterCap)
                     {
                         queen.SpawnFighter();
                     }
                 } else
                 {
-                    if (farmerCounter.Amount < spawnConfig.farmerCap)
+                    if (farmerCounter.GetAmount() < spawnConfig.farmerCap)
                     {
                         queen.SpawnFarmer();
                     }

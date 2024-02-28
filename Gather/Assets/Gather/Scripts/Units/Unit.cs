@@ -2,7 +2,7 @@ using UnityEngine;
 using PolyNav;
 using Gather.AI;
 
-namespace gather
+namespace Gather
 {
     public enum UnitType { Fighter, Farmer, Queen, Sarlac }
 

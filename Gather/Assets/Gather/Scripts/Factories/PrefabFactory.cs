@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using gather;
+using Gather;
 
 public abstract class PrefabFactory : MonoBehaviour
 {

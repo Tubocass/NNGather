@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     public delegate void LocationEvent(Vector2 location);
     public delegate void FoodEvent(int amount);

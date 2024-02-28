@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     [RequireComponent(typeof(PooledObject))]
     public abstract class Drone : Unit, IRoamer

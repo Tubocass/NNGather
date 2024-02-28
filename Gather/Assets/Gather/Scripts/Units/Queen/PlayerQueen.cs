@@ -1,5 +1,5 @@
 ﻿
-namespace gather
+namespace Gather
 {
     public class PlayerQueen : Queen
     {

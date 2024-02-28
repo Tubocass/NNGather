@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using gather;
 
 namespace Gather.UI
 {
@@ -22,7 +21,7 @@ namespace Gather.UI
 
         public void UpdateText() 
         {
-            scoreText.text = counter?.Amount.ToString();
+            scoreText.text = counter?.GetAmount().ToString();
         }
     }
 }

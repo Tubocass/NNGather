@@ -1,7 +1,7 @@
 using UnityEngine;
 using Gather.AI;
 
-namespace gather
+namespace Gather
 {
     [CreateAssetMenu]
     public class TeamConfig : ScriptableObject

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Gather.UI;
 
-namespace gather
+namespace Gather
 {
     [System.Serializable]
     public struct TeamSelect

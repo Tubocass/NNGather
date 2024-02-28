@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     [CreateAssetMenu]
     public class GameEventObject : ScriptableObject

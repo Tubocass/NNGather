@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using gather;
+using Gather;
 using UnityEngine.SceneManagement;
 
 namespace Gather.UI

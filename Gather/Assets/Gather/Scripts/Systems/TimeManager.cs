@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
-namespace gather
+namespace Gather
 {
     public class TimeManager : MonoBehaviour
     {

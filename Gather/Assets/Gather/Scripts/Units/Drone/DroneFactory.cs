@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     public class DroneFactory : MonoBehaviour
     {

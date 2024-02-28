@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     [CreateAssetMenu]
     public class DroneSpawnConfig : ScriptableObject

@@ -1,4 +1,4 @@
-using gather;
+using Gather;
 
 namespace Gather.AI.FSM.States
 {
@@ -24,7 +24,7 @@ namespace Gather.AI.FSM.States
 
         public override void Update()
         {
-            if(!foodCounter.IsFoodLow() && fighterCounter.Amount < spawnConfig.fighterCap)
+            if(!foodCounter.IsFoodLow() && fighterCounter.GetAmount() < spawnConfig.fighterCap)
             {
                 queen.SpawnFighter();
             }

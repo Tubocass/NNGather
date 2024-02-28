@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace gather
+namespace Gather
 {
     public class UnitManager 
     {
@@ -28,7 +28,7 @@ namespace gather
             } else
             {
                 count = ScriptableObject.CreateInstance<Counter>();
-                count.Amount = 0;
+                count.SetAmount(0);
                 unitCounter.Add(type, count);
                 return count;
             }
@@ -40,7 +40,7 @@ namespace gather
             var keys = unitCounter.Keys;
             foreach (var key in keys)
             {
-                teamCount += GetUnitCounter(key).Amount;
+                teamCount += GetUnitCounter(key).GetAmount();
             }
             return teamCount;
         }

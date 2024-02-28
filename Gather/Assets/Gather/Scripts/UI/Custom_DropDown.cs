@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
-using gather;
+using Gather;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 

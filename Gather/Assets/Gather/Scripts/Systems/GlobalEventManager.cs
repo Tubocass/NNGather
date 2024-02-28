@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace gather
+namespace Gather
 {
     public class GlobalEventManager : MonoBehaviour
     {

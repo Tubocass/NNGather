@@ -1,29 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace gather
+namespace Gather
 {
     [CreateAssetMenu]
     public class Counter : ScriptableObject
     {
         public UnityEvent counterEvent = new UnityEvent();
-        public int defaultAmount;
-        private int amount = 0;
+        protected int amount = 0;
 
-        public int Amount { 
-            get => amount; 
-            set { amount = value; counterEvent?.Invoke(); } 
+        public int GetAmount()
+        {
+            return amount;
         }
 
-        public void AddAmount(int value)
+        public virtual void SetAmount(int value)
+        { 
+            amount = value; 
+            counterEvent?.Invoke(); 
+        }
+
+        public virtual void AddAmount(int value)
         {
-            Amount += value;
+            amount += value;
             counterEvent?.Invoke();
-        }
-
-        protected virtual void OnEnable()
-        {
-            Amount = defaultAmount;
         }
     }
 }

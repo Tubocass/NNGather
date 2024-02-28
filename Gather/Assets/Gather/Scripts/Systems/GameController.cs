@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Gather.UI;
 using UnityEditor;
 
-namespace gather
+namespace Gather
 {
     public class GameController : MonoBehaviour
     {

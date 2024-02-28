@@ -1,5 +1,5 @@
 
-using gather;
+using Gather;
 
 namespace Gather.AI.FSM.States
 {
