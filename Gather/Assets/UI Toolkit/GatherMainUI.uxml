@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; min-width: auto; min-height: auto; max-width: none; width: initial; height: initial;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; height: 37px; flex-direction: row; width: 249px; position: absolute; top: 414px; left: -2px;">
+            <ui:Button text="Button" />
+            <ui:Button text="Button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; height: 92px; width: 75px; align-self: center; justify-content: space-around; align-items: flex-start; flex-direction: column; min-height: initial; position: absolute; top: 0; left: 1px;">
+            <ui:Label text="Food" />
+            <ui:Label text="Farmers" />
+            <ui:Label text="Fighters" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
