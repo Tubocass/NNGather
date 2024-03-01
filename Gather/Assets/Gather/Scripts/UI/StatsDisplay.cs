@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Gather.UI
 {
@@ -9,10 +10,13 @@ namespace Gather.UI
         [SerializeField] ScoreDisplay farmerDisplay;
         [SerializeField] ScoreDisplay fighterDisplay;
         [SerializeField] HealthBar healthBar;
-        [SerializeField] Button spawnFarmer;
-        [SerializeField] Button spawnFighter;
-        [SerializeField] Button farmerAnchor;
-        [SerializeField] Button fighterAnchor;
+        [SerializeField] UIDocument document;
+        //[SerializeField] Button spawnFarmer;
+        //[SerializeField] Button spawnFighter;
+        //[SerializeField] Button farmerAnchor;
+        //[SerializeField] Button fighterAnchor;
+        DisplayNumber foodLabel;
+
 
         public void SetupPlayerUI(Queen playerQueen, TeamConfig playerTeam)
         {
@@ -21,10 +25,13 @@ namespace Gather.UI
             fighterDisplay.SetCounter(playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
             healthBar.SetCounter(playerQueen.Health.GetCounter());
 
-            spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);
-            spawnFighter.onClick.AddListener(playerQueen.SpawnFighter);
-            farmerAnchor.onClick.AddListener(playerQueen.PlaceFoodAnchor);
-            fighterAnchor.onClick.AddListener(playerQueen.PlaceFightAnchor);
+            VisualElement root = document.rootVisualElement;
+            Label foodCount = root.Q<Label>(name: "foodCount");
+            foodLabel = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
+            //spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);
+            //spawnFighter.onClick.AddListener(playerQueen.SpawnFighter);
+            //farmerAnchor.onClick.AddListener(playerQueen.PlaceFoodAnchor);
+            //fighterAnchor.onClick.AddListener(playerQueen.PlaceFightAnchor);
         }
     }
 }

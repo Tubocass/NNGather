@@ -36,20 +36,22 @@ namespace Gather
 
         private void Update()
         {
-            CalcTotal();
-            float edge = 0;
-            for (int t = 0; t < teams.Length; t++)
+            if (teams != null)
             {
-                if (t == 0)
+                CalcTotal();
+                float edge = 0;
+                for (int t = 0; t < teams.Length; t++)
                 {
-                    images[t].fillAmount = FillTeam(t);
-                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
-                }
-                else
-                {
-                    images[t].fillAmount = FillTeam(t);
-                    images[t].transform.localPosition = new Vector3(edge, 0, 0);
-                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
+                    if (t == 0)
+                    {
+                        images[t].fillAmount = FillTeam(t);
+                        edge += images[t].rectTransform.rect.width * images[t].fillAmount;
+                    } else
+                    {
+                        images[t].fillAmount = FillTeam(t);
+                        images[t].transform.localPosition = new Vector3(edge, 0, 0);
+                        edge += images[t].rectTransform.rect.width * images[t].fillAmount;
+                    }
                 }
             }
         }
