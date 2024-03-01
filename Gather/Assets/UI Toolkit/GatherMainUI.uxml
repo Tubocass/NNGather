@@ -6,7 +6,7 @@
             <ui:Button text="Fighter" />
         </ui:VisualElement>
         <ui:VisualElement name="VisualElement" class="container" style="width: 96px;">
-            <ui:Label text="Food" />
+            <ui:Label text="Food" name="foodCount" />
             <ui:Label text="Farmers" />
             <ui:Label text="Fighters" />
         </ui:VisualElement>
