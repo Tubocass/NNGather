@@ -10,7 +10,7 @@ namespace Gather
         [SerializeField] GameObject queenPrefab;
         [SerializeField] GameObject playerPrefab;
         [SerializeField] GameObject sarlacPrefab;
-        [SerializeField] UIController uiController;
+        [SerializeField] GUIController uiController;
         [SerializeField] ColorOptions colorOptions;
         [SerializeField] LevelSetup levelSetup;
 
@@ -88,7 +88,7 @@ namespace Gather
             player.SetTeam(teamConfig);
             input.SetPlayer(player);
             cameraController.SetTarget(player.transform);
-            uiController.SetupPlayerUI(player, teamConfig);
+            uiController.SetupPlayerUI(player);
         }
 
         void SetupBot(TeamSelect selection, Vector2 start)

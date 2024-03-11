@@ -531,13 +531,14 @@ GameObject:
   m_Component:
   - component: {fileID: 416451701}
   - component: {fileID: 416451700}
+  - component: {fileID: 416451702}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &416451700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +570,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &416451702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416451699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bcdc40e229e0f24f85ce9aaf5d0a491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &714018315
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,17 +627,6 @@ Transform:
   - {fileID: 1691882607}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &783397237 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2377285056081005018, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
-  m_PrefabInstance: {fileID: 2377285056870761577}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7daf7a0126501d7418c7d4e5178f8f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &825085360 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2377285056081005017, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
@@ -1141,6 +1143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2377285056081004998, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2377285056081005017, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1297,10 +1303,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8700141643713820397, guid: 1abd10e1ea0407e4f8c83ba28a5924dd, type: 3}
-      propertyPath: document
-      value: 
-      objectReference: {fileID: 416451700}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1475,7 +1477,11 @@ PrefabInstance:
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: uiController
       value: 
-      objectReference: {fileID: 783397237}
+      objectReference: {fileID: 416451702}
+    - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: anchorMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6077366050677378578, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: m_Name
       value: Game_Controller
