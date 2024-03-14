@@ -5,12 +5,12 @@ namespace Gather
 {
     public class PopulationBar : MonoBehaviour
     {
-        TeamConfig[] teams;
+        protected TeamConfig[] teams;
         Image[] images;
         [SerializeField] GameObject fillBar;
         int total = 0;
 
-        public void SetTeams(TeamConfig[] teams)
+        public virtual void SetTeams(TeamConfig[] teams)
         {
             this.teams = teams;
             images = new Image[teams.Length];
@@ -21,7 +21,34 @@ namespace Gather
             }
         }
 
-        void CalcTotal()
+        protected void Update()
+        {
+            if (teams != null)
+            {
+                DrawBar();
+            }
+        }
+
+        protected virtual void DrawBar()
+        {
+            CalcTotalPopulation();
+            float edge = 0;
+            for (int t = 0; t < teams.Length; t++)
+            {
+                if (t == 0)
+                {
+                    images[t].fillAmount = CalcTeamPercent(t);
+                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
+                } else
+                {
+                    images[t].fillAmount = CalcTeamPercent(t);
+                    images[t].transform.localPosition = new Vector3(edge, 0, 0);
+                    edge += images[t].rectTransform.rect.width * images[t].fillAmount;
+                }
+            }
+        }
+
+        protected void CalcTotalPopulation()
         {
             total = 0;
             for (int t = 0; t < teams.Length; t++)
@@ -29,31 +56,10 @@ namespace Gather
                 total += teams[t].UnitManager.GetTeamCount();
             }
         }
-        float FillTeam(int team)
+
+        protected float CalcTeamPercent(int team)
         {
             return Mathf.Clamp01(Mathf.InverseLerp(0, total, teams[team].UnitManager.GetTeamCount()));
-        }
-
-        private void Update()
-        {
-            if (teams != null)
-            {
-                CalcTotal();
-                float edge = 0;
-                for (int t = 0; t < teams.Length; t++)
-                {
-                    if (t == 0)
-                    {
-                        images[t].fillAmount = FillTeam(t);
-                        edge += images[t].rectTransform.rect.width * images[t].fillAmount;
-                    } else
-                    {
-                        images[t].fillAmount = FillTeam(t);
-                        images[t].transform.localPosition = new Vector3(edge, 0, 0);
-                        edge += images[t].rectTransform.rect.width * images[t].fillAmount;
-                    }
-                }
-            }
         }
     }
 }

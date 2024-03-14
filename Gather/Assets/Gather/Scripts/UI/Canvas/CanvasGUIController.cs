@@ -16,11 +16,6 @@ namespace Gather.UI
         [SerializeField] Button farmerAnchor;
         [SerializeField] Button fighterAnchor;
 
-        public void SetActive(bool active)
-        {
-            gameObject.SetActive(active);
-        }
-
         public override void SetupPlayerUI(Queen playerQueen)
         {
             TeamConfig playerTeam = playerQueen.TeamConfig;
