@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 namespace Gather
 {
@@ -9,6 +11,7 @@ namespace Gather
         [SerializeField] UnitType[] enemyTypes;
         List<Unit> enemies = new List<Unit>();
         Unit unitController;
+        Predicate<Unit> canTarget;
         int team;
         bool detectedThing = false;
         public bool DetectedThing => detectedThing;
@@ -16,6 +19,8 @@ namespace Gather
         private void Awake()
         {
             unitController = GetComponent<Unit>();
+            canTarget = CanTarget;
+
         }
 
         public void SetTeam(int team)
@@ -25,9 +30,15 @@ namespace Gather
 
         public void Detect()
         {
+
             TargetSystem.FindTargetsByCount<Unit>(
-                enemies, unitController.GetLocation(), config, f => f.CanBeTargeted(team) && ContainsUnitType(f.UnitType));
+                enemies, unitController.GetLocation(), config, canTarget);
             detectedThing = enemies != null && enemies.Count > 0;
+        }
+
+        bool CanTarget(Unit target)
+        {
+            return target.CanBeTargeted(team) && ContainsUnitType(target.UnitType);
         }
 
         bool ContainsUnitType(UnitType type)
