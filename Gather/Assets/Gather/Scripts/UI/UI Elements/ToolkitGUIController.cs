@@ -12,13 +12,13 @@ namespace Gather.UI {
         //HealthBar healthBar;
         //Button farmerAnchor;
         //Button fighterAnchor;
-        PopulationBarElement populationBar;
+        PopulationBarController populationBar;
         //PauseMenu pauseMenu;
 
 
         private void OnEnable()
         {
-            populationBar = GetComponent<PopulationBarElement>();
+            populationBar = GetComponent<PopulationBarController>();
         }
 
         public override void SetupPlayerUI(Queen playerQueen)
@@ -33,9 +33,9 @@ namespace Gather.UI {
             
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
             spawnFighter.clicked += playerQueen.SpawnFighter;
-            foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
-            farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
-            fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
+            //foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
+            //farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
+            //fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
         }
 
         public override void SetupPopulationBar(TeamConfig[] teams)

@@ -279,7 +279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
-  hp: 0
 --- !u!114 &7104895462335366718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +294,7 @@ MonoBehaviour:
   foodQueueSize: 10
   foodReserve: 5
   maxFood: 20
-  startAmount: 10
+  startAmount: 20
 --- !u!1001 &4157595422945233066
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,7 +20,6 @@ namespace Gather
         {
             unitController = GetComponent<Unit>();
             canTarget = CanTarget;
-
         }
 
         public void SetTeam(int team)
@@ -30,9 +29,7 @@ namespace Gather
 
         public void Detect()
         {
-
-            TargetSystem.FindTargetsByCount<Unit>(
-                enemies, unitController.GetLocation(), config, canTarget);
+            TargetSystem.FindTargetsByCount<Unit>(enemies, unitController.GetLocation(), config, canTarget);
             detectedThing = enemies != null && enemies.Count > 0;
         }
 

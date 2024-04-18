@@ -1,33 +1,23 @@
 .unity-label {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .unity-button {
 }
 
-.populationSegment {
-    min-width: 1%;
-    min-height: 100%;
-    max-height: 100%;
-    max-width: 100%;
-    transform-origin: left;
-    flex-grow: 0;
-    align-items: flex-start;
-    flex-shrink: 0;
-}
-
 #Counters {
-    align-items: stretch;
-    justify-content: space-around;
-    font-size: 16px;
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-left-color: rgba(0, 0, 0, 0);
-    border-right-color: rgba(0, 0, 0, 0);
-    border-top-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0);
-    transform-origin: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: auto;
+    align-self: flex-start;
 }
 
 #Buttons {
@@ -43,10 +33,6 @@
 }
 
 #PopulationBar {
-    max-width: 200px;
-    min-width: 100px;
-    max-height: 40px;
-    min-height: 20px;
     align-items: flex-start;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -54,14 +40,55 @@
     overflow: hidden;
     transform-origin: left top;
     justify-content: flex-start;
+    flex-grow: 1;
+    width: 200px;
+    height: 40px;
+    max-width: initial;
+    max-height: 40px;
+    background-color: rgba(137, 135, 135, 0);
 }
 
 .populationSegment {
-    background-image: url('project://database/Assets/Gather/Sprites/ColoredSquare.png?fileID=2800000&guid=abc1825804f39714a892ca288d10d930&type=3#ColoredSquare');
-    background-color: rgb(255, 255, 255);
-    min-width: 1%;
+    min-width: 0;
     min-height: 100%;
     max-height: 100%;
     max-width: 100%;
     transform-origin: left;
+}
+
+.imageLabel {
+    background-color: rgba(118, 118, 118, 0.48);
+    background-image: none;
+    flex-grow: 1;
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.statBox {
+    background-color: rgba(132, 132, 132, 0.56);
+    font-size: 14px;
+    -unity-font-style: normal;
+    text-overflow: ellipsis;
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    margin-left: 0;
+    margin-top: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.unity-text-element {
 }
