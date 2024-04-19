@@ -5,10 +5,10 @@ namespace Gather.UI
 {
     public class PopulationBarController : MonoBehaviour
     {
+        [SerializeField] float minLineWidth = 40f;
         int total = 0;
-        float minLineWidth = 40f;
-        protected TeamConfig[] teams;
-        PopulationBarElement[] elements;
+        TeamConfig[] teams;
+        PopulationBarSegment[] segments;
         VisualElement fillBar;
 
         private void Awake()
@@ -21,30 +21,27 @@ namespace Gather.UI
         public virtual void SetTeams(TeamConfig[] teams)
         {
             this.teams = teams;
-            elements = new PopulationBarElement[teams.Length];
-            for (int t = 0; t < elements.Length; t++)
+            segments = new PopulationBarSegment[teams.Length];
+            for (int t = 0; t < segments.Length; t++)
             {
-                elements[t] = new PopulationBarElement();
-                elements[t].fillColor = teams[t].TeamColor;
-                elements[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineWidth;
-                fillBar.Add(elements[t]);
+                segments[t] = new PopulationBarSegment();
+                segments[t].fillColor = teams[t].TeamColor;
+                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineWidth;
+                fillBar.Add(segments[t]);
             }
         }
 
-        protected void Update()
+        protected void FixedUpdate()
         {
-            if (teams != null)
+            CalcTotalPopulation();
+            float edge = 0;
+            float width = fillBar.contentRect.width;
+            for (int t = 0; t < teams.Length; t++)
             {
-                CalcTotalPopulation();
-                float edge = 0;
-                float width = fillBar.contentRect.width;
-                for (int t = 0; t < teams.Length; t++)
-                {
-                    Vector2 start = new Vector2(edge/2, 0);
-                    elements[t].transform.position = start;
-                    elements[t].fillAmount = CalcTeamPercent(t) * width; ;
-                    edge += elements[t].fillAmount;
-                }
+                Vector2 start = new Vector2(edge/2, 0);
+                segments[t].transform.position = start;
+                segments[t].fillAmount = CalcTeamPercent(t) * width; ;
+                edge += segments[t].fillAmount;
             }
         }
 

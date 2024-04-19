@@ -28,14 +28,18 @@ namespace Gather.UI {
             Label foodCount = root.Q<Label>(name: "foodCount");
             Label farmerCount = root.Q<Label>(name: "farmerCount");
             Label fighterCount = root.Q<Label>(name: "fighterCount");
+            VisualElement farmerImage = root.Q(name: "farmerImage");
+            VisualElement fighterImage = root.Q(name: "fighterImage");
             spawnFarmer = root.Q<Button>(name: "farmerButton");
             spawnFighter = root.Q<Button>(name: "fighterButton");
             
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
             spawnFighter.clicked += playerQueen.SpawnFighter;
-            //foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
-            //farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
-            //fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
+            farmerImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
+            fighterImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
+            foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
+            farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
+            fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
         }
 
         public override void SetupPopulationBar(TeamConfig[] teams)

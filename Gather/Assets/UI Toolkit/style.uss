@@ -1,12 +1,4 @@
 .unity-label {
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
 }
 
 .unity-button {
@@ -41,49 +33,31 @@
     height: 8%;
 }
 
+#InfoPanel {
+}
+
 .populationSegment {
     transform-origin: left;
     max-height: 100px;
     min-width: 1%;
 }
 
+.unity-text-element {
+}
+
+.statBlock {
+    max-height: 45px;
+    max-width: 80px;
+    font-size: 24px;
+    flex-direction: row;
+    overflow: hidden;
+    background-color: rgba(154, 154, 154, 0.71);
+}
+
 .imageLabel {
-    background-color: rgba(118, 118, 118, 0.48);
-    background-image: none;
     flex-grow: 1;
     max-width: 40px;
     max-height: 40px;
     min-width: 20px;
     min-height: 20px;
-}
-
-.statBox {
-    background-color: rgba(132, 132, 132, 0.56);
-    font-size: 14px;
-    -unity-font-style: normal;
-    text-overflow: ellipsis;
-    -unity-slice-left: 0;
-    -unity-slice-top: 0;
-    -unity-slice-right: 0;
-    -unity-slice-bottom: 0;
-    margin-left: 0;
-    margin-top: 0;
-    -unity-background-scale-mode: stretch-to-fill;
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    align-self: flex-start;
-    align-items: flex-start;
-}
-
-.unity-text-element {
-}
-
-#InfoPanel {
-    width: 10%;
 }

@@ -9,6 +9,7 @@ namespace Gather
     {
         public UnityEvent counterEvent = new UnityEvent();
         protected int amount = 0;
+        public int Amount { get { return amount; } }
 
         public int GetAmount()
         {

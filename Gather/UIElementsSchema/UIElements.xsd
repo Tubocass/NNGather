@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="Unity.Profiling.Editor.UI" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:import schemaLocation="Gather.UI.xsd" namespace="Gather.UI" />
   <xs:import schemaLocation="UnityEditor.UIElements.xsd" namespace="UnityEditor.UIElements" />
   <xs:import schemaLocation="UnityEditor.Accessibility.xsd" namespace="UnityEditor.Accessibility" />
   <xs:import schemaLocation="UnityEditor.ShaderGraph.Drawing.xsd" namespace="UnityEditor.ShaderGraph.Drawing" />
   <xs:include schemaLocation="GlobalNamespace.xsd" />
   <xs:import schemaLocation="UnityEditor.Rendering.LookDev.xsd" namespace="UnityEditor.Rendering.LookDev" />
+  <xs:import schemaLocation="Unity.MemoryProfiler.Editor.UI.xsd" namespace="Unity.MemoryProfiler.Editor.UI" />
   <xs:import schemaLocation="UnityEditor.Tilemaps.xsd" namespace="UnityEditor.Tilemaps" />
   <xs:import schemaLocation="UnityEditor.Tilemaps.External.xsd" namespace="UnityEditor.Tilemaps.External" />
   <xs:import schemaLocation="UnityEditor.U2D.Sprites.SpriteEditorTool.xsd" namespace="UnityEditor.U2D.Sprites.SpriteEditorTool" />
