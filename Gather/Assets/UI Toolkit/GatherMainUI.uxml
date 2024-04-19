@@ -2,6 +2,9 @@
     <Style src="project://database/Assets/UI%20Toolkit/style.uss?fileID=7433441132597879392&amp;guid=2416b76a8788da848aae9dd7f08447bb&amp;type=3#style" />
     <ui:VisualElement style="flex-grow: 1; min-width: auto; min-height: auto; max-width: none; width: initial; height: initial;">
         <ui:VisualElement name="PopulationBar" />
+        <ui:VisualElement name="InfoPanel" style="flex-grow: 1;">
+            <ui:VisualElement style="flex-grow: 1;" />
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Buttons">
         <ui:Button text="Farmer" name="farmerButton" />

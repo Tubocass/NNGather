@@ -34,26 +34,17 @@
 
 #PopulationBar {
     align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: nowrap;
     align-self: flex-start;
-    overflow: hidden;
-    transform-origin: left top;
+    overflow: visible;
     justify-content: flex-start;
-    flex-grow: 1;
-    width: 200px;
-    height: 40px;
-    max-width: initial;
-    max-height: 40px;
-    background-color: rgba(137, 135, 135, 0);
+    width: 20%;
+    height: 8%;
 }
 
 .populationSegment {
-    min-width: 0;
-    min-height: 100%;
-    max-height: 100%;
-    max-width: 100%;
     transform-origin: left;
+    max-height: 100px;
+    min-width: 1%;
 }
 
 .imageLabel {
@@ -91,4 +82,8 @@
 }
 
 .unity-text-element {
+}
+
+#InfoPanel {
+    width: 10%;
 }
