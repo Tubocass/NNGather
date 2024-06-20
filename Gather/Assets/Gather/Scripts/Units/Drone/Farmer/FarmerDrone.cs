@@ -15,7 +15,7 @@ namespace Gather
         public Queue<Vector2> waypoints = new Queue<Vector2>();
         public bool isExploring = false;
 
-        public bool IsSearchingForFood { get { return !GetEnemyDetected() && !IsCarryingFood() && !context.GetValue<bool>(Configs.HasTarget); } }
+        public bool IsSearchingForFood { get { return !GetEnemyDetected() && !IsCarryingFood() && !context.GetValue<bool>(Keys.HasTarget); } }
         public bool IsVisitingKnownSources { get { return waypoints.Count > 0; } }
         public bool CanCheckForSources { get { return !isExploring && waypoints.Count == 0 && TeamConfig.FoodManager.GetFoodSources().Count > 0; } }
 
@@ -23,7 +23,7 @@ namespace Gather
         {
             base.Awake();
             foodDetector = GetComponent<FoodDetector>();
-            context.SetValue(Configs.FoodDetector, foodDetector);
+            context.SetValue(Keys.FoodDetector, foodDetector);
         }
 
         public override void Death()
@@ -34,9 +34,9 @@ namespace Gather
                 carriedFood = null;
             }
             foodAnchor.PlaceAnchor -= SetDestination;
-            if (context.GetValue<bool>(Configs.HasTarget))
+            if (context.GetValue<bool>(Keys.HasTarget))
             {
-                ITargetable target = context.GetValue<ITargetable>(Configs.Target);
+                ITargetable target = context.GetValue<ITargetable>(Keys.Target);
                 UntargetFood((FoodBerry)target);
             }
             base.Death();
@@ -67,13 +67,13 @@ namespace Gather
         public void TargetFood(FoodBerry food)
         {
             teamConfig.FoodManager.TargetFood(GetInstanceID(), food.GetInstanceID());
-            context.SetValue<ITargetable>(Configs.Target, food);
+            context.SetValue<ITargetable>(Keys.Target, food);
             SetHasTarget(true);
         }
 
         public void UntargetFood(FoodBerry food)
         {
-            context.SetValue<ITargetable>(Configs.Target, null);
+            context.SetValue<ITargetable>(Keys.Target, null);
             teamConfig.FoodManager.UntargetFood(food.GetInstanceID());
         }
 
@@ -82,7 +82,7 @@ namespace Gather
             base.SetHasTarget(hasTarget);
             if (!hasTarget)
             {
-                FoodBerry food = (FoodBerry)context.GetValue<ITargetable>(Configs.Target);
+                FoodBerry food = (FoodBerry)context.GetValue<ITargetable>(Keys.Target);
                 if(food != null)
                 {
                     UntargetFood(food);

@@ -10,8 +10,8 @@ namespace Gather.AI.FSM.States
 
         public UnitState_Hunt(Blackboard context) : base(context)
         {
-            this.drone = context.GetValue<Unit>(Configs.Unit);
-            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            this.drone = context.GetValue<Unit>(Keys.Unit);
+            enemyDetector = context.GetValue<EnemyDetector>(Keys.EnemyDetector);
         }
         
         public override void Update()
@@ -31,7 +31,7 @@ namespace Gather.AI.FSM.States
             if (enemyDetector.DetectedThing)
             {
                 target = TargetSystem.TargetNearest(drone.GetLocation(), enemyDetector.GetEnemiesList());
-                context.SetValue<ITargetable>(Configs.Target, target);
+                context.SetValue<ITargetable>(Keys.Target, target);
                 drone.SetHasTarget(true);
             }
         }

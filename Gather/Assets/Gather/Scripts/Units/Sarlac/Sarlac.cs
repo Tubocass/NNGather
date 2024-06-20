@@ -16,18 +16,18 @@ namespace Gather
             timeManager.OnDawn.AddListener(SunUp);
             myColliders = GetComponentsInChildren<Collider2D>();
 
-            context.SetValue(Configs.IsNight, !timeManager.IsDaylight());
+            context.SetValue(Keys.IsNight, !timeManager.IsDaylight());
             SetHasTarget(false);
         }
 
         void SunUp()
         {
-            context.SetValue(Configs.IsNight, false);
+            context.SetValue(Keys.IsNight, false);
         }
 
         void SunDown()
         {
-            context.SetValue(Configs.IsNight, true);
+            context.SetValue(Keys.IsNight, true);
         }
 
         public void Sleep()

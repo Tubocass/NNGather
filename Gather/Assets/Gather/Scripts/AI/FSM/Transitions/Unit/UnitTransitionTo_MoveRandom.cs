@@ -11,7 +11,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !unit.IsMoving && !context.GetValue<bool>(Configs.HasTarget);
+            return !unit.IsMoving && !context.GetValue<bool>(Keys.HasTarget);
         }
     }
 }

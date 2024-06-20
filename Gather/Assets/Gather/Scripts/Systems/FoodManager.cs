@@ -13,7 +13,7 @@ namespace Gather
         public FoodManager(Blackboard teamContext)
         {
             this.teamContext = teamContext;
-            teamContext.SetValue(Configs.KnownFoodSources, knownFoodSources);
+            teamContext.SetValue(Keys.KnownFoodSources, knownFoodSources);
         }
 
         public void TargetFood(int droneID, int foodID)

@@ -25,7 +25,7 @@ namespace Gather
                 .GetComponent<FarmerFactory>();
 
             //context.SetValue(Configs.FoodCounter, foodCounter);
-            context.SetValue(Configs.SpawnConfig, spawnConfig);
+            context.SetValue(Keys.SpawnConfig, spawnConfig);
         }
 
         protected void Start()
@@ -47,7 +47,7 @@ namespace Gather
         public override void SetTeam(TeamConfig config)
         {
             base.SetTeam(config);
-            context.SetValue(Configs.TeamConfig, teamConfig);
+            context.SetValue(Keys.TeamConfig, teamConfig);
         }
 
         public void SpawnFarmer()

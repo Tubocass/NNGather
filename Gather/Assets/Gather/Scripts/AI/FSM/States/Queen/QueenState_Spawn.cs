@@ -14,8 +14,8 @@ namespace Gather.AI.FSM.States
 
         public QueenState_Spawn(Blackboard context) : base(context)
         {
-            this.queen = context.GetValue<Queen>(Configs.Unit);
-            spawnConfig = context.GetValue<DroneSpawnConfig>(Configs.SpawnConfig);
+            this.queen = context.GetValue<Queen>(Keys.Unit);
+            spawnConfig = context.GetValue<DroneSpawnConfig>(Keys.SpawnConfig);
             farmerCounter = queen.TeamConfig.UnitManager.GetUnitCounter(UnitType.Farmer);
             fighterCounter = queen.TeamConfig.UnitManager.GetUnitCounter(UnitType.Fighter);
         }

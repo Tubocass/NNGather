@@ -12,7 +12,7 @@ namespace Gather.AI.FSM.Transitions
         public FSM_Transition(Blackboard context, FSM_State nextState)
         {
             this.context = context;
-            this.unit = context.GetValue<Unit>(Configs.Unit);
+            this.unit = context.GetValue<Unit>(Keys.Unit);
             this.nextState = nextState;
         }
 

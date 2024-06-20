@@ -9,7 +9,7 @@ namespace Gather.AI.FSM.States
 
         public QueenState_Feed(Blackboard context) : base(context)
         {
-            Queen queen = context.GetValue<Queen>(Configs.Unit);
+            Queen queen = context.GetValue<Queen>(Keys.Unit);
             foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 

@@ -11,8 +11,8 @@ namespace Gather.AI.FSM.States
 
         public UnitState_Flee(Blackboard context) : base(context)
         {
-            this.unit = context.GetValue<Unit>(Configs.Unit);
-            enemyDetector = context.GetValue<EnemyDetector>(Configs.EnemyDetector);
+            this.unit = context.GetValue<Unit>(Keys.Unit);
+            enemyDetector = context.GetValue<EnemyDetector>(Keys.EnemyDetector);
         }
 
         public override void EnterState()

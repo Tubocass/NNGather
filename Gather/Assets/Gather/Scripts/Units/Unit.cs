@@ -38,8 +38,8 @@ namespace Gather
             navAgent = GetComponent<PolyNavAgent>();
             enemyDetector = GetComponent<EnemyDetector>();
             health = GetComponent<Health>();
-            context.SetValue(Configs.EnemyDetector, enemyDetector);
-            context.SetValue(Configs.Unit, this);
+            context.SetValue(Keys.EnemyDetector, enemyDetector);
+            context.SetValue(Keys.Unit, this);
         }
 
         public Vector2 GetLocation()
@@ -89,7 +89,7 @@ namespace Gather
 
         public virtual void SetHasTarget(bool value)
         {
-            context.SetValue(Configs.HasTarget, value);
+            context.SetValue(Keys.HasTarget, value);
         }
     }
 }

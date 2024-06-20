@@ -14,7 +14,7 @@ namespace Gather.AI.FSM.Transitions
 
         public override bool IsValid()
         {
-            return !context.GetValue<bool>(Configs.IsNight) && sarlac.IsAtHome();
+            return !context.GetValue<bool>(Keys.IsNight) && sarlac.IsAtHome();
         }
 
         public override void OnTransition()

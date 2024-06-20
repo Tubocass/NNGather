@@ -7,7 +7,7 @@ namespace Gather.AI.FSM.States
         Sarlac sarlac;
         public SarlacState_Awake(Blackboard context) : base(context)
         {
-            sarlac = context.GetValue<Sarlac>(Configs.Unit);
+            sarlac = context.GetValue<Sarlac>(Keys.Unit);
         }
 
         public override void EnterState()

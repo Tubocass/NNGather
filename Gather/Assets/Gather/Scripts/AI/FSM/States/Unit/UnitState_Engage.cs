@@ -10,13 +10,13 @@ namespace Gather.AI.FSM.States
 
         public UnitState_Engage(Blackboard context) : base(context) 
         {
-            this.unit = context.GetValue<Unit>(Configs.Unit);
+            this.unit = context.GetValue<Unit>(Keys.Unit);
         }
 
         public override void EnterState()
         {
             changePath = true; 
-            target = context.GetValue<ITargetable>(Configs.Target);
+            target = context.GetValue<ITargetable>(Keys.Target);
         }
 
         public override void Update()

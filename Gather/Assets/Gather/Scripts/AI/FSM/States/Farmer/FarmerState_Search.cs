@@ -10,8 +10,8 @@ namespace Gather.AI.FSM.States
 
         public FarmerState_Search(Blackboard context) : base(context)
         {
-            this.drone = context.GetValue<FarmerDrone>(Configs.Unit);
-            foodDetector = context.GetValue<FoodDetector>(Configs.FoodDetector);
+            this.drone = context.GetValue<FarmerDrone>(Keys.Unit);
+            foodDetector = context.GetValue<FoodDetector>(Keys.FoodDetector);
         }
 
         public override void EnterState()

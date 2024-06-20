@@ -10,7 +10,7 @@ namespace Gather.AI.FSM.Transitions
 
         public QueenTransitionTo_Move(Blackboard context, FSM_State next) : base(context, next)
         {
-            this.queen = context.GetValue<Queen>(Configs.Unit);
+            this.queen = context.GetValue<Queen>(Keys.Unit);
             foodCounter = queen.GetComponent<QueenFoodManager>();
         }
 

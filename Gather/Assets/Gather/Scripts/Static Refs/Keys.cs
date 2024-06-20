@@ -1,4 +1,4 @@
-public static class Configs
+public static class Keys
 {
     public static readonly string EnemyDetector = "enemyDetector";
     public static readonly string EnemySearchConfig = "enemySearchConfig";
