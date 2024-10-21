@@ -10,8 +10,8 @@ namespace Gather.UI {
         Button spawnFarmer;
         Button spawnFighter;
         //HealthBar healthBar;
-        //Button farmerAnchor;
-        //Button fighterAnchor;
+        Button farmerAnchor;
+        Button fighterAnchor;
         //PauseMenu pauseMenu;
 
         public override void SetupPlayerUI(Queen playerQueen)
@@ -25,16 +25,24 @@ namespace Gather.UI {
             VisualElement fighterImage = root.Q(name: "fighterImage");
             spawnFarmer = root.Q<Button>(name: "farmerButton");
             spawnFighter = root.Q<Button>(name: "fighterButton");
-            
+            farmerAnchor = root.Q<Button>(name: "farmerAnchor");
+            fighterAnchor = root.Q<Button>(name: "fighterAnchor");
+
+
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
             spawnFarmer.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             spawnFighter.clicked += playerQueen.SpawnFighter;
             spawnFighter.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
+
             farmerImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             fighterImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
+
             foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
             farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
             fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
+
+            farmerAnchor.clicked += playerQueen.PlaceFoodAnchor;
+            fighterAnchor.clicked += playerQueen.PlaceFightAnchor;
         }
 
     }

@@ -1502,7 +1502,7 @@ PrefabInstance:
       objectReference: {fileID: 416451703}
     - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: anchorMask.m_Bits
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6077366050677378578, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: m_Name

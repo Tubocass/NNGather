@@ -24,7 +24,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="FightRow" style="flex-grow: 1; flex-direction: row;">
             <ui:Button name="fighterButton" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=21300000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;); min-width: 16%; min-height: auto;" />
-            <ui:Button text="Fight Anchor" name="farmerAnchor" />
+            <ui:Button text="Fight Anchor" name="fighterAnchor" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
