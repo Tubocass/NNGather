@@ -34,7 +34,9 @@ namespace Gather.UI {
             spawnFighter = root.Q<Button>(name: "fighterButton");
             
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
+            spawnFarmer.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             spawnFighter.clicked += playerQueen.SpawnFighter;
+            spawnFighter.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             farmerImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             fighterImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
