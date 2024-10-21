@@ -1496,6 +1496,10 @@ PrefabInstance:
       propertyPath: uiController
       value: 
       objectReference: {fileID: 416451702}
+    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: popBarController
+      value: 
+      objectReference: {fileID: 416451703}
     - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: anchorMask.m_Bits
       value: 8

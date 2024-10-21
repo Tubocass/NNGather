@@ -12,6 +12,7 @@ namespace Gather
         [SerializeField] GUIController uiController;
         [SerializeField] ColorOptions colorOptions;
         [SerializeField] LevelSetup levelSetup;
+        [SerializeField] PopulationBarController popBarController;
 
         List<TeamConfig> teams;
         TeamSelect[] teamSelections;
@@ -35,8 +36,6 @@ namespace Gather
             levelSetup.Generate();
             FindTeamSelections();
             teams = new List<TeamConfig>();
-            uiController.gameObject.SetActive(true);
-
             SetupSarlac();
 
             for (int t = 0; t < teamSelections.Length; t++)
@@ -50,7 +49,7 @@ namespace Gather
                 }
             }
 
-            uiController.SetupPopulationBar(teams.ToArray());
+            popBarController.SetupPopulationBar(teams.ToArray());
         }
 
         public void FindTeamSelections()

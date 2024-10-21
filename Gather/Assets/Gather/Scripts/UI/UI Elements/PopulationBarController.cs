@@ -18,7 +18,7 @@ namespace Gather.UI
             fillBar.Clear();
         }
 
-        public virtual void SetTeams(TeamConfig[] teams)
+        public virtual void SetupPopulationBar(TeamConfig[] teams)
         {
             this.teams = teams;
             segments = new PopulationBarSegment[teams.Length];
