@@ -42,8 +42,8 @@ namespace Gather.UI {
             farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
             fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
 
-            farmerAnchor.clicked += inputManager.ReadyFoodAnchor;
-            fighterAnchor.clicked += inputManager.ReadyFightAnchor;
+            farmerAnchor.clicked += inputManager.ToggleFoodAnchor;
+            fighterAnchor.clicked += inputManager.ToggleFightAnchor;
         }
 
     }

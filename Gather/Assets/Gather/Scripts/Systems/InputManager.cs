@@ -51,17 +51,28 @@ namespace Gather
             this.activeAnchor = activeAnchor;
         }
 
-        //public void ToggleFoodAnchor()
-        //{
-        //    SetActiveAnchor(foodAnchor);
-        //    foodAnchor.SetReadyToPlace();
-        //}
+        public void ToggleFoodAnchor()
+        {
+            if (foodAnchor.IsActive())
+            {
+                foodAnchor.Deactivate();
+            } else
+            {
+                ReadyFoodAnchor();
+            }
+        }
 
-        //public void ToggleFightAnchor()
-        //{
+        public void ToggleFightAnchor()
+        {
+            if (fightAnchor.IsActive())
+            {
+                fightAnchor.Deactivate();
+            } else
+            {
+                ReadyFightAnchor();
+            }
+        }
 
-        //}
-   
         public void ReadyFoodAnchor()
         {
             SetActiveAnchor(foodAnchor);
