@@ -26,8 +26,8 @@ namespace Gather.UI
 
             spawnFarmer.onClick.AddListener(playerQueen.SpawnFarmer);
             spawnFighter.onClick.AddListener(playerQueen.SpawnFighter);
-            farmerAnchor.onClick.AddListener(playerQueen.PlaceFoodAnchor);
-            fighterAnchor.onClick.AddListener(playerQueen.PlaceFightAnchor);
+            //farmerAnchor.onClick.AddListener(playerQueen.PlaceFoodAnchor);
+            //fighterAnchor.onClick.AddListener(playerQueen.PlaceFightAnchor);
         }
 
         public override void SetupPopulationBar(TeamConfig[] teams) 

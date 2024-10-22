@@ -18,7 +18,11 @@ namespace Gather
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            fightAnchor = queenie.fightAnchor;
+        }
+
+        public void SetAnchor(Anchor anchor)
+        {
+            fightAnchor = anchor;
             fightAnchor.PlaceAnchor += SetDestination;
         }
 

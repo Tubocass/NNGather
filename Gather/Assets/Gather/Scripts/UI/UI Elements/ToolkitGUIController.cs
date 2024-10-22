@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 namespace Gather.UI {
     public class ToolkitGUIController : GUIController
     {
+        public InputManager inputManager;
         DisplayNumber foodCounter;
         DisplayNumber farmerCounter;
         DisplayNumber fighterCounter;
@@ -41,8 +42,8 @@ namespace Gather.UI {
             farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
             fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
 
-            farmerAnchor.clicked += playerQueen.PlaceFoodAnchor;
-            fighterAnchor.clicked += playerQueen.PlaceFightAnchor;
+            farmerAnchor.clicked += inputManager.ReadyFoodAnchor;
+            fighterAnchor.clicked += inputManager.ReadyFightAnchor;
         }
 
     }

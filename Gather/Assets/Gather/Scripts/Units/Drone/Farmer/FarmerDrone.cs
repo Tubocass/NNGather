@@ -45,7 +45,11 @@ namespace Gather
         public override void SetQueen(Queen queenie)
         {
             base.SetQueen(queenie);
-            foodAnchor = queenie.foodAnchor;
+        }
+
+        public void SetAnchor(Anchor anchor)
+        {
+            foodAnchor = anchor;
             foodAnchor.PlaceAnchor += SetDestination;
         }
 

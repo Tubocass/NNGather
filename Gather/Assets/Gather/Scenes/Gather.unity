@@ -583,6 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcdc40e229e0f24f85ce9aaf5d0a491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputManager: {fileID: 1175013165}
 --- !u!114 &416451703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +731,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4269841455281067712, guid: d2ca9bcc696a96b468bf930153b14851, type: 3}
   m_PrefabInstance: {fileID: 4269841454189988755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1175013165 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+  m_PrefabInstance: {fileID: 6077366049489854701}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd8b53620bf91f43b72bda08a54b4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1276435049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,9 +1509,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 416451702}
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: foodAnchorFab
+      value: 
+      objectReference: {fileID: 5802196354001701443, guid: b9c513dc9f3ac2246834efb24ecc513f, type: 3}
+    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: fightAnchorFab
+      value: 
+      objectReference: {fileID: 8124289913855996774, guid: 73890061ac2fe234a8df9d8d3415e83a, type: 3}
+    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: popBarController
       value: 
       objectReference: {fileID: 416451703}
+    - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: foodAnchor
+      value: 
+      objectReference: {fileID: 5802196354001701443, guid: b9c513dc9f3ac2246834efb24ecc513f, type: 3}
+    - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: fightAnchor
+      value: 
+      objectReference: {fileID: 8124289913855996774, guid: 73890061ac2fe234a8df9d8d3415e83a, type: 3}
     - target: {fileID: 6077366049489854707, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: anchorMask.m_Bits
       value: 40

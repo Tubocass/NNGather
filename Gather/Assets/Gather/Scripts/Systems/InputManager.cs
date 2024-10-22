@@ -4,10 +4,11 @@ namespace Gather
 {
     public class InputManager : MonoBehaviour
     {
+        [SerializeField] LayerMask anchorMask;
+        Anchor foodAnchor, fightAnchor;
         Queen player;
         Anchor activeAnchor;
         RaycastHit2D hit;
-        [SerializeField] LayerMask anchorMask;
 
         void Update()
         {
@@ -19,7 +20,7 @@ namespace Gather
                 
             if (Input.GetButtonDown(Inputs.RightClick))
             {
-                 RemoveAnchor();
+                RemoveAnchor();
             }
             
             if (Input.GetButtonDown(Inputs.SpawnFarmer))
@@ -32,11 +33,17 @@ namespace Gather
                 player.SpawnFighter();
             }
         }
+        public void SetAnchors(Anchor foodAnchor, Anchor fightAnchor)
+        {
+            // given by GameController
+            this.foodAnchor = foodAnchor;
+            this.fightAnchor = fightAnchor;
+        }
 
         public void SetPlayer(Queen player)
         {
             this.player = player;
-            player.SetInputManager(this);
+            player.SetAnchors(foodAnchor, fightAnchor);
         }
 
         public void SetActiveAnchor(Anchor activeAnchor)
@@ -54,6 +61,18 @@ namespace Gather
         //{
 
         //}
+   
+        public void ReadyFoodAnchor()
+        {
+            SetActiveAnchor(foodAnchor);
+            foodAnchor.SetReadyToPlace();
+        }
+
+        public void ReadyFightAnchor()
+        {
+            SetActiveAnchor(fightAnchor);
+            fightAnchor.SetReadyToPlace();
+        }
 
         void PlaceAnchor()
         {

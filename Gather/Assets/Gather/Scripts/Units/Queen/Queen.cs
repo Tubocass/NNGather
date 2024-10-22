@@ -6,12 +6,11 @@ namespace Gather
     [RequireComponent(typeof(QueenFoodManager))]
     public class Queen : Unit
     {
-        public Anchor foodAnchor, fightAnchor;
+        [SerializeField] float hungerTime;
+        Anchor foodAnchor, fightAnchor;
         public DroneSpawnConfig spawnConfig;
         PrefabFactory farmerFactory, fighterFactory;
         QueenFoodManager foodManager;
-        InputManager inputManager;
-        [SerializeField] float hungerTime;
 
         protected override void Awake()
         {
@@ -39,9 +38,12 @@ namespace Gather
             StopCoroutine(Hunger());
         }
 
-        public void SetInputManager(InputManager input)
+        public void SetAnchors(Anchor foodAnchor, Anchor fightAnchor)
         {
-            inputManager = input;
+            this.foodAnchor = foodAnchor;
+            this.fightAnchor = fightAnchor;
+            foodAnchor.transform.SetParent(myTransform, false);
+            fightAnchor.transform.SetParent(myTransform, false);
         }
 
         public override void SetTeam(TeamConfig config)
@@ -57,6 +59,7 @@ namespace Gather
                 FarmerDrone farmer = farmerFactory.Spawn(myTransform.position)
                     .GetComponent<FarmerDrone>();
                 farmer.SetQueen(this);
+                farmer.SetAnchor(foodAnchor);
                 farmer.SetTeam(teamConfig);
 
                 foodManager.AddAmount(-spawnConfig.farmerCost);
@@ -70,6 +73,7 @@ namespace Gather
                 FighterDrone fighter = fighterFactory.Spawn(myTransform.position)
                     .GetComponent<FighterDrone>();
                 fighter.SetTeam(teamConfig);
+                fighter.SetAnchor(fightAnchor);
                 fighter.SetQueen(this);
 
                 foodManager.AddAmount(-spawnConfig.fighterCost);
@@ -97,18 +101,6 @@ namespace Gather
                     health.TakeDamage(1);
                 }
             }
-        }
-
-        public void PlaceFoodAnchor()
-        {
-            inputManager.SetActiveAnchor(foodAnchor);
-            foodAnchor.SetReadyToPlace();
-        }
-
-        public void PlaceFightAnchor()
-        {
-            inputManager.SetActiveAnchor(fightAnchor);
-            fightAnchor.SetReadyToPlace();
         }
 
         public Counter GetFoodCounter() 

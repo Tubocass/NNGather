@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Gather.UI;
+using UnityEngine.UIElements;
 
 namespace Gather
 {
@@ -13,6 +14,7 @@ namespace Gather
         [SerializeField] ColorOptions colorOptions;
         [SerializeField] LevelSetup levelSetup;
         [SerializeField] PopulationBarController popBarController;
+        [SerializeField] Anchor foodAnchorFab, fightAnchorFab;
 
         List<TeamConfig> teams;
         TeamSelect[] teamSelections;
@@ -84,6 +86,7 @@ namespace Gather
                 .GetComponent<Queen>();
             
             player.SetTeam(teamConfig);
+            input.SetAnchors(Instantiate(foodAnchorFab), Instantiate(fightAnchorFab));
             input.SetPlayer(player);
             cameraController.SetTarget(player.transform);
             uiController.SetupPlayerUI(player);
@@ -96,6 +99,7 @@ namespace Gather
             Queen bot = Instantiate(queenPrefab, start, Quaternion.identity)
                 .GetComponent<Queen>();
             bot.SetTeam(teamConfig);
+            bot.SetAnchors(Instantiate(foodAnchorFab), Instantiate(fightAnchorFab));
         }
 
         TeamConfig NewTeam(TeamSelect selection)
