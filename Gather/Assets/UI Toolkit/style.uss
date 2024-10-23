@@ -1,67 +1,44 @@
-.unity-label {
-}
-
-.unity-button {
-}
-
-#Counters {
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: row;
-    width: auto;
-    align-self: flex-start;
-}
-
-#Buttons {
-    flex-direction: column;
-    flex-shrink: 1;
-    flex-wrap: wrap;
-    flex-grow: 0;
-    bottom: 0;
-    position: absolute;
-}
-
-#PopulationBar {
-    align-items: flex-start;
-    align-self: flex-start;
-    overflow: visible;
-    justify-content: flex-start;
-    width: 20%;
-    height: 8%;
-}
-
-#InfoPanel {
-}
-
 .populationSegment {
     transform-origin: left;
     max-height: 100px;
     min-width: 1%;
 }
 
-.unity-text-element {
-}
-
 .statBlock {
-    max-height: 45px;
-    max-width: 80px;
-    font-size: 24px;
-    flex-direction: row;
-    overflow: hidden;
     background-color: rgba(154, 154, 154, 0.71);
+    align-items: stretch;
+    justify-content: flex-end;
+    align-self: auto;
+    flex-direction: row;
 }
 
 .imageLabel {
     flex-grow: 1;
-    max-width: 40px;
-    max-height: 40px;
-    min-width: 20px;
-    min-height: 20px;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.infoText {
+    font-size: 30px;
+    -unity-text-align: middle-center;
+    -unity-font-style: normal;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 50px;
+    max-height: 50px;
 }
 
 .buttonImage {
-    min-width: 50px;
-    min-height: 50px;
+    min-width: 60px;
+    min-height: 60px;
 }
 
 .buttonRow {
