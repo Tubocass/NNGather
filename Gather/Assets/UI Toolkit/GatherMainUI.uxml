@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/style.uss?fileID=7433441132597879392&amp;guid=2416b76a8788da848aae9dd7f08447bb&amp;type=3#style" />
-    <ui:VisualElement style="flex-grow: 1; min-width: auto; min-height: auto; max-width: none; width: initial; height: initial;">
+    <ui:VisualElement>
         <ui:VisualElement name="PopulationBar" />
         <ui:VisualElement name="InfoPanel">
             <ui:VisualElement class="statBlock">
@@ -18,13 +18,13 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Buttons">
-        <ui:VisualElement name="FarmRow" style="flex-grow: 1; flex-direction: row;">
-            <ui:Button name="farmerButton" emoji-fallback-support="false" parse-escape-sequences="false" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=21300000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;); min-width: 16%;" />
-            <ui:Button text="Farm Anchor" name="farmerAnchor" />
+        <ui:VisualElement name="FarmRow" class="buttonRow">
+            <ui:Button name="farmerButton" emoji-fallback-support="false" parse-escape-sequences="false" class="buttonImage" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=21300000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;);" />
+            <ui:Button name="farmerAnchor" class="buttonImage" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/anchor-icon.png?fileID=21300000&amp;guid=89566a7702a53414c94a98a6de97b20b&amp;type=3#anchor-icon&apos;);" />
         </ui:VisualElement>
-        <ui:VisualElement name="FightRow" style="flex-grow: 1; flex-direction: row;">
-            <ui:Button name="fighterButton" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=21300000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;); min-width: 16%; min-height: auto;" />
-            <ui:Button text="Fight Anchor" name="fighterAnchor" />
+        <ui:VisualElement name="FightRow" class="buttonRow">
+            <ui:Button name="fighterButton" class="buttonImage" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=21300000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;);" />
+            <ui:Button name="fighterAnchor" class="buttonImage" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/anchor-icon.png?fileID=21300000&amp;guid=89566a7702a53414c94a98a6de97b20b&amp;type=3#anchor-icon&apos;);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

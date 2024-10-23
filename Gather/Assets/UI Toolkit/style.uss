@@ -13,15 +13,12 @@
 }
 
 #Buttons {
-    flex-direction: row;
+    flex-direction: column;
     flex-shrink: 1;
     flex-wrap: wrap;
     flex-grow: 0;
-    align-items: flex-start;
-    justify-content: space-around;
-    height: auto;
-    min-width: 200px;
-    max-width: 250px;
+    bottom: 0;
+    position: absolute;
 }
 
 #PopulationBar {
@@ -60,4 +57,16 @@
     max-height: 40px;
     min-width: 20px;
     min-height: 20px;
+}
+
+.buttonImage {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.buttonRow {
+    flex-grow: 1;
+    flex-direction: row;
+    min-height: 50px;
+    min-width: 100px;
 }
