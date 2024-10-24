@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace Gather.UI
 {
     [UxmlElement]
-    public partial class PopulationBarSegment : VisualElement
+    public partial class LineSegment : VisualElement
     {
         float m_fillAmount;
         [UxmlAttribute] public float fillAmount { get => m_fillAmount; set { m_fillAmount = value; MarkDirtyRepaint(); } }
@@ -12,7 +12,7 @@ namespace Gather.UI
         [UxmlAttribute] public Color fillColor;
         public static readonly string defaultClass = "populationSegment";
 
-        public PopulationBarSegment() 
+        public LineSegment() 
         { 
             generateVisualContent += DrawBar;
             AddToClassList(defaultClass);

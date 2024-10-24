@@ -27,4 +27,8 @@
             <ui:Button name="fighterAnchor" class="buttonImage" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/anchor-icon.png?fileID=21300000&amp;guid=89566a7702a53414c94a98a6de97b20b&amp;type=3#anchor-icon&apos;);" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="health_and_food" style="flex-grow: initial;">
+        <ui:VisualElement name="HealthBar" style="min-width: 300px; min-height: 50px;" />
+        <ui:VisualElement name="FoodBar" style="min-width: 300px; min-height: 50px;" />
+    </ui:VisualElement>
 </ui:UXML>

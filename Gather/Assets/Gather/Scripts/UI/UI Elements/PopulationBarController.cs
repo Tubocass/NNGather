@@ -5,10 +5,11 @@ namespace Gather.UI
 {
     public class PopulationBarController : MonoBehaviour
     {
-        [SerializeField] float minLineWidth = 40f;
+        [SerializeField] float minLineHeight = 40f;
+        float barWidth;
         int total = 0;
         TeamConfig[] teams;
-        PopulationBarSegment[] segments;
+        LineSegment[] segments;
         VisualElement fillBar;
 
         private void Awake()
@@ -16,17 +17,25 @@ namespace Gather.UI
             var root = GetComponent<UIDocument>().rootVisualElement;
             fillBar = root.Q<VisualElement>(name: "PopulationBar");
             fillBar.Clear();
+            fillBar.RegisterCallback<GeometryChangedEvent>(RetrieveSize);
+        }
+
+        void RetrieveSize(GeometryChangedEvent evt)
+        {
+            barWidth = fillBar.contentRect.width;
+
         }
 
         public virtual void SetupPopulationBar(TeamConfig[] teams)
         {
             this.teams = teams;
-            segments = new PopulationBarSegment[teams.Length];
+            segments = new LineSegment[teams.Length];
+            
             for (int t = 0; t < segments.Length; t++)
             {
-                segments[t] = new PopulationBarSegment();
+                segments[t] = new LineSegment();
                 segments[t].fillColor = teams[t].TeamColor;
-                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineWidth;
+                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineHeight;
                 fillBar.Add(segments[t]);
             }
         }
@@ -35,12 +44,12 @@ namespace Gather.UI
         {
             CalcTotalPopulation();
             float edge = 0;
-            float width = fillBar.contentRect.width;
+            Vector2 start = Vector2.zero;
             for (int t = 0; t < teams.Length; t++)
             {
-                Vector2 start = new Vector2(edge/2, 0);
+                start.x = edge / 2;
                 segments[t].transform.position = start;
-                segments[t].fillAmount = CalcTeamPercent(t) * width; ;
+                segments[t].fillAmount = CalcTeamPercent(t) * barWidth; ;
                 edge += segments[t].fillAmount;
             }
         }
