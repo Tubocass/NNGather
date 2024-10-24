@@ -1,9 +1,3 @@
-.populationSegment {
-    transform-origin: left;
-    max-height: 100px;
-    min-width: 1%;
-}
-
 .statBlock {
     background-color: rgba(154, 154, 154, 0.71);
     align-items: stretch;
@@ -46,4 +40,10 @@
     flex-direction: row;
     min-height: 50px;
     min-width: 100px;
+}
+
+.populationSegment {
+    transform-origin: left;
+    max-height: 100px;
+    min-width: 1%;
 }
