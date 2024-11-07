@@ -5,44 +5,45 @@ namespace Gather.UI
 {
     public class PopulationBarController : MonoBehaviour
     {
-        float barWidth;
         int total = 0;
+        float edge = 0;
+        Vector2 start = Vector2.zero;
         TeamConfig[] teams;
-        LineSegment[] segments;
-        VisualElement fillBar;
+        VisualElement[] segments;
+        VisualElement container;
 
         private void Awake()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
-            fillBar = root.Q<VisualElement>(name: "populationBar");
-            fillBar.Clear();
+            container = root.Q<VisualElement>(name: "populationBar");
+            container.Clear();
         }
 
         public virtual void SetupPopulationBar(TeamConfig[] teams)
         {
             this.teams = teams;
-            segments = new LineSegment[teams.Length];
+            segments = new VisualElement[teams.Length];
             
             for (int t = 0; t < segments.Length; t++)
             {
-                segments[t] = new LineSegment();
-                segments[t].fillColor = teams[t].TeamColor;
-                fillBar.Add(segments[t]);
+                segments[t] = new VisualElement();
+                segments[t].style.backgroundColor = teams[t].TeamColor;
+                container.Add(segments[t]);
+                segments[t].StretchToParentSize();
             }
         }
 
         protected void LateUpdate()
         {
             CalcTotalPopulation();
-            float edge = 0;
-            Vector2 start = Vector2.zero;
-            barWidth = fillBar.contentRect.width;
+            edge = 0;
+            
             for (int t = 0; t < teams.Length; t++)
             {
-                start.x = edge / 2;
+                start.x = edge;
                 segments[t].transform.position = start;
-                segments[t].fillAmount = CalcTeamPercent(t) * barWidth; ;
-                edge += segments[t].fillAmount;
+                segments[t].style.width = CalcTeamPercent(t) * container.contentRect.width;
+                edge += segments[t].style.width.value.value;
             }
         }
 
@@ -57,7 +58,7 @@ namespace Gather.UI
 
         protected float CalcTeamPercent(int team)
         {
-            return Mathf.Clamp01(Mathf.InverseLerp(0, total, teams[team].UnitManager.GetTeamCount()));
+            return Mathf.InverseLerp(0, total, teams[team].UnitManager.GetTeamCount());
         }
     }
 }

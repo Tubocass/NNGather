@@ -20,7 +20,7 @@ namespace Gather.UI
         {
             var painter = mgc.painter2D;
             painter.strokeColor = fillColor;
-            painter.lineWidth = parent.contentRect.height * 2;
+            painter.lineWidth = lineWidth;
 
             Vector2 point = Vector2.zero;
             point.x = fillAmount;
