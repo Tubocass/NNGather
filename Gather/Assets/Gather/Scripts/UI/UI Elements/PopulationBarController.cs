@@ -17,13 +17,6 @@ namespace Gather.UI
             var root = GetComponent<UIDocument>().rootVisualElement;
             fillBar = root.Q<VisualElement>(name: "PopulationBar");
             fillBar.Clear();
-            fillBar.RegisterCallback<GeometryChangedEvent>(RetrieveSize);
-        }
-
-        void RetrieveSize(GeometryChangedEvent evt)
-        {
-            barWidth = fillBar.contentRect.width;
-
         }
 
         public virtual void SetupPopulationBar(TeamConfig[] teams)
@@ -40,11 +33,12 @@ namespace Gather.UI
             }
         }
 
-        protected void FixedUpdate()
+        protected void LateUpdate()
         {
             CalcTotalPopulation();
             float edge = 0;
             Vector2 start = Vector2.zero;
+            barWidth = fillBar.contentRect.width;
             for (int t = 0; t < teams.Length; t++)
             {
                 start.x = edge / 2;

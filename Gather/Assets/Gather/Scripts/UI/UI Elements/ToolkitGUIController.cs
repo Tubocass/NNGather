@@ -35,7 +35,7 @@ namespace Gather.UI {
             fighterAnchor = root.Q<Button>(name: "fighterAnchor");
             VisualElement health = root.Q<VisualElement>(name: "HealthBar");
 
-            healthBar.SetUIElement(health);
+            healthBar.SetFillContainer(health);
             healthBar.SetData(playerQueen.Health.GetCounter());
 
 

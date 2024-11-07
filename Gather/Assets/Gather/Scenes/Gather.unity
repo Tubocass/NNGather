@@ -611,7 +611,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  lineWidth: 25
   fillColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &714018315
 GameObject:
@@ -1516,6 +1515,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
+      propertyPath: UIDocument
+      value: 
+      objectReference: {fileID: 416451700}
     - target: {fileID: 6077366049489854706, guid: a6f989ccec8d2e24bb019d8f67323841, type: 3}
       propertyPath: levelSetup
       value: 

@@ -3,7 +3,7 @@
     <ui:VisualElement name="TopUI">
         <ui:VisualElement name="VisualElement" style="flex-direction: row; flex-grow: 1; height: 56px;">
             <ui:VisualElement name="PopulationBar" style="min-width: 300px; min-height: 50px;" />
-            <ui:VisualElement name="InfoPanel" style="flex-direction: row; flex-grow: 1; left: 45%; top: 0; max-width: none; min-width: 5%; position: absolute;">
+            <ui:VisualElement name="InfoPanel" style="left: 45%; top: 0; position: absolute; flex-direction: row; background-color: rgba(118, 118, 118, 0.71);">
                 <ui:VisualElement class="statBlock">
                     <ui:VisualElement class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Circle.png?fileID=2800000&amp;guid=4c5911e85659310458089ac2dce325ac&amp;type=3#Circle&apos;); -unity-background-image-tint-color: rgb(229, 190, 23);" />
                     <ui:Label text="69" name="foodCount" class="infoText" />
@@ -19,8 +19,8 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="health_and_food" style="flex-grow: initial; max-height: initial; max-width: initial;">
-            <ui:VisualElement name="HealthBar" style="min-width: 300px; min-height: 50px; max-width: 300px; top: auto; left: 45%; max-height: 50px; transform-origin: left top;" />
-            <ui:VisualElement name="FoodBar" style="min-width: 300px; min-height: 50px; left: 45%; max-width: 300px; max-height: 50px;" />
+            <ui:VisualElement name="HealthBar" style="min-width: 300px; min-height: 50px; max-width: 313px; max-height: 50px; transform-origin: left top; background-color: rgba(161, 161, 161, 0.56); width: 313px; height: 50px; position: relative; top: auto; left: 45%;" />
+            <ui:VisualElement name="FoodBar" style="min-width: 300px; min-height: 50px; left: 45%; max-width: 313px; max-height: 50px; background-color: rgb(255, 232, 0);" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="Buttons" style="bottom: 0; position: absolute;">

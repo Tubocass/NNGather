@@ -10,12 +10,12 @@ namespace Gather.UI
         [UxmlAttribute] public float fillAmount { get => m_fillAmount; set { m_fillAmount = value; MarkDirtyRepaint(); } }
         [UxmlAttribute] public float lineWidth = 80f;
         [UxmlAttribute] public Color fillColor;
-        public static readonly string defaultClass = "populationSegment";
+        //public static readonly string defaultClass = "populationSegment";
 
         public LineSegment() 
         { 
             generateVisualContent += DrawBar;
-            AddToClassList(defaultClass);
+            //AddToClassList(defaultClass);
         }
 
         protected void DrawBar(MeshGenerationContext mgc)
