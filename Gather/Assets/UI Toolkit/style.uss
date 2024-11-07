@@ -43,7 +43,7 @@
 }
 
 .populationSegment {
-    transform-origin: left;
+    transform-origin: left top;
     max-height: 100px;
     min-width: 1%;
 }

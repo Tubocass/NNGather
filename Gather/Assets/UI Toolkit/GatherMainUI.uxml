@@ -1,26 +1,24 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/style.uss?fileID=7433441132597879392&amp;guid=2416b76a8788da848aae9dd7f08447bb&amp;type=3#style" />
     <ui:VisualElement name="topUI">
-        <ui:VisualElement style="flex-direction: row; flex-grow: 1; height: 56px;">
-            <ui:VisualElement name="populationBar" style="min-width: 300px; min-height: 50px;" />
-            <ui:VisualElement name="infoPanel" style="left: 45%; top: 0; position: absolute; flex-direction: row; background-color: rgba(118, 118, 118, 0.71);">
-                <ui:VisualElement class="statBlock">
-                    <ui:VisualElement class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Circle.png?fileID=2800000&amp;guid=4c5911e85659310458089ac2dce325ac&amp;type=3#Circle&apos;); -unity-background-image-tint-color: rgb(229, 190, 23);" />
-                    <ui:Label text="69" name="foodCount" class="infoText" />
-                </ui:VisualElement>
-                <ui:VisualElement class="statBlock">
-                    <ui:VisualElement name="farmerImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=2800000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;);" />
-                    <ui:Label text="69" name="farmerCount" class="infoText" />
-                </ui:VisualElement>
-                <ui:VisualElement class="statBlock">
-                    <ui:VisualElement name="fighterImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=2800000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;);" />
-                    <ui:Label text="69" name="fighterCount" class="infoText" />
-                </ui:VisualElement>
-            </ui:VisualElement>
+        <ui:VisualElement name="populationBar" style="background-color: rgba(142, 142, 142, 0.8); min-height: 50px; min-width: 300px; max-width: 300px; max-height: 80px; height: 50px; width: 300px;" />
+        <ui:VisualElement name="health_and_food" style="flex-grow: initial; max-height: initial; max-width: initial; position: absolute; left: 45%;">
+            <ui:VisualElement name="healthBar" style="min-width: 300px; min-height: 50px; max-width: 313px; max-height: 50px; transform-origin: left top; background-color: rgb(147, 147, 147); width: 313px; height: 50px;" />
+            <ui:VisualElement name="foodBar" style="min-width: 300px; min-height: 50px; max-width: 313px; max-height: 50px; background-color: rgb(146, 146, 146);" />
         </ui:VisualElement>
-        <ui:VisualElement name="health_and_food" style="flex-grow: initial; max-height: initial; max-width: initial;">
-            <ui:VisualElement name="healthBar" style="min-width: 300px; min-height: 50px; max-width: 313px; max-height: 50px; transform-origin: left top; background-color: rgb(147, 147, 147); width: 313px; height: 50px; position: relative; top: auto; left: 45%;" />
-            <ui:VisualElement name="foodBar" style="min-width: 300px; min-height: 50px; left: 45%; max-width: 313px; max-height: 50px; background-color: rgb(146, 146, 146);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="infoPanel" style="left: 5px; top: 894px; position: absolute; flex-direction: row; background-color: rgba(118, 118, 118, 0.71);">
+        <ui:VisualElement class="statBlock" style="display: none;">
+            <ui:VisualElement class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Circle.png?fileID=2800000&amp;guid=4c5911e85659310458089ac2dce325ac&amp;type=3#Circle&apos;); -unity-background-image-tint-color: rgb(229, 190, 23);" />
+            <ui:Label text="69" name="foodCount" class="infoText" />
+        </ui:VisualElement>
+        <ui:VisualElement class="statBlock">
+            <ui:VisualElement name="farmerImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=2800000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;);" />
+            <ui:Label text="69" name="farmerCount" class="infoText" />
+        </ui:VisualElement>
+        <ui:VisualElement class="statBlock">
+            <ui:VisualElement name="fighterImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=2800000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;);" />
+            <ui:Label text="69" name="fighterCount" class="infoText" />
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="buttons" style="bottom: 0; position: absolute;">

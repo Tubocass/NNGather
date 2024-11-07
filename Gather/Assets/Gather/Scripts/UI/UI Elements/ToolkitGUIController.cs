@@ -10,16 +10,11 @@ namespace Gather.UI {
         DisplayNumber fighterCounter;
         Button spawnFarmer;
         Button spawnFighter;
-        //HealthBar healthBar;
         Button farmerAnchor;
         Button fighterAnchor;
         //PauseMenu pauseMenu;
         [SerializeField] FillBar healthBar;
         [SerializeField] FillBar foodBar;
-
-        private void Awake()
-        {
-        }
 
         public override void SetupPlayerUI(Queen playerQueen)
         {
@@ -37,10 +32,8 @@ namespace Gather.UI {
             VisualElement health = root.Q<VisualElement>(name: "healthBar");
             VisualElement food = root.Q<VisualElement>(name: "foodBar");
 
-            healthBar.SetFillContainer(health);
-            healthBar.SetData(playerQueen.Health.GetCounter());
-            foodBar.SetFillContainer(food);
-            foodBar.SetData(playerQueen.GetFoodCounter());
+            healthBar.Initialize(health, playerQueen.Health.GetCounter());
+            foodBar.Initialize(food, playerQueen.GetFoodCounter());
 
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
             spawnFarmer.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
@@ -50,13 +43,12 @@ namespace Gather.UI {
             farmerImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
             fighterImage.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;
 
-            foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
+            //foodCounter = new DisplayNumber(foodCount, playerQueen.GetFoodCounter());
             farmerCounter = new DisplayNumber(farmerCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Farmer));
             fighterCounter = new DisplayNumber(fighterCount, playerTeam.UnitManager.GetUnitCounter(UnitType.Fighter));
 
             farmerAnchor.clicked += inputManager.ToggleFoodAnchor;
             fighterAnchor.clicked += inputManager.ToggleFightAnchor;
         }
-
     }
 }

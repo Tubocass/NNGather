@@ -10,25 +10,18 @@ namespace Gather.UI
         VisualElement container;
         VisualElement line;
 
-        //private void Awake()
-        //{
-        //    var root = GetComponent<UIDocument>().rootVisualElement;
-        //    VisualElement healthBar = root.Q<VisualElement>(name: "HealthBar");
-        //    SetUIElement(healthBar);
-        //}
-
-        public void SetFillContainer(VisualElement element)
+        public void Initialize(VisualElement element, MaxCounter data)
         {
             this.container = element;
+            this.data = data;
+
             line = new VisualElement();
             container.Add(line);
             line.style.backgroundColor = fillColor;
             line.StretchToParentSize();
-        }
 
-        public void SetData(MaxCounter data) { 
-            this.data = data;
             data.counterEvent.AddListener(UpdateLine);
+            UpdateLine();
         }
 
         private void UpdateLine()

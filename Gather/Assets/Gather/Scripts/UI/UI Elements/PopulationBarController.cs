@@ -5,7 +5,6 @@ namespace Gather.UI
 {
     public class PopulationBarController : MonoBehaviour
     {
-        [SerializeField] float minLineHeight = 40f;
         float barWidth;
         int total = 0;
         TeamConfig[] teams;
@@ -29,8 +28,6 @@ namespace Gather.UI
                 segments[t] = new LineSegment();
                 segments[t].fillColor = teams[t].TeamColor;
                 fillBar.Add(segments[t]);
-                //segments[t].StretchToParentSize();
-                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineHeight;
             }
         }
 
