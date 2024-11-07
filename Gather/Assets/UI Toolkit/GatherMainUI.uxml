@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/style.uss?fileID=7433441132597879392&amp;guid=2416b76a8788da848aae9dd7f08447bb&amp;type=3#style" />
     <ui:VisualElement name="TopUI">
-        <ui:VisualElement name="VisualElement" style="flex-direction: row; flex-grow: 0;">
+        <ui:VisualElement name="VisualElement" style="flex-direction: row; flex-grow: 1; height: 56px;">
             <ui:VisualElement name="PopulationBar" style="min-width: 300px; min-height: 50px;" />
             <ui:VisualElement name="InfoPanel" style="flex-direction: row; flex-grow: 1; left: 45%; top: 0; max-width: none; min-width: 5%; position: absolute;">
                 <ui:VisualElement class="statBlock">
@@ -18,8 +18,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="health_and_food" style="flex-grow: initial;">
-            <ui:VisualElement name="HealthBar" class="populationSegment" style="min-width: 300px; min-height: 50px; max-width: 300px; top: auto; left: 45%; max-height: 50px;" />
+        <ui:VisualElement name="health_and_food" style="flex-grow: initial; max-height: initial; max-width: initial;">
+            <ui:VisualElement name="HealthBar" style="min-width: 300px; min-height: 50px; max-width: 300px; top: auto; left: 45%; max-height: 50px; transform-origin: left top;" />
             <ui:VisualElement name="FoodBar" style="min-width: 300px; min-height: 50px; left: 45%; max-width: 300px; max-height: 50px;" />
         </ui:VisualElement>
     </ui:VisualElement>

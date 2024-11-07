@@ -6,6 +6,8 @@ namespace Gather.UI
     public class FillBar : MonoBehaviour
     {
         [SerializeField] MaxCounter data;
+        [SerializeField] float lineWidth;
+        [SerializeField] Color fillColor;
         VisualElement container;
         LineSegment line;
 
@@ -20,8 +22,8 @@ namespace Gather.UI
         {
             this.container = element;
             line = new LineSegment();
-            line.fillColor = Color.red;
-            line.lineWidth = 50;
+            line.fillColor = fillColor;
+            line.lineWidth = lineWidth;
             container.Add(line);
         }
 

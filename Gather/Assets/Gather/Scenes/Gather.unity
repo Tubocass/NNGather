@@ -611,6 +611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
+  lineWidth: 25
+  fillColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &714018315
 GameObject:
   m_ObjectHideFlags: 0
