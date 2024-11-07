@@ -8,16 +8,12 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="infoPanel" style="left: 5px; top: 894px; position: absolute; flex-direction: row; background-color: rgba(118, 118, 118, 0.71);">
-        <ui:VisualElement class="statBlock" style="display: none;">
-            <ui:VisualElement class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Circle.png?fileID=2800000&amp;guid=4c5911e85659310458089ac2dce325ac&amp;type=3#Circle&apos;); -unity-background-image-tint-color: rgb(229, 190, 23);" />
-            <ui:Label text="69" name="foodCount" class="infoText" />
-        </ui:VisualElement>
         <ui:VisualElement class="statBlock">
-            <ui:VisualElement name="farmerImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=2800000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;);" />
+            <ui:VisualElement name="farmerImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/Tri.png?fileID=21300000&amp;guid=17d79d31166207c479f0335f58bc0b85&amp;type=3#Tri&apos;);" />
             <ui:Label text="69" name="farmerCount" class="infoText" />
         </ui:VisualElement>
         <ui:VisualElement class="statBlock">
-            <ui:VisualElement name="fighterImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=2800000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;);" />
+            <ui:VisualElement name="fighterImage" class="imageLabel" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/DiamondTail.png?fileID=21300000&amp;guid=26a8f9c8d1357164a9107be4e9d034d0&amp;type=3#DiamondTail&apos;);" />
             <ui:Label text="69" name="fighterCount" class="infoText" />
         </ui:VisualElement>
     </ui:VisualElement>

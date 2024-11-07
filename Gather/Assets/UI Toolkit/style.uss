@@ -1,7 +1,7 @@
 .statBlock {
     background-color: rgba(154, 154, 154, 0.71);
-    align-items: stretch;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
     align-self: auto;
     flex-direction: row;
 }
