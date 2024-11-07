@@ -10,13 +10,14 @@ namespace Gather
         public int maxFood = 20;
         public int startAmount = 10;
         Queue<Vector2> foodLocations;
-        Counter foodCounter;
+        MaxCounter foodCounter;
 
         public int Amount { get { return foodCounter.GetAmount(); } }
 
         protected void OnEnable()
         {
-            foodCounter = ScriptableObject.CreateInstance<Counter>();
+            foodCounter = ScriptableObject.CreateInstance<MaxCounter>();
+            foodCounter.SetMax(maxFood);
             foodCounter.SetAmount(startAmount);
             foodLocations = new Queue<Vector2>(foodQueueSize);
         }
@@ -41,7 +42,7 @@ namespace Gather
             return Amount >= maxFood;
         }
 
-        public Counter GetCounter()
+        public MaxCounter GetCounter()
         {
             return foodCounter;
         }

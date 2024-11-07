@@ -103,7 +103,7 @@ namespace Gather
             }
         }
 
-        public Counter GetFoodCounter() 
+        public MaxCounter GetFoodCounter() 
         {
             return foodManager.GetCounter();
         }

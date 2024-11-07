@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Gather.UI {
@@ -13,11 +14,11 @@ namespace Gather.UI {
         Button farmerAnchor;
         Button fighterAnchor;
         //PauseMenu pauseMenu;
-        FillBar healthBar;
+        [SerializeField] FillBar healthBar;
+        [SerializeField] FillBar foodBar;
 
         private void Awake()
         {
-            healthBar = GetComponent<FillBar>();
         }
 
         public override void SetupPlayerUI(Queen playerQueen)
@@ -33,11 +34,13 @@ namespace Gather.UI {
             spawnFighter = root.Q<Button>(name: "fighterButton");
             farmerAnchor = root.Q<Button>(name: "farmerAnchor");
             fighterAnchor = root.Q<Button>(name: "fighterAnchor");
-            VisualElement health = root.Q<VisualElement>(name: "HealthBar");
+            VisualElement health = root.Q<VisualElement>(name: "healthBar");
+            VisualElement food = root.Q<VisualElement>(name: "foodBar");
 
             healthBar.SetFillContainer(health);
             healthBar.SetData(playerQueen.Health.GetCounter());
-
+            foodBar.SetFillContainer(food);
+            foodBar.SetData(playerQueen.GetFoodCounter());
 
             spawnFarmer.clicked += playerQueen.SpawnFarmer;
             spawnFarmer.style.unityBackgroundImageTintColor = playerQueen.TeamConfig.TeamColor;

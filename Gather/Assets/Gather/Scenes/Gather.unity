@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 416451702}
   - component: {fileID: 416451703}
   - component: {fileID: 416451704}
+  - component: {fileID: 416451705}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -585,6 +586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 1175013165}
+  healthBar: {fileID: 416451704}
+  foodBar: {fileID: 416451705}
 --- !u!114 &416451703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,6 +615,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   fillColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &416451705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416451699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcdc9d6dd6d7e874fa523f88987f3eb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
+  fillColor: {r: 0.8490566, g: 0.78098166, b: 0.06007475, a: 1}
 --- !u!1 &714018315
 GameObject:
   m_ObjectHideFlags: 0

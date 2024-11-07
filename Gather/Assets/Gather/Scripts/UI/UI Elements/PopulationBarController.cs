@@ -15,7 +15,7 @@ namespace Gather.UI
         private void Awake()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
-            fillBar = root.Q<VisualElement>(name: "PopulationBar");
+            fillBar = root.Q<VisualElement>(name: "populationBar");
             fillBar.Clear();
         }
 
@@ -28,8 +28,9 @@ namespace Gather.UI
             {
                 segments[t] = new LineSegment();
                 segments[t].fillColor = teams[t].TeamColor;
-                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineHeight;
                 fillBar.Add(segments[t]);
+                //segments[t].StretchToParentSize();
+                segments[t].lineWidth = fillBar.contentRect.height > 0 ? fillBar.contentRect.height : minLineHeight;
             }
         }
 
