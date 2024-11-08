@@ -12,7 +12,6 @@ namespace Gather.UI {
         Button spawnFighter;
         Button farmerAnchor;
         Button fighterAnchor;
-        //PauseMenu pauseMenu;
         [SerializeField] FillBar healthBar;
         [SerializeField] FillBar foodBar;
 
