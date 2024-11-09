@@ -5,19 +5,19 @@ using Gather.UI;
 
 namespace Gather
 {
-    [System.Serializable]
-    public struct TeamSelect
-    {
-        public int id;
-        public bool isPlayer;
-        public int colorOption;
-        public TeamSelect(int id, bool isPlayer, int colorOption)
-        {
-            this.id = id;
-            this.isPlayer = isPlayer;
-            this.colorOption = colorOption;
-        }
-    }
+    //[System.Serializable]
+    //public struct TeamSelect
+    //{
+    //    public int id;
+    //    public bool isPlayer;
+    //    public int colorOption;
+    //    public TeamSelect(int id, bool isPlayer, int colorOption)
+    //    {
+    //        this.id = id;
+    //        this.isPlayer = isPlayer;
+    //        this.colorOption = colorOption;
+    //    }
+    //}
 
     public class TeamSlot : MonoBehaviour
     {
@@ -25,14 +25,14 @@ namespace Gather
         public Toggle botSelect;
         public TMP_Dropdown colorSelect;
         public ColorOptions colorOptions;
-        NewGameScreen newGameScreen;
+        NewGameScreen_Canvas newGameScreen;
         TMP_Text playerText;
 
 
         private void Awake()
         {
             playerText = botSelect.GetComponentInChildren<TMP_Text>();
-            newGameScreen = GetComponentInParent<NewGameScreen>();
+            newGameScreen = GetComponentInParent<NewGameScreen_Canvas>();
             botSelect.onValueChanged.AddListener(SetPlayer);
             colorSelect.onValueChanged.AddListener(SetColor);
 

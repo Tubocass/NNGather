@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Gather;
 using UnityEngine.SceneManagement;
 
 namespace Gather.UI
 {
-    public class NewGameScreen : MonoBehaviour
+    public class NewGameScreen_Canvas : MonoBehaviour
     {
         [SerializeField] GameObject emptySlot;
         [SerializeField] GameObject teamSlotPrefab;
