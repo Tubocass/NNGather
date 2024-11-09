@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Gather.UI
+namespace Gather.UI.Toolkit
 {
     public class FillBar : MonoBehaviour
     {

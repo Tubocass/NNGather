@@ -1,6 +1,6 @@
 ﻿using UnityEngine.UIElements;
 
-namespace Gather.UI
+namespace Gather.UI.Toolkit
 {
     public class DisplayNumber
     {

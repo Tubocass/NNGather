@@ -1,12 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/GatherMainUI/style.uss?fileID=7433441132597879392&amp;guid=2416b76a8788da848aae9dd7f08447bb&amp;type=3#style" />
+    <Style src="project://database/Assets/UI%20Toolkit/NewGameScreenStyle.uss?fileID=7433441132597879392&amp;guid=cebccb845818f514889ac0600538fbde&amp;type=3#NewGameScreenStyle" />
     <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
         <ui:VisualElement name="outer-shell" style="width: 90%; height: 90%; background-color: rgb(128, 100, 90); justify-content: center; align-items: center;">
             <ui:VisualElement style="background-color: rgb(173, 173, 173); width: 85%; height: 80%; align-items: center; justify-content: center;">
                 <ui:VisualElement name="teamPanel" style="width: 85%; height: 80%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
-                    <Gather.UI.TeamSlotElement class="teamSelect" style="display: none;">
+                    <Gather.UI.TeamSlotElement class="teamSelect" style="display: flex;">
                         <ui:Toggle label="Player" name="player-toggle" class="player-toggle" />
-                        <ui:DropdownField label="&#10;" name="DropdownField" style="flex-grow: 1; flex-shrink: 1; flex-direction: column; width: 230px; height: 80%;" />
+                        <ui:DropdownField label="&#10;" name="DropdownField" choices="1,2,3" index="0" style="flex-grow: 1; flex-shrink: 1; flex-direction: column; width: 230px; height: 80%;" />
                         <ui:VisualElement name="spacer" style="width: 80%;" />
                         <ui:Button class="team-select__button" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/black_minus_sign.png?fileID=21300000&amp;guid=fce4c2f0f3b7b05469f04ffea0994071&amp;type=3#black_minus_sign&apos;);" />
                     </Gather.UI.TeamSlotElement>

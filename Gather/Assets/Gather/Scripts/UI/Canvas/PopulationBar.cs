@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gather
+namespace Gather.UI.Canvas
 {
     public class PopulationBar : MonoBehaviour
     {

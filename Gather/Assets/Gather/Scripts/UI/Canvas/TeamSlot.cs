@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Gather.UI;
 
-namespace Gather
+namespace Gather.UI.Canvas
 {
-    //[System.Serializable]
-    //public struct TeamSelect
-    //{
-    //    public int id;
-    //    public bool isPlayer;
-    //    public int colorOption;
-    //    public TeamSelect(int id, bool isPlayer, int colorOption)
-    //    {
-    //        this.id = id;
-    //        this.isPlayer = isPlayer;
-    //        this.colorOption = colorOption;
-    //    }
-    //}
+    [System.Serializable]
+    public struct TeamSelect
+    {
+        public int id;
+        public bool isPlayer;
+        public int colorOption;
+        public TeamSelect(int id, bool isPlayer, int colorOption)
+        {
+            this.id = id;
+            this.isPlayer = isPlayer;
+            this.colorOption = colorOption;
+        }
+    }
 
     public class TeamSlot : MonoBehaviour
     {
@@ -27,7 +26,6 @@ namespace Gather
         public ColorOptions colorOptions;
         NewGameScreen_Canvas newGameScreen;
         TMP_Text playerText;
-
 
         private void Awake()
         {
@@ -39,11 +37,6 @@ namespace Gather
             selection.id = transform.GetSiblingIndex();
             selection.isPlayer = botSelect.isOn;
             playerText.text = botSelect.isOn ? "Player" : "Bot";
-        }
-
-        private void Start()
-        {
-            
         }
 
         private void OnEnable()

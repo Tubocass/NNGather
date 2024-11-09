@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace Gather.UI
+namespace Gather.UI.Canvas
 {
     public class ScoreDisplay : MonoBehaviour
     {

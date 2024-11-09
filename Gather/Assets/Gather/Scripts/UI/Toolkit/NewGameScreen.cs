@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Gather.UI
+namespace Gather.UI.Toolkit
 {
     public class NewGameScreen : MonoBehaviour
     {
@@ -22,10 +22,7 @@ namespace Gather.UI
             emptySlot = teamPanel.Q(name: "emptySlot");
             Button add = emptySlot.Q<Button>();
             add.clicked += AddRow;
-            add.clicked += () => Debug.Log("Clicked");
             CreateTeamSlot().SetPlayer(true);
-            //emptySlot.transform.SetAsLastSibling();
-            //teamPanel.BringToFront();
         }
 
         public void AddRow()
@@ -41,9 +38,8 @@ namespace Gather.UI
 
             }
             ts.SetPlayer(false);
-            //emptySlot.transform.SetAsLastSibling();
 
-            if (teamSlots.FindAll(ts => ts.style.display == DisplayStyle.Flex).Count == maxTeams)
+            if (teamSlots.FindAll(ts => ts.style.display.value == DisplayStyle.Flex).Count == maxTeams)
             {
                 emptySlot.style.display = DisplayStyle.None;
             }
@@ -56,6 +52,9 @@ namespace Gather.UI
             teamSlots.Add(ts);
             teamPanel.Add(ts);
             ts.Init(colorOptions);
+            ts.RowRemoved.AddListener(RestoreEmptySlot);
+            emptySlot.BringToFront();
+
             return ts;
         }
 

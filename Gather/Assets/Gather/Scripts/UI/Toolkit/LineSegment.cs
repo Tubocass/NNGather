@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Gather.UI
+namespace Gather.UI.Toolkit
 {
     [UxmlElement]
     public partial class LineSegment : VisualElement

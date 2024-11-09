@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Gather.UI
+namespace Gather.UI.Canvas
 {
     public class NewGameScreen_Canvas : MonoBehaviour
     {

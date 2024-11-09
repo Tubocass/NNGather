@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using TMPro;
-using Gather;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace Gather.UI
+namespace Gather.UI.Canvas
 {
     public class Custom_DropDown : MonoBehaviour, IPointerClickHandler
     {
@@ -27,7 +26,7 @@ namespace Gather.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            var list = GetComponentInChildren<Canvas>();
+            var list = GetComponentInChildren<UnityEngine.Canvas>();
             if (list)
             {
                 var toggles = list.GetComponentsInChildren<Toggle>();

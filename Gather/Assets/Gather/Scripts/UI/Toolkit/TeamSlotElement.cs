@@ -1,6 +1,7 @@
-﻿using UnityEngine.UIElements;
+﻿using UnityEngine.Events;
+using UnityEngine.UIElements;
 
-namespace Gather.UI
+namespace Gather.UI.Toolkit
 {
     [System.Serializable]
     public struct TeamSelect
@@ -18,6 +19,7 @@ namespace Gather.UI
     [UxmlElement]
     public partial class TeamSlotElement : VisualElement
     {
+        public UnityEvent RowRemoved = new UnityEvent();
         TeamSelect selection;
         Toggle botSelect;
         Label playerText;
@@ -53,6 +55,10 @@ namespace Gather.UI
         //    colorOptions.DeselectColor(selection.colorOption);
         //}
 
+        public void SetupColorOptions(ColorOptions colorOptions)
+        {
+        }
+
         public void SetColor(ChangeEvent<int> change)
         {
             int choice = change.newValue;
@@ -84,7 +90,10 @@ namespace Gather.UI
         public void RemoveRow()
         {
             this.style.display = DisplayStyle.None;
-            //newGameScreen.RestoreEmptySlot();
+            if(RowRemoved != null)
+            {
+                RowRemoved.Invoke();
+            }
         }
     }
 }

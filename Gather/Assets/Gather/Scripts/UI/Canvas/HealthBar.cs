@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gather.UI
+namespace Gather.UI.Canvas
 {
     public class HealthBar : MonoBehaviour
     {

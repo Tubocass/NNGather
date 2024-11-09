@@ -43,60 +43,7 @@
     min-width: 1%;
 }
 
-.teamSelect {
-    height: 100px;
-    background-color: rgb(152, 152, 152);
-    flex-direction: row;
-    align-items: center;
-}
-
-.emptySlot {
-    height: 100px;
-    background-color: rgb(118, 118, 118);
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-}
-
 .buttonImage {
     min-width: 60px;
     min-height: 60px;
-}
-
-.unity-base-popup-field__label {
-    display: none;
-}
-
-.team-select__button {
-    align-items: center;
-    justify-content: center;
-    right: 0;
-    min-width: 80px;
-    min-height: 80%;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-#unity-checkmark {
-    min-width: 50px;
-    min-height: 50px;
-    bottom: 0;
-}
-
-#player-toggle {
-    font-size: 40px;
-    height: 100%;
-    align-items: center;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-}
-
-#player-toggle > .unity-label {
 }
