@@ -67,8 +67,6 @@
 
 .color-option {
     flex-grow: initial;
-    width: 100px;
-    height: 50px;
     border-left-color: rgb(255, 255, 255);
     border-right-color: rgb(255, 255, 255);
     border-top-color: rgb(255, 255, 255);
@@ -77,6 +75,8 @@
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
+    min-width: 100px;
+    min-height: 50px;
 }
 
 .colorPicker {
@@ -91,6 +91,31 @@
     overflow: visible;
     flex-wrap: wrap;
     flex-direction: row;
-    flex-grow: 1;
+    flex-grow: initial;
     flex-shrink: 1;
+}
+
+.colorContainer {
+    height: 102px;
+    width: 602px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    background-color: rgb(152, 152, 152);
+    overflow: visible;
+    visibility: visible;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: initial;
+    display: none;
+    align-items: flex-start;
+    transition-property: display;
+    transition-duration: 0.2s;
+    position: absolute;
+    top: -25px;
 }

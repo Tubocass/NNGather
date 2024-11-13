@@ -41,7 +41,6 @@ namespace Gather.UI.Toolkit
                 using var evt = ChangeEvent<int>.GetPooled(previous, value);
                 evt.target = this;
                 SendEvent(evt);
-
             }
         }
 

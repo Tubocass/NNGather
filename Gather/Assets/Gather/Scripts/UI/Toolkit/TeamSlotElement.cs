@@ -22,33 +22,26 @@ namespace Gather.UI.Toolkit
     {
         public UnityEvent RowRemoved = new UnityEvent();
         TeamSelect selection = new TeamSelect(-1, false, -1);
-        Toggle botSelect;
-        Label playerText;
-        ColorPicker colorSelect;
+        Toggle botSelect => this.Q<Toggle>();
+        Label playerText => botSelect.Q<Label>();
+        ColorPicker colorSelect => this.Q<ColorPicker>();
+        Button remove => this.Q<Button>();
         ColorOptions colorOptions;
-        NewGameScreen newGameScreen;
 
         public TeamSlotElement () { }
 
         public void Init (ColorOptions colors)
         {
             colorOptions = colors;
-            botSelect = this.Q<Toggle>();
-            playerText = botSelect.Q<Label>();
-            colorSelect = this.Q<ColorPicker>();
-            Button remove = this.Q<Button>();
-
-            remove.clicked += RemoveRow;
-            botSelect.RegisterValueChangedCallback(ChangePlayer);
             colorSelect.Init(colors);
             colorSelect.RegisterValueChangedCallback(SetColor);
-
+            colorSelect.value = colorOptions.GetFreeColor();
+            remove.clicked += RemoveRow;
+            botSelect.RegisterValueChangedCallback(ChangePlayer);
 
             selection.id = parent.IndexOf(this);
             selection.isPlayer = botSelect.value;
             playerText.text = botSelect.value ? "Player" : "Bot";
-
-            colorSelect.value = colorOptions.GetFreeColor();
 
             RegisterCallback<DetachFromPanelEvent>((evt) => OnDisable());
         }
@@ -65,7 +58,6 @@ namespace Gather.UI.Toolkit
                 colorOptions.DeselectColor(change.previousValue);
                 colorOptions.SelectColor(change.newValue);
                 selection.colorIndex = change.newValue;
-                //Debug.Log("Changed selected color");
             }
         }
 

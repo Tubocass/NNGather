@@ -1,19 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/NewGameScreen/NewGameScreenStyle.uss?fileID=7433441132597879392&amp;guid=cebccb845818f514889ac0600538fbde&amp;type=3#NewGameScreenStyle" />
     <Gather.UI.Toolkit.ColorPicker name="ColorPicker" class="colorPicker">
-        <ui:VisualElement name="container" style="height: 102px; width: 602px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: rgb(152, 152, 152); overflow: visible; visibility: visible; flex-direction: row; flex-wrap: wrap; flex-grow: 1; position: absolute; top: -4px; left: -8px; display: none;">
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-            <ui:VisualElement class="color-option" />
-        </ui:VisualElement>
+        <ui:VisualElement name="container" class="colorContainer" style="display: none;" />
     </Gather.UI.Toolkit.ColorPicker>
 </ui:UXML>
