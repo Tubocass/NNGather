@@ -11,7 +11,7 @@ namespace Gather
 
         private void OnEnable()
         {
-            //disabledOptions.Clear();
+            disabledOptions.Clear();
         }
 
         public void DeselectColor(int choice)

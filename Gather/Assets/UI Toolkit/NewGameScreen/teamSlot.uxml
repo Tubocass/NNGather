@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/NewGameScreen/NewGameScreenStyle.uss?fileID=7433441132597879392&amp;guid=cebccb845818f514889ac0600538fbde&amp;type=3#NewGameScreenStyle" />
+    <Gather.UI.Toolkit.TeamSlotElement class="teamSelect" style="position: relative;">
+        <ui:Toggle label="Player" name="player-toggle" class="player-toggle" />
+        <Gather.UI.Toolkit.ColorPicker name="ColorPicker" class="colorPicker">
+            <ui:VisualElement name="container" style="height: 102px; width: 602px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: rgb(152, 152, 152); overflow: visible; visibility: visible; flex-direction: row; flex-wrap: wrap; flex-grow: 1; position: absolute; top: -4px; left: -8px; display: none; align-items: flex-start;" />
+        </Gather.UI.Toolkit.ColorPicker>
+        <ui:VisualElement name="spacer" style="width: 80%;" />
+        <ui:Button class="team-select__button" style="background-image: url(&apos;project://database/Assets/Gather/Sprites/black_minus_sign.png?fileID=21300000&amp;guid=fce4c2f0f3b7b05469f04ffea0994071&amp;type=3#black_minus_sign&apos;);" />
+    </Gather.UI.Toolkit.TeamSlotElement>
+</ui:UXML>

@@ -1,4 +1,6 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 namespace Gather.UI.Toolkit
@@ -23,7 +25,7 @@ namespace Gather.UI.Toolkit
         TeamSelect selection;
         Toggle botSelect;
         Label playerText;
-        DropdownField colorSelect;
+        ColorPicker colorSelect;
         ColorOptions colorOptions;
         NewGameScreen newGameScreen;
 
@@ -34,20 +36,21 @@ namespace Gather.UI.Toolkit
             colorOptions = colors;
             botSelect = this.Q<Toggle>();
             playerText = botSelect.Q<Label>();
-            colorSelect = this.Q<DropdownField>();
+            colorSelect = this.Q<ColorPicker>();
             Button remove = this.Q<Button>();
 
             remove.clicked += RemoveRow;
             botSelect.RegisterValueChangedCallback(ChangePlayer);
-            colorSelect.RegisterCallback<ChangeEvent<int>>(SetColor);
+            colorSelect.RegisterValueChangedCallback(SetColor);
+            colorSelect.Init(colors);
 
             selection.id = parent.IndexOf(this);
             selection.isPlayer = botSelect.value;
             playerText.text = botSelect.value ? "Player" : "Bot";
 
             selection.colorOption = colorOptions.GetFreeColor();
-            colorSelect.index = selection.colorOption;
-            colorOptions.SelectColor(colorSelect.index);
+            colorSelect.value = selection.colorOption;
+            colorOptions.SelectColor(colorSelect.value);
         }
 
         //private void OnDisable()
@@ -57,6 +60,7 @@ namespace Gather.UI.Toolkit
 
         public void SetupColorOptions(ColorOptions colorOptions)
         {
+            colorSelect.Init(colorOptions);
         }
 
         public void SetColor(ChangeEvent<int> change)
@@ -64,9 +68,10 @@ namespace Gather.UI.Toolkit
             int choice = change.newValue;
             if (choice != selection.colorOption)
             {
-                colorOptions.DeselectColor(selection.colorOption);
+                //colorOptions.DeselectColor(selection.colorOption);
                 selection.colorOption = choice;
-                colorOptions.SelectColor(choice);
+                Debug.Log("Changed selected color");
+                //colorOptions.SelectColor(choice);
             }
         }
 
@@ -90,10 +95,7 @@ namespace Gather.UI.Toolkit
         public void RemoveRow()
         {
             this.style.display = DisplayStyle.None;
-            if(RowRemoved != null)
-            {
-                RowRemoved.Invoke();
-            }
+            RowRemoved?.Invoke();
         }
     }
 }
