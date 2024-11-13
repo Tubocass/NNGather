@@ -1,20 +1,47 @@
-﻿using UnityEngine.UIElements;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Gather.UI.Toolkit
 {
     [UxmlElement]
     public partial class ColorPicker : VisualElement, INotifyValueChanged<int>
     {
+        public new class UxmlFactory : UxmlFactory<ColorPicker, UxmlTraits> { }
+        public new class UxmlTraits : VisualElement.UxmlTraits
+        {
+            UxmlIntAttributeDescription m_Value = new UxmlIntAttributeDescription { name = "value" };
+
+            public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
+            {
+                //get { yield break; }
+                get { yield return new UxmlChildElementDescription(typeof(VisualElement)); }
+            }
+
+            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+            {
+                base.Init(ve, bag, cc);
+                ((ColorPicker)ve).value = m_Value.GetValueFromBag(bag, cc);
+            }
+        }
+
         VisualElement[] options;
         VisualElement container => this.Q(name: "container");
         ColorOptions colorOptions;
-        int index;
+        int index = -1;
 
         public int value { 
             get => index;
             set { 
-                index = value;
-                UpdateChosenColor(index);
+                if(value == this.value)
+                    return;
+
+                var previous = this.value;
+                SetValueWithoutNotify(value);
+                using var evt = ChangeEvent<int>.GetPooled(previous, value);
+                evt.target = this;
+                SendEvent(evt);
+
             }
         }
 
@@ -23,7 +50,7 @@ namespace Gather.UI.Toolkit
         public void Init(ColorOptions colorOptions)
         {
             this.colorOptions = colorOptions;
-            this.RegisterCallback<PointerDownEvent>(OnPointerDown);
+            RegisterCallback<PointerDownEvent>(OnPointerDown);
             options = new VisualElement[colorOptions.colors.Length];
 
             for (int i = 0; i < options.Length; i++)
@@ -37,7 +64,8 @@ namespace Gather.UI.Toolkit
                 options[i].RegisterCallback<PointerDownEvent>((evt) => {
                     evt.StopPropagation();
                     value = optionIndex;
-                    container.style.display = DisplayStyle.None; });
+                    container.style.display = DisplayStyle.None; 
+                });
             }
         }
 
@@ -54,12 +82,11 @@ namespace Gather.UI.Toolkit
         public void SetValueWithoutNotify(int newValue)
         {
             index = newValue;
+            UpdateChosenColor(index);
         }
 
         void UpdateChosenColor(int change)
         {
-            colorOptions.DeselectColor(change);
-            colorOptions.SelectColor(change);
             this.style.backgroundColor = colorOptions.colors[change];
         }
     }
