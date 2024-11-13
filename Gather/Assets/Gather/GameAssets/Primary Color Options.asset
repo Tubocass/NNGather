@@ -12,9 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a097fe48d87b348a9c3048a51347d1, type: 3}
   m_Name: Primary Color Options
   m_EditorClassIdentifier: 
+  colorOptions:
+  - color: {r: 0.098039225, g: 0.34117648, b: 0.76470596, a: 1}
+    isSelected: 0
+  - color: {r: 1, g: 0.96158725, b: 0.043137252, a: 1}
+    isSelected: 0
+  - color: {r: 0.91372555, g: 0.1254902, b: 0.7843138, a: 1}
+    isSelected: 0
+  - color: {r: 0.0627451, g: 0.46274513, b: 0.38431376, a: 1}
+    isSelected: 0
+  - color: {r: 0.5568628, g: 0.17254902, b: 0.10588236, a: 1}
+    isSelected: 0
+  - color: {r: 0.9803922, g: 0.56078434, b: 0.08627451, a: 1}
+    isSelected: 0
+  - color: {r: 0.7372549, g: 0.63529414, b: 0.44705886, a: 1}
+    isSelected: 0
+  - color: {r: 0.5647059, g: 0.1254902, b: 0.91372555, a: 1}
+    isSelected: 0
   colors:
   - {r: 0.09732112, g: 0.34106266, b: 0.764151, a: 1}
-  - {r: 1, g: 0.8578285, b: 0.042452812, a: 1}
+  - {r: 0.9725491, g: 0.94117653, b: 0.03529412, a: 1}
   - {r: 0.9150943, g: 0.12517802, b: 0.7839163, a: 1}
   - {r: 0.06323426, g: 0.46226418, b: 0.38319892, a: 1}
   - {r: 0.5566038, g: 0.17217319, b: 0.107645065, a: 1}

@@ -67,7 +67,7 @@ namespace Gather
 
         void SetupSarlac()
         {
-            TeamSelect envTeam = new TeamSelect(-1, false, 0);
+            TeamSelect envTeam = new TeamSelect(-1, false, 0, Color.white);
             TeamConfig teamConfig = NewTeam(envTeam);
             teams.Remove(teamConfig);
             
@@ -107,7 +107,7 @@ namespace Gather
         {
             TeamConfig teamConfig = ScriptableObject.CreateInstance<TeamConfig>();
             teamConfig.TeamID = selection.id;
-            teamConfig.TeamColor = colorOptions.colors[selection.colorIndex];
+            teamConfig.TeamColor = selection.teamColor;
             teams.Add(teamConfig);
 
             return teamConfig;

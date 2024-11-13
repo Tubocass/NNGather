@@ -10,18 +10,20 @@ namespace Gather.UI.Toolkit
         public int id;
         public bool isPlayer;
         public int colorIndex;
-        public TeamSelect(int id, bool isPlayer, int colorOption)
+        public Color teamColor;
+        public TeamSelect(int id, bool isPlayer, int colorOption, Color color)
         {
             this.id = id;
             this.isPlayer = isPlayer;
             this.colorIndex = colorOption;
+            this.teamColor = color;
         }
     }
     [UxmlElement]
     public partial class TeamSlotElement : VisualElement
     {
         public UnityEvent RowRemoved = new UnityEvent();
-        TeamSelect selection = new TeamSelect(-1, false, -1);
+        TeamSelect selection = new TeamSelect(-1, false, -1, Color.white);
         Toggle botSelect => this.Q<Toggle>();
         Label playerText => botSelect.Q<Label>();
         ColorPicker colorSelect => this.Q<ColorPicker>();
@@ -35,7 +37,7 @@ namespace Gather.UI.Toolkit
             colorOptions = colors;
             colorSelect.Init(colors);
             colorSelect.RegisterValueChangedCallback(SetColor);
-            colorSelect.value = colorOptions.GetFreeColor();
+            colorSelect.value = colorOptions.GetFreeColorOption();
             remove.clicked += RemoveRow;
             botSelect.RegisterValueChangedCallback(ChangePlayer);
 
@@ -48,16 +50,16 @@ namespace Gather.UI.Toolkit
 
         private void OnDisable()
         {
-            colorOptions.DeselectColor(selection.colorIndex);
+            colorOptions.DeselectColor(selection.teamColor);
         }
 
-        public void SetColor(ChangeEvent<int> change)
+        public void SetColor(ChangeEvent<Color> change)
         {
-            if (change.newValue != selection.colorIndex)
+            if (change.newValue != selection.teamColor)
             {
                 colorOptions.DeselectColor(change.previousValue);
                 colorOptions.SelectColor(change.newValue);
-                selection.colorIndex = change.newValue;
+                selection.teamColor = change.newValue;
             }
         }
 

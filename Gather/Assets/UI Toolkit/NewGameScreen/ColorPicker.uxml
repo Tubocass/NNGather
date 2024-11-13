@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/NewGameScreen/NewGameScreenStyle.uss?fileID=7433441132597879392&amp;guid=cebccb845818f514889ac0600538fbde&amp;type=3#NewGameScreenStyle" />
     <Gather.UI.Toolkit.ColorPicker name="ColorPicker" class="colorPicker">
-        <ui:VisualElement name="container" class="colorContainer" style="display: none;" />
+        <ui:VisualElement name="container" class="colorContainer" />
     </Gather.UI.Toolkit.ColorPicker>
 </ui:UXML>

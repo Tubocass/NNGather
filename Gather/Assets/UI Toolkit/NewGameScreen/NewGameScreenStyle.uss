@@ -67,16 +67,17 @@
 
 .color-option {
     flex-grow: initial;
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
     border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
     min-width: 100px;
     min-height: 50px;
+    background-image: none;
 }
 
 .colorPicker {
@@ -118,4 +119,22 @@
     transition-duration: 0.2s;
     position: absolute;
     top: -25px;
+}
+
+.highlight {
+    border-left-color: rgb(248, 210, 9);
+    border-right-color: rgb(248, 210, 9);
+    border-top-color: rgb(248, 210, 9);
+    border-bottom-color: rgb(248, 210, 9);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    flex-grow: 1;
+}
+
+.grayout {
+    flex-grow: 1;
+    background-color: rgba(128, 128, 128, 0.54);
+    background-image: url('project://database/Assets/Gather/Sprites/grayX.png?fileID=21300000&guid=dd67709931b3a62458989458a61d6f56&type=3#grayX');
 }
