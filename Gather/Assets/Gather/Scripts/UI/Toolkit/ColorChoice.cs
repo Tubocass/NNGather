@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Gather.UI.Toolkit 
@@ -6,16 +5,15 @@ namespace Gather.UI.Toolkit
     [UxmlElement]
     public partial class ColorChoice : VisualElement
     {
-        string highlightClass = "highlight";
-        string grayoutClass = "grayout";
-        VisualElement mask;
+        readonly string highlightClass = "highlight";
+        readonly string grayoutClass = "grayout";
+        readonly VisualElement mask;
 
         public ColorChoice()
         {
             mask = new VisualElement();
             Add(mask);
         }
-
 
         public void Highlight()
         {
@@ -34,8 +32,4 @@ namespace Gather.UI.Toolkit
             mask.ClearClassList();
         }
     }
-
 }
-
-
-

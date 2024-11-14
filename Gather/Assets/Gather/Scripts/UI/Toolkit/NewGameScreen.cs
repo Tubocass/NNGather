@@ -32,12 +32,15 @@ namespace Gather.UI.Toolkit
             if (ts != null)
             {
                 ts.style.display = DisplayStyle.Flex;
+                teamPanel.Add(ts);
+                ts.BringToFront();
             } else if (teamSlots.Count < maxTeams)
             {
                 ts = CreateTeamSlot();
-
             }
-            ts.SetPlayer(false);
+            ts.SetPlayer(ts.GetSelection().isPlayer);
+            emptySlot.BringToFront();
+
 
             if (teamSlots.FindAll(ts => ts.style.display.value == DisplayStyle.Flex).Count == maxTeams)
             {

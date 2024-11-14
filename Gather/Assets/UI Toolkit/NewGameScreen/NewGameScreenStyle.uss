@@ -66,7 +66,7 @@
 }
 
 .color-option {
-    flex-grow: initial;
+    flex-grow: 1;
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
@@ -75,9 +75,11 @@
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
-    min-width: 100px;
-    min-height: 50px;
+    min-width: 80px;
+    min-height: 40px;
     background-image: none;
+    max-width: 150px;
+    max-height: 80px;
 }
 
 .colorPicker {
@@ -97,8 +99,8 @@
 }
 
 .colorContainer {
-    height: 102px;
-    width: 602px;
+    height: auto;
+    width: auto;
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
@@ -110,15 +112,17 @@
     background-color: rgb(152, 152, 152);
     overflow: visible;
     visibility: visible;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    flex-grow: initial;
+    flex-grow: 1;
     display: none;
     align-items: flex-start;
-    transition-property: display;
-    transition-duration: 0.2s;
     position: absolute;
     top: -25px;
+    max-width: 600px;
+    max-height: 100px;
+    min-width: 100px;
+    min-height: 50px;
 }
 
 .highlight {

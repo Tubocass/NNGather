@@ -30,13 +30,17 @@ namespace Gather.UI.Toolkit
         Button remove => this.Q<Button>();
         ColorOptions colorOptions;
 
-        public TeamSlotElement () { }
+        public TeamSlotElement () 
+        {
+            RegisterCallback<DetachFromPanelEvent>((evt) => OnDisable());
+            RegisterCallback<AttachToPanelEvent>((evt) => colorOptions?.SelectColor(selection.teamColor));
+        }
 
         public void Init (ColorOptions colors)
         {
             colorOptions = colors;
             colorSelect.Init(colors);
-            colorSelect.RegisterValueChangedCallback(SetColor);
+            colorSelect.RegisterValueChangedCallback(ChangeColor);
             colorSelect.value = colorOptions.GetFreeColorOption();
             remove.clicked += RemoveRow;
             botSelect.RegisterValueChangedCallback(ChangePlayer);
@@ -44,8 +48,6 @@ namespace Gather.UI.Toolkit
             selection.id = parent.IndexOf(this);
             selection.isPlayer = botSelect.value;
             playerText.text = botSelect.value ? "Player" : "Bot";
-
-            RegisterCallback<DetachFromPanelEvent>((evt) => OnDisable());
         }
 
         private void OnDisable()
@@ -53,7 +55,7 @@ namespace Gather.UI.Toolkit
             colorOptions.DeselectColor(selection.teamColor);
         }
 
-        public void SetColor(ChangeEvent<Color> change)
+        public void ChangeColor(ChangeEvent<Color> change)
         {
             if (change.newValue != selection.teamColor)
             {
@@ -83,6 +85,7 @@ namespace Gather.UI.Toolkit
         public void RemoveRow()
         {
             this.style.display = DisplayStyle.None;
+            RemoveFromHierarchy();
             RowRemoved?.Invoke();
         }
     }

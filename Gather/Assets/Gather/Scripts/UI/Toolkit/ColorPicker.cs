@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -51,11 +50,25 @@ namespace Gather.UI.Toolkit
         {
             this.colorOptions = colorOptions;
             RegisterCallback<PointerDownEvent>(OnPointerDown);
-            //container.RegisterCallback<FocusOutEvent>((evt) => {
-            //    var container = evt.target as VisualElement;
-            //    container.style.display = DisplayStyle.None;
-            //    Debug.Log("Focus lost");
-            //    });
+            //RegisterCallback<FocusInEvent>((evt) =>
+            //{
+            //    //if (evt.target == container)
+            //    {
+            //        Debug.Log(evt.target?.ToString());
+            //        Debug.Log("Focus gained");
+            //    }
+            //});
+
+            //RegisterCallback<FocusOutEvent>((evt) =>
+            //{
+            //    //if(evt.target == container)
+            //    {
+            //        //container.style.display = DisplayStyle.None;
+            //        Debug.Log(evt.target?.ToString());
+            //        Debug.Log("Focus lost");
+            //    }
+            //});
+
             options = new ColorChoice[colorOptions.colorOptions.Length];
 
             for (int i = 0; i < options.Length; i++)
@@ -65,7 +78,7 @@ namespace Gather.UI.Toolkit
                 options[i].style.backgroundColor = colorOptions.colorOptions[i].color;
                 container.Add(options[i]);
                 
-                options[i].RegisterCallback<PointerDownEvent>(SelectColor);
+                options[i].RegisterCallback<PointerDownEvent>(SelectColor, TrickleDown.TrickleDown);
             }
         }
 
@@ -86,12 +99,18 @@ namespace Gather.UI.Toolkit
 
         public void OnPointerDown(PointerDownEvent evt)
         {
-            DisplayOptions();
+            if(evt.target == this)
+            {
+                evt.StopPropagation();
+                DisplayOptions();
+            }
         }
 
         public void DisplayOptions()
         {
             container.style.display = DisplayStyle.Flex;
+            //container.Focus();
+
             Color optionColor;
             for (int i = 0; i< options.Length; i++)
             {
